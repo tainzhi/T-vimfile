@@ -1,8 +1,15 @@
-##configure initial
+##Configure initial
 
-    git clone --recursive https://github.com/taiznhi/vimfile.git ./.vim    # clone recursively with vundle
-    vim .vim/vimrc +BundleInstall +qall                     # run installation in relative to current folder
+```
+# clone recursively with vundle
+git clone --recursive https://github.com/tainzhi/Q-vimfile.git ~/.vim
+# run vim and install plugins
+vim .vim/vimrc +PluginInstall +qall                     
+```
 
+##Thanks
+- 1  learn git submodule and vundle from [gmarik/vimfiles](https://github.com/gmarik/vimfiles)
+- 2 get some useful plugins from [wklken/k-vim](https://github.com/wklken/k-vim)
 -------------------------------------------------------------------------------
 
 ##vim_help
@@ -299,7 +306,8 @@ set tags and jump to tags
     N       在反方向上重复上一次命令
     :s/p1/p2/g      将当前行中所有的p1用p2代替
     :n1,n2s/p1/p2/g     将能n1至n2行中所有的p1用p2代替
-    :g/p1/s//p2/g       将文件中所有的p1用p2替代
+    :%s/p1/p2/g         将文件中所有的p1用p2替代
+    :.,$s/p1/p2/g       替换当前行到最后一行的p1
 
 ###setting
 
