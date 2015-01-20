@@ -10,6 +10,7 @@ vim .vim/vimrc +PluginInstall +qall
 ##Thanks
 - 1  learn git submodule and vundle from [gmarik/vimfiles](https://github.com/gmarik/vimfiles)
 - 2 get some useful plugins from [wklken/k-vim](https://github.com/wklken/k-vim)
+
 -------------------------------------------------------------------------------
 
 ##vim_help
