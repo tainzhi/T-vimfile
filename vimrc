@@ -554,6 +554,11 @@ let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,.svn,cscope*,tags"
 
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
+let g:session_autosave='no'
+
+
+
+Plugin 'mileszs/ack.vim'
 
 
 
