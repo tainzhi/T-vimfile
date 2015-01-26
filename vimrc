@@ -41,9 +41,6 @@ set timeoutlen=250             " Time to wait after ESC (default causes an annoy
 set clipboard+=unnamed         " Yanks go on clipboard instead.
 set pastetoggle=<F10>          " toggle between paste and normal: for 'safer' pasting from keyboard
 set shiftround                 " round indent to multiple of 'shiftwidth'
-"set tags=.git/tags;$HOME       " consider the repo tags first, then
-                               " walk directory tree upto $HOME looking for tags
-                               " note `;` sets the stop folder. :h file-search
 
 set modeline
 set modelines=5                " default numbers of lines to read for modeline instructions
@@ -471,7 +468,10 @@ nmap <silent> <F10> :NERDTree<CR>
 "ctags install path
 let Tlist_Ctags_Cmd='/usr/bin/ctags'
 "set tags=/home/muqing/vivo/b/android-20/tags,./tags
-"set autochdir
+set autochdir
+set tags=**/tags;$HOME         " consider the tags first, then
+                               " walk directory tree upto $HOME looking for tags
+                               " note `;` sets the stop folder. :h file-search
 
 
 
