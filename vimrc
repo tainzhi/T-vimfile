@@ -469,7 +469,7 @@ nmap <silent> <F10> :NERDTree<CR>
 let Tlist_Ctags_Cmd='/usr/bin/ctags'
 "set tags=/home/muqing/vivo/b/android-20/tags,./tags
 set autochdir
-set tags=**/tags;$HOME         " consider the tags first, then
+set tags=tags;**/.svn,tags;**/.git         " consider the tags first, then
                                " walk directory tree upto $HOME looking for tags
                                " note `;` sets the stop folder. :h file-search
 
