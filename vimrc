@@ -342,9 +342,8 @@ if has("gui_running")
   set background=light
   colorscheme solarized
 else
-  set background=dark
+  "set background=dark
   "set t_Co=256
-  "set background=light
   "colorscheme solarized
 endif
 
@@ -462,13 +461,14 @@ let Tlist_Sort_Type = "name"                   " items in tags sorted by namelet
 "nerdtree
 Plugin 'scrooloose/nerdtree'
 nmap <silent> <F10> :NERDTree<CR>
+let g:NERDTreeWinWize=26
 
 
 
 "ctags install path
 let Tlist_Ctags_Cmd='/usr/bin/ctags'
 "set tags=/home/muqing/vivo/b/android-20/tags,./tags
-set autochdir
+"set autochdir
 set tags=tags;**/.svn,tags;**/.git         " consider the tags first, then
                                " walk directory tree upto $HOME looking for tags
                                " note `;` sets the stop folder. :h file-search
@@ -513,6 +513,7 @@ au Syntax * RainbowParenthesesLoadBraces
 Plugin 'majutsushi/tagbar'
 nmap <silent> <F8> :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
+let g:tagbar_width = 26
 
 
 
