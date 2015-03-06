@@ -342,7 +342,7 @@ if has("gui_running")
   set background=light
   colorscheme solarized
 else
-  set background=dark
+  "set background=dark
   "set t_Co=256
   "set background=light
   "colorscheme torte
@@ -463,6 +463,7 @@ let Tlist_Sort_Type = "name"                   " items in tags sorted by namelet
 Plugin 'scrooloose/nerdtree'
 let g:NERDTreeWinPos = 'right'
 nmap <silent> <F10> :NERDTree<CR>
+let g:NERDTreeWinWize=26
 
 
 
