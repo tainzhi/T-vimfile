@@ -35,7 +35,7 @@ set fileencoding=utf-8
 
 set whichwrap+=<,>,h,l   " 允许backspace和光标键跨越行边界(不建议)    
 
-set cc=100
+set cc=120
 set history=256                " Number of things to remember in history.
 set timeoutlen=250             " Time to wait after ESC (default causes an annoying delay)
 set clipboard+=unnamed         " Yanks go on clipboard instead.
@@ -345,7 +345,7 @@ else
   set background=dark
   "set t_Co=256
   "set background=light
-  "colorscheme solarized
+  "colorscheme torte
 endif
 
 " Programming
@@ -461,6 +461,7 @@ let Tlist_Sort_Type = "name"                   " items in tags sorted by namelet
 
 "nerdtree
 Plugin 'scrooloose/nerdtree'
+let g:NERDTreeWinPos = 'right'
 nmap <silent> <F10> :NERDTree<CR>
 
 
@@ -468,7 +469,7 @@ nmap <silent> <F10> :NERDTree<CR>
 "ctags install path
 let Tlist_Ctags_Cmd='/usr/bin/ctags'
 "set tags=/home/muqing/vivo/b/android-20/tags,./tags
-set autochdir
+"set autochdir
 set tags=tags;**/.svn,tags;**/.git         " consider the tags first, then
                                " walk directory tree upto $HOME looking for tags
                                " note `;` sets the stop folder. :h file-search
@@ -492,7 +493,7 @@ let g:rbpt_colorpairs = [
     \ ['darkmagenta', 'DarkOrchid3'],
     \ ['brown',       'firebrick3'],
     \ ['gray',        'RoyalBlue3'],
-    \ ['black',       'SeaGreen3'],
+    \ ['gray',       'SeaGreen3'],
     \ ['darkmagenta', 'DarkOrchid3'],
     \ ['Darkblue',    'firebrick3'],
     \ ['darkgreen',   'RoyalBlue3'],
@@ -513,6 +514,8 @@ au Syntax * RainbowParenthesesLoadBraces
 Plugin 'majutsushi/tagbar'
 nmap <silent> <F8> :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
+let g:tagbar_width = 26
+let g:tagbar_left = 1
 
 
 
@@ -559,6 +562,12 @@ let g:session_autosave='no'
 
 
 Plugin 'mileszs/ack.vim'
+let g_ack_default_options = " -s -H --color --nogroup --column --smart-case --follow"
+let g:ackhightlight = 1
+let g:ack_autofold_results = 1
+nmap <leader>af :AckFile <C-R>=expand("<cfile>")<CR><CR>
+""d: 查找本当前函数调用的函数
+nmap <leader>a :Ack <C-R>=expand("<cword>")<CR><CR>
 
 
 
