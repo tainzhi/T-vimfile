@@ -35,7 +35,7 @@ set fileencoding=utf-8
 
 set whichwrap+=<,>,h,l   " 允许backspace和光标键跨越行边界(不建议)    
 
-set cc=120
+set cc=80
 set history=256                " Number of things to remember in history.
 set timeoutlen=250             " Time to wait after ESC (default causes an annoying delay)
 set clipboard+=unnamed         " Yanks go on clipboard instead.
@@ -148,7 +148,7 @@ map <silent> <F12> :set invlist<CR>
 
 if has('gui_running')
     "winpos 5 5          " 设定窗口位置    
-    set lines=999 columns=999
+    "set lines=999 columns=999
     "win 2560 1700
     "gvim -geometry 2560*1700
     "an GUIEnter * simalt ~x     #full screen
@@ -639,6 +639,7 @@ let g:ycm_complete_in_comments = 1
 let g:ycm_complete_in_strings = 1
 "注释和字符串中的文字也会被收入补全
 let g:ycm_collect_identifiers_from_comments_and_strings = 0
+let g:ycm_confirm_extra_conf = 0
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> " 跳转到定义处
 
 
