@@ -146,28 +146,27 @@ set listchars+=extends:»,precedes:«
 map <silent> <F12> :set invlist<CR>
 
 
-if has('gui_running')
-    "winpos 5 5          " 设定窗口位置    
-    "set lines=999 columns=999
-    "win 2560 1700
-    "gvim -geometry 2560*1700
-    "an GUIEnter * simalt ~x     #full screen
-    set guioptions=cMg " console dialogs, do not show menu and toolbar
-endif
 
 if has('mac')
     set guifont=Andale\ Mono:h13
-elseif has('win32')
-    set guifont=Consolas:h14:cANSI
-else
-    set guifont=Monospace\ 11
-end
-
-if has('mac')
     set noantialias
     set fuoptions=maxvert,maxhorz ",background:#00AAaaaa
+"elseif has('win32')
+"    set guifont=Consolas:h14:cANSI
+else
+    if has('gui_running')
+        "winpos 5 5          " 设定窗口位置    
+        "set lines=999 columns=999
+        "win 2560 1700
+        "gvim -geometry 2560*1700
+        "an GUIEnter * simalt ~x     #full screen
+        set guioptions=m
+        set guifont=Monospace\ 14
+    else
+        set guifont=Monospace\ 11
+    endif
 endif
-" "}}}
+
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
