@@ -17,16 +17,17 @@
 set nocompatible               " be iMproved
 
 "" 中文编码支持，同时支持GBK和UTF-8编码
+set termencoding=utf-8
 set encoding=utf-8
 set fileencodings=utf-8,gb18030,utf-16,big5,cp936,ucs-bom,unicode
 
 "" 解决菜单乱码
-"source $VIMRUNTIME/delmenu.vim
-"source $VIMRUNTIME/menu.vim
+source $VIMRUNTIME/delmenu.vim
+source $VIMRUNTIME/menu.vim
 
 "" 解决console输出乱码
-"language messages zh_CN.utf-8
-"let g:is_posix = 1             " vim's default is archaic bourne shell, bring it up to the 90s
+language messages zh_CN.utf-8
+let g:is_posix = 1             " vim's default is archaic bourne shell, bring it up to the 90s
 
 set whichwrap+=<,>,h,l   " 允许backspace和光标键跨越行边界(不建议)    
 
@@ -147,7 +148,8 @@ if has('gui_running')
     "win 2560 1700
     "gvim -geometry 2560*1700
     "an GUIEnter * simalt ~x     #full screen
-    set guioptions=cMg " console dialogs, do not show menu and toolbar
+    "set guioptions=cMg " console dialogs, do not show menu and toolbar
+    set guioptions=m
 endif
 
 if has('mac')
@@ -201,11 +203,8 @@ inoremap <C-V> <esc> "+pa
 cnoremap <leader>c mz"dyy"dp`z
 vnoremap <leader>c "dymz"dP`z
 
-nnoremap <leader>rs :source ~/.vim/vimrc<CR>
-nnoremap <leader>rt :tabnew ~/.vim/vimrc<CR>
-"nnoremap <leader>re :c ~/.vim/vimrc<CR>
-"nnoremap <leader>rd :e ~/.vim/ <CR>
-nnoremap <leader>rc :silent ! cd ~/.vim/ && git commit ~/.vim/vimrc -v <CR>
+nnoremap <leader>rs :source c:\Program\ Files\Vim\_vimrc<CR>
+nnoremap <leader>rt :tabnew c:\Program\ Files\Vim\_vimrc<CR>
 
 " Tabs
 "nnoremap <leader>tn :tabnew 
