@@ -175,7 +175,7 @@ map <C-A> ggVG$
 map! <C-A> <Esc>ggvG$
 map <C-X> "+x
 
-map <C-v> "+gp
+map <C-v> "+gP
 map <C-V> <Esc>"+pa
 map <C-V> "+pa<Esc>
 
