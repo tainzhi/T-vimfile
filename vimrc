@@ -1,4 +1,4 @@
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  FileName:     _vimrc/_gvimrc for linux
 "  Author:        muqing
 "  CreateTime:   2012-09-22 14:30:00
@@ -126,7 +126,7 @@ set stl+=%y%m%r%=
 set stl+=%-14.(%l,%c%V%)\ %P,%L
 
 
-set foldenable                " Turn on folding
+"set foldenable                " Turn on folding
 set foldmethod=marker         " Fold on the marker
 set foldlevel=80             " Don't autofold anything (but I can still fold manually)
 
@@ -344,7 +344,7 @@ else
   "set background=dark
   "set t_Co=256
   "set background=light
-  "colorscheme torte
+  colorscheme torte
 endif
 
 " Programming
