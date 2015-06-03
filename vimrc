@@ -478,7 +478,12 @@ set tags=tags;**/.svn,tags;**/.git         " consider the tags first, then
 
 "autoload_cscope.vim
 Plugin 'tainzhi/autoload_cscope.vim'
-
+"if has("cscope")
+    "set csprg=/usr/bin/cscope
+    set cst
+    "set cscopequickfix=s+,c+,d+,i+,t+,e+
+    set csverb
+"endif
 
 
 " rainbow_parentheses.vim
@@ -513,6 +518,7 @@ au Syntax * RainbowParenthesesLoadBraces
 " Plugin tagbar
 Plugin 'majutsushi/tagbar'
 nmap <silent> <F8> :TagbarToggle<CR>
+set updatetime=100
 let g:tagbar_autofocus = 1
 let g:tagbar_width = 26
 let g:tagbar_left = 1
