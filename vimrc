@@ -502,6 +502,42 @@ nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> " 跳转到�
 
 
 
+" use to line up text
+Plugin 'godlygeek/tabular'
+nmap <leader>be :Tabularize /=<CR>
+nmap <leader>bu :Tabularize /
+
+
+
+Plugin 'scrooloose/syntastic'
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+
+
+" Included are syntax, indent, and filetype file for git, gitconfig,
+" gitrebase,and gitsendemail
+Plugin 'tpope/vim-git'
+
+
+
+Plugin 'tpope/vim-fugitive'
+
+nnoremap <leader>W :Gwrite<CR>
+nnoremap <leader>C :Gcommit -v<CR>
+nnoremap <leader>S :Gstatus \| 7<CR>
+inoremap <leader>W <Esc><leader>W
+inoremap <leader>C <Esc><leader>C
+inoremap <leader>S <Esc><leader>S
+
+
+
 
 
 
@@ -511,12 +547,6 @@ nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> " 跳转到�
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
 let g:session_autosave='no'
-
-
-
-Plugin 'godlygeek/tabular'
-nmap <leader>be :Tabularize /=<CR>
-nmap <leader>bu :Tabularize /
 
 
 
@@ -545,16 +575,6 @@ Plugin 'rizzatti/dash.vim'
 Plugin 'gmarik/vim-markdown'
 Plugin 'timcharper/textile.vim'
 
-" Git integration
-Plugin 'tpope/vim-git'
-Plugin 'tpope/vim-fugitive'
-
-nnoremap <leader>W :Gwrite<CR>
-nnoremap <leader>C :Gcommit -v<CR>
-nnoremap <leader>S :Gstatus \| 7<CR>
-inoremap <leader>W <Esc><leader>W
-inoremap <leader>C <Esc><leader>C
-inoremap <leader>S <Esc><leader>S
 
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-unimpaired'
