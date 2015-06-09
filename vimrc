@@ -528,7 +528,6 @@ Plugin 'tpope/vim-git'
 
 
 Plugin 'tpope/vim-fugitive'
-
 nnoremap <leader>W :Gwrite<CR>
 nnoremap <leader>C :Gcommit -v<CR>
 nnoremap <leader>S :Gstatus \| 7<CR>
@@ -538,6 +537,8 @@ inoremap <leader>S <Esc><leader>S
 
 
 
+" List the recent files
+Plugin 'yegappan/mru'
 
 
 
