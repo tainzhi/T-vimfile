@@ -35,7 +35,7 @@ set fileencoding=utf-8
 
 set whichwrap+=<,>,h,l   " 允许backspace和光标键跨越行边界(不建议)    
 
-set cc=80
+set colorcolumn=80
 set history=256                " Number of things to remember in history.
 set timeoutlen=250             " Time to wait after ESC (default causes an annoying delay)
 set clipboard+=unnamed         " Yanks go on clipboard instead.
@@ -346,7 +346,7 @@ else
   "set background=dark
   "set t_Co=256
   "set background=light
-  colorscheme torte
+  colorscheme desert
 endif
 
 
