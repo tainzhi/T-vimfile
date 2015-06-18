@@ -39,7 +39,7 @@ set colorcolumn=80
 set history=256                " Number of things to remember in history.
 set timeoutlen=250             " Time to wait after ESC (default causes an annoying delay)
 set clipboard+=unnamed         " Yanks go on clipboard instead.
-set pastetoggle=<F10>          " toggle between paste and normal: for 'safer' pasting from keyboard
+" set pastetoggle=<F10>          " toggle between paste and normal: for 'safer' pasting from keyboard
 set shiftround                 " round indent to multiple of 'shiftwidth'
 
 set modeline
@@ -143,6 +143,7 @@ set list                      " display unprintable characters f12 - switches
 set listchars=tab:\ ·,eol:¬
 set listchars+=trail:·
 set listchars+=extends:»,precedes:«
+set invlist
 map <silent> <F12> :set invlist<CR>
 
 
@@ -360,7 +361,7 @@ let g:NERDSpaceDelims=1
 "nerdtree
 Plugin 'scrooloose/nerdtree'
 let g:NERDTreeWinPos = 'right'
-nmap <silent> <F10> :NERDTree<CR>
+" nmap <silent> <F10> :NERDTree<CR>
 let g:NERDTreeWinWize=26
 
 
@@ -377,12 +378,25 @@ set tags=tags;**/.svn,tags;**/.git         " consider the tags first, then
 
 "autoload_cscope.vim
 Plugin 'tainzhi/autoload_cscope.vim'
-"if has("cscope")
-    "set csprg=/usr/bin/cscope
+" if has("cscope")
+    " set csprg=/usr/bin/cscope
     set cst
-    "set cscopequickfix=s+,c+,d+,i+,t+,e+
-    set csverb
-"endif
+    " set cscopequickfix=s+,c+,d+,i+,t+,e+
+    set nocsverb
+" endif
+nmap <silent> <F5> :call Do_CsTag()<CR><CR><CR><CR>
+function! Do_CsTag()
+    let has_cscope_out = filereadable("cscope.out")
+    execute "!find . -iname '*.java' -o -name '*.xml' -o -name '*.h'  -o -name '*.c' -o -name '*.cpp' -o -name '*.cc' | grep -v .plus > ./cscope.files"
+    execute "!ctags --fields=+i -n -R -L ./cscope.files"
+    execute "!cscope -bkq -i ./cscope.files"
+    if (has_cscope_out)
+        execute "cs reset"
+    else
+        execute "cs add cscope.out"
+    endif
+endfunction
+    
 
 
 
@@ -509,15 +523,15 @@ nmap <leader>bu :Tabularize /
 
 
 
-Plugin 'scrooloose/syntastic'
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" Plugin 'scrooloose/syntastic'
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+" let g:syntastic_always_populate_loc_list = 0
+" let g:syntastic_auto_loc_list = 0
+" let g:syntastic_check_on_open = 0
+" let g:syntastic_check_on_wq = 0
 
 
 
@@ -623,7 +637,7 @@ vnoremap ## :<C-u>HlmPartVSel<CR>
 vnoremap <leader>## :<C-u>HlmPartGrepVSel<CR>
 
 
-" " }}}
+ 
 " Plugin 'int3/vim-extradite'
 " Plugin 'Lokaltog/vim-powerline'
 Plugin 'gregsexton/gitv'
