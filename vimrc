@@ -61,11 +61,6 @@ set smartcase                  " be case sensitive when input has a capital lett
 set incsearch                  " show matches while typing
 
 
-let mapleader = ","
-"let maplocalleader = '	'      " Tab as a local leader
-let g:netrw_banner = 0         " do not show Netrw help banner
-" "}}}
-
 " Formatting "{{{
 set fo+=o                      " Automatically insert the current comment leader after hitting 'o' or 'O' in Normal mode.
 set fo-=r                      " Do not automatically insert a comment leader after an enter
@@ -176,6 +171,17 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "keyboard map command 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let mapleader = ","
+"let maplocalleader = '	'      " Tab as a local leader
+let g:netrw_banner = 0         " do not show Netrw help banner
+
+" resize the window
+nmap w= :resize +3<CR>
+nmap w- :resize -3<CR>
+nmap w, :vertical resize +3<CR>
+nmap w. :vertical resize -3<CR>
+
 " 映射全选+复制 ctrl+a 
 map <C-A> ggVG$
 map! <C-A> <Esc>ggvG$
@@ -204,7 +210,6 @@ inoremap <C-V> <esc> "+pa
 
 
 
-" Key mappings " {{{
 " Duplication
 cnoremap <leader>c mz"dyy"dp`z
 vnoremap <leader>c "dymz"dP`z
