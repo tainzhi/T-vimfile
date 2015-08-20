@@ -294,7 +294,7 @@ au BufRead,BufNewFile {*.local}                                       setl ft=sh
 au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                         setl ft=markdown
 au BufRead,BufNewFile {*.scala}                                       setl ft=scala
 au! BufReadPost       {COMMIT_EDITMSG,*/COMMIT_EDITMSG}               setl ft=gitcommit noml list| norm 1G
-au! BufWritePost      {*.snippet,*.snippets}                          call ReloadAllSnippets()
+" au! BufWritePost      {*.snippet,*.snippets}                          call ReloadAllSnippets()
 
 " open help in vertical split
 au BufWinEnter *.txt if &ft == 'help' | wincmd H | nmap q :q<CR> | endif
@@ -561,6 +561,29 @@ Plugin 'yegappan/mru'
 
 
 
+" ultimate solutions for snippets
+Plugin  'Sirver/ultisnips'
+Plugin 'honza/vim-snippets'
+let g:UltiSnipsExpandTrigger = "<c-s-tab>"
+" let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/bundle/vim-snippets']
+
+
+
+" " make YouCompleteMe compatible with ultisnips
+" Plugin 'ervandew/supertab'
+" " make YCM compatible with UltiSnips (using supertab)
+" let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+" let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+" let g:SuperTabDefaultCompletionType = '<C-n>'
+" " better key bindings for UltiSnipsExpandTrigger
+" let g:UltiSnipsExpandTrigger = "<tab>"
+" let g:UltiSnipsJumpForwardTrigger = "<tab>"
+" let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+
+
+
+
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Todo use plugins
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -581,9 +604,9 @@ Plugin 'derekwyatt/vim-scala'
 Plugin 'tpope/vim-rails'
 
 " Snippets
-Plugin 'gmarik/snipmate.vim'
-Plugin 'gmarik/snipmate.snippets'
-nnoremap <leader>so :Explore ~/.vim/bundle/snipmate.snippets/snippets/<CR>
+" Plugin 'gmarik/snipmate.vim'
+" Plugin 'gmarik/snipmate.snippets'
+" nnoremap <leader>so :Explore ~/.vim/bundle/snipmate.snippets/snippets/<CR>
 
 
 " Dash.app
