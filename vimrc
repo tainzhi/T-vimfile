@@ -564,8 +564,9 @@ Plugin 'yegappan/mru'
 " ultimate solutions for snippets
 Plugin  'Sirver/ultisnips'
 Plugin 'honza/vim-snippets'
-let g:UltiSnipsExpandTrigger = "<c-s-tab>"
-" let g:UltiSnipsSnippetDirectories=[$HOME.'/.vim/bundle/vim-snippets']
+let g:UltiSnipsExpandTrigger = "<c-l>"
+let g:UltiSnipsJumpForwardTrigger = "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
 
 
 
@@ -603,10 +604,6 @@ Plugin 'fatih/vim-go'
 Plugin 'derekwyatt/vim-scala'
 Plugin 'tpope/vim-rails'
 
-" Snippets
-" Plugin 'gmarik/snipmate.vim'
-" Plugin 'gmarik/snipmate.snippets'
-" nnoremap <leader>so :Explore ~/.vim/bundle/snipmate.snippets/snippets/<CR>
 
 
 " Dash.app
