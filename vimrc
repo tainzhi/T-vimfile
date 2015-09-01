@@ -327,10 +327,7 @@ au BufWinEnter *.txt if &ft == 'help' | wincmd H | nmap q :q<CR> | endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Scripts and Plugins configure "
 " filetype off
-filetype on
-filetype plugin on
-filetype indent on
-" filetype plugin indent on      " Automatically detect file types.
+filetype plugin indent on      " Automatically detect file types.
 " This plugin makes "%" command jump to match HTML tags, if/else/endif in vim
 " scripts, etc
 runtime macros/matchit.vim
@@ -524,7 +521,7 @@ nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> " 跳转到�
 " use to line up text
 Plugin 'godlygeek/tabular'
 nmap <leader>be :Tabularize /=<CR>
-nmap <leader>bu :Tabularize /
+nnoremap <leader>buu :Tabularize /
 
 
 
@@ -562,11 +559,16 @@ Plugin 'yegappan/mru'
 
 
 " ultimate solutions for snippets
-Plugin  'Sirver/ultisnips'
+Plugin 'Sirver/ultisnips'
 Plugin 'honza/vim-snippets'
 let g:UltiSnipsExpandTrigger = "<c-l>"
 let g:UltiSnipsJumpForwardTrigger = "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
+" let g:UltiSnipsSnippetDirectories=["UltiSnips", "bundle/vim-snippets/UltiSnips"]
+autocmd BufWritePre,FileWritePre,BufRead,BufNewFile {*.java} call UltiSnips#AddFiletypes("java")
+autocmd BufWritePre,FileWritePre,BufRead,BufNewFile {*.xml} call UltiSnips#AddFiletypes("xml")
+autocmd BufWritePre,FileWritePre,BufRead,BufNewFile {*.py} call UltiSnips#AddFiletypes("py")
+autocmd BufWritePre,FileWritePre,BufRead,BufNewFile {*.cc,*.h,*c,*.cpp} call UltiSnips#AddFiletypes("cpp")
 
 
 
