@@ -203,8 +203,8 @@ inoremap <C-V> <esc> "+pa
 cnoremap <leader>c mz"dyy"dp`z
 vnoremap <leader>c "dymz"dP`z
 
-nnoremap <leader>rs :source c:\Program\ Files\Vim\_vimrc<CR>
-nnoremap <leader>rt :tabnew c:\Program\ Files\Vim\_vimrc<CR>
+nnoremap <leader>rs :source $VIM\_vimrc<CR>
+nnoremap <leader>rt :tabnew $Vim\_vimrc<CR>
 
 " Tabs
 "nnoremap <leader>tn :tabnew 
