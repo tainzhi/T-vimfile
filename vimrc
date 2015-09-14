@@ -61,13 +61,14 @@ set smartcase                  " be case sensitive when input has a capital lett
 set incsearch                  " show matches while typing
 
 
-" Formatting "{{{
-set fo+=o                      " Automatically insert the current comment leader after hitting 'o' or 'O' in Normal mode.
+" Formatting 
+set formatoptions+=o                      " Automatically insert the current comment leader after hitting 'o' or 'O' in Normal mode.
 set fo-=r                      " Do not automatically insert a comment leader after an enter
 set fo-=t                      " Do no auto-wrap text using textwidth (does not apply to comments)
 
 set nowrap
 set textwidth=0                " Don't wrap lines by default
+" set linebreak off
 
 set tabstop=4                  " tab size eql 2 spaces
 set softtabstop=4
@@ -208,12 +209,7 @@ vnoremap <C-V> d"+P
 inoremap <C-V> "+p
 inoremap <C-V> <esc> "+pa
 
-
-
-" Duplication
-cnoremap <leader>c mz"dyy"dp`z
-vnoremap <leader>c "dymz"dP`z
-
+" Operatations to vimrc
 nnoremap <leader>rs :source ~/.vim/vimrc<CR>
 nnoremap <leader>rt :tabnew ~/.vim/vimrc<CR>
 "nnoremap <leader>re :c ~/.vim/vimrc<CR>
@@ -364,7 +360,7 @@ let g:NERDSpaceDelims=1
 Plugin 'scrooloose/nerdtree'
 let g:NERDTreeWinPos = 'right'
 " nmap <silent> <F10> :NERDTree<CR>
-let g:NERDTreeWinWize=26
+let g:NERDTreeWinSize=40
 
 
 
@@ -398,6 +394,8 @@ function! Do_CsTag()
         execute "cs add cscope.out"
     endif
 endfunction
+nnoremap <leader>ct :cs find t 
+nnoremap <leader>cf :cs find f 
     
 
 
@@ -436,7 +434,7 @@ Plugin 'majutsushi/tagbar'
 nmap <silent> <F8> :TagbarToggle<CR>
 set updatetime=100
 let g:tagbar_autofocus = 1
-let g:tagbar_width = 26
+let g:tagbar_width = 40
 let g:tagbar_left = 1
 
 
@@ -497,7 +495,6 @@ inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 "let g:ycm_key_list_select_completion = ['<Down>']
 "let g:ycm_key_list_previous_completion=['<c-p>']
 "let g:ycm_key_list_previous_completion = ['<Up>']
-"let g:ycm_confirm_extra_conf=0 "关闭加载.ycm_extra_conf.py提示
 
 let g:ycm_collect_identifiers_from_tags_files=1	" 开启 YCM 基于标签引擎
 let g:ycm_min_num_of_chars_for_completion=2	" 从第2个键入字符就开始罗列匹配项
@@ -512,7 +509,8 @@ let g:ycm_complete_in_comments = 1
 "在字符串输入中也能补全
 let g:ycm_complete_in_strings = 1
 "注释和字符串中的文字也会被收入补全
-let g:ycm_collect_identifiers_from_comments_and_strings = 0
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+" 关闭加载.ycm_extra_conf.py提示
 let g:ycm_confirm_extra_conf = 0
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> " 跳转到定义处
 
