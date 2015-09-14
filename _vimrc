@@ -17,9 +17,11 @@
 set nocompatible               " be iMproved
 
 "" 中文编码支持，同时支持GBK和UTF-8编码
-set termencoding=utf-8
 set encoding=utf-8
-set fileencodings=utf-8,gb18030,utf-16,big5,cp936,ucs-bom,unicode
+"set fileencoding=utf-8
+"" 依次使用以下格式解析, 当解析成功, 设置fileencoding为当前游标所在的编码格式
+set fileencodings=utf-8,cp936,euc-cn,big5,euc-tw,ucs-bom,gb18030,unicode,utf-16
+" set termencoding=utf-8
 
 "" 解决菜单乱码
 source $VIMRUNTIME/delmenu.vim
@@ -136,7 +138,8 @@ set splitbelow
 set splitright
 
 set list                      " display unprintable characters f12 - switches
-set listchars=tab:\ ·,eol:¬
+" set listchars=tab:\ ·,eol:¬
+set listchars=tab:\ .,eol:$
 set listchars+=trail:·
 set listchars+=extends:»,precedes:«
 map <silent> <F12> :set invlist<CR>
