@@ -16,12 +16,12 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible               " be iMproved
 
-" 中文编码支持，同时支持GBK和UTF-8编码
-"" set fileencodings=utf-8,gb18030,utf-16,big5,cp936,ucs-bom
-
 "" 中文编码支持，同时支持GBK和UTF-8编码
-"set encoding=utf-8
-"set fileencodings=utf-8,gb18030,utf-16,big5,cp936,ucs-bom,unicode
+set termencoding=utf-8
+set encoding=utf-8 " the default encoding of vim 
+" detect the current filetype whether is in following list one by one, if the 
+" answer is yes, then set fileencoding to the filetype
+set fileencodings=utf-8,gb18030,utf-16,big5,cp936,ucs-bom,unicode
 
 "" 解决菜单乱码
 "source $VIMRUNTIME/delmenu.vim
@@ -30,8 +30,6 @@ set nocompatible               " be iMproved
 "" 解决console输出乱码
 "language messages zh_CN.utf-8
 "let g:is_posix = 1             " vim's default is archaic bourne shell, bring it up to the 90s
-set encoding=utf-8
-set fileencoding=utf-8
 
 set whichwrap+=<,>,h,l   " 允许backspace和光标键跨越行边界(不建议)    
 
@@ -315,6 +313,21 @@ au BufWinEnter *.txt if &ft == 'help' | wincmd H | nmap q :q<CR> | endif
     "exe "1,".l. "g/LastModified/s/LastModified.*$/LastModified: ".strftime("%F %T")
     ""exe "1,".l. "g/^\s*\"\s*[L]ast[M]odified:.*$/s/^\s*\"\s*[L]ast[M]odified:.*$/\"    LastModified: ".strftime("%Y-%m-%d %H:%M:%S")
 "endfunc
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" invalite the default left, right, up, down key 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" noremap <Up> <NOP>
+" noremap <Down> <NOP>
+" noremap <Left> <NOP>
+" noremap <Right> <NOP>
+" noremap h <NOP>
+" noremap j <NOP>
+" noremap k <NOP>
+" noremap l <NOP>
+
 
 
 
