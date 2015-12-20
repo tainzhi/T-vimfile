@@ -46,10 +46,15 @@ set modelines=5                " default numbers of lines to read for modeline i
 set autowrite                  " Writes on make/shell commands
 set autoread
 
+" backup current file into /tmp, deleted afterwards
 set nobackup
-set nowritebackup
-set directory=/tmp//           " prepend(^=) $HOME/.tmp/ to default path; use full path as backup filename(//)
-set noswapfile                 "
+set writebackup
+set backupdir=/tmp/
+set swapfile
+set directory=/tmp/           " prepend(^=) $HOME/.tmp/ to default path; use full path as backup filename(//)
+" backup undo history into /tmp
+set undofile
+set undodir=/tmp/
 
 set hidden                     " The current buffer can be put to the background without writing to disk
 
