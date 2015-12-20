@@ -773,3 +773,12 @@ autocmd BufLeave,FocusLost silent! wall
 " nnoremap <leader>er :topleft :vsplit config/routes.rb<cr>
 " nnoremap <leader>eg :topleft :vsplit Gemfile<cr>
 " nnoremap <leader>es :Ctrlp src/
+"
+
+" Input method
+set iminsert=0
+set imsearch=0
+se imd
+au InsertEnter * se noimd
+au InsertLeave * se imd
+au FocusGained * se imd
