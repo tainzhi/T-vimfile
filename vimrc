@@ -291,7 +291,7 @@ au! BufReadPost       {COMMIT_EDITMSG,*/COMMIT_EDITMSG}               setl ft=gi
 " au! BufWritePost      {*.snippet,*.snippets}                          call ReloadAllSnippets()
 
 " open help in vertical split
-au BufWinEnter *.txt if &ft == 'help' | wincmd H | nmap q :q<CR> | endif
+au BufWinEnter *.txt if &ft == 'help' | wincmd H | vertical resize 80 | nmap q :q<CR> | endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "加入文件修改时间
