@@ -191,10 +191,6 @@ map <C-A> ggVG$
 map! <C-A> <Esc>ggvG$
 map <C-X> "+x
 
-map <C-v> "+gp
-map <C-V> <Esc>"+pa
-map <C-V> "+pa<Esc>
-
 " 选中状态下 Ctrl+c 复制 
 map <C-c> "+y
 
@@ -203,14 +199,13 @@ map <C-c> "+y
 "普通模式下 Ctrl+c 复制文件路径
 "nnoremap <c-c> :let @+ = expand('%:p')<cr>
 
-"普通模式下,Ctrl+c,插入系统剪切板中的内容
+"普通模式下,Ctrl+c,插入系统剪切板中的内容到光标之后
 noremap <C-V> "+p
-noremap <C-V> <esc>"+pa
-"选中模式下,Ctrl+c,插入系统剪切板中的内容
+"选中模式下,Ctrl+c,插入系统剪切板中的内容到光标之前
 vnoremap <C-V> d"+P
-"插入模式下,Ctrl+c,插入系统剪切板中的内容
+"插入模式下,Ctrl+c,插入系统剪切板中的内容到光标之后
 inoremap <C-V> "+p
-inoremap <C-V> <esc> "+pa
+" inoremap <C-V> <esc> "+pa
 
 " Operatations to vimrc
 nnoremap <leader>rs :source ~/.vim/vimrc<CR>
