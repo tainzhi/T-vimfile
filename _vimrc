@@ -173,28 +173,27 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "keyboard map command 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 映射全选ctrl+a 
+" 映射全选+复制 ctrl+a 
 map <C-A> ggVG$
 map! <C-A> <Esc>ggvG$
+map <C-X> "+x
 
 " 选中状态下 Ctrl+c 复制 
-" + is a  register for storing and retrieving the selected text for the GUI.
-map <C-C> "+y
-
-" 映射粘贴ctrl+v
-map <C-V> <Esc>"+gPa
-map! <C-V> <Esc>++gPa
-
+map <C-c> "+y
 
 "选中模式 Ctrl+c 复制选中的文本
-map <C-X> "+x
 "vnoremap <c-c> "+y
 "普通模式下 Ctrl+c 复制文件路径
 "nnoremap <c-c> :let @+ = expand('%:p')<cr>
 
+"普通模式下,Ctrl+c,插入系统剪切板中的内容到光标之后
+noremap <C-V> "+p
+"选中模式下,Ctrl+c,插入系统剪切板中的内容到光标之前
+vnoremap <C-V> "+P
+"插入模式下,Ctrl+c,插入系统剪切板中的内容到光标之后
+inoremap <C-V> <esc>"+pa
 
 
-" Key mappings " {{{
 " Duplication
 cnoremap <leader>c mz"dyy"dp`z
 vnoremap <leader>c "dymz"dP`z
@@ -286,7 +285,8 @@ au! BufReadPost       {COMMIT_EDITMSG,*/COMMIT_EDITMSG}               setl ft=gi
 au! BufWritePost      {*.snippet,*.snippets}                          call ReloadAllSnippets()
 
 " open help in vertical split
-au BufWinEnter *.txt if &ft == 'help' | wincmd H | nmap q :q<CR> | endif
+au BufWinEnter *.txt if &ft == 'help' | wincmd H | vertical resize 80 | nmap q :q<CR> | endif
+noremap <leader>h :help <C-R>=expand("<cword>")<CR><CR>
 
 
 

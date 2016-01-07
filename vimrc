@@ -202,10 +202,9 @@ map <C-c> "+y
 "普通模式下,Ctrl+c,插入系统剪切板中的内容到光标之后
 noremap <C-V> "+p
 "选中模式下,Ctrl+c,插入系统剪切板中的内容到光标之前
-vnoremap <C-V> d"+P
+vnoremap <C-V> "+P
 "插入模式下,Ctrl+c,插入系统剪切板中的内容到光标之后
-inoremap <C-V> "+p
-" inoremap <C-V> <esc> "+pa
+inoremap <C-V> <esc>"+pa
 
 " Operatations to vimrc
 nnoremap <leader>rs :source ~/.vim/vimrc<CR>
