@@ -16,12 +16,12 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible               " be iMproved
 
-" 中文编码支持，同时支持GBK和UTF-8编码
-"" set fileencodings=utf-8,gb18030,utf-16,big5,cp936,ucs-bom
-
 "" 中文编码支持，同时支持GBK和UTF-8编码
-"set encoding=utf-8
-"set fileencodings=utf-8,gb18030,utf-16,big5,cp936,ucs-bom,unicode
+set termencoding=utf-8
+set encoding=utf-8 " the default encoding of vim 
+" detect the current filetype whether is in following list one by one, if the 
+" answer is yes, then set fileencoding to the filetype
+set fileencodings=utf-8,gb18030,utf-16,big5,cp936,ucs-bom,unicode
 
 "" 解决菜单乱码
 "source $VIMRUNTIME/delmenu.vim
@@ -30,8 +30,6 @@ set nocompatible               " be iMproved
 "" 解决console输出乱码
 "language messages zh_CN.utf-8
 "let g:is_posix = 1             " vim's default is archaic bourne shell, bring it up to the 90s
-set encoding=utf-8
-set fileencoding=utf-8
 
 set whichwrap+=<,>,h,l   " 允许backspace和光标键跨越行边界(不建议)    
 
@@ -48,10 +46,15 @@ set modelines=5                " default numbers of lines to read for modeline i
 set autowrite                  " Writes on make/shell commands
 set autoread
 
+" backup current file into /tmp, deleted afterwards
 set nobackup
-set nowritebackup
-set directory=/tmp//           " prepend(^=) $HOME/.tmp/ to default path; use full path as backup filename(//)
-set noswapfile                 "
+set writebackup
+set backupdir=/tmp/
+set swapfile
+set directory=/tmp/           " prepend(^=) $HOME/.tmp/ to default path; use full path as backup filename(//)
+" backup undo history into /tmp
+set undofile
+set undodir=/tmp/
 
 set hidden                     " The current buffer can be put to the background without writing to disk
 
@@ -61,13 +64,14 @@ set smartcase                  " be case sensitive when input has a capital lett
 set incsearch                  " show matches while typing
 
 
-" Formatting "{{{
-set fo+=o                      " Automatically insert the current comment leader after hitting 'o' or 'O' in Normal mode.
+" Formatting 
+set formatoptions+=o                      " Automatically insert the current comment leader after hitting 'o' or 'O' in Normal mode.
 set fo-=r                      " Do not automatically insert a comment leader after an enter
 set fo-=t                      " Do no auto-wrap text using textwidth (does not apply to comments)
 
 set nowrap
 set textwidth=0                " Don't wrap lines by default
+" set linebreak off
 
 set tabstop=4                  " tab size eql 2 spaces
 set softtabstop=4
@@ -187,10 +191,6 @@ map <C-A> ggVG$
 map! <C-A> <Esc>ggvG$
 map <C-X> "+x
 
-map <C-v> "+gp
-map <C-V> <Esc>"+pa
-map <C-V> "+pa<Esc>
-
 " 选中状态下 Ctrl+c 复制 
 map <C-c> "+y
 
@@ -199,21 +199,15 @@ map <C-c> "+y
 "普通模式下 Ctrl+c 复制文件路径
 "nnoremap <c-c> :let @+ = expand('%:p')<cr>
 
-"普通模式下,Ctrl+c,插入系统剪切板中的内容
+"普通模式下,Ctrl+c,插入系统剪切板中的内容到光标之后
 noremap <C-V> "+p
-noremap <C-V> <esc>"+pa
-"选中模式下,Ctrl+c,插入系统剪切板中的内容
+"选中模式下,Ctrl+c,插入系统剪切板中的内容到光标之前
 vnoremap <C-V> d"+P
-"插入模式下,Ctrl+c,插入系统剪切板中的内容
+"插入模式下,Ctrl+c,插入系统剪切板中的内容到光标之后
 inoremap <C-V> "+p
-inoremap <C-V> <esc> "+pa
+" inoremap <C-V> <esc> "+pa
 
-
-
-" Duplication
-cnoremap <leader>c mz"dyy"dp`z
-vnoremap <leader>c "dymz"dP`z
-
+" Operatations to vimrc
 nnoremap <leader>rs :source ~/.vim/vimrc<CR>
 nnoremap <leader>rt :tabnew ~/.vim/vimrc<CR>
 "nnoremap <leader>re :c ~/.vim/vimrc<CR>
@@ -297,7 +291,8 @@ au! BufReadPost       {COMMIT_EDITMSG,*/COMMIT_EDITMSG}               setl ft=gi
 " au! BufWritePost      {*.snippet,*.snippets}                          call ReloadAllSnippets()
 
 " open help in vertical split
-au BufWinEnter *.txt if &ft == 'help' | wincmd H | nmap q :q<CR> | endif
+au BufWinEnter *.txt if &ft == 'help' | wincmd H | vertical resize 80 | nmap q :q<CR> | endif
+noremap <leader>h :help <C-R>=expand("<cword>")<CR><CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "加入文件修改时间
@@ -323,14 +318,26 @@ au BufWinEnter *.txt if &ft == 'help' | wincmd H | nmap q :q<CR> | endif
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" invalite the default left, right, up, down key 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" noremap <Up> <NOP>
+" noremap <Down> <NOP>
+" noremap <Left> <NOP>
+" noremap <Right> <NOP>
+" noremap h <NOP>
+" noremap j <NOP>
+" noremap k <NOP>
+" noremap l <NOP>
+
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "install plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Scripts and Plugins configure "
 " filetype off
-filetype on
-filetype plugin on
-filetype indent on
-" filetype plugin indent on      " Automatically detect file types.
+filetype plugin indent on      " Automatically detect file types.
 " This plugin makes "%" command jump to match HTML tags, if/else/endif in vim
 " scripts, etc
 runtime macros/matchit.vim
@@ -367,7 +374,7 @@ let g:NERDSpaceDelims=1
 Plugin 'scrooloose/nerdtree'
 let g:NERDTreeWinPos = 'right'
 " nmap <silent> <F10> :NERDTree<CR>
-let g:NERDTreeWinWize=26
+let g:NERDTreeWinSize=40
 
 
 
@@ -401,6 +408,8 @@ function! Do_CsTag()
         execute "cs add cscope.out"
     endif
 endfunction
+nnoremap <leader>ct :cs find t 
+nnoremap <leader>cf :cs find f 
     
 
 
@@ -439,7 +448,7 @@ Plugin 'majutsushi/tagbar'
 nmap <silent> <F8> :TagbarToggle<CR>
 set updatetime=100
 let g:tagbar_autofocus = 1
-let g:tagbar_width = 26
+let g:tagbar_width = 40
 let g:tagbar_left = 1
 
 
@@ -500,7 +509,6 @@ inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
 "let g:ycm_key_list_select_completion = ['<Down>']
 "let g:ycm_key_list_previous_completion=['<c-p>']
 "let g:ycm_key_list_previous_completion = ['<Up>']
-"let g:ycm_confirm_extra_conf=0 "关闭加载.ycm_extra_conf.py提示
 
 let g:ycm_collect_identifiers_from_tags_files=1	" 开启 YCM 基于标签引擎
 let g:ycm_min_num_of_chars_for_completion=2	" 从第2个键入字符就开始罗列匹配项
@@ -515,7 +523,8 @@ let g:ycm_complete_in_comments = 1
 "在字符串输入中也能补全
 let g:ycm_complete_in_strings = 1
 "注释和字符串中的文字也会被收入补全
-let g:ycm_collect_identifiers_from_comments_and_strings = 0
+let g:ycm_collect_identifiers_from_comments_and_strings = 1
+" 关闭加载.ycm_extra_conf.py提示
 let g:ycm_confirm_extra_conf = 0
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> " 跳转到定义处
 
@@ -524,7 +533,7 @@ nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> " 跳转到�
 " use to line up text
 Plugin 'godlygeek/tabular'
 nmap <leader>be :Tabularize /=<CR>
-nmap <leader>bu :Tabularize /
+nnoremap <leader>buu :Tabularize /
 
 
 
@@ -562,11 +571,16 @@ Plugin 'yegappan/mru'
 
 
 " ultimate solutions for snippets
-Plugin  'Sirver/ultisnips'
+Plugin 'Sirver/ultisnips'
 Plugin 'honza/vim-snippets'
 let g:UltiSnipsExpandTrigger = "<c-l>"
 let g:UltiSnipsJumpForwardTrigger = "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
+" let g:UltiSnipsSnippetDirectories=["UltiSnips", "bundle/vim-snippets/UltiSnips"]
+autocmd BufWritePre,FileWritePre,BufRead,BufNewFile {*.java} call UltiSnips#AddFiletypes("java")
+autocmd BufWritePre,FileWritePre,BufRead,BufNewFile {*.xml} call UltiSnips#AddFiletypes("xml")
+autocmd BufWritePre,FileWritePre,BufRead,BufNewFile {*.py} call UltiSnips#AddFiletypes("py")
+autocmd BufWritePre,FileWritePre,BufRead,BufNewFile {*.cc,*.h,*c,*.cpp} call UltiSnips#AddFiletypes("cpp")
 
 
 
@@ -760,3 +774,12 @@ autocmd BufLeave,FocusLost silent! wall
 " nnoremap <leader>er :topleft :vsplit config/routes.rb<cr>
 " nnoremap <leader>eg :topleft :vsplit Gemfile<cr>
 " nnoremap <leader>es :Ctrlp src/
+"
+
+" Input method
+set iminsert=0
+set imsearch=0
+se imd
+au InsertEnter * se noimd
+au InsertLeave * se imd
+au FocusGained * se imd

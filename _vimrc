@@ -173,31 +173,24 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "keyboard map command 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" 映射全选+复制 ctrl+a 
+" 映射全选ctrl+a 
 map <C-A> ggVG$
 map! <C-A> <Esc>ggvG$
-map <C-X> "+x
-
-map <C-v> "+gP
-map <C-V> <Esc>"+pa
-map <C-V> "+pa<Esc>
 
 " 选中状态下 Ctrl+c 复制 
-map <C-c> "+y
+" + is a  register for storing and retrieving the selected text for the GUI.
+map <C-C> "+y
+
+" 映射粘贴ctrl+v
+map <C-V> <Esc>"+gPa
+map! <C-V> <Esc>++gPa
+
 
 "选中模式 Ctrl+c 复制选中的文本
+map <C-X> "+x
 "vnoremap <c-c> "+y
 "普通模式下 Ctrl+c 复制文件路径
 "nnoremap <c-c> :let @+ = expand('%:p')<cr>
-
-"普通模式下,Ctrl+c,插入系统剪切板中的内容
-noremap <C-V> "+p
-noremap <C-V> <esc>"+pa
-"选中模式下,Ctrl+c,插入系统剪切板中的内容
-vnoremap <C-V> d"+P
-"插入模式下,Ctrl+c,插入系统剪切板中的内容
-inoremap <C-V> "+p
-inoremap <C-V> <esc> "+pa
 
 
 
