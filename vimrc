@@ -46,10 +46,15 @@ set modelines=5                " default numbers of lines to read for modeline i
 set autowrite                  " Writes on make/shell commands
 set autoread
 
+" backup current file into /tmp, deleted afterwards
 set nobackup
-set nowritebackup
-set directory=/tmp//           " prepend(^=) $HOME/.tmp/ to default path; use full path as backup filename(//)
-set noswapfile                 "
+set writebackup
+set backupdir=/tmp/
+set swapfile
+set directory=/tmp/           " prepend(^=) $HOME/.tmp/ to default path; use full path as backup filename(//)
+" backup undo history into /tmp
+set undofile
+set undodir=/tmp/
 
 set hidden                     " The current buffer can be put to the background without writing to disk
 
@@ -186,10 +191,6 @@ map <C-A> ggVG$
 map! <C-A> <Esc>ggvG$
 map <C-X> "+x
 
-map <C-v> "+gp
-map <C-V> <Esc>"+pa
-map <C-V> "+pa<Esc>
-
 " 选中状态下 Ctrl+c 复制 
 map <C-c> "+y
 
@@ -198,14 +199,12 @@ map <C-c> "+y
 "普通模式下 Ctrl+c 复制文件路径
 "nnoremap <c-c> :let @+ = expand('%:p')<cr>
 
-"普通模式下,Ctrl+c,插入系统剪切板中的内容
+"普通模式下,Ctrl+c,插入系统剪切板中的内容到光标之后
 noremap <C-V> "+p
-noremap <C-V> <esc>"+pa
-"选中模式下,Ctrl+c,插入系统剪切板中的内容
-vnoremap <C-V> d"+P
-"插入模式下,Ctrl+c,插入系统剪切板中的内容
-inoremap <C-V> "+p
-inoremap <C-V> <esc> "+pa
+"选中模式下,Ctrl+c,插入系统剪切板中的内容到光标之前
+vnoremap <C-V> "+P
+"插入模式下,Ctrl+c,插入系统剪切板中的内容到光标之后
+inoremap <C-V> <esc>"+pa
 
 " Operatations to vimrc
 nnoremap <leader>rs :source ~/.vim/vimrc<CR>
@@ -292,6 +291,7 @@ au! BufReadPost       {COMMIT_EDITMSG,*/COMMIT_EDITMSG}               setl ft=gi
 
 " open help in vertical split
 au BufWinEnter *.txt if &ft == 'help' | wincmd H | vertical resize 80 | nmap q :q<CR> | endif
+noremap <leader>h :help <C-R>=expand("<cword>")<CR><CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "加入文件修改时间
