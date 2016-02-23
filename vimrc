@@ -372,8 +372,11 @@ let g:NERDSpaceDelims=1
 "nerdtree
 Plugin 'scrooloose/nerdtree'
 let g:NERDTreeWinPos = 'right'
-" nmap <silent> <F10> :NERDTree<CR>
+nmap <silent> <F10> :NERDTreeToggle<CR>
 let g:NERDTreeWinSize=40
+" open a NEDTree automatically when vim starts up
+" autocmd StdinReadPre * let s:std_in=1
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 
 
@@ -603,7 +606,10 @@ autocmd BufWritePre,FileWritePre,BufRead,BufNewFile {*.cc,*.h,*c,*.cpp} call Ult
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
-let g:session_autosave='no'
+let g:session_autosave='yes'
+let g:session_autoload='yes'
+let g:session_directory='./'
+let g:session_default_name='.session'
 
 
 
