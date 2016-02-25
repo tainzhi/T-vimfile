@@ -447,7 +447,7 @@ au Syntax * RainbowParenthesesLoadBraces
 
 " Plugin tagbar
 Plugin 'majutsushi/tagbar'
-nmap <silent> <F8> :TagbarToggle<CR>
+nmap <silent> <F9> :Tagbar<CR>
 set updatetime=100
 let g:tagbar_autofocus = 1
 let g:tagbar_width = 40
@@ -610,6 +610,7 @@ let g:session_autosave='prompt'
 let g:session_autoload='yes'
 let g:session_directory='./'
 let g:session_default_name='.session'
+let g:session_lock_enabled=0
 
 
 
