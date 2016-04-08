@@ -48,9 +48,9 @@ set autoread
 
 " backup current file into /tmp, deleted afterwards
 set nobackup
-set writebackup
+set nowritebackup
 set backupdir=/tmp/
-set swapfile
+set noswapfile
 set directory=/tmp/           " prepend(^=) $HOME/.tmp/ to default path; use full path as backup filename(//)
 " backup undo history into /tmp
 set undofile
@@ -401,7 +401,7 @@ Plugin 'tainzhi/autoload_cscope.vim'
 nmap <silent> <F5> :call Do_CsTag()<CR><CR><CR><CR>
 function! Do_CsTag()
     let has_cscope_out = filereadable("cscope.out")
-    execute "!find `pwd` -iname '*.java' -o -name '*.xml' -o -name '*.h'  -o -name '*.c' -o -name '*.cpp' -o -name '*.cc' | grep -v .plus > ./cscope.files"
+    execute "!find `pwd` -iname '*.java' -o -name '*.xml' -o -name '*.h'  -o -name '*.c' -o -name '*.cpp' -o -name '*.cc' -o -name '*.py'| grep -v .plus > ./cscope.files"
     execute "!ctags --fields=+i -n -R -L ./cscope.files"
     execute "!cscope -bkq -i ./cscope.files"
     if (has_cscope_out)
