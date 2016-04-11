@@ -355,9 +355,9 @@ if has("gui_running")
   set background=light
   colorscheme solarized
 else
-  "set background=dark
-  "set t_Co=256
-  "set background=light
+  set t_Co=256
+  " set background=dark
+  " colorscheme solarized
   colorscheme desert
 endif
 
@@ -606,8 +606,8 @@ autocmd BufWritePre,FileWritePre,BufRead,BufNewFile {*.cc,*.h,*c,*.cpp} call Ult
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
-let g:session_autosave='prompt'
-let g:session_autoload='yes'
+let g:session_autosave='no'
+let g:session_autoload='no'
 let g:session_directory='./'
 let g:session_default_name='.session'
 let g:session_lock_enabled=0
