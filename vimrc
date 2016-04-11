@@ -374,9 +374,19 @@ Plugin 'scrooloose/nerdtree'
 let g:NERDTreeWinPos = 'right'
 nmap <silent> <F10> :NERDTreeToggle<CR>
 let g:NERDTreeWinSize=40
-" open a NEDTree automatically when vim starts up
+" open a NERDTree automatically when vim starts up if no files were specified, but this will conflict with vim-sessions
 " autocmd StdinReadPre * let s:std_in=1
 " autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" close vim if the only window left open is a NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+
+
+" vim-nerdtree-tabs
+Plugin 'jistr/vim-nerdtree-tabs'
+let g:nerdtree_tabs_open_on_console_startup = 1
+let g:nerdtree_tabs_smart_startup_focus = 2
+let g:nerdtree_tabs_synchronize_view = 1
 
 
 
@@ -599,11 +609,6 @@ autocmd BufWritePre,FileWritePre,BufRead,BufNewFile {*.cc,*.h,*c,*.cpp} call Ult
 
 
 
-
-
-"'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Todo use plugins
-"'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
 let g:session_autosave='yes'
@@ -611,6 +616,10 @@ let g:session_autoload='yes'
 let g:session_directory='./'
 let g:session_default_name='.session'
 let g:session_lock_enabled=0
+
+"'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Todo use plugins
+"'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
 
