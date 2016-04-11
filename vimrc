@@ -606,8 +606,8 @@ autocmd BufWritePre,FileWritePre,BufRead,BufNewFile {*.cc,*.h,*c,*.cpp} call Ult
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-session'
-let g:session_autosave='no'
-let g:session_autoload='no'
+let g:session_autosave='yes'
+let g:session_autoload='yes'
 let g:session_directory='./'
 let g:session_default_name='.session'
 let g:session_lock_enabled=0
