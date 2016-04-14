@@ -374,6 +374,7 @@ Plugin 'scrooloose/nerdtree'
 let g:NERDTreeWinPos = 'right'
 nmap <silent> <F10> :NERDTreeToggle<CR>
 let g:NERDTreeWinSize=40
+let NERDTreeIgnore=['cscope.files$[[file]]', 'cscope.out$[[file]]', 'cscope.in.out$[[file]]', 'cscope.out$[[file]]]', 'cscope.po.out$[[file]]', 'tags$[[file]]']
 " open a NERDTree automatically when vim starts up if no files were specified, but this will conflict with vim-sessions
 " autocmd StdinReadPre * let s:std_in=1
 " autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
