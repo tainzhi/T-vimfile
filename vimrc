@@ -45,6 +45,7 @@ set modelines=5                " default numbers of lines to read for modeline i
 
 set autowrite                  " Writes on make/shell commands
 set autoread
+autocmd BufLeave,FocusLost silent! wall
 
 " backup current file into /tmp, deleted afterwards
 set nobackup
@@ -279,7 +280,7 @@ map <leader>2h :runtime! syntax/2html.vim<CR>
 
 " " }}}
 
-" AutoCommands " {{{
+" AutoCommands 
 au BufRead,BufNewFile {*.go}                                          setl ft=go tabstop=2 softtabstop=2 noexpandtab smarttab
 " autocmd FileType go compiler go
 au BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru}     setl ft=ruby tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab
@@ -293,6 +294,13 @@ au! BufReadPost       {COMMIT_EDITMSG,*/COMMIT_EDITMSG}               setl ft=gi
 au BufWinEnter *.txt if &ft == 'help' | wincmd H | vertical resize 80 | nmap q :q<CR> | endif
 noremap <leader>h :help <C-R>=expand("<cword>")<CR><CR>
 
+" for input method
+set iminsert=0
+set imsearch=0
+se imd
+au InsertEnter * se noimd
+au InsertLeave * se imd
+au FocusGained * se imd
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "加入文件修改时间
 "原理:找到前10行出现的LastModified所在行,替换为当前的时间
@@ -327,6 +335,8 @@ noremap <leader>h :help <C-R>=expand("<cword>")<CR><CR>
 " noremap j <NOP>
 " noremap k <NOP>
 " noremap l <NOP>
+
+
 
 
 
@@ -659,16 +669,9 @@ nmap sk :SplitjoinSplit<cr>
 
 Plugin 'sjl/gundo.vim'
 
-Plugin 'gregsexton/gitv'
-Plugin 'rstacruz/sparkup.git', {'rtp': 'vim/'}
-let g:sparkupExecuteMapping = '<c-e>'
-let g:sparkupNextMapping = '<c-ee>'
-
-
-
 Plugin 'vim-scripts/genutils'
 
-
+Plugin 'gregsexton/gitv'
 
 Plugin 'bling/vim-airline'
 let g:airline_section_a = airline#section#create(['%<', 'file', 'readonly'])
@@ -681,19 +684,11 @@ let g:airline_section_z = airline#section#create(['%(%l,%c%V%) %P'])
 let g:airline_section_warning = '' "airline#section#create(['whitespace'])
 
 
-autocmd BufLeave,FocusLost silent! wall
-
-
-
-
-
 
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Deprecated plugins
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin 'vim-scripts/lookupfile'
-
-
 
 " taglist.vim"
 " Plugin 'vim-scripts/taglist.vim'
@@ -737,7 +732,6 @@ autocmd BufLeave,FocusLost silent! wall
 " nnoremap <leader>gn :vnew \| :FufFile ~/src/notes/<CR>
 
 
-
 " Plugin 'kien/ctrlp.vim'
 " let g:ctrlp_map = '<leader>t'
 " let g:ctrlp_max_height = 30
@@ -776,7 +770,6 @@ autocmd BufLeave,FocusLost silent! wall
 " Plugin 'gmarik/vim-markdown'
 " Plugin 'timcharper/textile.vim'
 
-
 " Plugin 'tpope/vim-unimpaired'
 "
 " " bubble current line
@@ -803,9 +796,9 @@ autocmd BufLeave,FocusLost silent! wall
 
 " Plugin 'int3/vim-extradite'
 " Plugin 'Lokaltog/vim-powerline'
-set iminsert=0
-set imsearch=0
-se imd
-au InsertEnter * se noimd
-au InsertLeave * se imd
-au FocusGained * se imd
+" Plugin 'int3/vim-extradite'
+" Plugin 'Lokaltog/vim-powerline'
+
+" Plugin 'rstacruz/sparkup.git', {'rtp': 'vim/'}
+" let g:sparkupExecuteMapping = '<c-e>'
+" let g:sparkupNextMapping = '<c-ee>'
