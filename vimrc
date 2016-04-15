@@ -626,29 +626,36 @@ map J <Plug>(expand_region_shrink)
 
 
 
-"'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Todo use plugins
-"'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugin 'SuperTab'
-"Plugin 'bogado/file-line'
-"Plugin 'junegunn/vim-easy-align'
-"Plugin 'vim-scripts/lastpos.vim'
-" Programming
-" Plugin 'Blackrush/vim-gocode'
-Plugin 'fatih/vim-go'
-Plugin 'derekwyatt/vim-scala'
-Plugin 'tpope/vim-rails'
-
-
-
-" Dash.app
 Plugin 'rizzatti/funcoo.vim'
-Plugin 'rizzatti/dash.vim'
+Plugin 'rizzatti/greper.vim'
+
 
 
 " Syntax highlight
 Plugin 'gmarik/vim-markdown'
-Plugin 'timcharper/textile.vim'
+
+"'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Todo use plugins
+"'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin 'SuperTab'
+" Plugin 'bogado/file-line'
+" Plugin 'junegunn/vim-easy-align'
+" Plugin 'vim-scripts/lastpos.vim'
+" 
+" Programming
+" Plugin 'Blackrush/vim-gocode'
+" Plugin 'fatih/vim-go'
+" Plugin 'derekwyatt/vim-scala'
+" Plugin 'tpope/vim-rails'
+
+" Dash.app only for iOS, not supports vim
+" Plugin 'rizzatti/funcoo.vim'
+" Plugin 'rizzatti/dash.vim'
+
+
+" Syntax highlight
+" Plugin 'gmarik/vim-markdown'
+" Plugin 'timcharper/textile.vim'
 
 
 Plugin 'tpope/vim-repeat'
