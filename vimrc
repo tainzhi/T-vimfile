@@ -394,6 +394,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 
 " vim-nerdtree-tabs
 Plugin 'jistr/vim-nerdtree-tabs'
+let g:nerdtree_tabs_open_on_gui_startup = 0
 let g:nerdtree_tabs_open_on_console_startup = 1
 let g:nerdtree_tabs_smart_startup_focus = 2
 let g:nerdtree_tabs_synchronize_view = 1
@@ -468,15 +469,21 @@ au Syntax * RainbowParenthesesLoadBraces
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_section_a = airline#section#create_left(['mode', 'crypt', 'paste', 'spell','iminsert'])
-let g:airline_section_b = airline#section#create(['hunks', 'branch'])
-let g:airline_section_c = airline#section#create(['file'])
-let g:airline_section_gutter = airline#section#create(['readonly', 'tagbar'])
-let g:airline_section_x = '' "airline#section#create_right(['ffenc', 'filetype'])
-let g:airline_section_y = '%y%m%r%=[%{&ff}] %(%l,%c%V%) %P' "airline#section#create_right(['ffenc'])
-let g:airline_section_z = '' "airline#section#create_right(['%(%l,%c%V%) %P'])
-let g:airline_section_error = '' " airline#section#create(['ycm_error_count', 'syntastic', 'eclim'])
-let g:airline_section_warning = '' " airline#section#create(['ycm_warning_count', 'whitespace'])
+" let g:airline_section_a = airline#section#create_left(['mode', 'crypt', 'paste', 'spell','iminsert'])
+" let g:airline_section_b = airline#section#create(['hunks', 'branch'])
+" let g:airline_section_c = airline#section#create(['file'])
+" let g:airline_section_gutter = airline#section#create(['readonly', 'tagbar'])
+" let g:airline_section_x = '' "airline#section#create_right(['ffenc', 'filetype'])
+" let g:airline_section_z = '%-14 %y%m%r%=[%{&ff}] %= %(%l,%c%V%) %P' "airline#section#create_right(['ffenc'])
+" let g:airline_section_y = '' "airline#section#create_right(['%(%l,%c%V%) %P'])
+" let g:airline_section_error = '' " airline#section#create(['ycm_error_count', 'syntastic', 'eclim'])
+" let g:airline_section_warning = '' " airline#section#create(['ycm_warning_count', 'whitespace'])
+" let g:airline#extensions#default#layout = [
+"     \ ['a', 'b', 'c'],
+"     \ ['gutter'],
+"     \ ['x', 'y', 'z', 'error', 'warning' ]
+"     \ ]
+" let g:airline#extensions#branch#displayed_head_limit = 10
 
 
 
