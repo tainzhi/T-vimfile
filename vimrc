@@ -634,6 +634,13 @@ Plugin 'rizzatti/greper.vim'
 " Syntax highlight
 Plugin 'gmarik/vim-markdown'
 
+
+
+Plugin 'tpope/vim-repeat'
+
+
+
+
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Todo use plugins
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -658,15 +665,14 @@ Plugin 'gmarik/vim-markdown'
 " Plugin 'timcharper/textile.vim'
 
 
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-unimpaired'
-
-" bubble current line
-nmap <M-j> ]e
-nmap <M-k> [e
-" bubble visual selection lines
-vmap <M-j> ]egv
-vmap <M-k> [egv
+" Plugin 'tpope/vim-unimpaired'
+"
+" " bubble current line
+" nmap <M-j> ]e
+" nmap <M-k> [e
+" " bubble visual selection lines
+" vmap <M-j> ]egv
+" vmap <M-k> [egv
 
 " Utility
 Plugin 'AndrewRadev/splitjoin.vim'
