@@ -116,14 +116,13 @@ set novisualbell              " No blinking
 set noerrorbells              " No noise.
 set vb t_vb=                  " disable any beeps or flashes on error
 
-set laststatus=2              " always show status line.
-set shortmess=atI             " shortens messages
-set showcmd                   " display an incomplete command in statusline
-
-set statusline=%<%f\          " custom statusline
-set stl+=[%{&ff}]             " show fileformat
-set stl+=%y%m%r%=
-set stl+=%-14.(%l,%c%V%)\ %P,%L
+" set laststatus=2              " always show status line.
+" set shortmess=atI             " shortens messages
+" set showcmd                   " display an incomplete command in statusline
+" set statusline=%<%f\          " custom statusline
+" set stl+=[%{&ff}]             " show fileformat
+" set stl+=%y%m%r%=
+" set stl+=%-14.(%l,%c%V%)\ %P,%L
 
 
 "set foldenable                " Turn on folding
@@ -466,12 +465,28 @@ au Syntax * RainbowParenthesesLoadBraces
 
 
 
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_section_a = airline#section#create_left(['mode', 'crypt', 'paste', 'spell','iminsert'])
+let g:airline_section_b = airline#section#create(['hunks', 'branch'])
+let g:airline_section_c = airline#section#create(['file'])
+let g:airline_section_gutter = airline#section#create(['readonly', 'tagbar'])
+let g:airline_section_x = '' "airline#section#create_right(['ffenc', 'filetype'])
+let g:airline_section_y = '%y%m%r%=[%{&ff}] %(%l,%c%V%) %P' "airline#section#create_right(['ffenc'])
+let g:airline_section_z = '' "airline#section#create_right(['%(%l,%c%V%) %P'])
+let g:airline_section_error = '' " airline#section#create(['ycm_error_count', 'syntastic', 'eclim'])
+let g:airline_section_warning = '' " airline#section#create(['ycm_warning_count', 'whitespace'])
+
+
+
 " Plugin tagbar
 Plugin 'majutsushi/tagbar'
 nmap <silent> <F9> :Tagbar<CR>
 set updatetime=100
 let g:tagbar_autofocus = 1
 let g:tagbar_width = 40
+
 let g:tagbar_left = 1
 
 
@@ -653,6 +668,7 @@ Plugin 'tpope/vim-repeat'
 Plugin 'gmarik/ide-popup.vim'
 
 
+
 Plugin 'tomtom/tlib_vim'
 Plugin 'tomtom/tcomment_vim'
 nnoremap // :TComment<CR>
@@ -673,15 +689,6 @@ Plugin 'vim-scripts/genutils'
 
 Plugin 'gregsexton/gitv'
 
-Plugin 'bling/vim-airline'
-let g:airline_section_a = airline#section#create(['%<', 'file', 'readonly'])
-let g:airline_section_b = '' " airline#section#create_left(['mode', 'paste', 'iminsert'])
-let g:airline_section_c = '' " airline#section#create(['hunks'])
-let g:airline_section_gutter = airline#section#create(['%=%y%m%r[%{&ff}]'])
-let g:airline_section_x = '' " airline#section#create_right(['filetype'])
-" let g:airline_section_y = '%y%m%r%=[%{&ff}]' "airline#section#create_right(['ffenc'])
-let g:airline_section_z = airline#section#create(['%(%l,%c%V%) %P'])
-let g:airline_section_warning = '' "airline#section#create(['whitespace'])
 
 
 
