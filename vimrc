@@ -618,12 +618,17 @@ let g:session_directory='./'
 let g:session_default_name='.session'
 let g:session_lock_enabled=0
 
+
+
+Plugin 'terryma/vim-expand-region'
+map K <Plug>(expand_region_expand)
+map J <Plug>(expand_region_shrink)
+
+
+
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Todo use plugins
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-
 " Plugin 'SuperTab'
 "Plugin 'bogado/file-line'
 "Plugin 'junegunn/vim-easy-align'
