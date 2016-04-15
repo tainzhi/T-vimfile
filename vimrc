@@ -640,57 +640,7 @@ Plugin 'tpope/vim-repeat'
 
 
 
-
-"'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Todo use plugins
-"'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugin 'SuperTab'
-" Plugin 'bogado/file-line'
-" Plugin 'junegunn/vim-easy-align'
-" Plugin 'vim-scripts/lastpos.vim'
-" 
-" Programming
-" Plugin 'Blackrush/vim-gocode'
-" Plugin 'fatih/vim-go'
-" Plugin 'derekwyatt/vim-scala'
-" Plugin 'tpope/vim-rails'
-
-" Dash.app only for iOS, not supports vim
-" Plugin 'rizzatti/funcoo.vim'
-" Plugin 'rizzatti/dash.vim'
-
-
-" Syntax highlight
-" Plugin 'gmarik/vim-markdown'
-" Plugin 'timcharper/textile.vim'
-
-
-" Plugin 'tpope/vim-unimpaired'
-"
-" " bubble current line
-" nmap <M-j> ]e
-" nmap <M-k> [e
-" " bubble visual selection lines
-" vmap <M-j> ]egv
-" vmap <M-k> [egv
-
-" Utility
-Plugin 'AndrewRadev/splitjoin.vim'
-nmap sj :SplitjoinJoin<cr>
-nmap sk :SplitjoinSplit<cr>
-
-Plugin 'gmarik/github-search.vim'
-
 Plugin 'gmarik/ide-popup.vim'
-Plugin 'gmarik/sudo-gui.vim'
-
-Plugin 'sjl/gundo.vim'
-
-Plugin 'mkitt/browser-refresh.vim'
-com! ONRRB :au! BufWritePost <buffer> :RRB
-com! NORRB :au! BufWritePost <buffer>
-
-
 
 
 Plugin 'tomtom/tlib_vim'
@@ -698,21 +648,17 @@ Plugin 'tomtom/tcomment_vim'
 nnoremap // :TComment<CR>
 vnoremap // :TComment<CR>
 
-Plugin 'gmarik/hlmatch.vim'
-nnoremap # :<C-u>HlmCword<CR>
-nnoremap <leader># :<C-u>HlmGrepCword<CR>
-vnoremap # :<C-u>HlmVSel<CR>
-vnoremap <leader># :<C-u>HlmGrepVSel<CR>
+"'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Todo use plugins
+"'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-nnoremap ## :<C-u>HlmPartCword<CR>
-nnoremap <leader>## :<C-u>HlmPartGrepCword<CR>
-vnoremap ## :<C-u>HlmPartVSel<CR>
-vnoremap <leader>## :<C-u>HlmPartGrepVSel<CR>
+" Utility
+Plugin 'AndrewRadev/splitjoin.vim'
+nmap sj :SplitjoinJoin<cr>
+nmap sk :SplitjoinSplit<cr>
 
+Plugin 'sjl/gundo.vim'
 
- 
-" Plugin 'int3/vim-extradite'
-" Plugin 'Lokaltog/vim-powerline'
 Plugin 'gregsexton/gitv'
 Plugin 'rstacruz/sparkup.git', {'rtp': 'vim/'}
 let g:sparkupExecuteMapping = '<c-e>'
@@ -810,7 +756,53 @@ autocmd BufLeave,FocusLost silent! wall
 " nnoremap <leader>es :Ctrlp src/
 "
 
+" Plugin 'SuperTab'
+" Plugin 'bogado/file-line'
+" Plugin 'junegunn/vim-easy-align'
+" Plugin 'vim-scripts/lastpos.vim'
+" 
+" Programming
+" Plugin 'Blackrush/vim-gocode'
+" Plugin 'fatih/vim-go'
+" Plugin 'derekwyatt/vim-scala'
+" Plugin 'tpope/vim-rails'
+
+" Dash.app only for iOS, not supports vim
+" Plugin 'rizzatti/funcoo.vim'
+" Plugin 'rizzatti/dash.vim'
+
+
+" Syntax highlight
+" Plugin 'gmarik/vim-markdown'
+" Plugin 'timcharper/textile.vim'
+
+
+" Plugin 'tpope/vim-unimpaired'
+"
+" " bubble current line
+" nmap <M-j> ]e
+" nmap <M-k> [e
+" " bubble visual selection lines
+" vmap <M-j> ]egv
+" vmap <M-k> [egv
 " Input method
+ 
+" Plugin 'gmarik/github-search.vim'
+
+" Plugin 'gmarik/sudo-gui.vim'
+
+" Plugin 'mkitt/browser-refresh.vim'
+" com! ONRRB :au! BufWritePost <buffer> :RRB
+" com! NORRB :au! BufWritePost <buffer>
+
+" Plugin 'gmarik/hlmatch.vim'
+" nnoremap # :<C-u>HlmCword<CR>
+" nnoremap <leader># :<C-u>HlmGrepCword<CR>
+" vnoremap # :<C-u>HlmVSel<CR>
+" vnoremap <leader># :<C-u>HlmGrepVSel<CR>
+
+" Plugin 'int3/vim-extradite'
+" Plugin 'Lokaltog/vim-powerline'
 set iminsert=0
 set imsearch=0
 se imd
