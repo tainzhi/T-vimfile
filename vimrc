@@ -658,11 +658,6 @@ map J <Plug>(expand_region_shrink)
 
 
 
-Plugin 'rizzatti/funcoo.vim'
-Plugin 'rizzatti/greper.vim'
-
-
-
 " Syntax highlight
 Plugin 'gmarik/vim-markdown'
 
@@ -816,3 +811,6 @@ Plugin 'gregsexton/gitv'
 " Plugin 'rstacruz/sparkup.git', {'rtp': 'vim/'}
 " let g:sparkupExecuteMapping = '<c-e>'
 " let g:sparkupNextMapping = '<c-ee>'
+
+" Plugin 'rizzatti/funcoo.vim'
+" Plugin 'rizzatti/greper.vim'
