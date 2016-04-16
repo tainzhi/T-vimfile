@@ -383,6 +383,7 @@ Plugin 'scrooloose/nerdtree'
 let g:NERDTreeWinPos = 'right'
 nmap <silent> <F10> :NERDTreeToggle<CR>
 let g:NERDTreeWinSize=40
+let NERDTreeAutoDeleteBuffer=1
 let NERDTreeIgnore=['cscope.files$[[file]]', 'cscope.out$[[file]]', 'cscope.in.out$[[file]]', 'cscope.out$[[file]]]', 'cscope.po.out$[[file]]', 'tags$[[file]]']
 " open a NERDTree automatically when vim starts up if no files were specified, but this will conflict with vim-sessions
 " autocmd StdinReadPre * let s:std_in=1
@@ -469,6 +470,21 @@ au Syntax * RainbowParenthesesLoadBraces
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#tab_nr_type = 2 " splits and tab number
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+nmap <leader>d :bd 
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
+nmap <leader>- <Plug>AirlineSelectPrevTab
+nmap <leader>+ <Plug>AirlineSelectNextTab
 " let g:airline_section_a = airline#section#create_left(['mode', 'crypt', 'paste', 'spell','iminsert'])
 " let g:airline_section_b = airline#section#create(['hunks', 'branch'])
 " let g:airline_section_c = airline#section#create(['file'])
