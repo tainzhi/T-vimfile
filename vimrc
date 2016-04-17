@@ -544,13 +544,11 @@ let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,.svn,cscope*,tags"
 
 
 
-Plugin 'mileszs/ack.vim'
-let g_ack_default_options = " -s -H --color --nogroup --column --smart-case --follow"
-let g:ackhightlight = 1
-let g:ack_autofold_results = 1
-nmap <leader>af :AckFile <C-R>=expand("<cfile>")<CR><CR>
-""d: 查找本当前函数调用的函数
-nmap <leader>a :Ack <C-R>=expand("<cword>")<CR><CR>
+Plugin 'rking/ag.vim'
+Plugin 'Chun-Yang/vim-action-ag'
+nmap * <Plug>AgActionWord
+vmap * <Plug>AgActionVisual
+let g:ag_highlight=1
 
 
 
@@ -830,3 +828,14 @@ Plugin 'gregsexton/gitv'
 
 " Plugin 'rizzatti/funcoo.vim'
 " Plugin 'rizzatti/greper.vim'
+
+" Plugin 'mileszs/ack.vim'
+" if executable('ag')
+"     let g:ackprg = 'ag --vimgrep'
+" endif
+" let g_ack_default_options = " -s -H --color --nogroup --column --smart-case --follow"
+" let g:ackhightlight = 1
+" let g:ack_autofold_results = 1
+" nmap <leader>af :AckFile <C-R>=expand("<cfile>")<CR><CR>
+" ""d: 查找本当前函数调用的函数
+" map <leader>a :Ack <C-R>=expand("<cword>")<CR><CR>
