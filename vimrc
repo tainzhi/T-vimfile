@@ -1,6 +1,3 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"  FileName:     _vimrc/_gvimrc for linux
-"  Author:        muqing
 "  CreateTime:   2012-09-22 14:30:00
 "  LastModified: 2014-11-16 23:26:19
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -337,6 +334,11 @@ au FocusGained * se imd
 
 
 
+" make
+set makeprg=g++\ -Wall\ \ %
+
+
+
 
 
 
@@ -361,7 +363,7 @@ Plugin 'gmarik/vundle' " let Vundle manage Vundle
 " Colorscheme
 Plugin 'altercation/vim-colors-solarized'
 if has("gui_running")
-  set background=light
+  set background=dark
   colorscheme solarized
 else
   set t_Co=256
@@ -689,6 +691,9 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'tomtom/tcomment_vim'
 nnoremap // :TComment<CR>
 vnoremap // :TComment<CR>
+
+
+
 
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Todo use plugins
