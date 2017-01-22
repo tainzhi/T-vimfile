@@ -34,7 +34,6 @@ set colorcolumn=80
 set history=256                " Number of things to remember in history.
 set timeoutlen=250             " Time to wait after ESC (default causes an annoying delay)
 set clipboard+=unnamed         " Yanks go on clipboard instead.
-" set pastetoggle=<F10>          " toggle between paste and normal: for 'safer' pasting from keyboard
 set shiftround                 " round indent to multiple of 'shiftwidth'
 
 set modeline
@@ -406,7 +405,7 @@ let g:nerdtree_tabs_synchronize_view = 1
 
 "ctags install path
 let Tlist_Ctags_Cmd='/usr/bin/ctags'
-"set tags=/home/muqing/vivo/b/android-20/tags,./tags
+"set tags=/home/muqing/android-20/tags,./tags
 "set autochdir
 set tags=tags;**/.svn,tags;**/.git         " consider the tags first, then
                                " walk directory tree upto $HOME looking for tags
