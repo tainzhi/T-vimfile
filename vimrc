@@ -335,6 +335,12 @@ au FocusGained * se imd
 
 " make
 set makeprg=g++\ -Wall\ \ %
+" :set makeprg=[[\ -f\ Makefile\ ]]\ &&\ make\ \\\|\\\|\ make\ -C\ .. 
+nmap <silent> <F6> :make<CR><CR>
+nmap <silent> <F7> :call Do_Make()<CR>
+function! Do_Make()
+    execute "!./a.out < a.in"
+endfunction
 
 
 
@@ -586,6 +592,7 @@ let g:ycm_complete_in_strings = 1
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 " 关闭加载.ycm_extra_conf.py提示
 let g:ycm_confirm_extra_conf = 0
+let g:ycm_server_python_interpreter = '/usr/bin/python2.7'
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> " 跳转到定义处
 
 
