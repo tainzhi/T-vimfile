@@ -333,8 +333,9 @@ au FocusGained * se imd
 
 
 
-" make
-set makeprg=g++\ -Wall\ \ %
+" " make
+" set makeprg=g++\ -Wall\ \ %
+set makeprg=g++\ %
 " :set makeprg=[[\ -f\ Makefile\ ]]\ &&\ make\ \\\|\\\|\ make\ -C\ .. 
 nmap <silent> <F6> :make<CR><CR>
 nmap <silent> <F7> :call Do_Make()<CR>
