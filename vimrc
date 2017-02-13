@@ -563,7 +563,7 @@ let g:ag_highlight=1
 " use to line up text
 Plugin 'godlygeek/tabular'
 nmap <leader>be :Tabularize /=<CR>
-nnoremap <leader>buu :Tabularize /
+nnoremap <leader>bu :Tabularize /
 
 
 
@@ -623,16 +623,16 @@ nnoremap <Leader>ap :lprevious<cr>
 
 
 
-" " make YouCompleteMe compatible with ultisnips
-" Plugin 'ervandew/supertab'
-" " make YCM compatible with UltiSnips (using supertab)
-" let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-" let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-" let g:SuperTabDefaultCompletionType = '<C-n>'
-" " better key bindings for UltiSnipsExpandTrigger
-" let g:UltiSnipsExpandTrigger = "<tab>"
-" let g:UltiSnipsJumpForwardTrigger = "<tab>"
-" let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+" make YouCompleteMe compatible with ultisnips
+Plugin 'ervandew/supertab'
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 
 
