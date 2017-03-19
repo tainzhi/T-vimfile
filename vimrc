@@ -337,12 +337,31 @@ au FocusGained * se imd
 " set makeprg=g++\ -Wall\ \ %
 set makeprg=g++\ %
 " :set makeprg=[[\ -f\ Makefile\ ]]\ &&\ make\ \\\|\\\|\ make\ -C\ .. 
-nmap <silent> <F6> :make<CR><CR>
-nmap <silent> <F7> :call Do_Make()<CR>
 function! Do_Make()
     execute "!./a.out < a.in"
 endfunction
 
+function! Do_Map()
+    if (&filetype == 'cc')
+        nmap <silent> <F5> :call Do_CsTag()<CR><CR><CR><CR>
+        nmap <silent> <F6> :make<CR><CR>
+        nmap <silent> <F7> :call Do_Make()<CR>
+    elseif (&filetype == 'c')
+        nmap <silent> <F5> :call Do_CsTag()<CR><CR><CR><CR>
+        nmap <silent> <F6> :make<CR><CR>
+        nmap <silent> <F7> :call Do_Make()<CR>
+    elseif (&filetype == 'cpp')
+        nmap <silent> <F5> :call Do_CsTag()<CR><CR><CR><CR>
+        nmap <silent> <F6> :make<CR><CR>
+        nmap <silent> <F7> :call Do_Make()<CR>
+    elseif (&filetype == 'tex')
+        nmap <silent> <F6> :echo "tex compile"
+        nmap <silent> <F7> :echo "tex run"
+    else 
+        echo 'other'
+    endif
+endfunction
+autocmd BufWritePost,FileWritePost,BufReadPre,FileReadPre {*.cc,*.c,*.cpp,*.h,*.tex} exec ":call Do_Map()"
 
 
 
@@ -428,7 +447,6 @@ Plugin 'tainzhi/autoload_cscope.vim'
     " set cscopequickfix=s+,c+,d+,i+,t+,e+
     set nocsverb
 " endif
-nmap <silent> <F5> :call Do_CsTag()<CR><CR><CR><CR>
 function! Do_CsTag()
     let has_cscope_out = filereadable("cscope.out")
     execute "!find `pwd` -iname '*.java' -o -name '*.xml' -o -name '*.h'  -o -name '*.c' -o -name '*.cpp' -o -name '*.cc' -o -name '*.py'| grep -v .plus > ./cscope.files"
@@ -717,6 +735,10 @@ let g:vimim_map = 'tab_as_gi'
 " :let g:vimim_punctuation = 2   
 " :let g:vimim_shuangpin = 0   
 " :let g:vimim_toggle = 'pinyin,google,sogou' 
+
+
+
+Plugin 'gerw/vim-latex-suite'
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Todo use plugins
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
