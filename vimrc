@@ -343,23 +343,23 @@ endfunction
 
 function! Do_Map()
     if (&filetype == 'cc')
-        nmap <silent> <F5> :call Do_CsTag()<CR><CR><CR><CR>
-        nmap <silent> <F6> :make<CR><CR>
-        nmap <silent> <F7> :call Do_Make()<CR>
+        nmap <silent> <F4> :call Do_CsTag()<CR><CR><CR><CR>
+        nmap <silent> <F9> :make<CR><CR>
+        nmap <silent> <F10> :call Do_Make()<CR>
     elseif (&filetype == 'c')
-        nmap <silent> <F5> :call Do_CsTag()<CR><CR><CR><CR>
-        nmap <silent> <F6> :make<CR><CR>
-        nmap <silent> <F7> :call Do_Make()<CR>
+        nmap <silent> <F4> :call Do_CsTag()<CR><CR><CR><CR>
+        nmap <silent> <F9> :make<CR><CR>
+        nmap <silent> <F10> :call Do_Make()<CR>
     elseif (&filetype == 'cpp')
-        nmap <silent> <F5> :call Do_CsTag()<CR><CR><CR><CR>
-        nmap <silent> <F6> :make<CR><CR>
-        nmap <silent> <F7> :call Do_Make()<CR>
+        nmap <silent> <F4> :call Do_CsTag()<CR><CR><CR><CR>
+        nmap <silent> <F9> :make<CR><CR>
+        nmap <silent> <F10> :call Do_Make()<CR>
     elseif (&filetype == 'tex')
-        nmap <silent> <F6> :echo "tex compile"
-        nmap <silent> <F8> :echo "tex run"
+        nmap <silent> <F9> <leader>ll
+        nmap <silent> <F10> <leader>lv
     else 
-        nmap <silent> <F6> :echo "other compile"
-        nmap <silent> <F8> :echo "other run"
+        nmap <silent> <F9> :echo "tex compile"
+        nmap <silent> <F10> :echo "tex run"
     endif
 endfunction
 autocmd BufWritePre,FileWritePost,BufReadPost,FileReadPost *.cc,*.c,*.cpp,*.h,*.tex call Do_Map()
@@ -409,7 +409,7 @@ let g:NERDSpaceDelims=1
 "nerdtree
 Plugin 'scrooloose/nerdtree'
 let g:NERDTreeWinPos = 'right'
-nmap <silent> <F10> :NERDTreeToggle<CR>
+nmap <silent> <F3> :NERDTreeToggle<CR>
 let g:NERDTreeWinSize=40
 let NERDTreeAutoDeleteBuffer=1
 let NERDTreeIgnore=['cscope.files$[[file]]', 'cscope.out$[[file]]', 'cscope.in.out$[[file]]', 'cscope.out$[[file]]]', 'cscope.po.out$[[file]]', 'tags$[[file]]']
@@ -532,7 +532,7 @@ nmap <leader>+ <Plug>AirlineSelectNextTab
 
 " Plugin tagbar
 Plugin 'majutsushi/tagbar'
-nmap <silent> <F9> :Tagbar<CR>
+nmap <silent> <F2> :Tagbar<CR>
 set updatetime=100
 let g:tagbar_autofocus = 1
 let g:tagbar_width = 40
@@ -744,6 +744,9 @@ Plugin 'gerw/vim-latex-suite'
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
 let g:tex_flavor='latex'
+let g:Tex_CompileRule_dvi = 'xelatex -interaction=nonstopmode $*'
+let g:Tex_CompileRule_pdf = 'xelatex -interaction=nonstopmode $*'
+ 
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Todo use plugins
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
