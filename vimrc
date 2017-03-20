@@ -356,12 +356,13 @@ function! Do_Map()
         nmap <silent> <F7> :call Do_Make()<CR>
     elseif (&filetype == 'tex')
         nmap <silent> <F6> :echo "tex compile"
-        nmap <silent> <F7> :echo "tex run"
+        nmap <silent> <F8> :echo "tex run"
     else 
-        echo 'other'
+        nmap <silent> <F6> :echo "other compile"
+        nmap <silent> <F8> :echo "other run"
     endif
 endfunction
-autocmd BufWritePost,FileWritePost,BufReadPre,FileReadPre {*.cc,*.c,*.cpp,*.h,*.tex} exec ":call Do_Map()"
+autocmd BufWritePre,FileWritePost,BufReadPost,FileReadPost *.cc,*.c,*.cpp,*.h,*.tex call Do_Map()
 
 
 
@@ -739,6 +740,10 @@ let g:vimim_map = 'tab_as_gi'
 
 
 Plugin 'gerw/vim-latex-suite'
+" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
+" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
+" The following changes the default filetype back to 'tex':
+let g:tex_flavor='latex'
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Todo use plugins
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
