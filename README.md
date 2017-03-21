@@ -1,4 +1,12 @@
-##Configure initial
+# Catetory
+---
+- [Configure initial](#configure-initial)
+- [Thanks](#thanks)
+- [vim help](#vim-help)
+- [vim plugin](#vim-plugin)
+---
+
+## Configure initial
 
 ```
 # clone recursively with vundle
@@ -7,13 +15,13 @@ git clone --recursive https://github.com/tainzhi/Q-vimfile.git ~/.vim
 vim .vim/vimrc +PluginInstall +qall                     
 ```
 
-##Thanks
+## Thanks
 - 1  learn git submodule and vundle from [gmarik/vimfiles](https://github.com/gmarik/vimfiles)
 - 2 get some useful plugins from [wklken/k-vim](https://github.com/wklken/k-vim)
 
 -------------------------------------------------------------------------------
 
-##vim_help
+## vim_help
 ###查找
 
     /xxx(?xxx)      / 向上查找，？ 向下查找， xxx 为正则表达式, 默认区分大小
@@ -344,7 +352,7 @@ go the `$vim/syntax/c.vim`, add `hi void guifg=#2f4f4f`
 
 
 
-##vim plugin
+## vim plugin
 
 ###[Vundle](https://github.com/gmarik/Vundle.vim):vim plugin manager
 **Brief help**
@@ -623,3 +631,316 @@ g 大概都是要加的，否則只會替換每一行的第一個符合字串。
 :%s/t([aou])g/h1t/g                     "将所有的tag,tog和tug分别改为hat,hot,hut
 
 ```
+
+
+## 美化插件 ##
+###[solarized.vim](http://ethanschoonover.com/solarized/vim-colors-solarized)
+```
+" Colorscheme
+Plugin 'altercation/vim-colors- '
+if has("gui_running")
+  set background=light
+  colorscheme solarized
+else
+  set background=dark
+endif
+```
+
+###[rainbow_parentheses](https://github.com/kien/rainbow_parentheses.vim)
+hight the parentheses
+
+## 普通插件　##
+###NERDTree###
+**Usage**:
+```
+?       toggle help
+m       Show the menu, then rename or create a file
+
+:NERDTree 
+:NERDTreeToggle
+```
+If a NERD tree already exists for this tab, it is reopened and rendered again.  If no NERD tree exists for this tab then this command acts the same as the :NERDTree command. 
+
+
+###[tagbar](https://github.com/majutsushi/tagbar)
+tagbar按作用域归类不同的标签。按名字空间 n_foo、类 Foo 进行归类,在内部有声明、有定义;
+显示标签类型。名字空间、类、函数等等;
+显示完整函数原型;
+图形化显示共有成员(+)、私有成员(-)、保护成员(#);
+**Usage**
+```
+s       Toggle sort order between name and file order
+```
+
+###[vim-surround](https://github.com/tpope/vim-surround)
+快速加环绕符号
+```
+ds"             删除"，此处"可以为任何符号,从光标所在处到单词末尾
+cs"<p>          替换"为<p>
+ysw(            添加()
+```
+
+###[godlygeek/tabular](https://github.com/godlygeek/tabular)
+对齐
+```
+<leader>be      以等号对齐
+<leader>bu      自定义符号
+```
+以空格号对齐
+```
+:Tabularize / /l0c5r0<CR>       以空格对齐，居中，插入5个空格
+```
+
+###[TaskList.vim](https://github.com/vim-scripts/TaskList.vim/blob/master/plugin/tasklist.vim)
+todolist
+```
+<leader>t
+```
+
+
+###[vim-easymotion](https://github.com/Lokaltog/vim-easymotion/)
+当前页面内快速跳转
+```
+<leader>s       查找一个字母，并跳转
+<leader>f       查找两个字母，并跳转
+```
+
+###[DirDiff](https://github.com/vim-scripts/DirDiff.vim)
+file or directory compare
+```
+:DirDiff directory1 directory2
+```
+
+###[Syntastic](https://github.com/scrooloose/syntastic#installation)###
+**与YouCompleteMe有冲突**
+syntax checking 
+```
+:h Syntastic            # show the help
+:SyntasticInfo          # Show current information
+:SyntasticCheck         # to manually check right now
+:Errors                 # open the location-list
+:lclose                 # close the window
+:lnext
+:lpreviews              # jump to the different errors
+```
+
+###[vim-git](https://github.com/tpope/vim-git)###
+Included are syntax, indent, and filetype plugin files for git, gitcommit, gitconfig, gitrebase, and gitsendemail. 
+
+###[tpope/vim-fugitive](https://github.com/tpope/vim-fugitive)
+```
+:Gstatus            
+:Gdiff              # diff current file
+```
+###[vim-session](https://github.com/xolox/vim-session)
+[vim-misc](https://github.com/xolox/vim-misc)
+**vim-session plug-in requires my vim-misc plug-in**
+recover vim session, where is the key and the tab statues
+before, must install [vim-misc](https://github.com/xolox/vim-misc)
+```
+:SaveSession
+:OpenSession
+```
+###[mru.vim](https://github.com/yegappan/mru)###
+provides an easy access to a list of recently opened/edited files in Vim.
+```
+:MRU
+```
+If you are using GUI Vim, then the names of the recently edited files are 
+added to the "File->Recent Files" menu
+
+###vim-auto-save###
+使用plugin, 这种方法, 都会自动保存到文件中, 没有swp文件冲突提示
+```
+Plugin 'vim-scripts/vim-auto-save'
+let g:auto_save = 1     " enable AudoSave on Vim startup
+let g:auto_save_no_updatetime = 1
+let g:auto_save_in_insert_mode = 0
+" let g:auto_save_silent = 1
+" let g:auto_save_postsave_hook = 'TagsGenerate'
+```
+
+不使用plugin, [References: vim wikia](http://vim.wikia.com/wiki/Auto_save_files_when_focus_is_lost)
+```
+:set autowrite
+or
+:au FocusLost * silent! wa
+:autocmd CursorHold,CursorHoldI * update
+```
+
+###[vim-expand-region](https://github.com/terryma/vim-expand-region)
+```
+K   expand select block
+J   shrink select block
+```
+
+###[vim-ariline](https://github.com/vim-airline/vim-airline)
+```
+<leader>d N                 delete buffer N
+<leader>d 1 2 3             delete buffer 1 2 3
+<leader>1, 2, ..., 9        jump to buffer 1, 2, ..., 9
+```
+
+- the small number is buffer likes tab number, use with `<leader>1, 2, ..., 9`
+- the large number is real buffer number, use with `:bdelete 1`, delete buffer
+- `:tabnew`产生新的窗口, 有3个数字了, 直接`:q`退出, 但是会保留一个2个数字的buffer
+
+
+###[vimim中文输入法](https://github.com/tainzhi/vimim)
+查找文本中的`项目`这一词组, 先查找`/xiangmu`, 然后输入回车, 此时没有匹配结果, 然后输入`n`查找下一个
+
+###[snippet](https://github.com/honza/vim-snippets)
+
+##有依赖包的插件
+###[tagbar](https://github.com/majutsushi/tagbar)
+**依赖包：ctags**
+
+
+###[ag.vim](https://github.com/rking/ag.vim)
+[vim-action-ag](https://github.com/Chun-Yang/vim-action-ag): 使得普通模式的搜索(按*键)即可全工程搜索
+```
+:Ag str
+:LAg str        search in quickfix
+```
+**依赖包: [ag](https://github.com/ggreer/the_silver_searcher)**
+
+###[YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
+**依赖包：clang**
+- 自动补全名称和目录路径， 支持c/c++,python,node.js,JavaScript,go
+- 实时检测并显示c/c++语法错误
+[Support Node.js and JavaScript](https://github.com/Valloric/YouCompleteMe#ubuntu-linux-x64)
+
+**usage**
+>tab键选中，Ctrl+P/N选择
+<leaer>jd   跳转到定义处
+Ctrl+O      jump backword
+Ctrl+I      jump forward
+
+####auto install(recommend)
+```
+cd ~/.vim/bundle/YouCompleteMe
+./install.py --all
+```
+
+####manual install
+#####install clang
+######install clang pre-buildt binaries(recommend)
+一种是直接拷贝
+```
+tar xf clang*
+cd clang*
+sudo cp -R * /usr/local/
+```
+另一种是， 把bin添加到path文件中
+```
+export PATH=~/clang+llvm-3.2-x86_64-linux-ubuntu-12.04/bin/:$PATH
+```
+######install clang by source
+***编译clang3.5**
+[参考1](http://www.cnblogs.com/zhongcq/p/3630047.html)
+[参考2](http://hahaya.github.io/build-YouCompleteMe/)
+[参考2官网指导](http://clang.llvm.org/get_started.html)
+从[llvm官网](http://llvm.org/releases/download.html#3.3)下载
+要提前安装cmake和python-dev
+```
+sudo apt-get install g++4.8 cmake python-dev
+```
+**the directory structure**
+```
+~/
+|----.vim
+|        |----bundle
+|                |----vundle
+|                |----YouComplteMe
+|-----Downloads
+        |----clang
+        |       |----llvm-3.5.0.src
+        |       |----llvm-build
+        |----ycm_build
+
+```
+> in `llvm-build`, clang is maked and installed, in `ycm_build`, the .so files which is needed by YouComplteMe is created by clang 
+
+用`tar Jxvf`解压后
+```
+tar xJvf cfe-3.5.0.src.tar.xz
+tar xJvf clang-tools-extra-3.5.0.src.tar.xz
+tar xJvf compiler-rt-3.5.0.src.tar.xz
+tar xJvf llvm-3.5.0.src.tar.xz
+```
+编译和安装
+```
+mv cfe-3.5.0.src llvm-3.5.0.src/tools/clang
+mv clang-tools-extra-3.5.0.src/ llvm-3.5.0.src/tools/clang/extra/
+mkdir llvm-build
+cd llvm-build
+../llvm-3.5.0.src/configure --enable-optimized  #要编译很久，大约最终有1个G的文件；默认编译目录为/usr/local/
+可执行文件放在/usr/local/bin/，库文件放在/usr/local/lib
+make -j 9
+sudo make install
+
+# 非必须
+make uninstall
+clang -v
+```
+#####编译YouCompleteMe插件
+
+```
+cd ~
+mkdir ycm_build
+cd ycm_build
+cmake -G "Unix Makefiles" -DPATH_TO_LLVM_ROOT=/home/muqing/Downloads/clang+llvm-3.9.0-x86_64-linux-gnu-ubuntu-16.04 . ~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp
+cmake --build . --target ycm_core --config Release
+```
+
+注意：　`-DPATH_TO_LLVM_ROOT=`为自定义clang+llvm位置
+
+####使用配置
+在`vimrc`中设置
+```
+let g:ycm_confirm_extra_conf = 0            #自动载入.ycm_extra_conf.py,
+let g:ycm_server_python_interpreter = '/usr/bin/python2.7'      #选择python2.7,prevent YouComplteMe from not working
+```
+
+然后**在所要编辑的父目录拷贝一份.ycm_extra_conf.py, 并根据c/c++修改flags和路径
+c/c++的头文件在`/usr/include`目录下**
+```
+cp ~/linux_config/vimfile/bundle/YouCompleteMe/third_party/ycmd/examples/.ycm_extra_conf.py ~/Program/
+```
+并修改`flags`
+```
+flags = [
+    '-isystem', '/home/sehe/custom/boost',
+    '-isystem', '/usr/lib/gcc/x86_64-linux-gnu/4.8/include',
+]
+```
+现在在`~/Program`目录下就可以自动补全`stdlib.h`
+
+###[syntastic](https://github.com/vim-syntastic/syntastic)
+实时检测语法错误, 支持c/c++, python, java, html, javascript...
+但是需要第三方检测工具支持, 具体使用以下命令
+```
+:help syntastic-checker
+```
+一经保存,就会显示错误窗口quickfix
+```
+nnoremap <Leader>an :lnext<cr>
+nnoremap <Leader>ap :lprevious<cr>
+```
+因为要保存之后才能显示检测结果, 所以对于c/c++使用YouComplteMe的检测功能,不用保存就可以显示语法错误. (打开YouCompleteMe的检测功能, 默认不显示syntastic的检测功能)
+```
+let g:ycm_show_diagnostics_ui = 1
+```
+
+## Deprecated plugins ##
+###vim-scripts/taglist.vim
+
+###[FuzzyFinder](http://www.vim.org/scripts/script.php?script_id=1984): 查找文件，路劲，buffer等
+```
+:FufHelp            打开帮助
+:FufFile            打开文件
+```
+
+
+###Reference
+[vimrc function载入cscope.out](http://www.cnblogs.com/IceKernel/archive/2012/08/30/2663237.html)
