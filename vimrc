@@ -1,5 +1,6 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  CreateTime:   2012-09-22 14:30:00
-"  LastModified: 2014-11-16 23:26:19
+"  LastModified: 2017-03-21 15:02:22
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -296,26 +297,6 @@ se imd
 au InsertEnter * se noimd
 au InsertLeave * se imd
 au FocusGained * se imd
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"加入文件修改时间
-"原理:找到前10行出现的LastModified所在行,替换为当前的时间
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"匹配任意文件
-"ks     保存当前位置到's'标记
-"'s     光标回到旧位置
-"autocmd BufWritePre,FileWritePre * ks|call LastModified()|'s
-"func LastModified()
-    ""文件的行数如果大于10
-    "if line("$") > 10
-        "let l=10
-    "else
-        "let l=line("$")
-    "endif
-    ""先用g查找行1到行l,查找到存在LastModified的行,替换LastModified到之后的为保存
-    ""时间
-    "exe "1,".l. "g/LastModified/s/LastModified.*$/LastModified: ".strftime("%F %T")
-    ""exe "1,".l. "g/^\s*\"\s*[L]ast[M]odified:.*$/s/^\s*\"\s*[L]ast[M]odified:.*$/\"    LastModified: ".strftime("%Y-%m-%d %H:%M:%S")
-"endfunc
 
 
 
@@ -746,6 +727,90 @@ Plugin 'gerw/vim-latex-suite'
 let g:tex_flavor='latex'
 let g:Tex_CompileRule_dvi = 'xelatex -interaction=nonstopmode $*'
 let g:Tex_CompileRule_pdf = 'xelatex -interaction=nonstopmode $*'
+
+function! Do_Update_Modified()
+    let line_number = search('LastModified','nw')
+    if line_number < 10
+        let line_content = substitute(getline(line_number),"[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9]",strftime("%Y-%m-%d %T"),"g") 
+        call setline(line_number, line_content)
+    endif
+endfunction
+autocmd BufWritePre,FileWritePre * call Do_Update_Modified()
+
+" 定义函数Do_Set_Title，自动插入文件头 
+func Do_Set_Title() 
+    "如果文件类型为.sh文件 
+    echo &filetype
+    if &filetype == 'sh' 
+        call setline(1,"\################################################################################") 
+        call append(line("."), "\# File     : ".expand("%")) 
+        call append(line(".")+1, "\# Author   : tainzhi") 
+        call append(line(".")+2, "\# Mail     : qfq61@qq.com") 
+        call append(line(".")+3, "\# Created  : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+4, "\# Modified : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+5, "\################################################################################") 
+        call append(line(".")+6, "\#!/bin/bash") 
+        call append(line(".")+7, "") 
+    elseif &filetype == 'text'
+        call setline(1,"********************************************************************************") 
+        call append(line("."), " > File     : ".expand("%")) 
+        call append(line(".")+1, " > Author   : tainzhi") 
+        call append(line(".")+2, " > Mail     : qfq61@qq.com") 
+        call append(line(".")+3, " > Created  : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+4, " > Modified : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+5, "********************************************************************************") 
+        call append(line(".")+6, "") 
+    elseif &filetype == 'c'
+        call setline(1,"/*******************************************************************************") 
+        call append(line("."), "* File     : ".expand("%")) 
+        call append(line(".")+1, "* Author   : tainzhi") 
+        call append(line(".")+2, "* Mail     : qfq61@qq.com") 
+        call append(line(".")+3, "* Created  : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+4, "* Modified : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+5, "*******************************************************************************/") 
+        call append(line(".")+6, "") 
+        call append(line(".")+7, "#include <stdio.h>") 
+        call append(line(".")+8, "#include <string.h>") 
+        call append(line(".")+9, "#include <stdlib.h>") 
+        call append(line(".")+10, "") 
+        call append(line(".")+11, "") 
+    elseif &filetype == 'cpp' || &filetype == 'h' || &filetype == 'cc'
+        call setline(1,"/*******************************************************************************") 
+        call append(line("."), "* File     : ".expand("%")) 
+        call append(line(".")+1, "* Author   : tainzhi") 
+        call append(line(".")+2, "* Mail     : qfq61@qq.com") 
+        call append(line(".")+3, "* Created  : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+4, "* Modified : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+5, "*******************************************************************************/") 
+        call append(line(".")+6, "") 
+        call append(line(".")+7, "#include <stdio.h>") 
+        call append(line(".")+8, "#include <string.h>") 
+        call append(line(".")+9, "#include <stdlib.h>") 
+        call append(line(".")+10, "#include <iostream>") 
+        call append(line(".")+11, "") 
+        call append(line(".")+12, "using namespace std;") 
+        call append(line(".")+13, "") 
+        call append(line(".")+14, "") 
+    elseif &filetype == 'python'
+        call setline(1,"###############################################################################") 
+        call append(line("."), "# File       : ".expand("%")) 
+        call append(line(".")+1, "# Author      : tainzhi") 
+        call append(line(".")+2, "# Mail        : qfq61@qq.com") 
+        call append(line(".")+3, "# Created     : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+4, "# Modified    : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+5, "# Description : ") 
+        call append(line(".")+6, "###############################################################################/") 
+        call append(line(".")+7, "") 
+        call append(line(".")+8, "") 
+    endif
+    "新建文件后，自动定位到文件末尾
+    autocmd BufNewFile * normal G
+endfunc 
+" 匹配任意文件
+" ma     保存当前位置到'a'标记
+" 'a     光标回到旧位置
+" autocmd BufWritePre,FileWritePre * ma|call Do_File()|'a
+autocmd BufNewFile *.sh,*.txt,*.c,*.h,*.cpp,*.cc,*.python,*.java exec ":call Do_Set_Title()" 
  
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Todo use plugins
