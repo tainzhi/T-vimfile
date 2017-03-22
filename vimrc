@@ -336,8 +336,13 @@ function! Do_Map()
         nmap <silent> <F9> :make<CR><CR>
         nmap <silent> <F10> :call Do_Make()<CR>
     elseif (&filetype == 'tex')
-        nmap <silent> <F9> <leader>ll
-        nmap <silent> <F10> <leader>lv
+        " 因为vim-latex-suite只对pdflatex良好支持, 对xelatex支持性太差
+        " 而xelatex对中文宏包xeCJK支持良好, pdflatex不支持,
+        " 故不使用其自带的编译运行快捷键
+        " nmap <silent> <F9> <leader>ll
+        " nmap <silent> <F10> <leader>lv
+        nmap <silent> <F9> :exec '!xelatex '."%"<CR><CR>
+        nmap <silent> <F10> :exec '!evince '.expand('%:r').'.pdf'<CR><CR>
     else 
         nmap <silent> <F9> :echo "tex compile"
         nmap <silent> <F10> :echo "tex run"
@@ -724,9 +729,20 @@ Plugin 'gerw/vim-latex-suite'
 " OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
-let g:tex_flavor='latex'
-let g:Tex_CompileRule_dvi = 'xelatex -interaction=nonstopmode $*'
-let g:Tex_CompileRule_pdf = 'xelatex -interaction=nonstopmode $*'
+" let g:tex_flavor='latex'
+" let g:Tex_CompileRule_dvi = 'xelatex --src-specials -interaction=nonstopmode $*'
+" let g:Tex_FormatDependency_dvi = 'dvi,ps,pdf'
+" let g:Tex_IgnoredWarnings = 
+"     \"Underfull\n".
+"     \"Overfull\n".
+"     \"specifier changed to\n".
+"     \"You have requested\n".
+"     \"Missing number, treated as zero.\n".
+"     \"There were undefined references\n"
+"     \"Citation %.%# undefined\n"
+"     \"LaTex Font Warning:"
+" let g:Tex_IgnoreLevel = 8
+
 
 function! Do_Update_Modified()
     let line_number = search('LastModified','nw')
