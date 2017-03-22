@@ -325,24 +325,24 @@ endfunction
 function! Do_Map()
     if (&filetype == 'cc')
         nmap <silent> <F4> :call Do_CsTag()<CR><CR><CR><CR>
-        nmap <silent> <F9> :make<CR><CR>
-        nmap <silent> <F10> :call Do_Make()<CR>
+        map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :make<CR><CR>
+        map <silent> <F10> <ESC>:call Do_Make()<CR>
     elseif (&filetype == 'c')
         nmap <silent> <F4> :call Do_CsTag()<CR><CR><CR><CR>
-        nmap <silent> <F9> :make<CR><CR>
-        nmap <silent> <F10> :call Do_Make()<CR>
+        map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :make<CR><CR>
+        map <silent> <F10> <ESC>:call Do_Make()<CR>
     elseif (&filetype == 'cpp')
         nmap <silent> <F4> :call Do_CsTag()<CR><CR><CR><CR>
-        nmap <silent> <F9> :make<CR><CR>
-        nmap <silent> <F10> :call Do_Make()<CR>
+        map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :make<CR><CR>
+        map <silent> <F10> <ESC>:call Do_Make()<CR>
     elseif (&filetype == 'tex')
         " 因为vim-latex-suite只对pdflatex良好支持, 对xelatex支持性太差
         " 而xelatex对中文宏包xeCJK支持良好, pdflatex不支持,
         " 故不使用其自带的编译运行快捷键
         " nmap <silent> <F9> <leader>ll
         " nmap <silent> <F10> <leader>lv
-        nmap <silent> <F9> :exec '!xelatex '."%"<CR><CR>
-        nmap <silent> <F10> :exec '!evince '.expand('%:r').'.pdf'<CR><CR>
+        map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!xelatex '."%"<CR><CR>
+        map <silent> <F10> <ESC>:exec '!evince '.expand('%:r').'.pdf'<CR><CR>
     else 
         nmap <silent> <F9> :echo "tex compile"
         nmap <silent> <F10> :echo "tex run"
