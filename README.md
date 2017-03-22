@@ -83,7 +83,6 @@ vim .vim/vimrc +PluginInstall +qall
 ## vim help
 ### 自定义map
 ```
-<leader> is ,
 <leader>h       打开光标所在的单词的help
 
 " resize the window
@@ -130,6 +129,7 @@ nnoremap // :TComment<CR>   注释
 ''          jump to preview position
 ```
 - 1 因为fs影射了cscope的快捷操作, 所以使用f查找s, 不能连续快速按fs, 要再f和s之间停顿一下
+- 2 我的<leader>修改为,键
 
 
 ### 跳转移动光标
