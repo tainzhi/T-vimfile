@@ -83,6 +83,7 @@ vim .vim/vimrc +PluginInstall +qall
 ## vim help
 ### 自定义map
 ```
+my <leader> is ,
 <leader>h       打开光标所在的单词的help
 
 " resize the window
