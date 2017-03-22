@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  CreateTime:   2012-09-22 14:30:00
-"  LastModified: 2017-03-21 15:02:22
+"  LastModified: 2017-03-22 10:54:17
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -810,7 +810,7 @@ endfunc
 " ma     保存当前位置到'a'标记
 " 'a     光标回到旧位置
 " autocmd BufWritePre,FileWritePre * ma|call Do_File()|'a
-autocmd BufNewFile *.sh,*.txt,*.c,*.h,*.cpp,*.cc,*.python,*.java exec ":call Do_Set_Title()" 
+autocmd BufNewFile *.sh,*.txt,*.[ch],*.cpp,*.cc,*.python,*.java exec ":call Do_Set_Title()" 
  
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Todo use plugins

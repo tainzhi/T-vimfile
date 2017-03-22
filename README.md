@@ -40,7 +40,6 @@ Information about my vim configure, notes and plugins
          * [rainbow_parentheses](#rainbow_parentheses)
       * [普通插件](#普通插件)
          * [NERDTree](#nerdtree)
-         * [tagbar](#tagbar)
          * [vim-surround](#vim-surround)
          * [tabular](#tabular)
          * [TaskkList.vim](#taskklistvim)
@@ -57,8 +56,9 @@ Information about my vim configure, notes and plugins
          * [vimim中文输入法](#vimim中文输入法)
          * [Snippet](#snippet)
       * [依赖包的插件](#依赖包的插件)
-         * [tagbar](#tagbar-1)
+         * [tagbar](#tagbar)
          * [ag.vim](#agvim)
+         * [cscope](#cscope)
          * [YouCompleteMe](#youcompleteme)
          * [Syntastic](#syntastic-1)
       * [Deprecated plugins](#deprecated-plugins)
@@ -122,13 +122,16 @@ nnoremap // :TComment<CR>   注释
 |F11||ubuntu maxium window|
 |F12|显示结尾符号|map &lt;silent&gt; &lt;F12&gt; :set invlist&lt;CR&gt;|
 
-### 快捷键
+### 快捷键与需要注意的地方
 ```
 .           重复上次操作命令
 ,       	repeat f or F
 0	        jump to the begin of line
 ''          jump to preview position
 ```
+- 1 因为fs影射了cscope的快捷操作, 所以使用f查找s, 不能连续快速按fs, 要再f和s之间停顿一下
+
+
 ### 跳转移动光标
 ```
 zz              当前行居于屏幕正中
@@ -636,17 +639,6 @@ m       Show the menu, then rename or create a file
 If a NERD tree already exists for this tab, it is reopened and rendered again.  If no NERD tree exists for this tab then this command acts the same as the :NERDTree command. 
 
 
-### tagbar
-[tagbar](https://github.com/majutsushi/tagbar)
-tagbar按作用域归类不同的标签。按名字空间 n_foo、类 Foo 进行归类,在内部有声明、有定义;
-显示标签类型。名字空间、类、函数等等;
-显示完整函数原型;
-图形化显示共有成员(+)、私有成员(-)、保护成员(#);
-**Usage**
-```
-s       Toggle sort order between name and file order
-```
-
 ### vim-surround
 [vim-surround](https://github.com/tpope/vim-surround)
 快速加环绕符号
@@ -785,15 +777,58 @@ J   shrink select block
 [tagbar](https://github.com/majutsushi/tagbar)
 **依赖包：ctags**
 
+tagbar按作用域归类不同的标签。按名字空间 n_foo、类 Foo 进行归类,在内部有声明、有定义;
+显示标签类型。名字空间、类、函数等等;
+显示完整函数原型;
+图形化显示共有成员(+)、私有成员(-)、保护成员(#);
+**Usage**
+```
+s       Toggle sort order between name and file order
+```
+
 
 ### ag.vim
 [ag.vim](https://github.com/rking/ag.vim)
+
 [vim-action-ag](https://github.com/Chun-Yang/vim-action-ag): 使得普通模式的搜索(按*键)即可全工程搜索
 ```
 :Ag str
 :LAg str        search in quickfix
 ```
 **依赖包: [ag](https://github.com/ggreer/the_silver_searcher)**
+
+### cscope
+[autoload_cscope](https://github.com/tainzhi/autoload_cscope.vim)
+
+依赖包: cscope
+
+**usage**:
+```
+set nocst    "在cscope数据库添加成功的时候不在命令栏现实提示信息.
+set cspc=6 "cscope的查找结果在格式上最多显示6层目录.
+let g:autocscope_menus=0 "关闭autocscope插件的快捷健映射.防止和我们定义的快捷键冲突.
+"个人cscope的快捷键映射
+""cscope相关的快捷键映射
+"s:查找即查找C语言符号出现的地方
+nmap fs :cs find s <C-R>=expand("<cword>")<CR><CR>
+"g:查找函数、宏、枚举等定义的位置
+nmap fg :cs find g <C-R>=expand("<cword>")<CR><CR>
+"c:查找光标下的函数被调用的地方
+nmap fc :cs find c <C-R>=expand("<cword>")<CR><CR>
+""t: 查找指定的字符串出现的地方
+nmap ft :cs find t <C-R>=expand("<cword>")<CR><CR>
+"e:egrep模式查找,相当于egrep功能
+nmap fe :cs find e <C-R>=expand("<cword>")<CR><CR>
+""f: 查找文件名,相当于lookupfile
+nmap fn :cs find f <C-R>=expand("<cfile>")<CR><CR>
+""f: 查找文件名,相当于lookupfile
+nmap ff :cs find f <C-R>=expand("<cword>")<CR><CR>
+"i: 查找当前文件名出现过的地方
+nmap fi :cs find i <C-R>=expand("<cfile>")<CR><CR>
+""d: 查找本当前函数调用的函数
+nmap fd :cs find d <C-R>=expand("<cword>")<CR><CR>
+```
+
 
 ### YouCompleteMe
 [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
