@@ -55,6 +55,7 @@ Information about my vim configure, notes and plugins
          * [vim-airline](#vim-airline)
          * [vimim中文输入法](#vimim中文输入法)
          * [Snippet](#snippet)
+         * [vim-latex-suite](#vim-latex-suite)
       * [依赖包的插件](#依赖包的插件)
          * [tagbar](#tagbar)
          * [ag.vim](#agvim)
@@ -117,8 +118,8 @@ nnoremap // :TComment<CR>   注释
 |F2|nmap <silent> <F2> :Tagbar<CR>||
 |F3|nmap <silent> <F3> :NERDTreeToggle<CR>|toggle NERDTree|
 |F4|reload cscope database and recreate tags||
-|F9|compile current c file|nmap <silent> <F6> :make<CR><CR>|
-|F10|execute a.out| ./a.out < a.in|
+|F9|编译c/cpp/tex||
+|F10|执行.out文件,或者使用evince打开pdf文件||
 |F11||ubuntu maxium window|
 |F12|显示结尾符号|map &lt;silent&gt; &lt;F12&gt; :set invlist&lt;CR&gt;|
 
@@ -786,6 +787,9 @@ tagbar按作用域归类不同的标签。按名字空间 n_foo、类 Foo 进行
 ```
 s       Toggle sort order between name and file order
 ```
+
+### vim-latex-suite
+[vim-latex-suite](https://github.com/gerw/vim-latex-suite)
 
 
 ### ag.vim

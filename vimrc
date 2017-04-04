@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  CreateTime:   2012-09-22 14:30:00
-"  LastModified: 2017-03-22 10:54:17
+"  LastModified: 2017-04-05 06:54:37
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -329,7 +329,8 @@ function! Do_Map()
         map <silent> <F10> <ESC>:call Do_Make()<CR>
     elseif (&filetype == 'c')
         nmap <silent> <F4> :call Do_CsTag()<CR><CR><CR><CR>
-        map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :make<CR><CR>
+        map <silent> <F9> <ESC>:exec "w"<CR> <bar> :exec ":make"<CR><CR>
+        " map <silent> <F9> :make<CR><CR>
         map <silent> <F10> <ESC>:call Do_Make()<CR>
     elseif (&filetype == 'cpp')
         nmap <silent> <F4> :call Do_CsTag()<CR><CR><CR><CR>
@@ -754,7 +755,7 @@ endfunction
 autocmd BufWritePre,FileWritePre * call Do_Update_Modified()
 
 " 定义函数Do_Set_Title，自动插入文件头 
-func Do_Set_Title() 
+function! Do_Set_Title() 
     "如果文件类型为.sh文件 
     echo &filetype
     if &filetype == 'sh' 
