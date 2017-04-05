@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"  CreateTime:   2012-09-22 14:30:00
-"  LastModified: 2017-04-05 06:54:37
+"  Created  : 2012-09-22 14:30:00
+"  Modified : 2017-04-06 06:40:49
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -746,7 +746,8 @@ Plugin 'gerw/vim-latex-suite'
 
 
 function! Do_Update_Modified()
-    let line_number = search('LastModified','nw')
+    let line_number = search('Modified','nw')
+    " echo line_number
     if line_number < 10
         let line_content = substitute(getline(line_number),"[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9]",strftime("%Y-%m-%d %T"),"g") 
         call setline(line_number, line_content)
@@ -757,7 +758,7 @@ autocmd BufWritePre,FileWritePre * call Do_Update_Modified()
 " 定义函数Do_Set_Title，自动插入文件头 
 function! Do_Set_Title() 
     "如果文件类型为.sh文件 
-    echo &filetype
+    " echo &filetype
     if &filetype == 'sh' 
         call setline(1,"\################################################################################") 
         call append(line("."), "\# File     : ".expand("%")) 
