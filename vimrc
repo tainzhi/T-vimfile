@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-04-06 06:40:49
+"  Modified : 2017-04-26 20:21:17
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -344,12 +344,14 @@ function! Do_Map()
         " nmap <silent> <F10> <leader>lv
         map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!xelatex '."%"<CR><CR>
         map <silent> <F10> <ESC>:exec '!evince '.expand('%:r').'.pdf'<CR><CR>
+    elseif (&filetype == 'python')
+        map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!python '"%"<CR>
     else 
         nmap <silent> <F9> :echo "tex compile"
         nmap <silent> <F10> :echo "tex run"
     endif
 endfunction
-autocmd BufWritePre,FileWritePost,BufReadPost,FileReadPost *.cc,*.c,*.cpp,*.h,*.tex call Do_Map()
+autocmd BufWritePre,FileWritePost,BufReadPost,FileReadPost *.cc,*.c,*.cpp,*.h,*.tex,*py call Do_Map()
 
 
 
@@ -758,7 +760,6 @@ autocmd BufWritePre,FileWritePre * call Do_Update_Modified()
 " 定义函数Do_Set_Title，自动插入文件头 
 function! Do_Set_Title() 
     "如果文件类型为.sh文件 
-    " echo &filetype
     if &filetype == 'sh' 
         call setline(1,"\################################################################################") 
         call append(line("."), "\# File     : ".expand("%")) 
@@ -828,7 +829,7 @@ endfunc
 " ma     保存当前位置到'a'标记
 " 'a     光标回到旧位置
 " autocmd BufWritePre,FileWritePre * ma|call Do_File()|'a
-autocmd BufNewFile *.sh,*.txt,*.[ch],*.cpp,*.cc,*.python,*.java exec ":call Do_Set_Title()" 
+autocmd BufNewFile *.sh,*.txt,*.[ch],*.cpp,*.cc,*.python,*.java,*.py exec ":call Do_Set_Title()" 
  
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Todo use plugins
