@@ -816,6 +816,7 @@ function! Do_Set_Title()
         call append(line(".")+14, "") 
     elseif &filetype == 'python'
         call setline(1,"###############################################################################") 
+        call setline(1,"#---# coding=utf-8--###########################################################") 
         call append(line("."), "# File        : ".expand("%")) 
         call append(line(".")+1, "# Author      : tainzhi") 
         call append(line(".")+2, "# Mail        : qfq61@qq.com") 
