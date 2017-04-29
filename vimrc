@@ -347,7 +347,7 @@ function! Do_Map()
     elseif (&filetype == 'python')
         map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!python '"%"<CR>
     elseif (&filetype == 'markdown')
-        map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!google-chrome '"%"<CR><CR>
+        map <buffer> <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!google-chrome '"%"<CR><CR>
     else 
         nmap <silent> <F9> :echo "tex compile"
         nmap <silent> <F10> :echo "tex run"
