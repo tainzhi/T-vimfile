@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-04-28 09:50:00
+"  Modified : 2017-05-01 21:20:11
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -815,17 +815,17 @@ function! Do_Set_Title()
         call append(line(".")+13, "") 
         call append(line(".")+14, "") 
     elseif &filetype == 'python'
-        call setline(1,"###############################################################################") 
-        call setline(1,"#---# coding=utf-8--###########################################################") 
-        call append(line("."), "# File        : ".expand("%")) 
-        call append(line(".")+1, "# Author      : tainzhi") 
-        call append(line(".")+2, "# Mail        : qfq61@qq.com") 
-        call append(line(".")+3, "# Created     : ".strftime("%Y-%m-%d %T")) 
-        call append(line(".")+4, "# Modified    : ".strftime("%Y-%m-%d %T")) 
-        call append(line(".")+5, "# Description : ") 
-        call append(line(".")+6, "###############################################################################/") 
-        call append(line(".")+7, "") 
+        call setline(1,"#!/usr/bin/env python##########################################################")
+        call setline(2,"# -*- coding: utf-8 -*-########################################################")
+        call append(line(".")+1, "# File        : ".expand("%")) 
+        call append(line(".")+2, "# Author      : tainzhi") 
+        call append(line(".")+3, "# Mail        : qfq61@qq.com") 
+        call append(line(".")+4, "# Created     : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+5, "# Modified    : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+6, "# Description : ") 
+        call append(line(".")+7, "###############################################################################/") 
         call append(line(".")+8, "") 
+        call append(line(".")+9, "") 
     endif
     "新建文件后，自动定位到文件末尾
     autocmd BufNewFile * normal G
