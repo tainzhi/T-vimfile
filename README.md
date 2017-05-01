@@ -41,7 +41,6 @@ Thanks
          * [FuzzyFinder](#fuzzyfinder)
       * [Plugin for java and android](#plugin-for-java-and-android)
       * [vim help](#vim_help)
-         * [快捷键](#快捷键)
          * [跳转移动光标](#跳转移动光标)
          * [插入](#插入)
          * [删除进入Normal模式](#删除进入normal模式)
