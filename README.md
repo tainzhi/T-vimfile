@@ -133,6 +133,12 @@ nnoremap // :TComment<CR>   注释
 - 1 因为fs影射了cscope的快捷操作, 所以使用f查找s, 不能连续快速按fs, 要再f和s之间停顿一下
 - 2 我的&lt;leader&gt;修改为,键
 
+添加新语言的快捷键F9支持, 即添加新的语言autocmd识别
+```
+autocmd BufWritePre,FileWritePost,BufReadPost,FileReadPost *.cc,*.c,*.cpp,*.h,*.tex,*py call Do_Map()
+autocmd BufNewFile *.sh,*.txt,*.[ch],*.cpp,*.cc,*.python,*.java,*.py exec ":call Do_Set_Title()" 
+```
+
 
 
 ## 美化插件
