@@ -1,8 +1,12 @@
 Information about my vim configure, notes and plugins
+
+Thanks
+- 1  learn git submodule and vundle from [gmarik/vimfiles](https://github.com/gmarik/vimfiles)
+- 2 get some useful plugins from [wklken/k-vim](https://github.com/wklken/k-vim)
+
 -----
    * [Table of Contents](#table-of-contents)
       * [Configure initial](#configure-initial)
-      * [Thanks](#thanks)
       * [自定义map](#自定义map)
       * [美化插件](#美化插件)
          * [solarized.vim](#solarizedvim)
@@ -77,10 +81,6 @@ git clone --recursive https://github.com/tainzhi/Q-vimfile.git ~/.vim
 vim .vim/vimrc +PluginInstall +qall                     
 ```
 
-## Thanks
-- 1  learn git submodule and vundle from [gmarik/vimfiles](https://github.com/gmarik/vimfiles)
-- 2 get some useful plugins from [wklken/k-vim](https://github.com/wklken/k-vim)
-
 ## 自定义map
 ```
 my <leader> is ,
@@ -119,12 +119,12 @@ nnoremap // :TComment<CR>   注释
 |F4|reload cscope database and recreate tags||
 |F9 for c/cpp/tex|编译c/cpp/tex/||
 |F9 for python|interpret python||
-|F9 for markdown|open google-chrome(already has installed plugin MarkDown Preview Plus Options) to preview markdown||
+|F9 for markdown|open google-chrome(already has installed plugin MarkDown Preview Plus) to preview markdown||
 |F10|执行.out文件,或者使用evince打开pdf文件||
 |F11||ubuntu maxium window|
 |F12|显示结尾符号|map &lt;silent&gt; &lt;F12&gt; :set invlist&lt;CR&gt;|
 
-## 快捷键与需要注意的地方
+快捷键与需要注意的地方
 ```
 .           重复上次操作命令
 ,       	repeat f or F
