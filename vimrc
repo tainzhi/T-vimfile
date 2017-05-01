@@ -751,6 +751,12 @@ Plugin 'gerw/vim-latex-suite'
 " let g:Tex_IgnoreLevel = 8
 
 
+
+Plugin 'lilydjwg/fcitx.vim'
+
+
+
+
 function! Do_Update_Modified()
     let line_number = search('Modified','nw')
     " echo line_number
@@ -851,7 +857,6 @@ Plugin 'vim-scripts/genutils'
 
 Plugin 'gregsexton/gitv'
 
-Plugin 'lilydjwg/fcitx.vim'
 
 
 
