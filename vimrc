@@ -672,9 +672,9 @@ Plugin 'yegappan/mru'
 " ultimate solutions for snippets
 Plugin 'Sirver/ultisnips'
 Plugin 'honza/vim-snippets'
-let g:UltiSnipsExpandTrigger = "<c-l>"
-let g:UltiSnipsJumpForwardTrigger = "<c-j>"
-let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
+" let g:UltiSnipsExpandTrigger = "<c-l>"
+" let g:UltiSnipsJumpForwardTrigger = "<c-j>"
+" let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
 " let g:UltiSnipsSnippetDirectories=["UltiSnips", "bundle/vim-snippets/UltiSnips"]
 autocmd BufWritePre,FileWritePre,BufRead,BufNewFile {*.java} call UltiSnips#AddFiletypes("java")
 autocmd BufWritePre,FileWritePre,BufRead,BufNewFile {*.xml} call UltiSnips#AddFiletypes("xml")

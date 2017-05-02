@@ -305,11 +305,12 @@ J   shrink select block
 ### Snippet
 [snippet](https://github.com/honza/vim-snippets)
 
-usage:
+usage: the default trigger
 ```
-<C-l>       trigger
-<C-j>       jump forward trigger, not jump forward list option
-<C-k>       jump backword trigger
+   g:UltiSnipsExpandTrigger               <tab>
+   g:UltiSnipsListSnippets                <c-tab>
+   g:UltiSnipsJumpForwardTrigger          <c-j>
+   g:UltiSnipsJumpBackwardTrigger         <c-k>
 ```
 
 - `snippets/*`: snippets using snipMate format
