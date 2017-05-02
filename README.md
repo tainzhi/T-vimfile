@@ -305,6 +305,16 @@ J   shrink select block
 ### Snippet
 [snippet](https://github.com/honza/vim-snippets)
 
+usage:
+```
+<C-l>       trigger
+<C-j>       jump forward trigger, not jump forward list option
+<C-k>       jump backword trigger
+```
+
+- `snippets/*`: snippets using snipMate format
+- `UltiSnips/*`: snippets using UltiSnips format
+
 ### fcitx.vim
 [fcitx.vim](https://github.com/lilydjwg/fcitx.vim)
 
