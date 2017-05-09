@@ -546,7 +546,7 @@ Plugin 'tpope/vim-surround'
 
 
 Plugin 'vim-scripts/TaskList.vim'
-let g:tlTokenList = ['TODO','todo','Todo']
+let g:tlTokenList = ['fixme', 'todo']
 
 
 
@@ -754,6 +754,9 @@ Plugin 'gerw/vim-latex-suite'
 
 Plugin 'lilydjwg/fcitx.vim'
 
+
+
+Plugin 'metakirby5/codi.vim'
 
 
 
