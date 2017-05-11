@@ -341,7 +341,7 @@ function! Do_Map()
         map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!xelatex '."%"<CR><CR>
         map <silent> <F10> <ESC>:exec '!evince '.expand('%:r').'.pdf'<CR><CR>
     elseif (&filetype == 'python')
-        map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!python '"%"<CR>
+        map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec 'AsyncRun! python'"%"<CR>
     elseif (&filetype == 'markdown')
         map <buffer> <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!google-chrome '"%"<CR><CR>
     else 
@@ -752,7 +752,8 @@ Plugin 'lilydjwg/fcitx.vim'
 
 
 
-Plugin 'metakirby5/codi.vim'
+Plugin 'skywind3000/asyncrun.vim'
+
 
 
 
