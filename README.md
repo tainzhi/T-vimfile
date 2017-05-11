@@ -323,7 +323,7 @@ usage: the default trigger
 方便在vim中使用中文输入法. 如果在输入模式, 输入中文, 然后Esc返回normal模式, 不用切换输入法, 也能使用各种vim命令, 然后再次返回输入模式, 直接输入中文, 不用切换输入法
 
 ### asyncrun.vim
-[asyncrun.vim](https://github.com/skywind3000/asyncrun.vim）
+[asyncrun.vim](https://github.com/skywind3000/asyncrun.vim)
 
 This plugin takes the advantage of new apis in Vim 8 (and NeoVim) to enable you to run shell commands in background and read output in the quickfix window in realtime:
 
