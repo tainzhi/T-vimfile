@@ -14,6 +14,7 @@ Thanks
       * [普通插件](#普通插件)
          * [NERDTree](#nerdtree)
          * [vim-surround](#vim-surround)
+         * [delimitMate](#delimitmate)
          * [MatchTagAlways](#matchtagalways)
          * [tabular](#tabular)
          * [TaskkList.vim](#taskklistvim)
@@ -175,13 +176,20 @@ If a NERD tree already exists for this tab, it is reopened and rendered again.  
 
 
 ### vim-surround
+
 [vim-surround](https://github.com/tpope/vim-surround)
 快速加环绕符号
+
 ```
 ds"             删除"，此处"可以为任何符号,从光标所在处到单词末尾
 cs"<p>          替换"为<p>
 ysw(            添加()
 ```
+
+### delimitMate
+[delimitMate](https://github.com/Raimondi/delimitMate)
+This plug-in provides automatic closing of quotes, parenthesis, brackets, etc., besides some other related features that should make your time in insert mode a little bit easier, like syntax awareness (will not insert the closing delimiter in comments and other configurable regions), and expansions (off by default), and some more.
+
 
 ### MatchTagAlways
 [MatchTagAlways](https://github.com/Valloric/MatchTagAlways)
