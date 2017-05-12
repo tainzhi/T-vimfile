@@ -14,6 +14,7 @@ Thanks
       * [普通插件](#普通插件)
          * [NERDTree](#nerdtree)
          * [vim-surround](#vim-surround)
+         * [MatchTagAlways](#matchtagalways)
          * [tabular](#tabular)
          * [TaskkList.vim](#taskklistvim)
          * [vim-easymotion](#vim-easymotion)
@@ -182,6 +183,10 @@ cs"<p>          替换"为<p>
 ysw(            添加()
 ```
 
+### MatchTagAlways
+[MatchTagAlways](https://github.com/Valloric/MatchTagAlways)
+This plugin makes "%" command jump to match HTML tags, if/else/endif in vim scripts, etc
+
 ### tabular
 [godlygeek/tabular](https://github.com/godlygeek/tabular)
 对齐
@@ -301,7 +306,7 @@ J   shrink select block
 
 ### vimim中文输入法
 [vimim](https://github.com/tainzhi/vimim)
-查找文本中的`项目`这一词组, 先查找`/xiangmu`, 然后输入回车, 此时没有匹配结果, 然后输入`n`查找下一个
+查找文本中的`项目`这一词组, 先查找`/xiangmu`, 然后输入回车, 此时没有匹配结果, 然后输入查找下一个
 
 ### Snippet
 [snippet](https://github.com/honza/vim-snippets)

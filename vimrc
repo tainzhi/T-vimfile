@@ -363,9 +363,6 @@ autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} call Do_Map()
 " Scripts and Plugins configure "
 " filetype off
 filetype plugin indent on      " Automatically detect file types.
-" This plugin makes "%" command jump to match HTML tags, if/else/endif in vim
-" scripts, etc
-runtime macros/matchit.vim
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
@@ -538,6 +535,11 @@ inoremap <leader>o <C-O>:ZoomWin<CR>
 
 
 Plugin 'tpope/vim-surround'
+
+
+
+Plugin 'Valloric/MatchTagAlways'
+nnoremap % :MtaJumpToOtherTag<CR>
 
 
 
