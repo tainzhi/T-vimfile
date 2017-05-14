@@ -760,6 +760,8 @@ Plugin 'lilydjwg/fcitx.vim'
 
 
 Plugin 'skywind3000/asyncrun.vim'
+" Use autocmd AsyncRunStart with asyncrun#quickfix_toggle in your vimrc:
+autocmd User AsyncRunStart call asyncrun#quickfix_toggle(15, 1)
 
 
 

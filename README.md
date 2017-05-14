@@ -342,9 +342,12 @@ This plugin takes the advantage of new apis in Vim 8 (and NeoVim) to enable you 
 
 but with use of it, you should open quickfix window, `:copen`
 
+You also can open quickfix window after you trigger the command. [Reference](https://github.com/skywind3000/asyncrun.vim/wiki/FAQ#automate-opening-quickfix-window)
+
 ```
 :AsyncRun gcc % -o %<
 :AsyncRun! grep -R word
+:Asynctop       # stop async jobs
 ```
 
 
