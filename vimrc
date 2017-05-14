@@ -374,14 +374,19 @@ Plugin 'gmarik/vundle' " let Vundle manage Vundle
 
 " Colorscheme
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'liuchengxu/space-vim-dark'
 if has("gui_running")
-  set background=dark
-  colorscheme solarized
+    set background=dark
+    colorscheme solarized
 else
   set t_Co=256
   " set background=dark
   " colorscheme solarized
-  colorscheme desert
+
+    colorscheme desert
+
+    colorscheme space-vim-dark
+    hi Comment cterm=italic
 endif
 
 
