@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-05-01 21:20:11
+"  Modified : 2017-05-14 23:25:43
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -358,47 +358,29 @@ autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} call Do_Map()
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"install plugin
+" install plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Scripts and Plugins configure "
-" filetype off
 filetype plugin indent on      " Automatically detect file types.
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
-
-
-
-Plugin 'gmarik/vundle' " let Vundle manage Vundle
-
+call plug#begin('~/.vim/plugged')
 
 
 " Colorscheme
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'liuchengxu/space-vim-dark'
-if has("gui_running")
-    set background=dark
-    colorscheme solarized
-else
-  set t_Co=256
-  " set background=dark
-  " colorscheme solarized
-
-    colorscheme desert
-
-    colorscheme space-vim-dark
-    hi Comment cterm=italic
-endif
+Plug 'altercation/vim-colors-solarized'
+" Plug 'nashamri/spacemacs-theme'
+" Plug 'junegunn/seoul256.vim', { 'do': ':colorscheme seoul256' }
+Plug 'liuchengxu/space-vim-dark', { 'do': ':colorscheme space-vim-dark' }
 
 
 
 "comment the code
-Plugin 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter'
 let g:NERDSpaceDelims=1
 
 
 
 "nerdtree
-Plugin 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree'
 let g:NERDTreeWinPos = 'right'
 nmap <silent> <F3> :NERDTreeToggle<CR>
 let g:NERDTreeWinSize=40
@@ -413,7 +395,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 
 
 " vim-nerdtree-tabs
-Plugin 'jistr/vim-nerdtree-tabs'
+Plug 'jistr/vim-nerdtree-tabs'
 let g:nerdtree_tabs_open_on_gui_startup = 0
 let g:nerdtree_tabs_open_on_console_startup = 1
 let g:nerdtree_tabs_smart_startup_focus = 2
@@ -432,7 +414,7 @@ set tags=tags;**/.svn,tags;**/.git         " consider the tags first, then
 
 
 "autoload_cscope.vim
-Plugin 'tainzhi/autoload_cscope.vim'
+Plug 'tainzhi/autoload_cscope.vim'
 " if has("cscope")
     " set csprg=/usr/bin/cscope
     set cst
@@ -457,7 +439,7 @@ nnoremap <leader>cf :cs find f
 
 
 " rainbow_parentheses.vim
-Plugin 'kien/rainbow_parentheses.vim'
+Plug 'kien/rainbow_parentheses.vim'
 let g:rbpt_colorpairs = [
     \ ['brown',       'RoyalBlue3'],
     \ ['Darkblue',    'SeaGreen3'],
@@ -485,12 +467,12 @@ au Syntax * RainbowParenthesesLoadBraces
 
 
 
-Plugin 'Raimondi/delimitMate'
+Plug 'Raimondi/delimitMate'
 
 
 
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#tab_nr_type = 2 " splits and tab number
 let g:airline#extensions#tabline#buffer_idx_mode = 1
@@ -526,7 +508,7 @@ nmap <leader>+ <Plug>AirlineSelectNextTab
 
 
 " Plugin tagbar
-Plugin 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 nmap <silent> <F2> :Tagbar<CR>
 set updatetime=100
 let g:tagbar_autofocus = 1
@@ -536,28 +518,28 @@ let g:tagbar_left = 1
 
 
 
-Plugin 'ZoomWin'
+Plug 'vim-scripts/ZoomWin'
 noremap <leader>o :ZoomWin<CR>
 vnoremap <leader>o <C-C>:ZoomWin<CR>
 inoremap <leader>o <C-O>:ZoomWin<CR>
 
 
 
-Plugin 'tpope/vim-surround'
+Plug 'tpope/vim-surround'
 
 
 
-Plugin 'Valloric/MatchTagAlways'
+Plug 'Valloric/MatchTagAlways'
 nnoremap % :MtaJumpToOtherTag<CR>
 
 
 
-Plugin 'vim-scripts/TaskList.vim'
+Plug 'vim-scripts/TaskList.vim'
 let g:tlTokenList = ['fixme', 'todo']
 
 
 
-Plugin 'Lokaltog/vim-easymotion'
+Plug 'Lokaltog/vim-easymotion'
 "let g:Easymotion_smartcase = 0
 "let g:Easymotion_use_upper = 1
 let g:EasyMotion_do_mapping = 0
@@ -566,13 +548,13 @@ nmap <leader>f <Plug>(easymotion-s2)
 
 
 
-Plugin 'DirDiff.vim'
+Plug 'vim-scripts/DirDiff.vim'
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,.svn,cscope*,tags"
 
 
 
-Plugin 'rking/ag.vim'
-Plugin 'Chun-Yang/vim-action-ag'
+Plug 'rking/ag.vim'
+Plug 'Chun-Yang/vim-action-ag'
 nmap * <Plug>AgActionWord
 vmap * <Plug>AgActionVisual
 let g:ag_highlight=1
@@ -580,13 +562,13 @@ let g:ag_highlight=1
 
 
 " use to line up text
-Plugin 'godlygeek/tabular'
+Plug 'godlygeek/tabular'
 nmap <leader>be :Tabularize /=<CR>
 nnoremap <leader>bu :Tabularize /
 
 
 
-Plugin 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe'
 " 自动补全配置
 set completeopt=longest,menu	"让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif	"离开插入模式后自动关闭预览窗口
@@ -626,7 +608,7 @@ let g:ycm_show_diagnostics_ui = 1
 
 
 
-Plugin 'vim-syntastic/syntastic'
+Plug 'vim-syntastic/syntastic'
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -644,7 +626,7 @@ nnoremap <Leader>ap :lprevious<cr>
 
 
 " make YouCompleteMe compatible with ultisnips
-Plugin 'ervandew/supertab'
+Plug 'ervandew/supertab'
 " make YCM compatible with UltiSnips (using supertab)
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
@@ -658,11 +640,11 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " Included are syntax, indent, and filetype file for git, gitconfig,
 " gitrebase,and gitsendemail
-Plugin 'tpope/vim-git'
+Plug 'tpope/vim-git'
 
 
 
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 nnoremap <leader>W :Gwrite<CR>
 nnoremap <leader>C :Gcommit -v<CR>
 nnoremap <leader>S :Gstatus \| 7<CR>
@@ -673,13 +655,13 @@ inoremap <leader>S <Esc><leader>S
 
 
 " List the recent files
-Plugin 'yegappan/mru'
+Plug 'yegappan/mru'
 
 
 
 " ultimate solutions for snippets
-Plugin 'Sirver/ultisnips'
-Plugin 'honza/vim-snippets'
+Plug 'Sirver/ultisnips'
+Plug 'honza/vim-snippets'
 " let g:UltiSnipsExpandTrigger = "<c-l>"
 " let g:UltiSnipsJumpForwardTrigger = "<c-j>"
 " let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
@@ -691,8 +673,8 @@ autocmd BufWritePre,FileWritePre,BufRead,BufNewFile {*.cc,*.h,*c,*.cpp} call Ult
 
 
 
-Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-session'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-session'
 let g:session_autosave='yes'
 let g:session_autoload='yes'
 let g:session_directory='./'
@@ -701,34 +683,34 @@ let g:session_lock_enabled=0
 
 
 
-Plugin 'terryma/vim-expand-region'
+Plug 'terryma/vim-expand-region'
 map K <Plug>(expand_region_expand)
 map J <Plug>(expand_region_shrink)
 
 
 
 " Syntax highlight
-Plugin 'gmarik/vim-markdown'
+Plug 'gmarik/vim-markdown'
 
 
 
-Plugin 'tpope/vim-repeat'
+Plug 'tpope/vim-repeat'
 
 
 
-Plugin 'gmarik/ide-popup.vim'
+Plug 'gmarik/ide-popup.vim'
 
 
 
-Plugin 'tomtom/tlib_vim'
-Plugin 'tomtom/tcomment_vim'
+Plug 'tomtom/tlib_vim'
+Plug 'tomtom/tcomment_vim'
 nnoremap // :TComment<CR>
 vnoremap // :TComment<CR>
 
 
 
 
-Plugin 'tainzhi/vimim'
+Plug 'tainzhi/vimim'
 let g:vimim_cloud = 'google,sogou,baidu,qq'   
 let g:vimim_map = 'tab_as_gi'   
 " :let g:vimim_mode = 'dynamic'   
@@ -740,7 +722,7 @@ let g:vimim_map = 'tab_as_gi'
 
 
 
-Plugin 'gerw/vim-latex-suite'
+Plug 'gerw/vim-latex-suite'
 " OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
@@ -760,11 +742,11 @@ Plugin 'gerw/vim-latex-suite'
 
 
 
-Plugin 'lilydjwg/fcitx.vim'
+Plug 'lilydjwg/fcitx.vim'
 
 
 
-Plugin 'skywind3000/asyncrun.vim'
+Plug 'skywind3000/asyncrun.vim'
 " Use autocmd AsyncRunStart with asyncrun#quickfix_toggle in your vimrc:
 autocmd User AsyncRunStart call asyncrun#quickfix_toggle(15, 1)
 
@@ -861,18 +843,28 @@ autocmd BufNewFile *.sh,*.txt,*.[ch],*.cpp,*.cc,*.python,*.java,*.py exec ":call
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Utility
-Plugin 'AndrewRadev/splitjoin.vim'
+Plug 'AndrewRadev/splitjoin.vim'
 nmap sj :SplitjoinJoin<cr>
 nmap sk :SplitjoinSplit<cr>
 
-Plugin 'sjl/gundo.vim'
+Plug 'sjl/gundo.vim'
 
-Plugin 'vim-scripts/genutils'
+Plug 'vim-scripts/genutils'
 
-Plugin 'gregsexton/gitv'
+Plug 'gregsexton/gitv'
+
+call plug#end()
 
 
 
+if has("gui_running")
+    set background=dark
+    colorscheme solarized
+else
+    set t_Co=256
+    colorscheme space-vim-dark
+    hi Comment cterm=italic
+endif
 
 
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1006,3 +998,5 @@ Plugin 'gregsexton/gitv'
 " nmap <leader>af :AckFile <C-R>=expand("<cfile>")<CR><CR>
 " ""d: 查找本当前函数调用的函数
 " map <leader>a :Ack <C-R>=expand("<cword>")<CR><CR>
+" 
+" 
