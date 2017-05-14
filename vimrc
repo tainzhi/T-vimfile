@@ -173,7 +173,7 @@ endif
 "keyboard map command 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let mapleader = ","
+let mapleader = "\<Space>"
 "let maplocalleader = '	'      " Tab as a local leader
 let g:netrw_banner = 0         " do not show Netrw help banner
 
