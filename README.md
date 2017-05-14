@@ -158,6 +158,12 @@ else
 endif
 ```
 
+### space-vim-dark
+
+[space-vim-dark](https://github.com/liuchengxu/space-vim-dark)
+
+a theme for terminal
+
 ### rainbow_parentheses
 [rainbow_parentheses](https://github.com/kien/rainbow_parentheses.vim)
 hight the parentheses
