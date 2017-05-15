@@ -122,7 +122,8 @@ nnoremap // :TComment<CR>   注释
 |F9 for c/cpp/tex|编译c/cpp/tex/||
 |F9 for python|interpret python||
 |F9 for markdown|open google-chrome(already has installed plugin MarkDown Preview Plus) to preview markdown||
-|F10|执行.out文件,或者使用evince打开pdf文件||
+|F9 for dot|compile the dot file to jpg wiht dot||
+|F10|执行.out文件,或者使用evince打开pdf文件,或者使用xdg-open打开图片||
 |F11||ubuntu maxium window|
 |F12|显示结尾符号|map &lt;silent&gt; &lt;F12&gt; :set invlist&lt;CR&gt;|
 

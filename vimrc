@@ -274,18 +274,6 @@ inoremap <C-S> <C-O>:update<CR>
 " generate HTML version current buffer using current color scheme
 map <leader>2h :runtime! syntax/2html.vim<CR>
 
-" " }}}
-
-" AutoCommands 
-au BufRead,BufNewFile {*.go}                                          setl ft=go tabstop=2 softtabstop=2 noexpandtab smarttab
-" autocmd FileType go compiler go
-au BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru}     setl ft=ruby tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab
-au BufRead,BufNewFile {*.local}                                       setl ft=sh
-au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                         setl ft=markdown
-au BufRead,BufNewFile {*.scala}                                       setl ft=scala
-au! BufReadPost       {COMMIT_EDITMSG,*/COMMIT_EDITMSG}               setl ft=gitcommit noml list| norm 1G
-" au! BufWritePost      {*.snippet,*.snippets}                          call ReloadAllSnippets()
-
 " open help in vertical split
 au BufWinEnter *.txt if &ft == 'help' | wincmd H | vertical resize 80 | nmap q :q<CR> | endif
 noremap <leader>h :help <C-R>=expand("<cword>")<CR><CR>
@@ -344,13 +332,33 @@ function! Do_Map()
         map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec 'AsyncRun! python'"%"<CR>
     elseif (&filetype == 'markdown')
         map <buffer> <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!google-chrome '"%"<CR><CR>
+    elseif (&filetype == 'dot')
+        map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!dot -Tjpg 'expand('%').' -o 'expand('%:r').'.jpg'<CR><CR>
+        map <silent> <F10> <ESC>:exec ":w"<CR> <bar> :exec '!xdg-open 'expand('%:r').'.jpg'<CR><CR>
     else 
         nmap <silent> <F9> :echo "tex compile"
         nmap <silent> <F10> :echo "tex run"
     endif
 endfunction
-autocmd BufWritePre,FileWritePost,BufReadPost,FileReadPost *.cc,*.c,*.cpp,*.h,*.tex,*py call Do_Map()
-autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} call Do_Map()
+
+
+au BufRead,BufNewFile {*.go}                                            setl ft=go tabstop=2 softtabstop=2 noexpandtab smarttab
+au BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru}       setl ft=ruby tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab
+au BufRead,BufNewFile {*.local}                                         setl ft=sh
+au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                           setl ft=markdown
+au BufRead,BufNewFile {*.c,*h}                                          setl ft=c
+au BufRead,BufNewFile {*.c++,*.cc,*.cpp}                                setl ft=cc
+au BufRead,BufNewFile {*.tex}                                           setl ft=tex
+au BufRead,BufNewFile {*.py}                                            setl ft=python
+au BufRead,BufNewFile {*.dot}                                           setl ft=dot
+
+autocmd BufWritePre,FileWritePost,BufReadPost,FileReadPost {*.*}        call Do_Map()
+
+au! BufReadPost       {COMMIT_EDITMSG,*/COMMIT_EDITMSG}                 setl ft=gitcommit noml list| norm 1G
+au! BufWritePost      {*.snippet,*.snippets}                            call ReloadAllSnippets()
+
+" autocmd BufWritePre,FileWritePost,BufReadPost,FileReadPost *.cc,*.c,*.cpp,*.h,*.tex,*py,*dot call Do_Map()
+" autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} call Do_Map()
 " autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} map <Leader>p :!start "C:\Program Files\Google\Chrome\Application\chrome.exe" "%:p"<CR>
 
 
@@ -455,8 +463,6 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " install plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Scripts and Plugins configure "
-filetype plugin indent on      " Automatically detect file types.
 call plug#begin('~/.vim/plugged')
 
 
