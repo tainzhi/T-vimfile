@@ -1,86 +1,86 @@
-Information about my vim configure, notes and plugins
+Information about my vim notes, configures and plugins
+=================
 
-Thanks
-- 1  learn git submodule and vundle from [gmarik/vimfiles](https://github.com/gmarik/vimfiles)
-- 2 get some useful plugins from [wklken/k-vim](https://github.com/wklken/k-vim)
+    * [Configure initial](#configure-initial)
+    * [自定义map](#%E8%87%AA%E5%AE%9A%E4%B9%89map)
+    * [美化插件](#%E7%BE%8E%E5%8C%96%E6%8F%92%E4%BB%B6)
+      * [solarized\.vim](#solarizedvim)
+      * [space\-vim\-dark](#space-vim-dark)
+      * [rainbow\_parentheses](#rainbow_parentheses)
+    * [普通插件](#%E6%99%AE%E9%80%9A%E6%8F%92%E4%BB%B6)
+      * [vim\-plug](#vim-plug)
+      * [NERDTree](#nerdtree)
+      * [vim\-surround](#vim-surround)
+      * [delimitMate](#delimitmate)
+      * [MatchTagAlways](#matchtagalways)
+      * [tabular](#tabular)
+      * [TaskkList\.vim](#taskklistvim)
+      * [vim\-easymotion](#vim-easymotion)
+      * [DirDiff](#dirdiff)
+      * [Syntastic](#syntastic)
+      * [vim\-git](#vim-git)
+      * [vim\-fugitive](#vim-fugitive)
+      * [vim\-sessiong](#vim-sessiong)
+      * [mru\.vim](#mruvim)
+      * [vim\-auto\-save](#vim-auto-save)
+      * [vim\-expand\-region](#vim-expand-region)
+      * [vim\-airline](#vim-airline)
+      * [vimim中文输入法](#vimim%E4%B8%AD%E6%96%87%E8%BE%93%E5%85%A5%E6%B3%95)
+      * [Snippet](#snippet)
+      * [fcitx\.vim](#fcitxvim)
+      * [asyncrun\.vim](#asyncrunvim)
+    * [依赖包的插件](#%E4%BE%9D%E8%B5%96%E5%8C%85%E7%9A%84%E6%8F%92%E4%BB%B6)
+      * [tagbar](#tagbar)
+      * [vim\-latex\-suite](#vim-latex-suite)
+      * [ag\.vim](#agvim)
+      * [cscope](#cscope)
+      * [YouCompleteMe](#youcompleteme)
+      * [Syntastic](#syntastic-1)
+    * [Deprecated plugins](#deprecated-plugins)
+      * [taglist\.vim](#taglistvim)
+      * [FuzzyFinder](#fuzzyfinder)
+    * [Plugin for java and android](#plugin-for-java-and-android)
+    * [vim help](#vim-help)
+      * [跳转移动光标](#%E8%B7%B3%E8%BD%AC%E7%A7%BB%E5%8A%A8%E5%85%89%E6%A0%87)
+      * [插入](#%E6%8F%92%E5%85%A5)
+      * [删除进入Normal模式](#%E5%88%A0%E9%99%A4%E8%BF%9B%E5%85%A5normal%E6%A8%A1%E5%BC%8F)
+      * [复制与寄存器](#%E5%A4%8D%E5%88%B6%E4%B8%8E%E5%AF%84%E5%AD%98%E5%99%A8)
+      * [粘贴与寄存器](#%E7%B2%98%E8%B4%B4%E4%B8%8E%E5%AF%84%E5%AD%98%E5%99%A8)
+      * [visual模式](#visual%E6%A8%A1%E5%BC%8F)
+      * [移动多行](#%E7%A7%BB%E5%8A%A8%E5%A4%9A%E8%A1%8C)
+      * [代码折叠](#%E4%BB%A3%E7%A0%81%E6%8A%98%E5%8F%A0)
+      * [翻屏](#%E7%BF%BB%E5%B1%8F)
+      * [文件](#%E6%96%87%E4%BB%B6)
+      * [窗口操作](#%E7%AA%97%E5%8F%A3%E6%93%8D%E4%BD%9C)
+      * [vimdiff](#vimdiff)
+      * [tab标签](#tab%E6%A0%87%E7%AD%BE)
+      * [set autochdir](#set-autochdir)
+      * [recent old files](#recent-old-files)
+      * [mark](#mark)
+      * [vim和shell](#vim%E5%92%8Cshell)
+      * [宏](#%E5%AE%8F)
+      * [帮助](#%E5%B8%AE%E5%8A%A9)
+      * [setting](#setting)
+      * [替换](#%E6%9B%BF%E6%8D%A2)
+      * [查找](#%E6%9F%A5%E6%89%BE)
+      * [vim EX mode](#vim-ex-mode)
+      * [vim tags](#vim-tags)
+      * [设置保存编码格式](#%E8%AE%BE%E7%BD%AE%E4%BF%9D%E5%AD%98%E7%BC%96%E7%A0%81%E6%A0%BC%E5%BC%8F)
+      * [vim打开16进制](#vim%E6%89%93%E5%BC%8016%E8%BF%9B%E5%88%B6)
+      * [vim buffer](#vim-buffer)
+      * [加密/解密文件](#%E5%8A%A0%E5%AF%86%E8%A7%A3%E5%AF%86%E6%96%87%E4%BB%B6)
+      * [长行断行/整行](#%E9%95%BF%E8%A1%8C%E6%96%AD%E8%A1%8C%E6%95%B4%E8%A1%8C)
 
------
-   * [Table of Contents](#table-of-contents)
-      * [Configure initial](#configure-initial)
-      * [自定义map](#自定义map)
-      * [美化插件](#美化插件)
-         * [solarized.vim](#solarizedvim)
-         * [rainbow_parentheses](#rainbow_parentheses)
-      * [普通插件](#普通插件)
-         * [NERDTree](#nerdtree)
-         * [vim-surround](#vim-surround)
-         * [delimitMate](#delimitmate)
-         * [MatchTagAlways](#matchtagalways)
-         * [tabular](#tabular)
-         * [TaskkList.vim](#taskklistvim)
-         * [vim-easymotion](#vim-easymotion)
-         * [DirDiff](#dirdiff)
-         * [Syntastic](#syntastic)
-         * [vim-git](#vim-git)
-         * [vim-fugitive](#vim-fugitive)
-         * [vim-sessiong](#vim-sessiong)
-         * [mru.vim](#mruvim)
-         * [vim-auto-save](#vim-auto-save)
-         * [vim-expand-region](#vim-expand-region)
-         * [vim-airline](#vim-airline)
-         * [vimim中文输入法](#vimim中文输入法)
-         * [Snippet](#snippet)
-         * [vim-latex-suite](#vim-latex-suite)
-         * [fcitx.vim](#fcitxvim)
-         * [asyncrun.vim](#asyncrunvim)
-      * [依赖包的插件](#依赖包的插件)
-         * [tagbar](#tagbar)
-         * [ag.vim](#agvim)
-         * [cscope](#cscope)
-         * [YouCompleteMe](#youcompleteme)
-         * [Syntastic](#syntastic-1)
-      * [Deprecated plugins](#deprecated-plugins)
-         * [taglist.vim](#taglistvim)
-         * [FuzzyFinder](#fuzzyfinder)
-      * [Plugin for java and android](#plugin-for-java-and-android)
-      * [vim help](#vim_help)
-         * [跳转移动光标](#跳转移动光标)
-         * [插入](#插入)
-         * [删除进入Normal模式](#删除进入normal模式)
-         * [复制与寄存器](#复制与寄存器)
-         * [粘贴与寄存器](#粘贴与寄存器)
-         * [visual模式](#visual模式)
-         * [移动多行](#移动多行)
-         * [代码折叠](#代码折叠)
-         * [翻屏](#翻屏)
-         * [文件](#文件)
-         * [窗口操作](#窗口操作)
-         * [vimdiff](#vimdiff)
-         * [tab标签](#tab标签)
-         * [set autochdir](#set-autochdir)
-         * [recent old files](#recent-old-files)
-         * [mark](#mark)
-         * [vim和shell](#vim和shell)
-         * [宏](#宏)
-         * [帮助](#帮助)
-         * [setting](#setting)
-         * [替换](#替换)
-         * [查找](#查找)
-         * [vim EX mode](#vim-ex-mode)
-         * [vim tags](#vim-tags)
-         * [设置保存编码格式](#设置保存编码格式)
-         * [vim打开16进制](#vim打开16进制)
-         * [vim buffer](#vim-buffer)
-         * [加密/解密文件](#加密解密文件)
-         * [长行断行/整行](#长行断行整行)
+
+
 
 ## Configure initial
 
 ```
 # clone recursively with vundle
-git clone --recursive https://github.com/tainzhi/Q-vimfile.git ~/.vim
+git clone https://github.com/tainzhi/Q-vimfile.git ~/.vim
 # run vim and install plugins
-vim .vim/vimrc +PluginInstall +qall                     
+vim .vim/vimrc +PlugUpdate +qall                     
 ```
 
 ## 自定义map
@@ -169,6 +169,24 @@ a theme for terminal
 hight the parentheses
 
 ## 普通插件
+
+### vim-plug
+[vim-plug](https://github.com/junegunn/vim-plug) is a faster plugin manager than [vundle](https://github.com/VundleVim/Vundle.vim). And it supports parallel installation/update.
+
+- Some settings
+```
+post update hooks"
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+```
+ 
+- Usage
+```
+:PlugUpdate     install or update 
+:PlugClean[!]   remove unused directories
+:PlugStatus     check the status of plugins
+```
+
+
 ### NERDTree
 **Usage**:
 ```
@@ -1050,7 +1068,4 @@ set key=    #直接回车, 然后保存退出
 :set wrap   #断行, 很长的一行, 分成几行完全显示
 :set nowrap #默认设置; 无论多长, 单行显示, 只显示屏幕可以显示的部分
 ```
-
-
-
 

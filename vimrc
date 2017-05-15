@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-05-14 23:25:43
+"  Modified : 2017-05-15 07:59:12
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -354,6 +354,101 @@ autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} call Do_Map()
 " autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} map <Leader>p :!start "C:\Program Files\Google\Chrome\Application\chrome.exe" "%:p"<CR>
 
 
+function! Do_Update_Modified()
+    let line_number = search('Modified','nw')
+    " echo line_number
+    if line_number < 10
+        let line_content = substitute(getline(line_number),"[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9]",strftime("%Y-%m-%d %T"),"g") 
+        call setline(line_number, line_content)
+    endif
+endfunction
+autocmd BufWritePre,FileWritePre * call Do_Update_Modified()
+
+" 定义函数Do_Set_Title，自动插入文件头 
+function! Do_Set_Title() 
+    "如果文件类型为.sh文件 
+    if &filetype == 'sh' 
+        call setline(1,"\################################################################################") 
+        call append(line("."), "\# File     : ".expand("%")) 
+        call append(line(".")+1, "\# Author   : tainzhi") 
+        call append(line(".")+2, "\# Mail     : qfq61@qq.com") 
+        call append(line(".")+3, "\# Created  : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+4, "\# Modified : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+5, "\################################################################################") 
+        call append(line(".")+6, "\#!/bin/bash") 
+        call append(line(".")+7, "") 
+    elseif &filetype == 'text'
+        call setline(1,"********************************************************************************") 
+        call append(line("."), " > File     : ".expand("%")) 
+        call append(line(".")+1, " > Author   : tainzhi") 
+        call append(line(".")+2, " > Mail     : qfq61@qq.com") 
+        call append(line(".")+3, " > Created  : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+4, " > Modified : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+5, "********************************************************************************") 
+        call append(line(".")+6, "") 
+    elseif &filetype == 'c'
+        call setline(1,"/*******************************************************************************") 
+        call append(line("."), "* File     : ".expand("%")) 
+        call append(line(".")+1, "* Author   : tainzhi") 
+        call append(line(".")+2, "* Mail     : qfq61@qq.com") 
+        call append(line(".")+3, "* Created  : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+4, "* Modified : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+5, "*******************************************************************************/") 
+        call append(line(".")+6, "") 
+        call append(line(".")+7, "#include <stdio.h>") 
+        call append(line(".")+8, "#include <string.h>") 
+        call append(line(".")+9, "#include <stdlib.h>") 
+        call append(line(".")+10, "") 
+        call append(line(".")+11, "") 
+    elseif &filetype == 'cpp' || &filetype == 'h' || &filetype == 'cc'
+        call setline(1,"/*******************************************************************************") 
+        call append(line("."), "* File     : ".expand("%")) 
+        call append(line(".")+1, "* Author   : tainzhi") 
+        call append(line(".")+2, "* Mail     : qfq61@qq.com") 
+        call append(line(".")+3, "* Created  : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+4, "* Modified : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+5, "*******************************************************************************/") 
+        call append(line(".")+6, "") 
+        call append(line(".")+7, "#include <stdio.h>") 
+        call append(line(".")+8, "#include <string.h>") 
+        call append(line(".")+9, "#include <stdlib.h>") 
+        call append(line(".")+10, "#include <iostream>") 
+        call append(line(".")+11, "") 
+        call append(line(".")+12, "using namespace std;") 
+        call append(line(".")+13, "") 
+        call append(line(".")+14, "") 
+    elseif &filetype == 'python'
+        call setline(1,"#!/usr/bin/env python##########################################################")
+        call setline(2,"# -*- coding: utf-8 -*-########################################################")
+        call append(line(".")+1, "# File        : ".expand("%")) 
+        call append(line(".")+2, "# Author      : tainzhi") 
+        call append(line(".")+3, "# Mail        : qfq61@qq.com") 
+        call append(line(".")+4, "# Created     : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+5, "# Modified    : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+6, "# Description : ") 
+        call append(line(".")+7, "###############################################################################/") 
+        call append(line(".")+8, "") 
+        call append(line(".")+9, "") 
+    endif
+    "新建文件后，自动定位到文件末尾
+    autocmd BufNewFile * normal G
+endfunc 
+" 匹配任意文件
+" ma     保存当前位置到'a'标记
+" 'a     光标回到旧位置
+" autocmd BufWritePre,FileWritePre * ma|call Do_File()|'a
+autocmd BufNewFile *.sh,*.txt,*.[ch],*.cpp,*.cc,*.python,*.java,*.py exec ":call Do_Set_Title()" 
+
+
+function! Do_BuildYCM(info)
+  " info is a dictionary with 3 fields
+  " - name:   name of the plugin
+  " - status: 'installed', 'updated', or 'unchanged'
+  " - force:  set on PlugInstall! or PlugUpdate!
+  if a:info.status == 'installed' || a:info.force
+    !./install.py --clang-completer --gocode-completer --tern-completer --racer-completer
+  endif
+endfunction
 
 
 
@@ -367,8 +462,7 @@ call plug#begin('~/.vim/plugged')
 
 " Colorscheme
 Plug 'altercation/vim-colors-solarized'
-" Plug 'nashamri/spacemacs-theme'
-" Plug 'junegunn/seoul256.vim', { 'do': ':colorscheme seoul256' }
+Plug 'junegunn/seoul256.vim', { 'do': ':colorscheme seoul256' }
 Plug 'liuchengxu/space-vim-dark', { 'do': ':colorscheme space-vim-dark' }
 
 
@@ -568,7 +662,7 @@ nnoremap <leader>bu :Tabularize /
 
 
 
-Plug 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe', { 'do': function('Do_BuildYCM') }
 " 自动补全配置
 set completeopt=longest,menu	"让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif	"离开插入模式后自动关闭预览窗口
@@ -750,94 +844,6 @@ Plug 'skywind3000/asyncrun.vim'
 " Use autocmd AsyncRunStart with asyncrun#quickfix_toggle in your vimrc:
 autocmd User AsyncRunStart call asyncrun#quickfix_toggle(15, 1)
 
-
-
-
-function! Do_Update_Modified()
-    let line_number = search('Modified','nw')
-    " echo line_number
-    if line_number < 10
-        let line_content = substitute(getline(line_number),"[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9]",strftime("%Y-%m-%d %T"),"g") 
-        call setline(line_number, line_content)
-    endif
-endfunction
-autocmd BufWritePre,FileWritePre * call Do_Update_Modified()
-
-" 定义函数Do_Set_Title，自动插入文件头 
-function! Do_Set_Title() 
-    "如果文件类型为.sh文件 
-    if &filetype == 'sh' 
-        call setline(1,"\################################################################################") 
-        call append(line("."), "\# File     : ".expand("%")) 
-        call append(line(".")+1, "\# Author   : tainzhi") 
-        call append(line(".")+2, "\# Mail     : qfq61@qq.com") 
-        call append(line(".")+3, "\# Created  : ".strftime("%Y-%m-%d %T")) 
-        call append(line(".")+4, "\# Modified : ".strftime("%Y-%m-%d %T")) 
-        call append(line(".")+5, "\################################################################################") 
-        call append(line(".")+6, "\#!/bin/bash") 
-        call append(line(".")+7, "") 
-    elseif &filetype == 'text'
-        call setline(1,"********************************************************************************") 
-        call append(line("."), " > File     : ".expand("%")) 
-        call append(line(".")+1, " > Author   : tainzhi") 
-        call append(line(".")+2, " > Mail     : qfq61@qq.com") 
-        call append(line(".")+3, " > Created  : ".strftime("%Y-%m-%d %T")) 
-        call append(line(".")+4, " > Modified : ".strftime("%Y-%m-%d %T")) 
-        call append(line(".")+5, "********************************************************************************") 
-        call append(line(".")+6, "") 
-    elseif &filetype == 'c'
-        call setline(1,"/*******************************************************************************") 
-        call append(line("."), "* File     : ".expand("%")) 
-        call append(line(".")+1, "* Author   : tainzhi") 
-        call append(line(".")+2, "* Mail     : qfq61@qq.com") 
-        call append(line(".")+3, "* Created  : ".strftime("%Y-%m-%d %T")) 
-        call append(line(".")+4, "* Modified : ".strftime("%Y-%m-%d %T")) 
-        call append(line(".")+5, "*******************************************************************************/") 
-        call append(line(".")+6, "") 
-        call append(line(".")+7, "#include <stdio.h>") 
-        call append(line(".")+8, "#include <string.h>") 
-        call append(line(".")+9, "#include <stdlib.h>") 
-        call append(line(".")+10, "") 
-        call append(line(".")+11, "") 
-    elseif &filetype == 'cpp' || &filetype == 'h' || &filetype == 'cc'
-        call setline(1,"/*******************************************************************************") 
-        call append(line("."), "* File     : ".expand("%")) 
-        call append(line(".")+1, "* Author   : tainzhi") 
-        call append(line(".")+2, "* Mail     : qfq61@qq.com") 
-        call append(line(".")+3, "* Created  : ".strftime("%Y-%m-%d %T")) 
-        call append(line(".")+4, "* Modified : ".strftime("%Y-%m-%d %T")) 
-        call append(line(".")+5, "*******************************************************************************/") 
-        call append(line(".")+6, "") 
-        call append(line(".")+7, "#include <stdio.h>") 
-        call append(line(".")+8, "#include <string.h>") 
-        call append(line(".")+9, "#include <stdlib.h>") 
-        call append(line(".")+10, "#include <iostream>") 
-        call append(line(".")+11, "") 
-        call append(line(".")+12, "using namespace std;") 
-        call append(line(".")+13, "") 
-        call append(line(".")+14, "") 
-    elseif &filetype == 'python'
-        call setline(1,"#!/usr/bin/env python##########################################################")
-        call setline(2,"# -*- coding: utf-8 -*-########################################################")
-        call append(line(".")+1, "# File        : ".expand("%")) 
-        call append(line(".")+2, "# Author      : tainzhi") 
-        call append(line(".")+3, "# Mail        : qfq61@qq.com") 
-        call append(line(".")+4, "# Created     : ".strftime("%Y-%m-%d %T")) 
-        call append(line(".")+5, "# Modified    : ".strftime("%Y-%m-%d %T")) 
-        call append(line(".")+6, "# Description : ") 
-        call append(line(".")+7, "###############################################################################/") 
-        call append(line(".")+8, "") 
-        call append(line(".")+9, "") 
-    endif
-    "新建文件后，自动定位到文件末尾
-    autocmd BufNewFile * normal G
-endfunc 
-" 匹配任意文件
-" ma     保存当前位置到'a'标记
-" 'a     光标回到旧位置
-" autocmd BufWritePre,FileWritePre * ma|call Do_File()|'a
-autocmd BufNewFile *.sh,*.txt,*.[ch],*.cpp,*.cc,*.python,*.java,*.py exec ":call Do_Set_Title()" 
- 
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Todo use plugins
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -852,7 +858,26 @@ Plug 'sjl/gundo.vim'
 Plug 'vim-scripts/genutils'
 
 Plug 'gregsexton/gitv'
+Plug 'kien/ctrlp.vim'
+let g:ctrlp_map = '<leader>t'
+let g:ctrlp_max_height = 30
+let g:ctrlp_match_window_bottom=1
+let g:ctrlp_max_height = 20
+let g:ctrlp_match_window_reversed = 1
+let g:ctrlp_switch_buffer = 'e'
+nnoremap <leader>ev :CtrlP app/views<cr>
+nnoremap <leader>ec :CtrlP app/controllers<cr>
+nnoremap <leader>em :CtrlP app/models<cr>
+nnoremap <leader>el :CtrlP lib<cr>
+nnoremap <leader>ea :CtrlP app/assets<cr>
+nnoremap <leader>ep :CtrlP public<cr>
+nnoremap <leader>er :topleft :vsplit config/routes.rb<cr>
+nnoremap <leader>eg :topleft :vsplit Gemfile<cr>
+nnoremap <leader>es :Ctrlp src/
 
+Plug 'junegunn/vim-easy-align'
+
+Plug 'tpope/vim-unimpaired'
 call plug#end()
 
 
@@ -871,88 +896,19 @@ endif
 " Deprecated plugins
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin 'vim-scripts/lookupfile'
-
-" taglist.vim"
 " Plugin 'vim-scripts/taglist.vim'
-" map <silent> <F9> :TlistToggle<CR>
-" let Tlist_Use_Right_Window = 1  "右侧显示
-" let Tlist_Show_One_File        = 1             " 只显示当前文件的tags
-" let Tlist_Exit_OnlyWindow      = 1             " 如果Taglist窗口是最后一个窗口则退出Vim
-" let Tlist_File_Fold_Auto_Close = 1             " 自动折叠
-" let Tlist_Sort_Type = "name"                   " items in tags sorted by namelet Tlist_WinWidth = 26
 " Plugin 'vim-scripts/taglist.vim'
-" map <silent> <F9> :TlistToggle<CR>
-" let Tlist_Use_Right_Window = 1  "右侧显示
-" let Tlist_Show_One_File        = 1             " 只显示当前文件的tags
-" let Tlist_Exit_OnlyWindow      = 1             " 如果Taglist窗口是最后一个窗口则退出Vim
-" let Tlist_File_Fold_Auto_Close = 1             " 自动折叠
-" let Tlist_Sort_Type = "name"                   " items in tags sorted by namelet Tlist_WinWidth = 26
-
-
-
-" FuzzyFinder
 " Plugin 'L9'
 " Plugin 'FuzzyFinder'
-" FuF customisations "{{{
-" let g:fuf_modesDisable = []
-" nnoremap <leader>h :FufHelp<CR>
-" nnoremap <leader>1  :FufTagWithCursorWord<CR>
-" nnoremap <leader>11 :FufTag<CR>
-" nnoremap <leader>2  :FufFileWithCurrentBufferDir<CR>
-" nnoremap <leader>22 :FufFile<CR>
-" nnoremap <leader>3  :FufBuffer<CR>
-" nnoremap <leader>4  :FufDirWithCurrentBufferDir<CR>
-" nnoremap <leader>44 :FufDir<CR>
-" nnoremap <leader>5  :FufBufferTag<CR>
-" nnoremap <leader>55 :FufBufferTagAll<CR>
-" nnoremap <leader>6  :FufMruFile<CR>
-" nnoremap <leader>7  :FufLine<CR>
-" nnoremap <leader>8  :FufChangeList<CR>
-" nnoremap <leader>9  :FufTaggedFile<CR>
-" nnoremap <leader>p :FufDir ~/src/<CR>
-" nnoremap <leader>ge :FufDir ~/.rvm/gems/<CR>
-" nnoremap <leader>gn :vnew \| :FufFile ~/src/notes/<CR>
-
-
-" Plugin 'kien/ctrlp.vim'
-" let g:ctrlp_map = '<leader>t'
-" let g:ctrlp_max_height = 30
-" let g:ctrlp_match_window_bottom=1
-" let g:ctrlp_max_height = 20
-" let g:ctrlp_match_window_reversed = 1
-" let g:ctrlp_switch_buffer = 'e'
-" nnoremap <leader>ev :CtrlP app/views<cr>
-" nnoremap <leader>ec :CtrlP app/controllers<cr>
-" nnoremap <leader>em :CtrlP app/models<cr>
-" nnoremap <leader>el :CtrlP lib<cr>
-" nnoremap <leader>ea :CtrlP app/assets<cr>
-" nnoremap <leader>ep :CtrlP public<cr>
-" nnoremap <leader>er :topleft :vsplit config/routes.rb<cr>
-" nnoremap <leader>eg :topleft :vsplit Gemfile<cr>
-" nnoremap <leader>es :Ctrlp src/
-"
-
-" Plugin 'SuperTab'
 " Plugin 'bogado/file-line'
-" Plugin 'junegunn/vim-easy-align'
 " Plugin 'vim-scripts/lastpos.vim'
-" 
-" Programming
 " Plugin 'Blackrush/vim-gocode'
 " Plugin 'fatih/vim-go'
 " Plugin 'derekwyatt/vim-scala'
 " Plugin 'tpope/vim-rails'
-
-" Dash.app only for iOS, not supports vim
 " Plugin 'rizzatti/funcoo.vim'
 " Plugin 'rizzatti/dash.vim'
-
-
-" Syntax highlight
-" Plugin 'gmarik/vim-markdown'
 " Plugin 'timcharper/textile.vim'
-
-" Plugin 'tpope/vim-unimpaired'
 "
 " " bubble current line
 " nmap <M-j> ]e
@@ -978,8 +934,6 @@ endif
 
 " Plugin 'int3/vim-extradite'
 " Plugin 'Lokaltog/vim-powerline'
-" Plugin 'int3/vim-extradite'
-" Plugin 'Lokaltog/vim-powerline'
 
 " Plugin 'rstacruz/sparkup.git', {'rtp': 'vim/'}
 " let g:sparkupExecuteMapping = '<c-e>'
@@ -998,5 +952,3 @@ endif
 " nmap <leader>af :AckFile <C-R>=expand("<cfile>")<CR><CR>
 " ""d: 查找本当前函数调用的函数
 " map <leader>a :Ack <C-R>=expand("<cword>")<CR><CR>
-" 
-" 
