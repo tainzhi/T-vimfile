@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-05-15 12:41:43
+"  Modified : 2017-05-15 22:59:46
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -695,21 +695,14 @@ nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> " 跳转到�
 let g:ycm_show_diagnostics_ui = 1
 
 
+" faster checkter than syntastic
+Plug 'w0rp/ale'
+let g:ale_linters = {
+            \ 'python': ['flake8'],
+            \}
+nmap <silent> <C-p> <Plug>(ale_previous_wrap)
+nmap <silent> <C-n> <Plug>(ale_next_wrap)
 
-Plug 'vim-syntastic/syntastic'
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-" prevent :mksession from saving syntastic-error-window as empty quickfix windows
-set sessionoptions-=blank
-let g:syntastic_error_symbol='>>'
-let g:syntastic_warning_symbol='>'
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-nnoremap <Leader>an :lnext<cr>
-nnoremap <Leader>ap :lprevious<cr>
 
 
 
@@ -964,3 +957,18 @@ endif
 " map <leader>a :Ack <C-R>=expand("<cword>")<CR><CR>
 
 " Plug 'sjl/gundo.vim'
+
+" Plug 'vim-syntastic/syntastic'
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+" " prevent :mksession from saving syntastic-error-window as empty quickfix windows
+" set sessionoptions-=blank
+" let g:syntastic_error_symbol='>>'
+" let g:syntastic_warning_symbol='>'
+" let g:syntastic_always_populate_loc_list = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_check_on_open = 1
+" let g:syntastic_check_on_wq = 0
+" nnoremap <Leader>an :lnext<cr>
+" nnoremap <Leader>ap :lprevious<cr>

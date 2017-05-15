@@ -17,7 +17,6 @@ Information about my vim notes, configures and plugins
          * [TaskkList.vim](#taskklistvim)
          * [vim-easymotion](#vim-easymotion)
          * [DirDiff](#dirdiff)
-         * [Syntastic](#syntastic)
          * [vim-git](#vim-git)
          * [vim-fugitive](#vim-fugitive)
          * [vim-sessiong](#vim-sessiong)
@@ -38,7 +37,6 @@ Information about my vim notes, configures and plugins
             * [auto install(recommend)](#auto-installrecommend)
             * [manual install](#manual-install)
             * [使用配置](#使用配置)
-         * [Syntastic](#syntastic-1)
       * [Deprecated plugins](#deprecated-plugins)
          * [taglist.vim](#taglistvim)
          * [FuzzyFinder](#fuzzyfinder)
@@ -255,20 +253,6 @@ file or directory compare
 :DirDiff directory1 directory2
 ```
 
-### Syntastic
-[Syntastic](https://github.com/scrooloose/syntastic#installation)###
-**与YouCompleteMe有冲突**
-syntax checking 
-```
-:h Syntastic            # show the help
-:SyntasticInfo          # Show current information
-:SyntasticCheck         # to manually check right now
-:Errors                 # open the location-list
-:lclose                 # close the window
-:lnext
-:lpreviews              # jump to the different errors
-```
-
 ### vim-git
 [vim-git](https://github.com/tpope/vim-git)###
 Included are syntax, indent, and filetype plugin files for git, gitcommit, gitconfig, gitrebase, and gitsendemail. 
@@ -449,7 +433,15 @@ nmap fi :cs find i <C-R>=expand("<cfile>")<CR><CR>
 ""d: 查找本当前函数调用的函数
 nmap fd :cs find d <C-R>=expand("<cword>")<CR><CR>
 ```
+### ale
 
+[ale](https://github.com/w0rp/ale), a asynchonous syntax checker
+
+```
+# moving between warnings and errors quickly.
+nmap <silent> <C-p> <Plug>(ale_previous_wrap)
+nmap <silent> <C-n> <Plug>(ale_next_wrap)
+```
 
 ### YouCompleteMe
 [YouCompleteMe](https://github.com/Valloric/YouCompleteMe)
@@ -586,6 +578,23 @@ let g:ycm_show_diagnostics_ui = 1
 
 ### FuzzyFinder
 [FuzzyFinder](http://www.vim.org/scripts/script.php?script_id=1984): 查找文件，路劲，buffer等
+
+### Syntastic
+[syntastic](https://github.com/vim-syntastic/syntastic)
+实时检测语法错误, 支持c/c++, python, java, html, javascript...
+但是需要第三方检测工具支持, 具体使用以下命令
+```
+:help syntastic-checker
+```
+一经保存,就会显示错误窗口quickfix
+```
+nnoremap <Leader>an :lnext<cr>
+nnoremap <Leader>ap :lprevious<cr>
+```
+因为要保存之后才能显示检测结果, 所以对于c/c++使用YouComplteMe的检测功能,不用保存就可以显示语法错误. (打开YouCompleteMe的检测功能, 默认不显示syntastic的检测功能)
+```
+let g:ycm_show_diagnostics_ui = 1
+```
 
 ## Plugin for java and android
 [eclim](http://eclim.org/)
