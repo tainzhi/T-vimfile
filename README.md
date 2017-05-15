@@ -375,6 +375,20 @@ You also can open quickfix window after you trigger the command. [Reference](htt
 :Asynctop       # stop async jobs
 ```
 
+### undotree
+[undotree](https://github.com/mbbill/undotree) show the undolist in a tree structure
+```
+:UndotreeToggle
+nnoremap <leader>un :UndotreeToggle<CR>   #open or hide
+u
+<ctrl+r>
+g+
+g-  browese the undo item in the list
+
+?   open help panel
+```
+
+
 
 ## 依赖包的插件
 ### tagbar

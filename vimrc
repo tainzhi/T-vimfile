@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-05-15 07:59:12
+"  Modified : 2017-05-15 12:41:43
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -43,18 +43,6 @@ set modelines=5                " default numbers of lines to read for modeline i
 set autowrite                  " Writes on make/shell commands
 set autoread
 autocmd BufLeave,FocusLost silent! wall
-
-" backup current file into /tmp, deleted afterwards
-set nobackup
-set nowritebackup
-set backupdir=/tmp/
-set noswapfile
-set directory=/tmp/           " prepend(^=) $HOME/.tmp/ to default path; use full path as backup filename(//)
-" backup undo history into /tmp
-set undofile
-set undodir=/tmp/
-
-set hidden                     " The current buffer can be put to the background without writing to disk
 
 set hlsearch                   " highlight search
 set ignorecase                 " be case insensitive when searching
@@ -355,7 +343,7 @@ au BufRead,BufNewFile {*.dot}                                           setl ft=
 autocmd BufWritePre,FileWritePost,BufReadPost,FileReadPost {*.*}        call Do_Map()
 
 au! BufReadPost       {COMMIT_EDITMSG,*/COMMIT_EDITMSG}                 setl ft=gitcommit noml list| norm 1G
-au! BufWritePost      {*.snippet,*.snippets}                            call ReloadAllSnippets()
+au! BufWritePost      {*.snippet,*.snippets}                          call ReloadAllSnippets()
 
 " autocmd BufWritePre,FileWritePost,BufReadPost,FileReadPost *.cc,*.c,*.cpp,*.h,*.tex,*py,*dot call Do_Map()
 " autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} call Do_Map()
@@ -850,6 +838,23 @@ Plug 'skywind3000/asyncrun.vim'
 " Use autocmd AsyncRunStart with asyncrun#quickfix_toggle in your vimrc:
 autocmd User AsyncRunStart call asyncrun#quickfix_toggle(15, 1)
 
+
+
+Plug 'mbbill/undotree'
+nnoremap <leader>un :UndotreeToggle<CR>
+nnoremap <leader>unq :UndotreeToggle<CR>
+" backup current file into /tmp, deleted afterwards
+set nobackup
+set nowritebackup
+set backupdir=/tmp/
+set noswapfile
+set directory=/tmp/           " prepend(^=) $HOME/.tmp/ to default path; use full path as backup filename(//)
+" backup undo history into /tmp
+set undofile
+set undodir=/tmp/
+
+set hidden                     " The current buffer can be put to the background without writing to disk
+
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Todo use plugins
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -859,7 +864,6 @@ Plug 'AndrewRadev/splitjoin.vim'
 nmap sj :SplitjoinJoin<cr>
 nmap sk :SplitjoinSplit<cr>
 
-Plug 'sjl/gundo.vim'
 
 Plug 'vim-scripts/genutils'
 
@@ -958,3 +962,5 @@ endif
 " nmap <leader>af :AckFile <C-R>=expand("<cfile>")<CR><CR>
 " ""d: 查找本当前函数调用的函数
 " map <leader>a :Ack <C-R>=expand("<cword>")<CR><CR>
+
+" Plug 'sjl/gundo.vim'
