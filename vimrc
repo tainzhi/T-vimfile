@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-05-15 22:59:46
+"  Modified : 2017-05-16 12:14:17
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -421,8 +421,8 @@ function! Do_Set_Title()
         call append(line(".")+3, "# Mail        : qfq61@qq.com") 
         call append(line(".")+4, "# Created     : ".strftime("%Y-%m-%d %T")) 
         call append(line(".")+5, "# Modified    : ".strftime("%Y-%m-%d %T")) 
-        call append(line(".")+6, "# Description : ") 
-        call append(line(".")+7, "###############################################################################/") 
+        call append(line(".")+6, "# Description :") 
+        call append(line(".")+7, "# #############################################################################/") 
         call append(line(".")+8, "") 
         call append(line(".")+9, "") 
     endif
