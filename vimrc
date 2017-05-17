@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-05-17 12:32:21
+"  Modified : 2017-05-17 12:38:50
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -616,7 +616,7 @@ Plug 'tpope/vim-surround'
 
 
 Plug 'Valloric/MatchTagAlways'
-nnoremap % :MtaJumpToOtherTag<CR>
+nnoremap <leader>% :MtaJumpToOtherTag<CR>
 
 
 
