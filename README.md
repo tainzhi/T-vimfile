@@ -109,31 +109,106 @@ nmap w. :vertical resize -3<CR>
 <leader>a       :Ack查找当前字符
 
 nnoremap // :TComment<CR>   注释
-
 ```
-|key|functions|detailed command|
-|:---:|:---:|:---:|
-|F1||ubuntu show help|
-|F2|nmap <silent> <F2> :Tagbar<CR>||
-|F3|nmap <silent> <F3> :NERDTreeToggle<CR>|toggle NERDTree|
-|F4|reload cscope database and recreate tags||
-|F9 for c/cpp/tex|编译c/cpp/tex/||
-|F9 for python|interpret python||
-|F9 for markdown|open google-chrome(already has installed plugin MarkDown Preview Plus) to preview markdown||
-|F9 for dot|compile the dot file to jpg wiht dot||
-|F10|执行.out文件,或者使用evince打开pdf文件,或者使用xdg-open打开图片||
-|F11||ubuntu maxium window|
-|F12|显示结尾符号|map &lt;silent&gt; &lt;F12&gt; :set invlist&lt;CR&gt;|
+
+<table>
+    <tr>
+        <td>key</td>
+        <td>language</td>
+        <td>usge</td>
+        <td>map</td>
+    </tr>
+    <tr>
+        <td>F1</td>
+        <td></td>
+        <td>buntu show help</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>F2</td>
+        <td></td>
+        <td></td>
+        <td>nmap <silent> <F2> :Tagbar<CR></td>
+    </tr>
+    <tr>
+        <td>F3</td>
+        <td></td>
+        <td>toggle NERDTree</td>
+        <td>nmap <silent> <F3> :NERDTreeToggle<CR></td>
+    </tr>
+    <tr>
+        <td>F4</td>
+        <td></td>
+        <td>reload cscope database and recreate tags</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td rowspan="4">F9</td>
+        <td>c/cpp</td>
+        <td>compile the file</td>
+        <td>g++ %</td>
+    </tr>
+    <tr>
+        <td>tex</td>
+        <td>compile the tex</td>
+        <td>xelatex</td>
+    </tr>
+    <tr>
+        <td>python</td>
+        <td>python</td>
+        <td>AsyncRun</td>
+    </tr>
+    <tr>
+        <td>dot</td>
+        <td>compile th dot file, then get a jpg picture</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td rowspan="4">F10</td>
+        <td>c/cpp</td>
+        <td>run the a.out compiled from souce code</td>
+        <td>./a.out &lt; a.in</td>
+    </tr>
+    <tr>
+        <td>tex</td>
+        <td>open the pdf file generaged by xelatex</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>python</td>
+        <td>stop runing the file</td>
+        <td>:AsyncStop</td>
+    </tr>
+    <tr>
+        <td>dot</td>
+        <td>open the file generaged by graphviz</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>F11</td>
+        <td></td>
+        <td>ubuntu maxium window</td>
+        <ted></td>
+    </tr>
+    <tr>
+        <td>F12</td>
+        <td></td>
+        <td>显示结尾符号</td>
+        <td>map &lt;silent&gt; &lt;F12&gt; :set invlist&lt;CR&gt;</td>
+    </tr>
+</table>
+
 
 快捷键与需要注意的地方
 ```
 .           重复上次操作命令
-,       	repeat f or F
+,       	repeat latest f, t, F or T [count] times
+;           repeat lates f, t, F or T in opposite direction [count] times
 0	        jump to the begin of line
 ''          jump to preview position
 ```
 - 1 因为fs影射了cscope的快捷操作, 所以使用f查找s, 不能连续快速按fs, 要再f和s之间停顿一下
-- 2 我的&lt;leader&gt;修改为,键
+- 2 我的&lt;leader&gt;修改为空格键
 
 添加新语言的快捷键F9支持, 即添加新的语言autocmd识别
 ```
