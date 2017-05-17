@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-05-17 18:55:36
+"  Modified : 2017-05-17 20:01:00
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -441,7 +441,7 @@ endfunc
 " ma     保存当前位置到'a'标记
 " 'a     光标回到旧位置
 " autocmd BufWritePre,FileWritePre * ma|call Do_File()|'a
-autocmd BufNewFile *.sh,*.txt,*.[ch],*.cpp,*.cc,*.python,*.java,*.py exec ":call Do_Set_Title()" 
+autocmd BufNewFile *.sh,*.txt,*.[ch],*.cpp,*.cc,*.python,*.py exec ":call Do_Set_Title()" 
 
 
 function! Do_BuildYCM(info)

@@ -80,6 +80,30 @@ git clone https://github.com/tainzhi/Q-vimfile.git ~/.vim
 # run vim and install plugins
 vim .vim/vimrc +PlugUpdate +qall                     
 ```
+## Support multi languages
+- YouCompleteMe
+    - [x] c/cpp
+    - [x] python
+- Snippets
+    - [x] python
+- ale
+    - [x] c/cpp
+    - [x] python
+- codequery: get tag and cscope database 
+    - [x] c/cpp
+    - [x] python
+- shorts cuts **F9** and **F10**
+    - [x] c/cpp
+    - [x] python
+    - [x] latex
+    - [x] dot
+- auto add file head containing author's information
+    - [x] shell script
+    - [x] text
+    - [x] c/cpp
+    - [x] python
+    - [x] java
+
 
 ## 自定义map
 ```
