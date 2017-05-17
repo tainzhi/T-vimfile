@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-05-17 20:01:00
+"  Modified : 2017-05-18 00:19:57
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -297,15 +297,15 @@ au FocusGained * se imd
 
 function! Do_Map()
     if (&filetype == 'cc')
-        nmap <silent> <F4> :call Do_CsTag()<CR><CR><CR><CR>
+        nmap <silent> <F4> :call Do_CsTag(&filetype)<CR><CR><CR><CR>
         map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!g++ '."%"<CR><CR>
         map <silent> <F10> <ESC>:exec '!./a.out < a.in'<CR>
     elseif (&filetype == 'c')
-        nmap <silent> <F4> :call Do_CsTag()<CR><CR><CR><CR>
+        nmap <silent> <F4> :call Do_CsTag(&filetype)<CR><CR><CR><CR>
         map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!g++ '."%"<CR><CR>
         map <silent> <F10> <ESC>:exec '!./a.out < a.in'<CR>
     elseif (&filetype == 'cpp')
-        nmap <silent> <F4> :call Do_CsTag()<CR><CR><CR><CR>
+        nmap <silent> <F4> :call Do_CsTag(&filetype)<CR><CR><CR><CR>
         map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!g++ '."%"<CR><CR>
         map <silent> <F10> <ESC>:exec '!./a.out < a.in'<CR>
     elseif (&filetype == 'tex')
@@ -317,6 +317,7 @@ function! Do_Map()
         map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!xelatex '."%"<CR><CR>
         map <silent> <F10> <ESC>:exec '!evince '.expand('%:r').'.pdf'<CR><CR>
     elseif (&filetype == 'python')
+        nmap <silent> <F4> :call Do_CsTag(&filetype)<CR><CR><CR><CR>
         map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec 'AsyncRun! python'"%"<CR>
         map <silent> <F10> <ESC>:exec 'AsyncStop'<CR>
     elseif (&filetype == 'markdown')
@@ -517,11 +518,16 @@ Plug 'tainzhi/autoload_cscope.vim'
     " set cscopequickfix=s+,c+,d+,i+,t+,e+
     set nocsverb
 " endif
-function! Do_CsTag()
+function! Do_CsTag(file_type)
     let has_cscope_out = filereadable("cscope.out")
     execute "!find `pwd` -iname '*.java' -o -name '*.xml' -o -name '*.h'  -o -name '*.c' -o -name '*.cpp' -o -name '*.cc' -o -name '*.py'| grep -v .plus > ./cscope.files"
     execute "!ctags --fields=+i -n -R -L ./cscope.files"
-    execute "!cscope -bkq -i ./cscope.files"
+    echo a:file_type
+    if a:file_type == 'python'
+        execute "!pycscope -i ./cscope.files"
+    else
+        execute "!cscope -bkq -i ./cscope.files"
+    endif
     if (has_cscope_out)
         execute "cs reset"
     else

@@ -164,7 +164,7 @@ nnoremap // :TComment<CR>   注释
         <td>F4</td>
         <td></td>
         <td>reload cscope database and recreate tags</td>
-        <td></td>
+        <td>for python use pycscope, for c/cpp use clang</td>
     </tr>
     <tr>
         <td rowspan="4">F9</td>
