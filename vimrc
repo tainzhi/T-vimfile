@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-05-17 12:38:50
+"  Modified : 2017-05-17 18:55:36
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -356,7 +356,14 @@ function! Do_Update_Modified()
     " echo line_number
     if line_number < 10
         let line_content = substitute(getline(line_number),"[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9]",strftime("%Y-%m-%d %T"),"g") 
-        call setline(line_number, line_content)
+        "  Modified : 2017-05-17 18:53:36
+        let minute_str = matchstr(getline(line_number),":[0-9][0-9]:") "get :53:
+        let minute = strpart(minute_str,1,2) " get minute 53, vim script has no string to int, thus string is a number
+        let current_minute = strftime("%M")
+        " update date modified time stamp every 3 minutes
+        if current_minute - minute >= 3 || current_minute - minute < 0
+            call setline(line_number, line_content)
+        endif
     endif
 endfunction
 autocmd BufWritePre,FileWritePre * call Do_Update_Modified()
