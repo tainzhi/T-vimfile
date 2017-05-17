@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-05-16 12:14:17
+"  Modified : 2017-05-17 12:32:21
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -608,9 +608,6 @@ let g:tagbar_left = 1
 
 
 Plug 'vim-scripts/ZoomWin'
-noremap <leader>o :ZoomWin<CR>
-vnoremap <leader>o <C-C>:ZoomWin<CR>
-inoremap <leader>o <C-O>:ZoomWin<CR>
 
 
 
@@ -744,10 +741,10 @@ Plug 'yegappan/mru'
 " ultimate solutions for snippets
 Plug 'Sirver/ultisnips'
 Plug 'honza/vim-snippets'
-" let g:UltiSnipsExpandTrigger = "<c-l>"
-" let g:UltiSnipsJumpForwardTrigger = "<c-j>"
-" let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
-" let g:UltiSnipsSnippetDirectories=["UltiSnips", "bundle/vim-snippets/UltiSnips"]
+let g:UltiSnipsExpandTrigger = "<c-l>"
+let g:UltiSnipsJumpForwardTrigger = "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
+" let g:UltiSnipsSnippetDirectories=["UltiSnips", "plugged/vim/vim-snippets/UltiSnips"]
 autocmd BufWritePre,FileWritePre,BufRead,BufNewFile {*.java} call UltiSnips#AddFiletypes("java")
 autocmd BufWritePre,FileWritePre,BufRead,BufNewFile {*.xml} call UltiSnips#AddFiletypes("xml")
 autocmd BufWritePre,FileWritePre,BufRead,BufNewFile {*.py} call UltiSnips#AddFiletypes("py")
