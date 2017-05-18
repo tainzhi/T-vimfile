@@ -247,7 +247,7 @@ autocmd BufNewFile *.sh,*.txt,*.[ch],*.cpp,*.cc,*.python,*.java,*.py exec ":call
 [solarized.vim](http://ethanschoonover.com/solarized/vim-colors-solarized)
 ```
 " Colorscheme
-Plugin 'altercation/vim-colors- '
+Plug 'altercation/vim-colors- '
 if has("gui_running")
   set background=light
   colorscheme solarized
@@ -279,7 +279,8 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
  
 - Usage
 ```
-:PlugUpdate     install or update 
+:PlugInstall    update the new add plug, and not upgrade exsiting plugs.But your should reload the vimrc first
+:PlugUpdate     install and update 
 :PlugClean[!]   remove unused directories
 :PlugStatus     check the status of plugins
 ```

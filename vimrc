@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-05-18 00:19:57
+"  Modified : 2017-05-18 18:07:12
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -901,7 +901,7 @@ if has("gui_running")
     colorscheme solarized
 else
     set t_Co=256
-    colorscheme space-vim-dark
+    colorscheme desert
     hi Comment cterm=italic
 endif
 
