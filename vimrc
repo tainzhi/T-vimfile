@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-05-18 18:07:12
+"  Modified : 2017-05-22 20:47:53
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -856,8 +856,14 @@ set directory=/tmp/           " prepend(^=) $HOME/.tmp/ to default path; use ful
 " backup undo history into /tmp
 set undofile
 set undodir=/tmp/
-
 set hidden                     " The current buffer can be put to the background without writing to disk
+
+
+
+Plug 'Vimjas/vim-python-pep8-indent'
+
+
+
 
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Todo use plugins

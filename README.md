@@ -472,6 +472,9 @@ g-  browese the undo item in the list
 ?   open help panel
 ```
 
+### vim-python-pep8-indent
+[vim-python-pep8-indent](https://github.com/Vimjas/vim-python-pep8-indent)
+
 
 
 ## 依赖包的插件
