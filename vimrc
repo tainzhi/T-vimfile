@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-05-22 20:47:53
+"  Modified : 2017-05-24 10:17:28
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -31,11 +31,11 @@ set fileencodings=utf-8,gb18030,utf-16,big5,cp936,ucs-bom,unicode
 
 set whichwrap+=<,>,h,l   " 允许backspace和光标键跨越行边界(不建议)    
 
-set colorcolumn=80
-set history=256                " Number of things to remember in history.
-set timeoutlen=250             " Time to wait after ESC (default causes an annoying delay)
-set clipboard+=unnamed         " Yanks go on clipboard instead.
-set shiftround                 " round indent to multiple of 'shiftwidth'
+set colorcolumn=80     " max line length to 80
+set history=256        " Number of things to remember in history.
+set timeoutlen=250     " Time to wait after ESC (default causes an annoying delay)
+set clipboard+=unnamed " Yanks go on clipboard instead.
+set shiftround         " round indent to multiple of 'shiftwidth'
 
 set modeline
 set modelines=5                " default numbers of lines to read for modeline instructions
@@ -296,11 +296,7 @@ au FocusGained * se imd
 " :set makeprg=[[\ -f\ Makefile\ ]]\ &&\ make\ \\\|\\\|\ make\ -C\ .. 
 
 function! Do_Map()
-    if (&filetype == 'cc')
-        nmap <silent> <F4> :call Do_CsTag(&filetype)<CR><CR><CR><CR>
-        map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!g++ '."%"<CR><CR>
-        map <silent> <F10> <ESC>:exec '!./a.out < a.in'<CR>
-    elseif (&filetype == 'c')
+    if (&filetype == 'c')
         nmap <silent> <F4> :call Do_CsTag(&filetype)<CR><CR><CR><CR>
         map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!g++ '."%"<CR><CR>
         map <silent> <F10> <ESC>:exec '!./a.out < a.in'<CR>
@@ -686,7 +682,6 @@ let g:ycm_collect_identifiers_from_tags_files=1	" 开启 YCM 基于标签引擎
 let g:ycm_min_num_of_chars_for_completion=2	" 从第2个键入字符就开始罗列匹配项
 let g:ycm_cache_omnifunc=0	" 禁止缓存匹配项,每次都重新生成匹配项
 let g:ycm_seed_identifiers_with_syntax=1	" 语法关键字补全
-"nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>	"force recomile with syntastic
 "nnoremap <leader>lo :lopen<CR>	"open locationlist
 "nnoremap <leader>lc :lclose<CR>	"close locationlist
 inoremap <leader><leader> <C-x><C-o>
@@ -711,6 +706,7 @@ Plug 'w0rp/ale'
 let g:ale_linters = {
             \ 'python': ['flake8'],
             \}
+let g:ale_python_flake8_options = '--max-length=100'
 nmap <silent> <C-p> <Plug>(ale_previous_wrap)
 nmap <silent> <C-n> <Plug>(ale_next_wrap)
 
@@ -772,12 +768,6 @@ let g:session_autoload='yes'
 let g:session_directory='./'
 let g:session_default_name='.session'
 let g:session_lock_enabled=0
-
-
-
-Plug 'terryma/vim-expand-region'
-map K <Plug>(expand_region_expand)
-map J <Plug>(expand_region_shrink)
 
 
 
@@ -870,9 +860,15 @@ Plug 'Vimjas/vim-python-pep8-indent'
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Utility
-Plug 'AndrewRadev/splitjoin.vim'
-nmap sj :SplitjoinJoin<cr>
-nmap sk :SplitjoinSplit<cr>
+" Plug 'terryma/vim-expand-region'
+" map K <Plug>(expand_region_expand)
+" map J <Plug>(expand_region_shrink)
+
+
+
+" Plug 'AndrewRadev/splitjoin.vim'
+" nmap sj :SplitjoinJoin<cr>
+" nmap sk :SplitjoinSplit<cr>
 
 
 Plug 'vim-scripts/genutils'
