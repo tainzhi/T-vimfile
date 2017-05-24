@@ -476,6 +476,10 @@ g-  browese the undo item in the list
 [vim-python-pep8-indent](https://github.com/Vimjas/vim-python-pep8-indent)
 
 
+### indentLine
+
+[indentLine](https://github.com/Yggdroot/indentLine)
+
 
 ## 依赖包的插件
 ### tagbar
