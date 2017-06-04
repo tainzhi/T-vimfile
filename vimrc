@@ -314,7 +314,7 @@ function! Do_Map()
         map <silent> <F10> <ESC>:exec '!evince '.expand('%:r').'.pdf'<CR><CR>
     elseif (&filetype == 'python')
         nmap <silent> <F4> :call Do_CsTag(&filetype)<CR><CR><CR><CR>
-        map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec 'AsyncRun! python'"%"<CR>
+        map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec 'AsyncRun! python3'"%"<CR>
         map <silent> <F10> <ESC>:exec 'AsyncStop'<CR>
     elseif (&filetype == 'markdown')
         map <buffer> <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!google-chrome '"%"<CR><CR>
@@ -419,7 +419,7 @@ function! Do_Set_Title()
         call append(line(".")+13, "") 
         call append(line(".")+14, "") 
     elseif &filetype == 'python'
-        call setline(1,"#!/usr/bin/env python##########################################################")
+        call setline(1,"#!/usr/bin/env python3#########################################################")
         call setline(2,"# -*- coding: utf-8 -*-########################################################")
         call append(line(".")+1, "# File        : ".expand("%")) 
         call append(line(".")+2, "# Author      : tainzhi") 
