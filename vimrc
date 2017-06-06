@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-06-06 14:22:56
+"  Modified : 2017-05-24 10:44:20
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -693,8 +693,8 @@ let g:ycm_complete_in_strings = 1
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 " 关闭加载.ycm_extra_conf.py提示
 let g:ycm_confirm_extra_conf = 0
-" let g:ycm_server_python_interpreter = 'python2.7'
-" let g:ycm_python_binary_path = '/usr/bin/python2.7'
+let g:ycm_server_python_interpreter = 'python2.7'
+let g:ycm_python_binary_path = '/usr/bin/python2.7'
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> " 跳转到定义处
 "显示对c/c++的实时检测结果,比如语法错误; 不显示, 值为0, 那么此时使用syntastic检测语法
 "为了不使用syntastic插件检测功能,而适用YouCompleteMe检测功能
