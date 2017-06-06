@@ -566,7 +566,7 @@ Ctrl+I      jump forward
 #### auto install(recommend)
 ```
 cd ~/.vim/bundle/YouCompleteMe
-!./install.py --clang-completer --gocode-completer --tern-completer --racer-completer
+python3 ./install.py --clang-completer --gocode-completer --tern-completer --racer-completer
 ```
 
 #### manual install
