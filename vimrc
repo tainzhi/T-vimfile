@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-06-09 21:51:52
+"  Modified : 2017-06-09 22:23:47
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -862,6 +862,18 @@ Plug 'Vimjas/vim-python-pep8-indent'
 
 
 Plug 'Yggdroot/indentLine'
+Plug 'terryma/vim-multiple-cursors'
+
+
+
+Plug 'dyng/ctrlsf.vim'
+
+
+
+Plug 'ivanov/vim-ipython'
+
+
+Plug 'python-mode/python-mode'
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Todo use plugins
 "'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -914,81 +926,3 @@ else
     hi Comment cterm=italic
 endif
 
-
-"'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Deprecated plugins
-"'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugin 'vim-scripts/lookupfile'
-" Plugin 'vim-scripts/taglist.vim'
-" Plugin 'vim-scripts/taglist.vim'
-" Plugin 'L9'
-" Plugin 'FuzzyFinder'
-" Plugin 'bogado/file-line'
-" Plugin 'vim-scripts/lastpos.vim'
-" Plugin 'Blackrush/vim-gocode'
-" Plugin 'fatih/vim-go'
-" Plugin 'derekwyatt/vim-scala'
-" Plugin 'tpope/vim-rails'
-" Plugin 'rizzatti/funcoo.vim'
-" Plugin 'rizzatti/dash.vim'
-" Plugin 'timcharper/textile.vim'
-"
-" " bubble current line
-" nmap <M-j> ]e
-" nmap <M-k> [e
-" " bubble visual selection lines
-" vmap <M-j> ]egv
-" vmap <M-k> [egv
-" Input method
- 
-" Plugin 'gmarik/github-search.vim'
-
-" Plugin 'gmarik/sudo-gui.vim'
-
-" Plugin 'mkitt/browser-refresh.vim'
-" com! ONRRB :au! BufWritePost <buffer> :RRB
-" com! NORRB :au! BufWritePost <buffer>
-
-" Plugin 'gmarik/hlmatch.vim'
-" nnoremap # :<C-u>HlmCword<CR>
-" nnoremap <leader># :<C-u>HlmGrepCword<CR>
-" vnoremap # :<C-u>HlmVSel<CR>
-" vnoremap <leader># :<C-u>HlmGrepVSel<CR>
-
-" Plugin 'int3/vim-extradite'
-" Plugin 'Lokaltog/vim-powerline'
-
-" Plugin 'rstacruz/sparkup.git', {'rtp': 'vim/'}
-" let g:sparkupExecuteMapping = '<c-e>'
-" let g:sparkupNextMapping = '<c-ee>'
-
-" Plugin 'rizzatti/funcoo.vim'
-" Plugin 'rizzatti/greper.vim'
-
-" Plugin 'mileszs/ack.vim'
-" if executable('ag')
-"     let g:ackprg = 'ag --vimgrep'
-" endif
-" let g_ack_default_options = " -s -H --color --nogroup --column --smart-case --follow"
-" let g:ackhightlight = 1
-" let g:ack_autofold_results = 1
-" nmap <leader>af :AckFile <C-R>=expand("<cfile>")<CR><CR>
-" ""d: 查找本当前函数调用的函数
-" map <leader>a :Ack <C-R>=expand("<cword>")<CR><CR>
-
-" Plug 'sjl/gundo.vim'
-
-" Plug 'vim-syntastic/syntastic'
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-" " prevent :mksession from saving syntastic-error-window as empty quickfix windows
-" set sessionoptions-=blank
-" let g:syntastic_error_symbol='>>'
-" let g:syntastic_warning_symbol='>'
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-" nnoremap <Leader>an :lnext<cr>
-" nnoremap <Leader>ap :lprevious<cr>
