@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-06-06 14:36:26
+"  Modified : 2017-06-09 21:51:52
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -314,8 +314,9 @@ function! Do_Map()
         map <silent> <F10> <ESC>:exec '!evince '.expand('%:r').'.pdf'<CR><CR>
     elseif (&filetype == 'python')
         nmap <silent> <F4> :call Do_CsTag(&filetype)<CR><CR><CR><CR>
+        map <silent> <F8> :call Do_FormatePythonSrc()<CR>
         map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec 'AsyncRun! python3'"%"<CR>
-        map <silent> <F10> <ESC>:exec 'AsyncStop'<CR>
+        map <silent> <F10> <ESC>:exec 'AsyncStop'<CR> <bar> :exec ":cclose"<CR>
     elseif (&filetype == 'markdown')
         map <buffer> <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!google-chrome '"%"<CR><CR>
     elseif (&filetype == 'dot')
@@ -449,6 +450,11 @@ function! Do_BuildYCM(info)
   if a:info.status == 'installed' || a:info.force
     !./install.py --clang-completer --gocode-completer --tern-completer --racer-completer
   endif
+endfunction
+
+
+function! Do_FormatePythonSrc()
+    execute "!find . -type f -name '*.py' | xargs autopep8 --in-place --aggressive --aggressive"
 endfunction
 
 

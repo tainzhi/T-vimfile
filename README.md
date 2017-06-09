@@ -167,6 +167,12 @@ nnoremap // :TComment<CR>   注释
         <td>for python use pycscope, for c/cpp use clang</td>
     </tr>
     <tr>
+        <td>F8</td>
+        <td>python</td>
+        <td>format python source code with autopep8</td>
+        <td></td>
+    </tr>
+    <tr>
         <td rowspan="4">F9</td>
         <td>c/cpp</td>
         <td>compile the file</td>
@@ -200,7 +206,7 @@ nnoremap // :TComment<CR>   注释
     </tr>
     <tr>
         <td>python</td>
-        <td>stop runing the file</td>
+        <td>stop runing the file and close quickfix</td>
         <td>:AsyncStop</td>
     </tr>
     <tr>
