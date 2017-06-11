@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-06-09 22:23:47
+"  Modified : 2017-06-11 11:01:45
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -263,7 +263,7 @@ inoremap <C-S> <C-O>:update<CR>
 map <leader>2h :runtime! syntax/2html.vim<CR>
 
 " open help in vertical split
-au BufWinEnter *.txt if &ft == 'help' | wincmd H | vertical resize 80 | nmap q :q<CR> | endif
+au BufWinEnter *.txt if &ft == 'help' | wincmd H | vertical resize 85 | nmap q :q<CR> | endif
 noremap <leader>h :help <C-R>=expand("<cword>")<CR><CR>
 
 " for input method
@@ -480,7 +480,7 @@ let g:NERDSpaceDelims=1
 
 "nerdtree
 Plug 'scrooloose/nerdtree'
-let g:NERDTreeWinPos = 'right'
+let g:NERDTreeWinPos = 'left'
 nmap <silent> <F3> :NERDTreeToggle<CR>
 let g:NERDTreeWinSize=40
 let NERDTreeAutoDeleteBuffer=1
@@ -496,9 +496,19 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 " vim-nerdtree-tabs
 Plug 'jistr/vim-nerdtree-tabs'
 let g:nerdtree_tabs_open_on_gui_startup = 0
-let g:nerdtree_tabs_open_on_console_startup = 1
+let g:nerdtree_tabs_open_on_console_startup = 0
 let g:nerdtree_tabs_smart_startup_focus = 2
 let g:nerdtree_tabs_synchronize_view = 1
+
+
+
+" Plugin tagbar
+Plug 'majutsushi/tagbar'
+nmap <silent> <F2> :Tagbar<CR>
+set updatetime=100
+let g:tagbar_autofocus = 1
+let g:tagbar_width = 40
+let g:tagbar_left = 0
 
 
 
@@ -608,17 +618,6 @@ nmap <leader>+ <Plug>AirlineSelectNextTab
 "     \ ['x', 'y', 'z', 'error', 'warning' ]
 "     \ ]
 " let g:airline#extensions#branch#displayed_head_limit = 10
-
-
-
-" Plugin tagbar
-Plug 'majutsushi/tagbar'
-nmap <silent> <F2> :Tagbar<CR>
-set updatetime=100
-let g:tagbar_autofocus = 1
-let g:tagbar_width = 40
-
-let g:tagbar_left = 1
 
 
 
