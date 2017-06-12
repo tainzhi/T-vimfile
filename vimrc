@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-06-12 10:01:11
+"  Modified : 2017-06-12 15:20:52
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -63,7 +63,7 @@ set tabstop=4                  " tab size eql 2 spaces
 set softtabstop=4
 set shiftwidth=4               " default shift width for indents
 set expandtab                  " replace tabs with ${tabstop} spaces
-set smarttab                   "
+set smarttab                   
 
 set backspace=indent
 set backspace+=eol
@@ -79,12 +79,10 @@ set cinkeys-=0#
 set cinoptions=:s,ps,ts,cs
 set cinwords=if,else,while,do
 set cinwords+=for,switch,case
-" "}}}
 
-" Visual "{{{
+
 syntax on                      " enable syntax
-
-" set synmaxcol=250              " limit syntax highlighting to 128 columns
+set synmaxcol=250              " limit syntax highlighting to 128 columns
 
 set mouse=a "enable mouse in GUI mode
 set mousehide                 " Hide mouse after chars typed
@@ -785,11 +783,16 @@ autocmd BufWritePre,FileWritePre,BufRead,BufNewFile {*.cc,*.h,*c,*.cpp} call Ult
 
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
-let g:session_autosave='yes'
-let g:session_autoload='yes'
 let g:session_directory='./'
 let g:session_default_name='.session'
 let g:session_lock_enabled=0
+if has("gui_running")
+    let g:session_autoload='no'
+    let g:session_autosave='no'
+else
+    let g:session_autoload='yes'
+    let g:session_autosave='yes'
+endif
 
 
 
@@ -876,8 +879,10 @@ Plug 'Vimjas/vim-python-pep8-indent'
 
 
 
-
 Plug 'Yggdroot/indentLine'
+
+
+
 Plug 'terryma/vim-multiple-cursors'
 
 
@@ -933,12 +938,13 @@ call plug#end()
 
 
 
+
 if has("gui_running")
     set background=dark
     colorscheme solarized
 else
     set t_Co=256
-    colorscheme desert
+    " colorscheme desert
+    colorscheme space-vim-dark
     hi Comment cterm=italic
 endif
-
