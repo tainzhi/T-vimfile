@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-06-11 11:01:45
+"  Modified : 2017-06-12 10:01:11
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -290,19 +290,20 @@ au FocusGained * se imd
 
 
 
-" " make
-" set makeprg=g++\ -Wall\ \ %
-" set makeprg=g++\ %
-" :set makeprg=[[\ -f\ Makefile\ ]]\ &&\ make\ \\\|\\\|\ make\ -C\ .. 
-
 function! Do_Map()
     if (&filetype == 'c')
+        set sp=2>
+        set makeprg=gcc\ -Wall\ \ %
         nmap <silent> <F4> :call Do_CsTag(&filetype)<CR><CR><CR><CR>
-        map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!g++ '."%"<CR><CR>
+        " map <silent> <F9> <ESC>:exec ":w"<bar> :exec ":copen" <bar> :exec ":wincmd p"<bar>:exec ":make"<CR><CR>
+        map <silent> <F9> <ESC>:exec "w"<bar> :exec "copen" <bar> :exec "wincmd p"<bar>:exec "make"<CR><CR>
         map <silent> <F10> <ESC>:exec '!./a.out < a.in'<CR>
     elseif (&filetype == 'cpp')
+        set sp=2>
+        set makeprg=g++\ -Wall\ \ %
+        " :set makeprg=[[\ -f\ Makefile\ ]]\ &&\ make\ \\\|\\\|\ make\ -C\ .. 
         nmap <silent> <F4> :call Do_CsTag(&filetype)<CR><CR><CR><CR>
-        map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!g++ '."%"<CR><CR>
+        map <silent> <F9> <ESC>:exec "w"<bar> :exec "copen" <bar> :exec "wincmd p"<bar>:exec "make"<CR><CR>
         map <silent> <F10> <ESC>:exec '!./a.out < a.in'<CR>
     elseif (&filetype == 'tex')
         " 因为vim-latex-suite只对pdflatex良好支持, 对xelatex支持性太差
@@ -313,9 +314,25 @@ function! Do_Map()
         map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!xelatex '."%"<CR><CR>
         map <silent> <F10> <ESC>:exec '!evince '.expand('%:r').'.pdf'<CR><CR>
     elseif (&filetype == 'python')
+        set sp=2> 
+        "the last line: \%-G%.%# is meant to suppress some
+        "late error messages that I found could occur e.g.
+        "with wxPython and that prevent one from using :clast
+        "to go to the relevant file and line of the traceback
+        set efm=%A\ \ File\ \"%f\"\\\,\ line\ %l\\\,%m,
+            \%+C\ \ \ \ %.%#,
+            \%+Z%.%#Error\:\ %.%#,
+            \%A\ \ File\ \"%f\"\\\,\ line\ %l,
+            \%+C\ \ %.%#,
+            \%-C%p^,
+            \%Z%m,
+            \%-G%.%#
+        set makeprg=python3\ \ %
         nmap <silent> <F4> :call Do_CsTag(&filetype)<CR><CR><CR><CR>
         map <silent> <F8> :call Do_FormatePythonSrc()<CR>
-        map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec 'AsyncRun! python3'"%"<CR>
+        " map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec 'AsyncRun! python3'"%"<CR>
+        map <silent> <F9> <ESC>:exec "w"<bar> :exec "copen" <bar> :exec "wincmd p"<bar> :exec "make %" <bar>:exec "clast" <CR><CR>
+        " map <silent> <F9> <ESC>:exec "w"<bar> :exec "copen" <bar> :exec "wincmd p"<bar> :exec "AsyncRun -program=make @%" <bar> :exec "clast" <CR><CR>
         map <silent> <F10> <ESC>:exec 'AsyncStop'<CR> <bar> :exec ":cclose"<CR>
     elseif (&filetype == 'markdown')
         map <buffer> <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!google-chrome '"%"<CR><CR>
