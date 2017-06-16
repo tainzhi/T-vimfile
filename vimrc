@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-06-16 21:28:26
+"  Modified : 2017-06-17 01:06:14
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -659,7 +659,7 @@ Plug 'Lokaltog/vim-easymotion'
 "let g:Easymotion_use_upper = 1
 let g:EasyMotion_do_mapping = 0
 nmap <leader>s <Plug>(easymotion-s)
-nmap <leader>f <Plug>(easymotion-s2)
+nmap <leader>ss <Plug>(easymotion-s2)
 
 
 
@@ -670,8 +670,8 @@ let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,.svn,cscope*,tags"
 
 Plug 'rking/ag.vim'
 Plug 'Chun-Yang/vim-action-ag'
-nmap * <Plug>AgActionWord
-vmap * <Plug>AgActionVisual
+nmap <leader>a <Plug>AgActionWord
+vmap <leader>a AgActionVisual
 let g:ag_highlight=1
 
 
@@ -884,17 +884,16 @@ Plug 'Yggdroot/indentLine'
 
 
 Plug 'terryma/vim-multiple-cursors'
+" Default mapping
+let g:multi_cursor_next_key='<C-n>'
+let g:multi_cursor_prev_key='<C-p>'
+let g:multi_cursor_skip_key='<C-j>'
+let g:multi_cursor_quit_key='<Esc>'
 
 
 
 Plug 'dyng/ctrlsf.vim'
-
-
-
-Plug 'ivanov/vim-ipython'
-
-
-Plug 'python-mode/python-mode'
+nmap     <leader>f <Plug>CtrlSFPrompt<CR>
 call plug#end()
 
 
