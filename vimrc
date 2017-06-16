@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-06-12 15:20:52
+"  Modified : 2017-06-16 21:28:26
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -895,47 +895,7 @@ Plug 'ivanov/vim-ipython'
 
 
 Plug 'python-mode/python-mode'
-"'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Todo use plugins
-"'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Utility
-" Plug 'terryma/vim-expand-region'
-" map K <Plug>(expand_region_expand)
-" map J <Plug>(expand_region_shrink)
-
-
-
-" Plug 'AndrewRadev/splitjoin.vim'
-" nmap sj :SplitjoinJoin<cr>
-" nmap sk :SplitjoinSplit<cr>
-
-
-Plug 'vim-scripts/genutils'
-
-Plug 'gregsexton/gitv'
-Plug 'kien/ctrlp.vim'
-let g:ctrlp_map = '<leader>t'
-let g:ctrlp_max_height = 30
-let g:ctrlp_match_window_bottom=1
-let g:ctrlp_max_height = 20
-let g:ctrlp_match_window_reversed = 1
-let g:ctrlp_switch_buffer = 'e'
-nnoremap <leader>ev :CtrlP app/views<cr>
-nnoremap <leader>ec :CtrlP app/controllers<cr>
-nnoremap <leader>em :CtrlP app/models<cr>
-nnoremap <leader>el :CtrlP lib<cr>
-nnoremap <leader>ea :CtrlP app/assets<cr>
-nnoremap <leader>ep :CtrlP public<cr>
-nnoremap <leader>er :topleft :vsplit config/routes.rb<cr>
-nnoremap <leader>eg :topleft :vsplit Gemfile<cr>
-nnoremap <leader>es :Ctrlp src/
-
-Plug 'junegunn/vim-easy-align'
-
-Plug 'tpope/vim-unimpaired'
 call plug#end()
-
 
 
 
