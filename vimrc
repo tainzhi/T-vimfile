@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-06-17 01:06:14
+"  Modified : 2017-06-20 12:29:57
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -524,6 +524,13 @@ set updatetime=100
 let g:tagbar_autofocus = 1
 let g:tagbar_width = 40
 let g:tagbar_left = 0
+let g:tagbar_type_markdown = {
+        \ 'ctagstype' : 'markdown',
+        \ 'kinds' : [
+                \ 'h:headings',
+        \ ],
+    \ 'sort' : 0
+\ }
 
 
 
@@ -903,7 +910,7 @@ if has("gui_running")
     colorscheme solarized
 else
     set t_Co=256
-    " colorscheme desert
-    colorscheme space-vim-dark
+    colorscheme desert
+    " colorscheme space-vim-dark
     hi Comment cterm=italic
 endif
