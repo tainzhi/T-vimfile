@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-06-20 12:29:57
+"  Modified : 2017-07-11 15:07:28
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -294,14 +294,14 @@ function! Do_Map()
         set makeprg=gcc\ -Wall\ \ %
         nmap <silent> <F4> :call Do_CsTag(&filetype)<CR><CR><CR><CR>
         " map <silent> <F9> <ESC>:exec ":w"<bar> :exec ":copen" <bar> :exec ":wincmd p"<bar>:exec ":make"<CR><CR>
-        map <silent> <F9> <ESC>:exec "w"<bar> :exec "copen" <bar> :exec "wincmd p"<bar>:exec "make"<CR><CR>
+        map <silent> <F9> <ESC>:exec "w"<bar> :exec "copen" <bar> :exec "wincmd J" <bar> :exec "wincmd p"<bar>:exec "make"<CR><CR>
         map <silent> <F10> <ESC>:exec '!./a.out < a.in'<CR>
     elseif (&filetype == 'cpp')
         set sp=2>
         set makeprg=g++\ -Wall\ \ %
         " :set makeprg=[[\ -f\ Makefile\ ]]\ &&\ make\ \\\|\\\|\ make\ -C\ .. 
         nmap <silent> <F4> :call Do_CsTag(&filetype)<CR><CR><CR><CR>
-        map <silent> <F9> <ESC>:exec "w"<bar> :exec "copen" <bar> :exec "wincmd p"<bar>:exec "make"<CR><CR>
+        map <silent> <F9> <ESC>:exec "w"<bar> :exec "copen" <bar> :exec "wincmd J" <bar> :exec "wincmd p"<bar>:exec "make"<CR><CR>
         map <silent> <F10> <ESC>:exec '!./a.out < a.in'<CR>
     elseif (&filetype == 'tex')
         " 因为vim-latex-suite只对pdflatex良好支持, 对xelatex支持性太差
@@ -329,7 +329,7 @@ function! Do_Map()
         nmap <silent> <F4> :call Do_CsTag(&filetype)<CR><CR><CR><CR>
         map <silent> <F8> :call Do_FormatePythonSrc()<CR>
         " map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec 'AsyncRun! python3'"%"<CR>
-        map <silent> <F9> <ESC>:exec "w"<bar> :exec "copen" <bar> :exec "wincmd p"<bar> :exec "make %" <bar>:exec "clast" <CR><CR>
+        map <silent> <F9> <ESC>:exec "w"<bar> :exec "copen" <bar> :exec "wincmd J" <bar> :exec "wincmd p"<bar> :exec "make %" <bar>:exec "clast" <CR><CR>
         " map <silent> <F9> <ESC>:exec "w"<bar> :exec "copen" <bar> :exec "wincmd p"<bar> :exec "AsyncRun -program=make @%" <bar> :exec "clast" <CR><CR>
         map <silent> <F10> <ESC>:exec 'AsyncStop'<CR> <bar> :exec ":cclose"<CR>
     elseif (&filetype == 'markdown')
