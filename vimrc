@@ -346,9 +346,9 @@ endfunction
 
 au BufRead,BufNewFile {*.go}                                            setl ft=go tabstop=2 softtabstop=2 noexpandtab smarttab
 au BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru}       setl ft=ruby tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab
-au BufRead,BufNewFile {*.local}                                         setl ft=sh
+au BufRead,BufNewFile {*.local,*.sh}                                         setl ft=sh
 au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                           setl ft=markdown
-au BufRead,BufNewFile {*.c,*h}                                          setl ft=c
+au BufRead,BufNewFile {*.c,*.h}                                          setl ft=c
 au BufRead,BufNewFile {*.c++,*.cc,*.cpp}                                setl ft=cpp
 au BufRead,BufNewFile {*.tex}                                           setl ft=tex
 au BufRead,BufNewFile {*.py}                                            setl ft=python
