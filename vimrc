@@ -36,6 +36,7 @@ set history=256        " Number of things to remember in history.
 set timeoutlen=250     " Time to wait after ESC (default causes an annoying delay)
 set clipboard+=unnamed " Yanks go on clipboard instead.
 set shiftround         " round indent to multiple of 'shiftwidth'
+set cm=blowfish2
 
 set modeline
 set modelines=5                " default numbers of lines to read for modeline instructions
