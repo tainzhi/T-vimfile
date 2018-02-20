@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2017-07-11 15:07:28
+"  Modified : 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -17,30 +17,25 @@ set nocompatible               " be iMproved
 "" 中文编码支持，同时支持GBK和UTF-8编码
 set termencoding=utf-8
 set encoding=utf-8 " the default encoding of vim 
-" detect the current filetype whether is in following list one by one, if the 
-" answer is yes, then set fileencoding to the filetype
-set fileencodings=utf-8,gb18030,utf-16,big5,cp936,ucs-bom,unicode
-
+" detect the current filetype whether is in following list one by one, if the answer is yes, then set fileencoding to the filetype
+set fileencodings=utf-8,gb18030,utf-16,big5,cp936,ucs-bom,ucs-bom,unicode
 "" 解决菜单乱码
-"source $VIMRUNTIME/delmenu.vim
-"source $VIMRUNTIME/menu.vim
-
+if has("gui_running")
+    source $VIMRUNTIME/delmenu.vim
+    source $VIMRUNTIME/menu.vim
+endif
 "" 解决console输出乱码
-"language messages zh_CN.utf-8
-"let g:is_posix = 1             " vim's default is archaic bourne shell, bring it up to the 90s
+language messages zh_CN.utf-8
 
 set whichwrap+=<,>,h,l   " 允许backspace和光标键跨越行边界(不建议)    
-
 set colorcolumn=80     " max line length to 80
 set history=256        " Number of things to remember in history.
 set timeoutlen=250     " Time to wait after ESC (default causes an annoying delay)
 set clipboard+=unnamed " Yanks go on clipboard instead.
 set shiftround         " round indent to multiple of 'shiftwidth'
 set cm=blowfish2
-
 set modeline
 set modelines=5                " default numbers of lines to read for modeline instructions
-
 set autowrite                  " Writes on make/shell commands
 set autoread
 autocmd BufLeave,FocusLost silent! wall
@@ -134,23 +129,25 @@ map <silent> <F12> :set invlist<CR>
 if has('mac')
     if has('gui_running')
         set macmeta
-    end
-    set guifont=Andale\ Mono:h13
+        set guifont=Andale\ Mono:h13
+    endif
     set noantialias
     set fuoptions=maxvert,maxhorz ",background:#00AAaaaa
-"elseif has('win32')
-"    set guifont=Consolas:h14:cANSI
-else
-    if has('gui_running')
+elseif has('win32')
+    if has ('gui_running')
+        set guifont=Consolas:h14:cANSI
         "winpos 5 5          " 设定窗口位置    
         "set lines=999 columns=999
         "win 2560 1700
         "gvim -geometry 2560*1700
-        "an GUIEnter * simalt ~x     #full screen
+        an GUIEnter * simalt ~x     #full screen
+    endif
+else
+    if has('gui_running')
         set guioptions=m
         set guifont=Monospace\ 14
-    else
-        set guifont=Monospace\ 11
+    " else
+    "     set guifont=Monospace\ 11
     endif
 endif
 
@@ -478,7 +475,16 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " install plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-call plug#begin('~/.vim/plugged')
+if has('win32')
+    call plug#begin('~/vimfiles/plugged')
+else
+    call plug#begin('~/.vim/plugged')
+end
+
+
+
+" for getting help for vim-plug itself
+Plug 'junegunn/vim-plug'
 
 
 " Colorscheme

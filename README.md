@@ -74,12 +74,21 @@ Information about my vim notes, configures and plugins
 
 ## Configure initial
 
+### for *nix
 ```
 # clone recursively with vundle
 git clone https://github.com/tainzhi/Q-vimfile.git ~/.vim
 # run vim and install plugins
 vim .vim/vimrc +PlugUpdate +qall                     
 ```
+
+### for windows
+```
+# clone recursively with vundle
+git clone https://github.com/tainzhi/Q-vimfile.git %userprofile%\vimfiles
+vim %userprofile%\vimfiles\vimrc +PlugUpdate +qall                     
+```
+
 ## Support multi languages
 - YouCompleteMe
     - [x] c/cpp
