@@ -134,15 +134,17 @@ if has('mac')
     set noantialias
     set fuoptions=maxvert,maxhorz ",background:#00AAaaaa
 elseif has('win32')
+    let HOME_VIM_RUNTIME = $HOME.'\vimfiles\'
     if has ('gui_running')
         set guifont=Consolas:h14:cANSI
         "winpos 5 5          " 设定窗口位置    
         "set lines=999 columns=999
         "win 2560 1700
         "gvim -geometry 2560*1700
-        an GUIEnter * simalt ~x     #full screen
+        " an GUIEnter * simalt ~x     #full screen
     endif
 else
+    let HOME_VIM_RUNTIME = $HOME.'/.vim/'
     if has('gui_running')
         set guioptions=m
         set guifont=Monospace\ 14
@@ -187,11 +189,9 @@ vnoremap <C-V> "+P
 "插入模式下,Ctrl+c,插入系统剪切板中的内容到光标之后
 inoremap <C-V> <esc>"+pa
 
-" Operatations to vimrc
-nnoremap <leader>rs :source ~/.vim/vimrc<CR>
-nnoremap <leader>rt :tabnew ~/.vim/vimrc<CR>
-"nnoremap <leader>re :c ~/.vim/vimrc<CR>
-"nnoremap <leader>rd :e ~/.vim/ <CR>
+" Operations to vimrc
+nnoremap <leader>rs :exec 'source '.HOME_VIM_RUNTIME.'vimrc'<CR>
+nnoremap <leader>rt :exec 'tabnew '.HOME_VIM_RUNTIME.'vimrc'<CR>
 nnoremap <leader>rc :silent ! cd ~/.vim/ && git commit ~/.vim/vimrc -v <CR>
 
 " Tabs
@@ -471,15 +471,10 @@ function! Do_FormatePythonSrc()
 endfunction
 
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " install plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if has('win32')
-    call plug#begin('~/vimfiles/plugged')
-else
-    call plug#begin('~/.vim/plugged')
-end
+call plug#begin(HOME_VIM_RUNTIME.'/plugged')
 
 
 
@@ -797,7 +792,7 @@ autocmd BufWritePre,FileWritePre,BufRead,BufNewFile {*.cc,*.h,*c,*.cpp} call Ult
 
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
-let g:session_directory='./'
+let g:session_directory=HOME_VIM_RUNTIME
 let g:session_default_name='.session'
 let g:session_lock_enabled=0
 if has("gui_running")
