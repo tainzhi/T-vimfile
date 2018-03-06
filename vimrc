@@ -127,6 +127,9 @@ map <silent> <F12> :set invlist<CR>
 
 
 if has('mac')
+    " 隐藏菜单栏和工具栏
+    set guioptions-=m
+    set guioptions-=T
     if has('gui_running')
         set macmeta
         set guifont=Andale\ Mono:h13
