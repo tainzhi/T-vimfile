@@ -289,6 +289,21 @@ au FocusGained * se imd
 
 
 
+" vim自带目录浏览器netrw, 功能没有NERDTree强大, 但是支持ssh和http
+" use the previous window to open file
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+" absolute width of netrw window
+let g:netrw_winsize = 20
+" do not display info on the top of window
+let g:netrw_banner = 0
+" tree-view
+let g:netrw_liststyle = 3
+" sort is affecting only: directories on the top, files below
+let g:netrw_sort_sequence = '[\/]$,*'
+
+
+
 function! Do_Map()
     if (&filetype == 'c')
         set sp=2>
