@@ -126,10 +126,13 @@ map <silent> <F12> :set invlist<CR>
 
 
 
+" 隐藏菜单栏和工具栏
+set guioptions-=m
+set guioptions-=T
+set t_Co=256
+" 使注释倾斜斜体
+hi Comment cterm=italic
 if has('mac')
-    " 隐藏菜单栏和工具栏
-    set guioptions-=m
-    set guioptions-=T
     if has('gui_running')
         set macmeta
         set guifont=Andale\ Mono:h13
@@ -148,12 +151,7 @@ elseif has('win32')
     endif
 else
     let HOME_VIM_RUNTIME = $HOME.'/.vim/'
-    if has('gui_running')
-        set guioptions=m
-        set guifont=Monospace\ 14
-    " else
-    "     set guifont=Monospace\ 11
-    endif
+    set guifont=Monospace\ 14
 endif
 
 
@@ -164,7 +162,6 @@ endif
 
 let mapleader = "\<Space>"
 "let maplocalleader = '	'      " Tab as a local leader
-let g:netrw_banner = 0         " do not show Netrw help banner
 
 " resize the window
 nmap w= :resize +3<CR>
@@ -502,8 +499,8 @@ Plug 'junegunn/vim-plug'
 
 " Colorscheme
 Plug 'altercation/vim-colors-solarized'
-Plug 'junegunn/seoul256.vim', { 'do': ':colorscheme seoul256' }
-Plug 'liuchengxu/space-vim-dark', { 'do': ':colorscheme space-vim-dark' }
+Plug 'junegunn/seoul256.vim'
+Plug 'liuchengxu/space-vim-dark'
 
 
 
@@ -740,8 +737,13 @@ let g:ycm_complete_in_strings = 1
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 " 关闭加载.ycm_extra_conf.py提示
 let g:ycm_confirm_extra_conf = 0
-let g:ycm_server_python_interpreter = 'python3.5'
-let g:ycm_python_binary_path = '/usr/bin/python3.5'
+if has('win32')
+    let g:ycm_server_python_interpreter = 'python'
+    let g:ycm_python_binary_path = 'c:\Python35\python'
+else
+    let g:ycm_server_python_interpreter = 'python3.5'
+    let g:ycm_python_binary_path = '/usr/bin/python3.5'
+endif
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> " 跳转到定义处
 "显示对c/c++的实时检测结果,比如语法错误; 不显示, 值为0, 那么此时使用syntastic检测语法
 "为了不使用syntastic插件检测功能,而适用YouCompleteMe检测功能
@@ -925,12 +927,12 @@ call plug#end()
 
 
 
+" 在这里设置colorscheme的原因是solarized等3个主题是通过插件管理器Plug加载的,
+" 只有等其加载完后才能导入设置;
+" 如果只是使用vim自带主题, 可以在前面设置主题
 if has("gui_running")
     set background=dark
     colorscheme solarized
 else
-    set t_Co=256
-    colorscheme desert
-    " colorscheme space-vim-dark
-    hi Comment cterm=italic
+    colorscheme space-vim-dark
 endif
