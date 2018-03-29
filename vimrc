@@ -1,11 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" set runtimepath=~/vim,$VIMRUNTIME,$VIM
+"  Modified : 2018-03-29 17:09:56
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -13,8 +8,7 @@
 " General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible               " be iMproved
-
-"" 中文编码支持，同时支持GBK和UTF-8编码
+" 中文编码支持，同时支持GBK和UTF-8编码
 set termencoding=utf-8
 set encoding=utf-8 " the default encoding of vim 
 " detect the current filetype whether is in following list one by one, if the answer is yes, then set fileencoding to the filetype
@@ -24,7 +18,7 @@ if has("gui_running")
     source $VIMRUNTIME/delmenu.vim
     source $VIMRUNTIME/menu.vim
 endif
-"" 解决console输出乱码
+" 解决console输出乱码
 language messages zh_CN.utf-8
 
 set whichwrap+=<,>,h,l   " 允许backspace和光标键跨越行边界(不建议)    
@@ -36,9 +30,16 @@ set shiftround         " round indent to multiple of 'shiftwidth'
 set cm=blowfish2
 set modeline
 set modelines=5                " default numbers of lines to read for modeline instructions
-set autowrite                  " Writes on make/shell commands
-set autoread
+" 当文件在外部被修改，自动更新该文件
+set autoread 
+set autowrite
+" 失去焦点后自动保存文件
+au FocusLost * :up
+" 避免在操作中频繁出现“请按Enter或其他命令继续”
+" 以及出现“更多”的提示而需要按空格键继续
+set nomore
 autocmd BufLeave,FocusLost silent! wall
+
 
 set hlsearch                   " highlight search
 set ignorecase                 " be case insensitive when searching
@@ -47,7 +48,7 @@ set incsearch                  " show matches while typing
 
 
 " Formatting 
-set formatoptions+=o                      " Automatically insert the current comment leader after hitting 'o' or 'O' in Normal mode.
+set formatoptions+=o           " Automatically insert the current comment leader after hitting 'o' or 'O' in Normal mode.
 set fo-=r                      " Do not automatically insert a comment leader after an enter
 set fo-=t                      " Do no auto-wrap text using textwidth (does not apply to comments)
 
@@ -147,7 +148,9 @@ elseif has('win32')
         "set lines=999 columns=999
         "win 2560 1700
         "gvim -geometry 2560*1700
-        " an GUIEnter * simalt ~x     #full screen
+        " an GUIEnter * simalt ~x           " 进入窗口后对所有文件类型(型号*匹配所有文件)全屏. 
+                                            " simalt ~x模拟Alt Spacebar X. 
+                                            " simalt ~n最小化窗口
     endif
 else
     let HOME_VIM_RUNTIME = $HOME.'/.vim/'
@@ -378,16 +381,21 @@ au! BufWritePost      {*.snippet,*.snippets}                          call Reloa
 
 
 function! Do_Update_Modified()
-    let line_number = search('Modified','nw')
+    " let line_number = search('Modified','nw')
     " echo line_number
-    if line_number < 10
-        let line_content = substitute(getline(line_number),"[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9]",strftime("%Y-%m-%d %T"),"g") 
+    " if line_number < 10
+    " 因为search()从当前cursor所在行查找, 所以在此处用法不对. 更改为判断文件第
+    " 3行是否有时间戳Modified
+    let line_number = 3
+    if match(getline(line_number), 'Modified')
+        let line_content = substitute(getline(line_number),"[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9]",strftime("%Y-%m-%d %X"),"g") 
         "  Modified : 2017-05-17 18:53:36
+        echo line_content
         let minute_str = matchstr(getline(line_number),":[0-9][0-9]:") "get :53:
         let minute = strpart(minute_str,1,2) " get minute 53, vim script has no string to int, thus string is a number
         let current_minute = strftime("%M")
-        " update date modified time stamp every 3 minutes
-        if current_minute - minute >= 3 || current_minute - minute < 0
+        " update date modified time stamp every 5 minutes
+        if current_minute - minute >= 5 || current_minute - minute < 0
             call setline(line_number, line_content)
         endif
     endif
@@ -402,8 +410,8 @@ function! Do_Set_Title()
         call append(line("."), "\# File     : ".expand("%")) 
         call append(line(".")+1, "\# Author   : tainzhi") 
         call append(line(".")+2, "\# Mail     : qfq61@qq.com") 
-        call append(line(".")+3, "\# Created  : ".strftime("%Y-%m-%d %T")) 
-        call append(line(".")+4, "\# Modified : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+3, "\# Created  : ".strftime("%Y-%m-%d %X")) 
+        call append(line(".")+4, "\# Modified : ".strftime("%Y-%m-%d %X")) 
         call append(line(".")+5, "\################################################################################") 
         call append(line(".")+6, "\#!/bin/bash") 
         call append(line(".")+7, "") 
@@ -412,8 +420,8 @@ function! Do_Set_Title()
         call append(line("."), " > File     : ".expand("%")) 
         call append(line(".")+1, " > Author   : tainzhi") 
         call append(line(".")+2, " > Mail     : qfq61@qq.com") 
-        call append(line(".")+3, " > Created  : ".strftime("%Y-%m-%d %T")) 
-        call append(line(".")+4, " > Modified : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+3, " > Created  : ".strftime("%Y-%m-%d %X")) 
+        call append(line(".")+4, " > Modified : ".strftime("%Y-%m-%d %X")) 
         call append(line(".")+5, "********************************************************************************") 
         call append(line(".")+6, "") 
     elseif &filetype == 'c'
@@ -421,8 +429,8 @@ function! Do_Set_Title()
         call append(line("."), "* File     : ".expand("%")) 
         call append(line(".")+1, "* Author   : tainzhi") 
         call append(line(".")+2, "* Mail     : qfq61@qq.com") 
-        call append(line(".")+3, "* Created  : ".strftime("%Y-%m-%d %T")) 
-        call append(line(".")+4, "* Modified : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+3, "* Created  : ".strftime("%Y-%m-%d %X")) 
+        call append(line(".")+4, "* Modified : ".strftime("%Y-%m-%d %X")) 
         call append(line(".")+5, "*******************************************************************************/") 
         call append(line(".")+6, "") 
         call append(line(".")+7, "#include <stdio.h>") 
@@ -435,8 +443,8 @@ function! Do_Set_Title()
         call append(line("."), "* File     : ".expand("%")) 
         call append(line(".")+1, "* Author   : tainzhi") 
         call append(line(".")+2, "* Mail     : qfq61@qq.com") 
-        call append(line(".")+3, "* Created  : ".strftime("%Y-%m-%d %T")) 
-        call append(line(".")+4, "* Modified : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+3, "* Created  : ".strftime("%Y-%m-%d %X")) 
+        call append(line(".")+4, "* Modified : ".strftime("%Y-%m-%d %X")) 
         call append(line(".")+5, "*******************************************************************************/") 
         call append(line(".")+6, "") 
         call append(line(".")+7, "#include <stdio.h>") 
@@ -453,8 +461,8 @@ function! Do_Set_Title()
         call append(line(".")+1, "# File        : ".expand("%")) 
         call append(line(".")+2, "# Author      : tainzhi") 
         call append(line(".")+3, "# Mail        : qfq61@qq.com") 
-        call append(line(".")+4, "# Created     : ".strftime("%Y-%m-%d %T")) 
-        call append(line(".")+5, "# Modified    : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+4, "# Created     : ".strftime("%Y-%m-%d %X")) 
+        call append(line(".")+5, "# Modified    : ".strftime("%Y-%m-%d %X")) 
         call append(line(".")+6, "# Description :") 
         call append(line(".")+7, "# #############################################################################/") 
         call append(line(".")+8, "") 
@@ -933,6 +941,7 @@ call plug#end()
 if has("gui_running")
     set background=dark
     colorscheme solarized
+    " colorscheme space-vim-dark
 else
-    colorscheme space-vim-dark
+    colorscheme desert
 endif
