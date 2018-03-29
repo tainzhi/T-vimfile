@@ -1,23 +1,26 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2018-03-29 17:09:56
+"  Modified : 2018-03-29 23:13:14
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has("win32")
+    let g:HomeVimRuntime = $HOME.'\vimfiles\'
+elseif has('mac')
+    echo "Todo: set my vim runpath"
+else
+    let g:HomeVimRuntime = $HOME.'/.vim/'
+endif
+
 set nocompatible               " be iMproved
 " 中文编码支持，同时支持GBK和UTF-8编码
 set termencoding=utf-8
 set encoding=utf-8 " the default encoding of vim 
 " detect the current filetype whether is in following list one by one, if the answer is yes, then set fileencoding to the filetype
 set fileencodings=utf-8,gb18030,utf-16,big5,cp936,ucs-bom,ucs-bom,unicode
-"" 解决菜单乱码
-if has("gui_running")
-    source $VIMRUNTIME/delmenu.vim
-    source $VIMRUNTIME/menu.vim
-endif
 " 解决console输出乱码
 language messages zh_CN.utf-8
 
@@ -125,37 +128,8 @@ set listchars+=extends:»,precedes:«
 set invlist
 map <silent> <F12> :set invlist<CR>
 
-
-
-" 隐藏菜单栏和工具栏
-set guioptions-=m
-set guioptions-=T
-set t_Co=256
 " 使注释倾斜斜体
 hi Comment cterm=italic
-if has('mac')
-    if has('gui_running')
-        set macmeta
-        set guifont=Andale\ Mono:h13
-    endif
-    set noantialias
-    set fuoptions=maxvert,maxhorz ",background:#00AAaaaa
-elseif has('win32')
-    let HOME_VIM_RUNTIME = $HOME.'\vimfiles\'
-    if has ('gui_running')
-        set guifont=Consolas:h14:cANSI
-        "winpos 5 5          " 设定窗口位置    
-        "set lines=999 columns=999
-        "win 2560 1700
-        "gvim -geometry 2560*1700
-        " an GUIEnter * simalt ~x           " 进入窗口后对所有文件类型(型号*匹配所有文件)全屏. 
-                                            " simalt ~x模拟Alt Spacebar X. 
-                                            " simalt ~n最小化窗口
-    endif
-else
-    let HOME_VIM_RUNTIME = $HOME.'/.vim/'
-    set guifont=Monospace\ 14
-endif
 
 
 
@@ -193,8 +167,8 @@ vnoremap <C-V> "+P
 inoremap <C-V> <esc>"+pa
 
 " Operations to vimrc
-nnoremap <leader>rs :exec 'source '.HOME_VIM_RUNTIME.'vimrc'<CR>
-nnoremap <leader>rt :exec 'tabnew '.HOME_VIM_RUNTIME.'vimrc'<CR>
+nnoremap <leader>rs :exec 'source '.g:HomeVimRuntime.'vimrc'<CR>
+nnoremap <leader>rt :exec 'tabnew '.g:HomeVimRuntime.'vimrc'<CR>
 nnoremap <leader>rc :silent ! cd ~/.vim/ && git commit ~/.vim/vimrc -v <CR>
 
 " Tabs
@@ -390,7 +364,6 @@ function! Do_Update_Modified()
     if match(getline(line_number), 'Modified')
         let line_content = substitute(getline(line_number),"[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9]",strftime("%Y-%m-%d %X"),"g") 
         "  Modified : 2017-05-17 18:53:36
-        echo line_content
         let minute_str = matchstr(getline(line_number),":[0-9][0-9]:") "get :53:
         let minute = strpart(minute_str,1,2) " get minute 53, vim script has no string to int, thus string is a number
         let current_minute = strftime("%M")
@@ -497,7 +470,7 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " install plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-call plug#begin(HOME_VIM_RUNTIME.'/plugged')
+call plug#begin(g:HomeVimRuntime.'/plugged')
 
 
 
@@ -820,7 +793,7 @@ autocmd BufWritePre,FileWritePre,BufRead,BufNewFile {*.cc,*.h,*c,*.cpp} call Ult
 
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
-let g:session_directory=HOME_VIM_RUNTIME
+let g:session_directory=g:HomeVimRuntime
 let g:session_default_name='.session'
 let g:session_lock_enabled=0
 if has("gui_running")
@@ -935,13 +908,46 @@ call plug#end()
 
 
 
-" 在这里设置colorscheme的原因是solarized等3个主题是通过插件管理器Plug加载的,
-" 只有等其加载完后才能导入设置;
-" 如果只是使用vim自带主题, 可以在前面设置主题
-if has("gui_running")
-    set background=dark
-    colorscheme solarized
-    " colorscheme space-vim-dark
+" 系统相关的配置
+if has('mac')
+    if has('gui_running')
+        set macmeta
+        set guifont=Andale\ Mono:h13
+    endif
+    set noantialias
+    set fuoptions=maxvert,maxhorz ",background:#00AAaaaa
+elseif has('win32')
+    if has ('gui_running')
+        if has('libcall')
+            map <F11> <ESC>:call libcallnr(g:HomeVimRuntime.'\gvimfullscreen.dll', "ToggleFullScreen", 0)<CR><CR>
+        endif
+        " 解决菜单乱码
+        source $VIMRUNTIME/delmenu.vim
+        source $VIMRUNTIME/menu.vim
+        " 设置字体
+        set guifont=Consolas:h14:cANSI
+        "winpos 5 5          " 设定窗口位置    
+        "set lines=999 columns=999
+        "win 2560 1700
+        "gvim -geometry 2560*1700
+        " an GUIEnter * simalt ~x           " 进入窗口后对所有文件类型(型号*匹配所有文件)全屏. 
+                                            " simalt ~x模拟Alt Spacebar X. 
+                                            " simalt ~n最小化窗口
+        " 隐藏菜单栏和工具栏
+        set guioptions-=m
+        set guioptions-=T
+        colorscheme solarized
+        set background=dark
+    else
+        colorscheme desert
+    endif
 else
-    colorscheme desert
+    set guifont=Monospace\ 14
+    if has('gui_running')
+        colorscheme solarized
+        set background=dark
+    else
+        colorscheme desert
+        set t_Co=256
+    endif
 endif

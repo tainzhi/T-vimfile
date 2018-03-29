@@ -40,7 +40,6 @@ Information about my vim notes, configures and plugins
       * [Deprecated plugins](#deprecated-plugins)
          * [taglist.vim](#taglistvim)
          * [FuzzyFinder](#fuzzyfinder)
-      * [Plugin for java and android](#plugin-for-java-and-android)
       * [vim help](#vim-help)
          * [跳转移动光标](#跳转移动光标)
          * [插入](#插入)
@@ -71,6 +70,9 @@ Information about my vim notes, configures and plugins
          * [vim buffer](#vim-buffer)
          * [加密/解密文件](#加密解密文件)
          * [长行断行/整行](#长行断行整行)
+      * [其他]](#其他)
+         * [全屏快捷键](#全屏快捷键)
+
 
 ## Configure initial
 
@@ -154,7 +156,7 @@ nnoremap // :TComment<CR>   注释
     <tr>
         <td>F1</td>
         <td></td>
-        <td>buntu show help</td>
+        <td>ubuntu show help</td>
         <td></td>
     </tr>
     <tr>
@@ -226,7 +228,7 @@ nnoremap // :TComment<CR>   注释
     <tr>
         <td>F11</td>
         <td></td>
-        <td>ubuntu maxium window</td>
+        <td>在全屏和正常屏幕之间切换</td>
         <ted></td>
     </tr>
     <tr>
@@ -718,22 +720,6 @@ nnoremap <Leader>ap :lprevious<cr>
 let g:ycm_show_diagnostics_ui = 1
 ```
 
-## Plugin for java and android
-[eclim](http://eclim.org/)
-
-[download](http://sourceforge.net/projects/eclim/files/eclim/2.4.0/eclim_2.4.0.jar/download)
-
-Install && Configure, 在.vimrc中设置
-```
-set nocompatible
-filetype plugin indent on
-```
-
-启动eclim server
-```
-运行`$EclipseHome/eclimd`
-在vim中`PingEclim`
-```
 
 ## vim help
 
@@ -1215,4 +1201,6 @@ set key=    #直接回车, 然后保存退出
 :set wrap   #断行, 很长的一行, 分成几行完全显示
 :set nowrap #默认设置; 无论多长, 单行显示, 只显示屏幕可以显示的部分
 ```
-
+## 其他
+### 全屏快捷键
+对于linux系统来说, <F11>是系统最大化按键, 不需要另配置与. 而对于windows来说, 默认<F11>是没有作用的, 需要添加一个动态库和映射才能最大化. 在windows系统下需要编译使用cmake和vs c++编译源码, 生成动态库dll, 放置在特定目录下, 我这里是放置在`~/.vim/`目录下(对于windows, 放置在`%USERPROFILE\vimfiles\`), [参考源码](https://github.com/derekmcloughlin/gvimfullscreen_win32/tree/master). 有一个[github用户](https://github.com/xqin/gvimfullscreen)提供了win32和Windows64的dll库, 可以直接下在到特定目录, 加载即可.
