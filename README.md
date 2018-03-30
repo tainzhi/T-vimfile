@@ -70,7 +70,7 @@ Information about my vim notes, configures and plugins
          * [vim buffer](#vim-buffer)
          * [加密/解密文件](#加密解密文件)
          * [长行断行/整行](#长行断行整行)
-      * [其他]](#其他)
+      * [其他](#其他)
          * [全屏快捷键](#全屏快捷键)
 
 
@@ -162,7 +162,7 @@ nnoremap // :TComment<CR>   注释
     <tr>
         <td>F2</td>
         <td></td>
-        <td></td>
+        <td>打开tagbar</td>
         <td>nmap <silent> <F2> :Tagbar<CR></td>
     </tr>
     <tr>
@@ -205,7 +205,7 @@ nnoremap // :TComment<CR>   注释
         <td></td>
     </tr>
     <tr>
-        <td rowspan="4">F10</td>
+        <td rowspan="5">F10</td>
         <td>c/cpp</td>
         <td>run the a.out compiled from souce code</td>
         <td>./a.out &lt; a.in</td>
@@ -213,6 +213,11 @@ nnoremap // :TComment<CR>   注释
     <tr>
         <td>tex</td>
         <td>open the pdf file generaged by xelatex</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>markdown</td>
+        <td>用chrome打开markdown文件, 因为chrome安装了预览markdown的插件</td>
         <td></td>
     </tr>
     <tr>
@@ -1203,4 +1208,4 @@ set key=    #直接回车, 然后保存退出
 ```
 ## 其他
 ### 全屏快捷键
-对于linux系统来说, <F11>是系统最大化按键, 不需要另配置与. 而对于windows来说, 默认<F11>是没有作用的, 需要添加一个动态库和映射才能最大化. 在windows系统下需要编译使用cmake和vs c++编译源码, 生成动态库dll, 放置在特定目录下, 我这里是放置在`~/.vim/`目录下(对于windows, 放置在`%USERPROFILE\vimfiles\`), [参考源码](https://github.com/derekmcloughlin/gvimfullscreen_win32/tree/master). 有一个[github用户](https://github.com/xqin/gvimfullscreen)提供了win32和Windows64的dll库, 可以直接下在到特定目录, 加载即可.
+对于linux系统来说, &lt;F11&gt;是系统最大化按键, 不需要另配置与. 而对于windows来说, 默认&lt;F11&gt;是没有作用的, 需要添加一个动态库和映射才能最大化. 在windows系统下需要编译使用cmake和vs c++编译源码, 生成动态库dll, 放置在特定目录下, 我这里是放置在`~/.vim/`目录下(对于windows, 放置在`%USERPROFILE\vimfiles\`), [参考源码](https://github.com/derekmcloughlin/gvimfullscreen_win32/tree/master). 有一个[github用户](https://github.com/xqin/gvimfullscreen)提供了win32和Windows64的dll库, 可以直接下在到特定目录, 加载即可.

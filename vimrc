@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2018-03-29 23:13:14
+"  Modified : 2018-03-30 10:32:53
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -323,7 +323,12 @@ function! Do_Map()
         " map <silent> <F9> <ESC>:exec "w"<bar> :exec "copen" <bar> :exec "wincmd p"<bar> :exec "AsyncRun -program=make @%" <bar> :exec "clast" <CR><CR>
         map <silent> <F10> <ESC>:exec 'AsyncStop'<CR> <bar> :exec ":cclose"<CR>
     elseif (&filetype == 'markdown')
-        map <buffer> <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!google-chrome '"%"<CR><CR>
+        if has("win32")
+			" 要把chrome的安装路径添加到系统环境变量Path
+            map <buffer> <silent> <F10> <ESC>:exec ":w"<CR> <bar> :exec '!start chrome '"%"<CR><CR>
+        else
+            map <buffer> <silent> <F10> <ESC>:exec ":w"<CR> <bar> :exec '!google-chrome '"%"<CR><CR>
+        endif
     elseif (&filetype == 'dot')
         map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!dot -Tjpg 'expand('%').' -o 'expand('%:r').'.jpg'<CR><CR>
         map <silent> <F10> <ESC>:exec ":w"<CR> <bar> :exec '!xdg-open 'expand('%:r').'.jpg'<CR><CR>
@@ -807,7 +812,7 @@ endif
 
 
 " Syntax highlight
-Plug 'gmarik/vim-markdown'
+Plug 'gmarik/vim-markdown', { 'for': 'markdown'}
 
 
 
@@ -839,7 +844,7 @@ let g:vimim_map = 'tab_as_gi'
 
 
 
-Plug 'gerw/vim-latex-suite'
+Plug 'gerw/vim-latex-suite', {'for': 'tex'}
 " OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
 " 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
 " The following changes the default filetype back to 'tex':
