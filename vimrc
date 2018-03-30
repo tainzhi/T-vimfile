@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2018-03-30 10:32:53
+"  Modified : 2018-03-30 17:47:54
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -462,7 +462,7 @@ function! Do_BuildYCM(info)
   " - status: 'installed', 'updated', or 'unchanged'
   " - force:  set on PlugInstall! or PlugUpdate!
   if a:info.status == 'installed' || a:info.force
-    !./install.py --clang-completer --gocode-completer --tern-completer --racer-completer
+    !python3 ./install.py --clang-completer --gocode-completer --tern-completer --racer-completer
   endif
 endfunction
 
