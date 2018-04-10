@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2018-03-30 17:47:54
+"  Modified : 2018-04-09 16:00:13
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -523,17 +523,19 @@ let g:nerdtree_tabs_synchronize_view = 1
 " Plugin tagbar
 Plug 'majutsushi/tagbar'
 nmap <silent> <F2> :Tagbar<CR>
-set updatetime=100
-let g:tagbar_autofocus = 1
-let g:tagbar_width = 40
-let g:tagbar_left = 0
-let g:tagbar_type_markdown = {
-        \ 'ctagstype' : 'markdown',
-        \ 'kinds' : [
-                \ 'h:headings',
-        \ ],
-    \ 'sort' : 0
-\ }
+if !has('win32')
+    set updatetime=100
+    let g:tagbar_autofocus = 1
+    let g:tagbar_width = 40
+    let g:tagbar_left = 0
+    let g:tagbar_type_markdown = {
+            \ 'ctagstype' : 'markdown',
+            \ 'kinds' : [
+                    \ 'h:headings',
+            \ ],
+        \ 'sort' : 0
+    \ }
+endif
 
 
 
@@ -613,7 +615,7 @@ Plug 'Raimondi/delimitMate'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#tab_nr_type = 2 " splits and tab number
+let g:airline#extensions#tabline#tab_nr_type = '2' " splits and tab number
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
 nmap <leader>d :bd 
@@ -801,13 +803,8 @@ Plug 'xolox/vim-session'
 let g:session_directory=g:HomeVimRuntime
 let g:session_default_name='.session'
 let g:session_lock_enabled=0
-if has("gui_running")
-    let g:session_autoload='no'
-    let g:session_autosave='no'
-else
-    let g:session_autoload='yes'
-    let g:session_autosave='yes'
-endif
+let g:session_autoload='yes'
+let g:session_autosave='yes'
 
 
 
@@ -924,6 +921,16 @@ if has('mac')
 elseif has('win32')
     if has ('gui_running')
         if has('libcall')
+            let g:VimTopMost = 0
+            function! SwitchVimTopMostMode()
+                if g:VimTopMost == 0
+                    let g:VimTopMost = 1
+                else
+                    let g:VimTopMost = 0
+                endif
+                call libcall(g:HomeVimRuntime.'\gvimfullscreen.dll','EnableTopMost', g:VimTopMost)
+            endfunction
+            map <M-F11> <Esc>:call SwitchVimTopMostMode()<CR><CR>
             map <F11> <ESC>:call libcallnr(g:HomeVimRuntime.'\gvimfullscreen.dll', "ToggleFullScreen", 0)<CR><CR>
         endif
         " 解决菜单乱码

@@ -534,7 +534,7 @@ s       Toggle sort order between name and file order
 ### cscope
 [autoload_cscope](https://github.com/tainzhi/autoload_cscope.vim)
 
-依赖包: cscope
+依赖包: cscope. zhe
 
 **usage**:
 ```
@@ -683,47 +683,6 @@ flags = [
 ]
 ```
 现在在`~/Program`目录下就可以自动补全`stdlib.h`
-
-### Syntastic
-[syntastic](https://github.com/vim-syntastic/syntastic)
-实时检测语法错误, 支持c/c++, python, java, html, javascript...
-但是需要第三方检测工具支持, 具体使用以下命令
-```
-:help syntastic-checker
-```
-一经保存,就会显示错误窗口quickfix
-```
-nnoremap <Leader>an :lnext<cr>
-nnoremap <Leader>ap :lprevious<cr>
-```
-因为要保存之后才能显示检测结果, 所以对于c/c++使用YouComplteMe的检测功能,不用保存就可以显示语法错误. (打开YouCompleteMe的检测功能, 默认不显示syntastic的检测功能)
-```
-let g:ycm_show_diagnostics_ui = 1
-```
-
-## Deprecated plugins ##
-### taglist.vim
-[vim-scripts/taglist.vim](https://github.com/vim-scripts/taglist.vim)
-
-### FuzzyFinder
-[FuzzyFinder](http://www.vim.org/scripts/script.php?script_id=1984): 查找文件，路劲，buffer等
-
-### Syntastic
-[syntastic](https://github.com/vim-syntastic/syntastic)
-实时检测语法错误, 支持c/c++, python, java, html, javascript...
-但是需要第三方检测工具支持, 具体使用以下命令
-```
-:help syntastic-checker
-```
-一经保存,就会显示错误窗口quickfix
-```
-nnoremap <Leader>an :lnext<cr>
-nnoremap <Leader>ap :lprevious<cr>
-```
-因为要保存之后才能显示检测结果, 所以对于c/c++使用YouComplteMe的检测功能,不用保存就可以显示语法错误. (打开YouCompleteMe的检测功能, 默认不显示syntastic的检测功能)
-```
-let g:ycm_show_diagnostics_ui = 1
-```
 
 
 ## vim help
