@@ -51,7 +51,6 @@ set ignorecase                 " be case insensitive when searching
 set smartcase                  " be case sensitive when input has a capital letter
 set incsearch                  " show matches while typing
 
-
 " Formatting 
 set formatoptions+=o           " Automatically insert the current comment leader after hitting 'o' or 'O' in Normal mode.
 set fo-=r                      " Do not automatically insert a comment leader after an enter
@@ -128,12 +127,24 @@ map <silent> <F12> :set invlist<CR>
 " 使注释倾斜斜体
 hi Comment cterm=italic
 
+" vim自带目录浏览器netrw, 功能没有NERDTree强大, 但是支持ssh和http
+" use the previous window to open file
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+" absolute width of netrw window
+let g:netrw_winsize = 20
+" do not display info on the top of window
+let g:netrw_banner = 0
+" tree-view
+let g:netrw_liststyle = 3
+" sort is affecting only: directories on the top, files below
+let g:netrw_sort_sequence = '[\/]$,*'
+
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "keyboard map command 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 let mapleader = "\<Space>"
 "let maplocalleader = '	'      " Tab as a local leader
 
@@ -143,14 +154,14 @@ nmap w- :resize -3<CR>
 nmap w, :vertical resize +3<CR>
 nmap w. :vertical resize -3<CR>
 
+" 像在windows系统一样使用Ctrl-C, Ctrl-V复制粘贴，可参考mswin.vim
+" source $VIMRUNTIME/mswin.vim
 " 映射全选+复制 ctrl+a 
 map <C-A> ggVG$
 map! <C-A> <Esc>ggvG$
 map <C-X> "+x
-
 " 选中状态下 Ctrl+c 复制 
 map <C-c> "+y
-
 "选中模式 Ctrl+c 复制选中的文本
 "vnoremap <c-c> "+y
 "普通模式下 Ctrl+c 复制文件路径
@@ -175,35 +186,19 @@ map td :tabclose
 nnoremap <M-h> :tabprev<CR>     "work equals <Alt-h>:tabprew
 nnoremap <M-l> :tabnext<CR>
 
-" Buffers
-nnoremap <localleader>- :bd<CR>
-nnoremap <localleader>-- :bd!<CR>
-" Split line(opposite to S-J joining line)
-nnoremap <C-J> gEa<CR><ESC>ew
-
 " map <silent> <C-W>v :vnew<CR>
 " map <silent> <C-W>s :snew<CR>
 
 " copy filename
 map <silent> <leader>. :let @+=expand('%:p').':'.line('.')<CR>
-map <silent> <leader>/ :let @+=expand('%:p:h')<CR>
 " copy path
-
-
-map <S-CR> A<CR><ESC>
-
-map <leader>E :Explore<CR>
-map <leader>EE :Vexplore!<CR><C-W>=
+map <silent> <leader>/ :let @+=expand('%:p:h')<CR>
 
 " Make Control-direction switch between windows (like C-W h, etc)
 nmap <silent> <C-k> <C-W><C-k>
 nmap <silent> <C-j> <C-W><C-j>
 nmap <silent> <C-h> <C-W><C-h>
 nmap <silent> <C-l> <C-W><C-l>
-
-  " vertical paragraph-movement
-nmap <C-K> {
-nmap <C-J> }
 
 " vertical split with CommandT
 nnoremap <leader>v :exec ':vnew \| CommandT'<CR>
@@ -217,30 +212,11 @@ xnoremap p pgvy
 " map(range(1,9), 'exec "imap <D-".v:val."> <C-o>".v:val."gt"')
 " map(range(1,9), 'exec " map <D-".v:val."> ".v:val."gt"')
 
-" Copy whole line
-nnoremap <silent> <D-c> yy
-
-" close/delete buffer when closing window
-map <silent> <D-w> :bdelete<CR>
-
-" Control+S and Control+Q are flow-control characters: disable them in your terminal settings.
-" $ stty -ixon -ixoff
-noremap <C-S> :update<CR>
-vnoremap <C-S> <C-C>:update<CR>
-inoremap <C-S> <C-O>:update<CR>
-"
-" generate HTML version current buffer using current color scheme
-map <leader>2h :runtime! syntax/2html.vim<CR>
-
 " open help in vertical split
 au BufWinEnter *.txt if &ft == 'help' | wincmd H | vertical resize 85 | nmap q :q<CR> | endif
 noremap <leader>h :help <C-R>=expand("<cword>")<CR><CR>
 
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " invalite the default left, right, up, down key 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " noremap <Up> <NOP>
 " noremap <Down> <NOP>
 " noremap <Left> <NOP>
@@ -252,21 +228,9 @@ noremap <leader>h :help <C-R>=expand("<cword>")<CR><CR>
 
 
 
-" vim自带目录浏览器netrw, 功能没有NERDTree强大, 但是支持ssh和http
-" use the previous window to open file
-let g:netrw_browse_split = 4
-let g:netrw_altv = 1
-" absolute width of netrw window
-let g:netrw_winsize = 20
-" do not display info on the top of window
-let g:netrw_banner = 0
-" tree-view
-let g:netrw_liststyle = 3
-" sort is affecting only: directories on the top, files below
-let g:netrw_sort_sequence = '[\/]$,*'
-
-
-
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" custom functions
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! Do_Map()
     if (&filetype == 'c')
         set sp=2>
@@ -314,8 +278,10 @@ function! Do_Map()
     elseif (&filetype == 'markdown')
         if has("win32")
 			" 要把chrome的安装路径添加到系统环境变量Path
+            map <buffer> <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!start chrome '"%"<CR><CR>
             map <buffer> <silent> <F10> <ESC>:exec ":w"<CR> <bar> :exec '!start chrome '"%"<CR><CR>
         else
+            map <buffer> <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!google-chrome '"%"<CR><CR>
             map <buffer> <silent> <F10> <ESC>:exec ":w"<CR> <bar> :exec '!google-chrome '"%"<CR><CR>
         endif
     elseif (&filetype == 'dot')
@@ -908,7 +874,9 @@ call plug#end()
 
 
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 系统相关的配置
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has('mac')
     if has('gui_running')
         set macmeta
