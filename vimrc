@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2018-04-09 16:00:13
+"  Modified : 2018-04-16 8:09:44
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -9,6 +9,9 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("win32")
     let g:HomeVimRuntime = $HOME.'\vimfiles\'
+    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
+    " set guioptions-=MT
+    set guioptions=Mr
 elseif has('mac')
     echo "Todo: set my vim runpath"
 else
@@ -43,7 +46,6 @@ au FocusLost * :up
 set nomore
 autocmd BufLeave,FocusLost silent! wall
 
-
 set hlsearch                   " highlight search
 set ignorecase                 " be case insensitive when searching
 set smartcase                  " be case sensitive when input has a capital letter
@@ -54,7 +56,6 @@ set incsearch                  " show matches while typing
 set formatoptions+=o           " Automatically insert the current comment leader after hitting 'o' or 'O' in Normal mode.
 set fo-=r                      " Do not automatically insert a comment leader after an enter
 set fo-=t                      " Do no auto-wrap text using textwidth (does not apply to comments)
-
 set nowrap
 set textwidth=0                " Don't wrap lines by default
 " set linebreak off
@@ -80,8 +81,7 @@ set cinoptions=:s,ps,ts,cs
 set cinwords=if,else,while,do
 set cinwords+=for,switch,case
 
-
-syntax on                      " enable syntax
+" syntax on                      " enable syntax, 但是插件管理器已经默认开启syntax
 set synmaxcol=250              " limit syntax highlighting to 128 columns
 
 set mouse=a "enable mouse in GUI mode
@@ -92,8 +92,6 @@ set showmatch                 " Show matching brackets.
 set matchtime=5               " Bracket blinking.
 
 set wildmode=longest,list     " At command line, complete longest common string, then list alternatives.
-
-set completeopt+=preview
 
 set novisualbell              " No blinking
 set noerrorbells              " No noise.
@@ -111,7 +109,6 @@ set showcmd                   " display an incomplete command in statusline
 "set foldenable                " Turn on folding
 set foldmethod=marker         " Fold on the marker
 set foldlevel=80             " Don't autofold anything (but I can still fold manually)
-
 set foldopen=block,hor,tag    " what movements open folds
 set foldopen+=percent,mark
 set foldopen+=quickfix
@@ -238,14 +235,6 @@ map <leader>2h :runtime! syntax/2html.vim<CR>
 " open help in vertical split
 au BufWinEnter *.txt if &ft == 'help' | wincmd H | vertical resize 85 | nmap q :q<CR> | endif
 noremap <leader>h :help <C-R>=expand("<cword>")<CR><CR>
-
-" for input method
-set iminsert=0
-set imsearch=0
-se imd
-au InsertEnter * se noimd
-au InsertLeave * se imd
-au FocusGained * se imd
 
 
 
@@ -828,16 +817,25 @@ vnoremap // :TComment<CR>
 
 
 
-
-Plug 'tainzhi/vimim'
-let g:vimim_cloud = 'google,sogou,baidu,qq'   
-let g:vimim_map = 'tab_as_gi'   
-" :let g:vimim_mode = 'dynamic'   
-" :let g:vimim_mycloud = 0   
-" :let g:vimim_plugin = 'C:/var/mobile/vim/vimfiles/plugin'   
-" :let g:vimim_punctuation = 2   
-" :let g:vimim_shuangpin = 0   
-" :let g:vimim_toggle = 'pinyin,google,sogou' 
+if !has('win32')
+    " 输入法支持Input method, 支持输入中文即可搜索
+    Plug 'tainzhi/vimim'
+    let g:vimim_cloud = 'google,sogou,baidu,qq'   
+    let g:vimim_map = 'tab_as_gi'   
+    " :let g:vimim_mode = 'dynamic'   
+    " :let g:vimim_mycloud = 0   
+    " :let g:vimim_plugin = 'C:/var/mobile/vim/vimfiles/plugin'   
+    " :let g:vimim_punctuation = 2   
+    " :let g:vimim_shuangpin = 0   
+    " :let g:vimim_toggle = 'pinyin,google,sogou' 
+    " for input method
+    " set iminsert=0
+    " set imsearch=0
+    " se imd
+    " au InsertEnter * se noimd
+    " au InsertLeave * se imd
+    " au FocusGained * se imd
+endif
 
 
 
@@ -934,8 +932,8 @@ elseif has('win32')
             map <F11> <ESC>:call libcallnr(g:HomeVimRuntime.'\gvimfullscreen.dll', "ToggleFullScreen", 0)<CR><CR>
         endif
         " 解决菜单乱码
-        source $VIMRUNTIME/delmenu.vim
-        source $VIMRUNTIME/menu.vim
+        " source $VIMRUNTIME/delmenu.vim
+        " source $VIMRUNTIME/menu.vim
         " 设置字体
         set guifont=Consolas:h14:cANSI
         "winpos 5 5          " 设定窗口位置    
@@ -945,9 +943,6 @@ elseif has('win32')
         " an GUIEnter * simalt ~x           " 进入窗口后对所有文件类型(型号*匹配所有文件)全屏. 
                                             " simalt ~x模拟Alt Spacebar X. 
                                             " simalt ~n最小化窗口
-        " 隐藏菜单栏和工具栏
-        set guioptions-=m
-        set guioptions-=T
         colorscheme solarized
         set background=dark
     else
