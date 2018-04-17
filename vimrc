@@ -495,41 +495,14 @@ endif
 
 
 "ctags install path
-let Tlist_Ctags_Cmd='/usr/bin/ctags'
+if !has('win32')
+    let Tlist_Ctags_Cmd='/usr/bin/ctags'
+endif
 "set tags=/home/muqing/android-20/tags,./tags
 "set autochdir
 set tags=tags;**/.svn,tags;**/.git         " consider the tags first, then
                                " walk directory tree upto $HOME looking for tags
                                " note `;` sets the stop folder. :h file-search
-
-
-
-"autoload_cscope.vim
-Plug 'tainzhi/autoload_cscope.vim'
-" if has("cscope")
-    " set csprg=/usr/bin/cscope
-    set cst
-    " set cscopequickfix=s+,c+,d+,i+,t+,e+
-    set nocsverb
-" endif
-function! Do_CsTag(file_type)
-    let has_cscope_out = filereadable("cscope.out")
-    execute "!find `pwd` -iname '*.java' -o -name '*.xml' -o -name '*.h'  -o -name '*.c' -o -name '*.cpp' -o -name '*.cc' -o -name '*.py'| grep -v .plus > ./cscope.files"
-    execute "!ctags --fields=+i -n -R -L ./cscope.files"
-    echo a:file_type
-    if a:file_type == 'python'
-        execute "!pycscope -i ./cscope.files"
-    else
-        execute "!cscope -bkq -i ./cscope.files"
-    endif
-    if (has_cscope_out)
-        execute "cs reset"
-    else
-        execute "cs add cscope.out"
-    endif
-endfunction
-nnoremap <leader>ct :cs find t 
-nnoremap <leader>cf :cs find f 
     
 
 
@@ -573,6 +546,9 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#tab_nr_type = '2' " splits and tab number
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
+if has('win32')
+    let g:airline#extensions#tagbar#enabled = 0
+endif
 nmap <leader>d :bd 
 nmap <leader>1 <Plug>AirlineSelectTab1
 nmap <leader>2 <Plug>AirlineSelectTab2
@@ -801,6 +777,35 @@ if !has('win32')
     " au InsertEnter * se noimd
     " au InsertLeave * se imd
     " au FocusGained * se imd
+
+
+
+    "autoload_cscope.vim
+    Plug 'tainzhi/autoload_cscope.vim'
+    " if has("cscope")
+        " set csprg=/usr/bin/cscope
+        set cst
+        " set cscopequickfix=s+,c+,d+,i+,t+,e+
+        set nocsverb
+    " endif
+    function! Do_CsTag(file_type)
+        let has_cscope_out = filereadable("cscope.out")
+        execute "!find `pwd` -iname '*.java' -o -name '*.xml' -o -name '*.h'  -o -name '*.c' -o -name '*.cpp' -o -name '*.cc' -o -name '*.py'| grep -v .plus > ./cscope.files"
+        execute "!ctags --fields=+i -n -R -L ./cscope.files"
+        echo a:file_type
+        if a:file_type == 'python'
+            execute "!pycscope -i ./cscope.files"
+        else
+            execute "!cscope -bkq -i ./cscope.files"
+        endif
+        if (has_cscope_out)
+            execute "cs reset"
+        else
+            execute "cs add cscope.out"
+        endif
+    endfunction
+    nnoremap <leader>ct :cs find t 
+    nnoremap <leader>cf :cs find f 
 endif
 
 
