@@ -538,6 +538,13 @@ au Syntax * RainbowParenthesesLoadBraces
 
 Plug 'Raimondi/delimitMate'
 let delimitMate_expand_cr = 1
+let delimitMate_expand_inside_quotes = 1
+let delimitMate_expand_space = 0
+augroup mydelimitMate
+    au!
+    au FileType python let b:delimitMate_nesting_quotes = ['"']
+    au FileType markdown let b:delimitMate_nesting_quotes = ['`']
+augroup END
 
 
 
