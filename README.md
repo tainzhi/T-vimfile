@@ -135,8 +135,6 @@ nmap w. :vertical resize -3<CR>
 <leader>ct :cs find t  找到这个string
 <leader>cf :cs find f  找到一个文件
 
-<ctrl-w>o :ZoomWin<CR>  缩放当前窗口
-
 <leader>s       Easymotion一个字符
 <leader>f       Easymotions二个字符
 

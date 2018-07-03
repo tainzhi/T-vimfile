@@ -24,8 +24,6 @@ set termencoding=utf-8
 set encoding=utf-8 " the default encoding of vim 
 " detect the current filetype whether is in following list one by one, if the answer is yes, then set fileencoding to the filetype
 set fileencodings=utf-8,gb18030,utf-16,big5,cp936,ucs-bom,ucs-bom,unicode
-" 解决console输出乱码
-" language messages zh_CN.utf-8
 
 set whichwrap+=<,>,h,l   " 允许backspace和光标键跨越行边界(不建议)    
 set colorcolumn=80     " max line length to 80
@@ -593,10 +591,6 @@ nmap <leader>+ <Plug>AirlineSelectNextTab
 
 
 
-Plug 'vim-scripts/ZoomWin'
-
-
-
 Plug 'tpope/vim-surround'
 
 
@@ -897,20 +891,9 @@ if has('mac')
     set noantialias
     set fuoptions=maxvert,maxhorz ",background:#00AAaaaa
 elseif has('win32')
+    " 解决console输出乱码
+    language messages zh_CN.utf-8
     if has ('gui_running')
-        if has('libcall')
-            let g:VimTopMost = 0
-            function! SwitchVimTopMostMode()
-                if g:VimTopMost == 0
-                    let g:VimTopMost = 1
-                else
-                    let g:VimTopMost = 0
-                endif
-                call libcall(g:HomeVimRuntime.'\gvimfullscreen.dll','EnableTopMost', g:VimTopMost)
-            endfunction
-            map <M-F11> <Esc>:call SwitchVimTopMostMode()<CR><CR>
-            map <F11> <ESC>:call libcallnr(g:HomeVimRuntime.'\gvimfullscreen.dll', "ToggleFullScreen", 0)<CR><CR>
-        endif
         " 解决菜单乱码
         " source $VIMRUNTIME/delmenu.vim
         " source $VIMRUNTIME/menu.vim
