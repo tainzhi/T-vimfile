@@ -279,7 +279,7 @@ function! Do_Map()
             map <buffer> <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!start chrome '"%"<CR><CR>
             map <buffer> <silent> <F10> <ESC>:exec ":w"<CR> <bar> :exec '!start chrome '"%"<CR><CR>
         else
-            map <buffer> <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!google-chrome '"%"<CR><CR>
+            map <buffer> <silent> <F9> <ESC>:Toc<CR>
             map <buffer> <silent> <F10> <ESC>:exec ":w"<CR> <bar> :exec '!google-chrome '"%"<CR><CR>
         endif
     elseif (&filetype == 'dot')
@@ -750,16 +750,14 @@ endif
 
 
 " for markdown
-Plug 'iamcco/markdown-preview.vim'
 Plug 'plasticboy/vim-markdown'
 Plug 'mzlogin/vim-markdown-toc'
 set conceallevel=2
 let g:vim_markdown_folding_disabled = 0
-let g:vim_markdown_folding_style_pythonic = 1
 let g:vim_markdown_toc_autofit = 1
 let g:vmt_cycle_list_item_markers = 1
 let g:vmt_list_item_char = '*,-,='
-
+let g:vim_markdown_folding_level = 6
 
 Plug 'tpope/vim-repeat'
 
