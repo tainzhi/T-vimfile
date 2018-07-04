@@ -103,7 +103,7 @@ set showcmd                   " display an incomplete command in statusline
 " set stl+=%-14.(%l,%c%V%)\ %P,%L
 
 
-"set foldenable                " Turn on folding
+set foldenable                " Turn on folding
 set foldmethod=marker         " Fold on the marker
 set foldlevel=80             " Don't autofold anything (but I can still fold manually)
 set foldopen=block,hor,tag    " what movements open folds
@@ -179,7 +179,7 @@ nnoremap <leader>rc :silent ! cd ~/.vim/ && git commit ~/.vim/vimrc -v <CR>
 
 " Tabs
 "nnoremap <leader>tn :tabnew 
-nnoremap tn :tabnew 
+nnoremap tn :e ~/Desktop/note-tmp.md<CR>
 map td :tabclose
 nnoremap <M-h> :tabprev<CR>     "work equals <Alt-h>:tabprew
 nnoremap <M-l> :tabnext<CR>
@@ -734,19 +734,31 @@ autocmd BufWritePre,FileWritePre,BufRead,BufNewFile {*.cc,*.h,*c,*.cpp} call Ult
 
 
 
-" Plug 'xolox/vim-misc'
-" Plug 'xolox/vim-session'
-" let g:session_directory=g:HomeVimRuntime
-" let g:session_default_name='.session'
-" let g:session_lock_enabled=0
-" let g:session_autoload='yes'
-" let g:session_autosave='yes'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-session'
+let g:session_directory=g:HomeVimRuntime
+let g:session_default_name='.session'
+let g:session_lock_enabled=0
+if has('gui_running')
+    let g:session_autoload='no'
+    let g:session_autosave='no'
+else
+    let g:session_autoload='yes'
+    let g:session_autosave='yes'
+endif
 
 
 
-" Syntax highlight
-Plug 'gmarik/vim-markdown', { 'for': 'markdown'}
-
+" for markdown
+Plug 'iamcco/markdown-preview.vim'
+Plug 'plasticboy/vim-markdown'
+Plug 'mzlogin/vim-markdown-toc'
+set conceallevel=2
+let g:vim_markdown_folding_disabled = 0
+let g:vim_markdown_folding_style_pythonic = 1
+let g:vim_markdown_toc_autofit = 1
+let g:vmt_cycle_list_item_markers = 1
+let g:vmt_list_item_char = '*,-,='
 
 
 Plug 'tpope/vim-repeat'

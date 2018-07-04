@@ -1,78 +1,84 @@
 Information about my vim notes, configures and plugins
 
-   * [Table of Contents](#table-of-contents)
-      * [Configure initial](#configure-initial)
-      * [自定义map](#自定义map)
-      * [美化插件](#美化插件)
-         * [solarized.vim](#solarizedvim)
-         * [space-vim-dark](#space-vim-dark)
-         * [rainbow_parentheses](#rainbow_parentheses)
-      * [普通插件](#普通插件)
-         * [vim-plug](#vim-plug)
-         * [NERDTree](#nerdtree)
-         * [vim-surround](#vim-surround)
-         * [delimitMate](#delimitmate)
-         * [MatchTagAlways](#matchtagalways)
-         * [tabular](#tabular)
-         * [TaskkList.vim](#taskklistvim)
-         * [vim-easymotion](#vim-easymotion)
-         * [DirDiff](#dirdiff)
-         * [vim-git](#vim-git)
-         * [vim-fugitive](#vim-fugitive)
-         * [vim-sessiong](#vim-sessiong)
-         * [mru.vim](#mruvim)
-         * [vim-auto-save](#vim-auto-save)
-         * [vim-expand-region](#vim-expand-region)
-         * [vim-airline](#vim-airline)
-         * [vimim中文输入法](#vimim中文输入法)
-         * [Snippet](#snippet)
-         * [fcitx.vim](#fcitxvim)
-         * [asyncrun.vim](#asyncrunvim)
-      * [依赖包的插件](#依赖包的插件)
-         * [tagbar](#tagbar)
-         * [vim-latex-suite](#vim-latex-suite)
-         * [ag.vim](#agvim)
-         * [cscope](#cscope)
-         * [YouCompleteMe](#youcompleteme)
-            * [auto install(recommend)](#auto-installrecommend)
-            * [manual install](#manual-install)
-            * [使用配置](#使用配置)
-      * [Deprecated plugins](#deprecated-plugins)
-         * [taglist.vim](#taglistvim)
-         * [FuzzyFinder](#fuzzyfinder)
-      * [vim help](#vim-help)
-         * [跳转移动光标](#跳转移动光标)
-         * [插入](#插入)
-         * [删除进入Normal模式](#删除进入normal模式)
-         * [复制与寄存器](#复制与寄存器)
-         * [粘贴与寄存器](#粘贴与寄存器)
-         * [visual模式](#visual模式)
-         * [移动多行](#移动多行)
-         * [代码折叠](#代码折叠)
-         * [翻屏](#翻屏)
-         * [文件](#文件)
-         * [窗口操作](#窗口操作)
-         * [vimdiff](#vimdiff)
-         * [tab标签](#tab标签)
-         * [set autochdir](#set-autochdir)
-         * [recent old files](#recent-old-files)
-         * [mark](#mark)
-         * [vim和shell](#vim和shell)
-         * [宏](#宏)
-         * [帮助](#帮助)
-         * [setting](#setting)
-         * [替换](#替换)
-         * [查找](#查找)
-         * [vim EX mode](#vim-ex-mode)
-         * [vim tags](#vim-tags)
-         * [设置保存编码格式](#设置保存编码格式)
-         * [vim打开16进制](#vim打开16进制)
-         * [vim buffer](#vim-buffer)
-         * [加密/解密文件](#加密解密文件)
-         * [长行断行/整行](#长行断行整行)
-      * [其他](#其他)
-         * [全屏快捷键](#全屏快捷键)
+<!-- vim-markdown-toc GFM -->
 
+* [Configure initial](#configure-initial)
+    - [for *nix](#for-nix)
+    - [for windows](#for-windows)
+* [Support multi languages](#support-multi-languages)
+* [自定义map](#自定义map)
+* [美化插件](#美化插件)
+    - [solarized.vim](#solarizedvim)
+    - [space-vim-dark](#space-vim-dark)
+    - [rainbow_parentheses](#rainbow_parentheses)
+* [普通插件](#普通插件)
+    - [vim-plug](#vim-plug)
+    - [NERDTree](#nerdtree)
+    - [vim-surround](#vim-surround)
+    - [delimitMate](#delimitmate)
+    - [MatchTagAlways](#matchtagalways)
+    - [tabular](#tabular)
+    - [TaskkList.vim](#taskklistvim)
+    - [vim-easymotion](#vim-easymotion)
+    - [DirDiff](#dirdiff)
+    - [vim-git](#vim-git)
+    - [vim-fugitive](#vim-fugitive)
+    - [vim-sessiong](#vim-sessiong)
+    - [mru.vim](#mruvim)
+    - [vim-auto-save](#vim-auto-save)
+    - [vim-expand-region](#vim-expand-region)
+    - [vim-airline](#vim-airline)
+    - [vimim中文输入法](#vimim中文输入法)
+    - [Snippet](#snippet)
+    - [fcitx.vim](#fcitxvim)
+    - [asyncrun.vim](#asyncrunvim)
+    - [undotree](#undotree)
+    - [vim-python-pep8-indent](#vim-python-pep8-indent)
+    - [indentLine](#indentline)
+* [依赖包的插件](#依赖包的插件)
+    - [tagbar](#tagbar)
+    - [vim-latex-suite](#vim-latex-suite)
+    - [ag.vim](#agvim)
+    - [cscope](#cscope)
+    - [ale](#ale)
+    - [YouCompleteMe](#youcompleteme)
+        + [auto install(recommend)](#auto-installrecommend)
+        + [manual install](#manual-install)
+        + [使用配置](#使用配置)
+* [vim help](#vim-help)
+    - [跳转移动光标](#跳转移动光标)
+    - [插入](#插入)
+    - [删除进入Normal模式](#删除进入normal模式)
+    - [复制与寄存器](#复制与寄存器)
+    - [粘贴与寄存器](#粘贴与寄存器)
+    - [visual模式](#visual模式)
+    - [移动多行](#移动多行)
+    - [代码折叠](#代码折叠)
+    - [翻屏](#翻屏)
+    - [文件](#文件)
+    - [窗口操作](#窗口操作)
+    - [vimdiff](#vimdiff)
+    - [tab标签](#tab标签)
+    - [set autochdir](#set-autochdir)
+    - [recent old files](#recent-old-files)
+    - [mark](#mark)
+    - [vim和shell](#vim和shell)
+    - [宏](#宏)
+    - [帮助](#帮助)
+    - [setting](#setting)
+    - [替换](#替换)
+    - [查找](#查找)
+    - [vim EX mode](#vim-ex-mode)
+    - [vim tags](#vim-tags)
+    - [设置保存编码格式](#设置保存编码格式)
+    - [vim打开16进制](#vim打开16进制)
+    - [vim buffer](#vim-buffer)
+    - [加密/解密文件](#加密解密文件)
+    - [长行断行/整行](#长行断行整行)
+* [其他](#其他)
+    - [全屏快捷键](#全屏快捷键)
+
+<!-- vim-markdown-toc -->
 
 ## Configure initial
 
@@ -579,7 +585,7 @@ nmap <silent> <C-n> <Plug>(ale_next_wrap)
 
 **usage**
 >tab键选中，Ctrl+P/N选择
-<leaer>jd   跳转到定义处
+<leader>jd   跳转到定义处
 Ctrl+O      jump backword
 Ctrl+I      jump forward
 
@@ -602,10 +608,10 @@ sudo cp -R * /usr/local/
 export PATH=~/clang+llvm-3.2-x86_64-linux-ubuntu-12.04/bin/:$PATH
 ```
 install clang by binary source
-***编译clang3.5**
+**编译clang3.5**
 [参考1](http://www.cnblogs.com/zhongcq/p/3630047.html)
 [参考2](http://hahaya.github.io/build-YouCompleteMe/)
-[参考2官网指导](http://clang.llvm.org/get_started.html)
+[参考3官网指导](http://clang.llvm.org/get_started.html)
 从[llvm官网](http://llvm.org/releases/download.html#3.3)下载
 要提前安装cmake和python-dev
 ```
@@ -614,15 +620,15 @@ sudo apt-get install g++4.8 cmake python-dev
 **the directory structure**
 ```
 ~/
-|----.vim
-|        |----bundle
-|                |----vundle
-|                |----YouComplteMe
-|-----Downloads
-        |----clang
-        |       |----llvm-3.5.0.src
-        |       |----llvm-build
-        |----ycm_build
+        | ----.vim
+--------|----------------|
+        |                | ----vundle
+        |                | ----YouComplteMe
+        | -----Downloads
+        | ----clang
+        |                | ----llvm-3.5.0.src
+        |                | ----llvm-build
+        | ----ycm_build
 
 ```
 > in `llvm-build`, clang is maked and installed, in `ycm_build`, the .so files which is needed by YouComplteMe is created by clang 
@@ -660,6 +666,7 @@ cmake --build . --target ycm_core --config Release
 ```
 
 注意：　`-DPATH_TO_LLVM_ROOT=`为自定义clang+llvm位置
+
 
 #### 使用配置
 在`vimrc`中设置
