@@ -457,13 +457,13 @@ Plug 'liuchengxu/space-vim-dark'
 
 
 "comment the code
-Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter', {'on': []}
 let g:NERDSpaceDelims=1
 
 
 
 "nerdtree
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind']}
 let g:NERDTreeWinPos = 'left'
 nmap <silent> <F3> :NERDTreeToggle<CR>
 let g:NERDTreeWinSize=40
@@ -478,7 +478,7 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 
 
 " vim-nerdtree-tabs
-Plug 'jistr/vim-nerdtree-tabs'
+Plug 'jistr/vim-nerdtree-tabs', {'on': ['NERDTreeToggle']}
 let g:nerdtree_tabs_open_on_gui_startup = 0
 let g:nerdtree_tabs_open_on_console_startup = 0
 let g:nerdtree_tabs_smart_startup_focus = 2
@@ -487,7 +487,7 @@ let g:nerdtree_tabs_synchronize_view = 1
 
 
 " Plugin tagbar
-Plug 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar', {'on': []}
 nmap <silent> <F2> :Tagbar<CR>
 if !has('win32')
     set updatetime=100
@@ -552,8 +552,8 @@ let g:AutoPairsFlyMode=1
 
 
 
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline', {'on': []}
+Plug 'vim-airline/vim-airline-themes', {'on': []}
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#tab_nr_type = '2' " splits and tab number
 let g:airline#extensions#tabline#buffer_idx_mode = 1
@@ -591,21 +591,21 @@ nmap <leader>+ <Plug>AirlineSelectNextTab
 
 
 
-Plug 'tpope/vim-surround'
+Plug 'tpope/vim-surround', {'on': []}
 
 
 
-Plug 'Valloric/MatchTagAlways'
+Plug 'Valloric/MatchTagAlways', {'on': []}
 nnoremap <leader>% :MtaJumpToOtherTag<CR>
 
 
 
-Plug 'vim-scripts/TaskList.vim'
+Plug 'vim-scripts/TaskList.vim', {'on': []}
 let g:tlTokenList = ['fixme', 'todo']
 
 
 
-Plug 'Lokaltog/vim-easymotion'
+Plug 'Lokaltog/vim-easymotion', {'on': []}
 "let g:Easymotion_smartcase = 0
 "let g:Easymotion_use_upper = 1
 let g:EasyMotion_do_mapping = 0
@@ -614,13 +614,13 @@ nmap <leader>ss <Plug>(easymotion-s2)
 
 
 
-Plug 'vim-scripts/DirDiff.vim'
+Plug 'vim-scripts/DirDiff.vim', {'on': []}
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,.svn,cscope*,tags"
 
 
 
-Plug 'rking/ag.vim'
-Plug 'Chun-Yang/vim-action-ag'
+Plug 'rking/ag.vim', {'on': []}
+Plug 'Chun-Yang/vim-action-ag', {'on': []}
 nmap <leader>a <Plug>AgActionWord
 vmap <leader>a AgActionVisual
 let g:ag_highlight=1
@@ -628,7 +628,7 @@ let g:ag_highlight=1
 
 
 " use to line up text
-Plug 'godlygeek/tabular'
+Plug 'godlygeek/tabular', {'on': []}
 nmap <leader>be :Tabularize /=<CR>
 nnoremap <leader>bu :Tabularize /
 
@@ -675,7 +675,7 @@ nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> " 跳转到�
 
 
 " faster checkter than syntastic, so abandon syntastic
-Plug 'w0rp/ale'
+Plug 'w0rp/ale', {'on': []}
 let g:ale_linters = {
             \ 'python': ['flake8'],
             \}
@@ -687,7 +687,7 @@ nmap <silent> <C-n> <Plug>(ale_next_wrap)
 
 
 " make YouCompleteMe compatible with ultisnips
-Plug 'ervandew/supertab'
+Plug 'ervandew/supertab', {'on': []}
 " make YCM compatible with UltiSnips (using supertab)
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
@@ -701,11 +701,11 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " Included are syntax, indent, and filetype file for git, gitconfig,
 " gitrebase,and gitsendemail
-Plug 'tpope/vim-git'
+Plug 'tpope/vim-git', {'on': []}
 
 
 
-Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive', {'on': []}
 nnoremap <leader>W :Gwrite<CR>
 nnoremap <leader>C :Gcommit -v<CR>
 nnoremap <leader>S :Gstatus \| 7<CR>
@@ -716,13 +716,13 @@ inoremap <leader>S <Esc><leader>S
 
 
 " List the recent files
-Plug 'yegappan/mru'
+Plug 'yegappan/mru', {'on': []}
 
 
 
 " ultimate solutions for snippets
-Plug 'Sirver/ultisnips'
-Plug 'honza/vim-snippets'
+Plug 'Sirver/ultisnips', {'on': []}
+Plug 'honza/vim-snippets', {'on': []}
 let g:UltiSnipsExpandTrigger = "<c-l>"
 let g:UltiSnipsJumpForwardTrigger = "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
@@ -734,13 +734,13 @@ autocmd BufWritePre,FileWritePre,BufRead,BufNewFile {*.cc,*.h,*c,*.cpp} call Ult
 
 
 
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-session'
-let g:session_directory=g:HomeVimRuntime
-let g:session_default_name='.session'
-let g:session_lock_enabled=0
-let g:session_autoload='yes'
-let g:session_autosave='yes'
+" Plug 'xolox/vim-misc'
+" Plug 'xolox/vim-session'
+" let g:session_directory=g:HomeVimRuntime
+" let g:session_default_name='.session'
+" let g:session_lock_enabled=0
+" let g:session_autoload='yes'
+" let g:session_autosave='yes'
 
 
 
@@ -753,8 +753,8 @@ Plug 'tpope/vim-repeat'
 
 
 
-Plug 'tomtom/tlib_vim'
-Plug 'tomtom/tcomment_vim'
+Plug 'tomtom/tlib_vim', {'on': ['TComment']}
+Plug 'tomtom/tcomment_vim', {'on': ['TComment']}
 nnoremap // :TComment<CR>
 vnoremap // :TComment<CR>
 
@@ -835,13 +835,13 @@ Plug 'gerw/vim-latex-suite', {'for': 'tex'}
 
 
 
-Plug 'skywind3000/asyncrun.vim'
+Plug 'skywind3000/asyncrun.vim', {'on': []}
 " Use autocmd AsyncRunStart with asyncrun#quickfix_toggle in your vimrc:
 autocmd User AsyncRunStart call asyncrun#quickfix_toggle(15, 1)
 
 
 
-Plug 'mbbill/undotree'
+Plug 'mbbill/undotree', {'on': []}
 nnoremap <leader>un :UndotreeToggle<CR>
 nnoremap <leader>unq :UndotreeToggle<CR>
 " backup current file into /tmp, deleted afterwards
@@ -861,11 +861,11 @@ Plug 'Vimjas/vim-python-pep8-indent'
 
 
 
-Plug 'Yggdroot/indentLine'
+Plug 'Yggdroot/indentLine', {'on': []}
 
 
 
-Plug 'terryma/vim-multiple-cursors'
+Plug 'terryma/vim-multiple-cursors', {'on': []}
 " Default mapping
 let g:multi_cursor_next_key='<C-n>'
 let g:multi_cursor_prev_key='<C-p>'
@@ -874,10 +874,43 @@ let g:multi_cursor_quit_key='<Esc>'
 
 
 
-Plug 'dyng/ctrlsf.vim'
+Plug 'dyng/ctrlsf.vim', {'on': []}
 nmap     <leader>f <Plug>CtrlSFPrompt<CR>
+
+
+
+Plug 'tweekmonster/startuptime.vim'
 call plug#end()
 
+
+call timer_start(500, 'LoadPlug')
+function! LoadPlug(timer) abort
+    call plug#load('nerdcommenter')
+    call plug#load('vim-airline')
+    call plug#load('vim-airline-themes')
+    call plug#load('vim-git')
+    call plug#load('vim-easymotion')
+    call plug#load('ctrlsf.vim')
+    call plug#load('ale')
+    call plug#load('vim-fugitive')
+    call plug#load('ultisnips')
+    call plug#load('vim-snippets')
+    call plug#load('vim-colors-solarized')
+    call plug#load('tabular')
+    call plug#load('mru')
+    call plug#load('asyncrun.vim')
+    call plug#load('supertab')
+    call plug#load('MatchTagAlways')
+    call plug#load('tagbar')
+    call plug#load('Dirdiff.vim')
+    call plug#load('indentLine')
+    call plug#load('ag.vim')
+    call plug#load('vim-action-ag')
+    call plug#load('vim-multiple-cursors')
+    call plug#load('vim-surround')
+    call plug#load('TaskList.vim')
+    call plug#load('undotree')
+endfunction
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
