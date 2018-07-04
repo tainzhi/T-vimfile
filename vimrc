@@ -674,15 +674,15 @@ endif
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> " 跳转到定义处
 
 
+
 " faster checkter than syntastic, so abandon syntastic
-Plug 'w0rp/ale', {'on': []}
+Plug 'w0rp/ale'
 let g:ale_linters = {
-            \ 'python': ['flake8'],
+        \ 'python': ['flake8'],
             \}
 let g:ale_python_flake8_options = '--max-length=100'
 nmap <silent> <C-p> <Plug>(ale_previous_wrap)
 nmap <silent> <C-n> <Plug>(ale_next_wrap)
-
 
 
 
@@ -721,8 +721,8 @@ Plug 'yegappan/mru', {'on': []}
 
 
 " ultimate solutions for snippets
-Plug 'Sirver/ultisnips', {'on': []}
-Plug 'honza/vim-snippets', {'on': []}
+Plug 'Sirver/ultisnips'
+Plug 'honza/vim-snippets'
 let g:UltiSnipsExpandTrigger = "<c-l>"
 let g:UltiSnipsJumpForwardTrigger = "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
@@ -891,7 +891,6 @@ function! LoadPlug(timer) abort
     call plug#load('vim-git')
     call plug#load('vim-easymotion')
     call plug#load('ctrlsf.vim')
-    call plug#load('ale')
     call plug#load('vim-fugitive')
     call plug#load('ultisnips')
     call plug#load('vim-snippets')
@@ -902,7 +901,7 @@ function! LoadPlug(timer) abort
     call plug#load('supertab')
     call plug#load('MatchTagAlways')
     call plug#load('tagbar')
-    call plug#load('Dirdiff.vim')
+    call plug#load('DirDiff.vim')
     call plug#load('indentLine')
     call plug#load('ag.vim')
     call plug#load('vim-action-ag')
