@@ -8,14 +8,24 @@
 " General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("win32")
+    let g:IsOs = 0 " 0: win32
+                   " 1: unix
+                   " 2: mac
     let g:HomeVimRuntime = $HOME.'\vimfiles\'
     " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
     " set guioptions-=MT
     set guioptions=Mr
 elseif has('mac')
+    let g:IsOs = 2
     echo "Todo: set my vim runpath"
 else
+    let g:IsOs = 1
     let g:HomeVimRuntime = $HOME.'/.vim/'
+endif
+if has("gui_running")
+    let g:IsGuiRunning = 1
+else
+    let g:IsGuiRunning = 0
 endif
 
 set nocompatible               " be iMproved
@@ -274,7 +284,7 @@ function! Do_Map()
         " map <silent> <F9> <ESC>:exec "w"<bar> :exec "copen" <bar> :exec "wincmd p"<bar> :exec "AsyncRun -program=make @%" <bar> :exec "clast" <CR><CR>
         map <silent> <F10> <ESC>:exec 'AsyncStop'<CR> <bar> :exec ":cclose"<CR>
     elseif (&filetype == 'markdown')
-        if has("win32")
+        if g:IsOs == 0 "win32
 			" 要把chrome的安装路径添加到系统环境变量Path
             map <buffer> <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!start chrome '"%"<CR><CR>
             map <buffer> <silent> <F10> <ESC>:exec ":w"<CR> <bar> :exec '!start chrome '"%"<CR><CR>
@@ -489,7 +499,7 @@ let g:nerdtree_tabs_synchronize_view = 1
 " Plugin tagbar
 Plug 'majutsushi/tagbar', {'on': []}
 nmap <silent> <F2> :Tagbar<CR>
-if !has('win32')
+if g:IsOs != 0
     set updatetime=100
     let g:tagbar_autofocus = 1
     let g:tagbar_width = 40
@@ -506,7 +516,7 @@ endif
 
 
 "ctags install path
-if !has('win32')
+if g:IsOs == 1 "linux"
     let Tlist_Ctags_Cmd='/usr/bin/ctags'
 endif
 "set tags=/home/muqing/android-20/tags,./tags
@@ -558,7 +568,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#tab_nr_type = '2' " splits and tab number
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#tabline#buffer_nr_show = 1
-if has('win32')
+if g:IsOs == 0 
     let g:airline#extensions#tagbar#enabled = 0
 endif
 nmap <leader>d :bd 
@@ -664,7 +674,7 @@ let g:ycm_complete_in_strings = 1
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
 " 关闭加载.ycm_extra_conf.py提示
 let g:ycm_confirm_extra_conf = 0
-if has('win32')
+if g:IsOs == 0
     let g:ycm_server_python_interpreter = 'python'
     let g:ycm_python_binary_path = 'c:\Python35\python'
 else
@@ -739,7 +749,7 @@ Plug 'xolox/vim-session'
 let g:session_directory=g:HomeVimRuntime
 let g:session_default_name='.session'
 let g:session_lock_enabled=0
-if has('gui_running')
+if g:IsGuiRunning == 1
     let g:session_autoload='no'
     let g:session_autosave='no'
 else
@@ -770,7 +780,7 @@ vnoremap // :TComment<CR>
 
 
 
-if !has('win32')
+if g:IsOs != 0
     Plug 'lilydjwg/fcitx.vim'
 
 
@@ -925,17 +935,17 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 系统相关的配置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if has('mac')
-    if has('gui_running')
+if g:IsOs == 2 "mac"
+    if g:IsGuiRunning == 1
         set macmeta
         set guifont=Andale\ Mono:h13
     endif
     set noantialias
     set fuoptions=maxvert,maxhorz ",background:#00AAaaaa
-elseif has('win32')
+elseif g:IsOs == 0 "win32"
     " 解决console输出乱码
     language messages zh_CN.utf-8
-    if has ('gui_running')
+    if g:IsGuiRunning == 1
         " 解决菜单乱码
         " source $VIMRUNTIME/delmenu.vim
         " source $VIMRUNTIME/menu.vim
@@ -955,7 +965,7 @@ elseif has('win32')
     endif
 else
     set guifont=Monospace\ 14
-    if has('gui_running')
+    if g:IsGuiRunning == 1
         colorscheme solarized
         set background=dark
     else
