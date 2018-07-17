@@ -872,6 +872,13 @@ nmap     <leader>f <Plug>CtrlSFPrompt<CR>
 
 
 Plug 'tweekmonster/startuptime.vim'
+
+
+
+Plug 'tsrryma/vim-expand-region'
+map K <Plug>(expand_region_expand)
+map - <Plug>(expand_region_shrink)
+
 call plug#end()
 
 
