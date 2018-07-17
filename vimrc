@@ -14,7 +14,6 @@ if has("win32")
     let g:HomeVimRuntime = $HOME.'\vimfiles\'
     " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
     " set guioptions-=MT
-    set guioptions=Mr
 elseif has('mac')
     let g:IsOs = 2
     echo "Todo: set my vim runpath"
@@ -184,18 +183,9 @@ inoremap <C-V> <esc>"+pa
 
 " Operations to vimrc
 nnoremap <leader>rs :exec 'source '.g:HomeVimRuntime.'vimrc'<CR>
-nnoremap <leader>rt :exec 'tabnew '.g:HomeVimRuntime.'vimrc'<CR>
+nnoremap <leader>rt :exec 'e '.g:HomeVimRuntime.'vimrc'<CR>
 nnoremap <leader>rc :silent ! cd ~/.vim/ && git commit ~/.vim/vimrc -v <CR>
-
-" Tabs
-"nnoremap <leader>tn :tabnew 
-nnoremap tn :e ~/Desktop/note-tmp.md<CR>
-map td :tabclose
-nnoremap <M-h> :tabprev<CR>     "work equals <Alt-h>:tabprew
-nnoremap <M-l> :tabnext<CR>
-
-" map <silent> <C-W>v :vnew<CR>
-" map <silent> <C-W>s :snew<CR>
+nnoremap tn :e ~/Desktop/tmp.md<CR>
 
 " copy filename
 map <silent> <leader>. :let @+=expand('%:p').':'.line('.')<CR>
@@ -208,31 +198,13 @@ nmap <silent> <C-j> <C-W><C-j>
 nmap <silent> <C-h> <C-W><C-h>
 nmap <silent> <C-l> <C-W><C-l>
 
-" vertical split with CommandT
-nnoremap <leader>v :exec ':vnew \| CommandT'<CR>
-" and without
-nnoremap <leader>V :vnew<CR>
-
 " when pasting copy pasted text back to 
 " buffer instead replacing with owerride
 xnoremap p pgvy
 
-" map(range(1,9), 'exec "imap <D-".v:val."> <C-o>".v:val."gt"')
-" map(range(1,9), 'exec " map <D-".v:val."> ".v:val."gt"')
-
 " open help in vertical split
 au BufWinEnter *.txt if &ft == 'help' | wincmd H | vertical resize 85 | nmap q :q<CR> | endif
 noremap <leader>h :help <C-R>=expand("<cword>")<CR><CR>
-
-" invalite the default left, right, up, down key 
-" noremap <Up> <NOP>
-" noremap <Down> <NOP>
-" noremap <Left> <NOP>
-" noremap <Right> <NOP>
-" noremap h <NOP>
-" noremap j <NOP>
-" noremap k <NOP>
-" noremap l <NOP>
 
 
 
@@ -950,6 +922,7 @@ elseif g:IsOs == 0 "win32"
         " source $VIMRUNTIME/delmenu.vim
         " source $VIMRUNTIME/menu.vim
         " 设置字体
+        set guioptions=Mr
         set guifont=Consolas:h14:cANSI
         "winpos 5 5          " 设定窗口位置    
         "set lines=999 columns=999
@@ -967,6 +940,7 @@ else
     set guifont=Monospace\ 14
     if g:IsGuiRunning == 1
         colorscheme solarized
+        set guioptions=Mr
         set background=dark
     else
         colorscheme desert
