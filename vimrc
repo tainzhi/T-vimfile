@@ -753,30 +753,6 @@ vnoremap // :TComment<CR>
 
 
 if g:IsOs != 0
-    Plug 'lilydjwg/fcitx.vim'
-
-
-
-    " 输入法支持Input method, 支持输入中文即可搜索
-    Plug 'tainzhi/vimim'
-    let g:vimim_cloud = 'google,sogou,baidu,qq'   
-    let g:vimim_map = 'tab_as_gi'   
-    " :let g:vimim_mode = 'dynamic'   
-    " :let g:vimim_mycloud = 0   
-    " :let g:vimim_plugin = 'C:/var/mobile/vim/vimfiles/plugin'   
-    " :let g:vimim_punctuation = 2   
-    " :let g:vimim_shuangpin = 0   
-    " :let g:vimim_toggle = 'pinyin,google,sogou' 
-    " for input method
-    " set iminsert=0
-    " set imsearch=0
-    " se imd
-    " au InsertEnter * se noimd
-    " au InsertLeave * se imd
-    " au FocusGained * se imd
-
-
-
     "autoload_cscope.vim
     Plug 'tainzhi/autoload_cscope.vim'
     " if has("cscope")
@@ -878,6 +854,12 @@ Plug 'tweekmonster/startuptime.vim'
 Plug 'tsrryma/vim-expand-region'
 map K <Plug>(expand_region_expand)
 map - <Plug>(expand_region_shrink)
+
+
+
+Plug 'junegunn/vim-easy-align'
+xmap ga <Plug>(EasyAlign)
+nmap ga <plug>(EasyAlign)
 
 call plug#end()
 
