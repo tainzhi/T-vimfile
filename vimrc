@@ -47,7 +47,7 @@ set modelines=5                " default numbers of lines to read for modeline i
 set autoread 
 set autowrite
 " 失去焦点后自动保存文件
-au FocusLost * :up
+autocmd FocusLost * :up
 " 避免在操作中频繁出现“请按Enter或其他命令继续”
 " 以及出现“更多”的提示而需要按空格键继续
 set nomore
@@ -203,7 +203,7 @@ nmap <silent> <C-l> <C-W><C-l>
 xnoremap p pgvy
 
 " open help in vertical split
-au BufWinEnter *.txt if &ft == 'help' | wincmd H | vertical resize 85 | nmap q :q<CR> | endif
+autocmd BufWinEnter *.txt if &ft == 'help' | wincmd H | vertical resize 85 | nmap q :q<CR> | endif
 noremap <leader>h :help <C-R>=expand("<cword>")<CR><CR>
 
 
@@ -274,24 +274,19 @@ function! Do_Map()
 endfunction
 
 
-au BufRead,BufNewFile {*.go}                                            setl ft=go tabstop=2 softtabstop=2 noexpandtab smarttab
-au BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru}       setl ft=ruby tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab
-au BufRead,BufNewFile {*.local,*.sh}                                         setl ft=sh
-au BufRead,BufNewFile {*.md,*.mkd,*.markdown}                           setl ft=markdown
-au BufRead,BufNewFile {*.c,*.h}                                          setl ft=c
-au BufRead,BufNewFile {*.c++,*.cc,*.cpp}                                setl ft=cpp
-au BufRead,BufNewFile {*.tex}                                           setl ft=tex
-au BufRead,BufNewFile {*.py}                                            setl ft=python
-au BufRead,BufNewFile {*.dot}                                           setl ft=dot
+autocmd  BufRead,BufNewFile {*.go}                                      setl ft=go        tabstop=2 softtabstop=2  noexpandtab smarttab
+autocmd  BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru} setl ft=ruby      tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab
+autocmd  BufRead,BufNewFile {*.local,*.sh}                              setl ft=sh
+autocmd  BufRead,BufNewFile {*.md,*.mkd,*.markdown}                     setl ft=markdown
+autocmd  BufRead,BufNewFile {*.c,*.h}                                   setl ft=c
+autocmd  BufRead,BufNewFile {*.c++,*.cc,*.cpp}                          setl ft=cpp
+autocmd  BufRead,BufNewFile {*.tex}                                     setl ft=tex
+autocmd  BufRead,BufNewFile {*.py}                                      setl ft=python
+autocmd  BufRead,BufNewFile {*.dot}                                     setl ft=dot
+autocmd!        BufReadPost {COMMIT_EDITMSG,*/COMMIT_EDITMSG}           setl ft=gitcommit      noml list|                 norm 1G
 
 autocmd BufWritePre,FileWritePost,BufReadPost,FileReadPost {*.*}        call Do_Map()
-
-au! BufReadPost       {COMMIT_EDITMSG,*/COMMIT_EDITMSG}                 setl ft=gitcommit noml list| norm 1G
-au! BufWritePost      {*.snippet,*.snippets}                          call ReloadAllSnippets()
-
-" autocmd BufWritePre,FileWritePost,BufReadPost,FileReadPost *.cc,*.c,*.cpp,*.h,*.tex,*py,*dot call Do_Map()
-" autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} call Do_Map()
-" autocmd BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn} map <Leader>p :!start "C:\Program Files\Google\Chrome\Application\chrome.exe" "%:p"<CR>
+autocmd! BufWritePost      {*.snippet,*.snippets}                          call ReloadAllSnippets()
 
 
 function! Do_Update_Modified()
@@ -522,10 +517,10 @@ let g:rbpt_colorpairs = [
     \ ]
 let g:rbpt_max = 16
 let g:rbpt_loadcmd_toggle = 0
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
+autocmd VimEnter * RainbowParenthesesToggle
+autocmd Syntax * RainbowParenthesesLoadRound
+autocmd Syntax * RainbowParenthesesLoadSquare
+autocmd Syntax * RainbowParenthesesLoadBraces
 
 
 
