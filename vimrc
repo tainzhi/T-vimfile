@@ -284,7 +284,7 @@ autocmd  BufRead,BufNewFile {*.tex}                                     setl ft=
 autocmd  BufRead,BufNewFile {*.py}                                      setl ft=python
 autocmd  BufRead,BufNewFile {*.dot}                                     setl ft=dot
 autocmd!        BufReadPost {COMMIT_EDITMSG,*/COMMIT_EDITMSG}           setl ft=gitcommit      noml list|                 norm 1G
-autocmd  BufRead,BufNewFile {*.toml}                                    setl ft=toml
+autocmd  BufRead,BufNewFile {*.toml}                                    setl ft=toml tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab
 
 autocmd BufWritePre,FileWritePost,BufReadPost,FileReadPost {*.*}        call Do_Map()
 autocmd! BufWritePost      {*.snippet,*.snippets}                          call ReloadAllSnippets()
@@ -545,7 +545,6 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 if g:IsOs == 0 
     let g:airline#extensions#tagbar#enabled = 0
 endif
-nmap <leader>d :bd 
 nmap <leader>1 <Plug>AirlineSelectTab1
 nmap <leader>2 <Plug>AirlineSelectTab2
 nmap <leader>3 <Plug>AirlineSelectTab3
@@ -864,6 +863,11 @@ Plug 'junegunn/vim-easy-align'
 xmap ga <Plug>(EasyAlign)
 nmap ga <plug>(EasyAlign)
 
+
+
+Plug 'moll/vim-bbye'
+map <leader>d :Bdelete<CR>
+map <leader>da :bufdo Bdelete<CR>
 call plug#end()
 
 
