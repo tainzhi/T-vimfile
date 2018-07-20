@@ -437,7 +437,7 @@ Plug 'liuchengxu/space-vim-dark'
 Plug 'scrooloose/nerdcommenter', {'on': []}
 let g:NERDSpaceDelims=1
 " let g:NERDCreateDefaultMappings=0
-" map // <plug>NERDCommenterInvert
+map // <plug>NERDCommenterInvert
 let g:NERDCustomDelimiters = {
     \ 'toml': { 'left': '#' },
     \ 'ruby': { 'left': '#', 'leftAlt': 'FOO', 'rightAlt': 'BAR' },
