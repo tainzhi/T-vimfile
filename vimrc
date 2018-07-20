@@ -284,6 +284,7 @@ autocmd  BufRead,BufNewFile {*.tex}                                     setl ft=
 autocmd  BufRead,BufNewFile {*.py}                                      setl ft=python
 autocmd  BufRead,BufNewFile {*.dot}                                     setl ft=dot
 autocmd!        BufReadPost {COMMIT_EDITMSG,*/COMMIT_EDITMSG}           setl ft=gitcommit      noml list|                 norm 1G
+autocmd  BufRead,BufNewFile {*.toml}                                    setl ft=toml
 
 autocmd BufWritePre,FileWritePost,BufReadPost,FileReadPost {*.*}        call Do_Map()
 autocmd! BufWritePost      {*.snippet,*.snippets}                          call ReloadAllSnippets()
@@ -433,9 +434,15 @@ Plug 'liuchengxu/space-vim-dark'
 
 
 
-"comment the code
 Plug 'scrooloose/nerdcommenter', {'on': []}
 let g:NERDSpaceDelims=1
+" let g:NERDCreateDefaultMappings=0
+" map // <plug>NERDCommenterInvert
+let g:NERDCustomDelimiters = {
+    \ 'toml': { 'left': '#' },
+    \ 'ruby': { 'left': '#', 'leftAlt': 'FOO', 'rightAlt': 'BAR' },
+    \ 'grondle': { 'left': '{{', 'right': '}}' }
+\ }
 
 
 
@@ -740,10 +747,11 @@ Plug 'tpope/vim-repeat'
 
 
 
-Plug 'tomtom/tlib_vim', {'on': ['TComment']}
-Plug 'tomtom/tcomment_vim', {'on': ['TComment']}
-nnoremap // :TComment<CR>
-vnoremap // :TComment<CR>
+Plug 'tomtom/tlib_vim'
+" Plug 'tomtom/tlib_vim', {'on': ['TComment']}
+" Plug 'tomtom/tcomment_vim', {'on': ['TComment']}
+" nnoremap // :TComment<CR>
+" vnoremap // :TComment<CR>
 
 
 
@@ -846,7 +854,7 @@ Plug 'tweekmonster/startuptime.vim'
 
 
 
-Plug 'tsrryma/vim-expand-region'
+Plug 'terryma/vim-expand-region', {'on': []}
 map K <Plug>(expand_region_expand)
 map - <Plug>(expand_region_shrink)
 
