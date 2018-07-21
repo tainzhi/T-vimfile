@@ -735,7 +735,8 @@ endif
 " for markdown
 Plug 'plasticboy/vim-markdown'
 Plug 'mzlogin/vim-markdown-toc'
-set conceallevel=1
+" set conceallevel=1
+let g:vim_markdown_conceal = 0
 let g:vim_markdown_folding_disabled = 0
 let g:vim_markdown_toc_autofit = 1
 let g:vmt_cycle_list_item_markers = 1
@@ -868,6 +869,10 @@ nmap ga <plug>(EasyAlign)
 Plug 'moll/vim-bbye'
 map <leader>d :Bdelete<CR>
 map <leader>da :bufdo Bdelete<CR>
+
+
+
+Plug 'vim-scripts/fcitx.vim'
 call plug#end()
 
 
