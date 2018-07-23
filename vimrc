@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2018-04-16 8:09:44
+"  Modified : 2018-07-23 10:13:27
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -291,23 +291,17 @@ autocmd! BufWritePost      {*.snippet,*.snippets}                          call 
 
 
 function! Do_Update_Modified()
-    " let line_number = search('Modified','nw')
-    " echo line_number
-    " if line_number < 10
-    " 因为search()从当前cursor所在行查找, 所以在此处用法不对. 更改为判断文件第
-    " 3行是否有时间戳Modified
-    let line_number = 3
-    if match(getline(line_number), 'Modified')
-        let line_content = substitute(getline(line_number),"[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9]",strftime("%Y-%m-%d %X"),"g") 
-        "  Modified : 2017-05-17 18:53:36
-        let minute_str = matchstr(getline(line_number),":[0-9][0-9]:") "get :53:
-        let minute = strpart(minute_str,1,2) " get minute 53, vim script has no string to int, thus string is a number
-        let current_minute = strftime("%M")
-        " update date modified time stamp every 5 minutes
-        if current_minute - minute >= 5 || current_minute - minute < 0
-            call setline(line_number, line_content)
-        endif
+    let save_cursor = getcurpos()
+    call cursor(1, 1) "把cursor定位到1行1列，便于search()从1行开始搜索
+    let b:line_number = search('Modified\|lastmod','nw')
+    if match(getline(b:line_number), 'lastmod') >= 0
+        let b:line_content = 'lastmod: '.strftime("%Y-%m-%d %T")
+        call setline(b:line_number, b:line_content)
+    elseif match(getline(b:line_number), 'Modified') >= 0
+        let b:line_content = substitute(getline(b:line_number),"[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9]",strftime("%Y-%m-%d %T"),"g") 
+        call setline(b:line_number, b:line_content)
     endif
+    call setpos('.', save_cursor)
 endfunction
 autocmd BufWritePre,FileWritePre * call Do_Update_Modified()
 
@@ -319,8 +313,8 @@ function! Do_Set_Title()
         call append(line("."), "\# File     : ".expand("%")) 
         call append(line(".")+1, "\# Author   : tainzhi") 
         call append(line(".")+2, "\# Mail     : qfq61@qq.com") 
-        call append(line(".")+3, "\# Created  : ".strftime("%Y-%m-%d %X")) 
-        call append(line(".")+4, "\# Modified : ".strftime("%Y-%m-%d %X")) 
+        call append(line(".")+3, "\# Created  : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+4, "\# Modified : ".strftime("%Y-%m-%d %T")) 
         call append(line(".")+5, "\################################################################################") 
         call append(line(".")+6, "\#!/bin/bash") 
         call append(line(".")+7, "") 
@@ -331,8 +325,8 @@ function! Do_Set_Title()
         call append(line("."), " > File     : ".expand("%")) 
         call append(line(".")+1, " > Author   : tainzhi") 
         call append(line(".")+2, " > Mail     : qfq61@qq.com") 
-        call append(line(".")+3, " > Created  : ".strftime("%Y-%m-%d %X")) 
-        call append(line(".")+4, " > Modified : ".strftime("%Y-%m-%d %X")) 
+        call append(line(".")+3, " > Created  : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+4, " > Modified : ".strftime("%Y-%m-%d %T")) 
         call append(line(".")+5, "********************************************************************************") 
         call append(line(".")+6, "") 
         call append(line(".")+7, "") 
@@ -342,8 +336,8 @@ function! Do_Set_Title()
         call append(line("."), "* File     : ".expand("%")) 
         call append(line(".")+1, "* Author   : tainzhi") 
         call append(line(".")+2, "* Mail     : qfq61@qq.com") 
-        call append(line(".")+3, "* Created  : ".strftime("%Y-%m-%d %X")) 
-        call append(line(".")+4, "* Modified : ".strftime("%Y-%m-%d %X")) 
+        call append(line(".")+3, "* Created  : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+4, "* Modified : ".strftime("%Y-%m-%d %T")) 
         call append(line(".")+5, "*******************************************************************************/") 
         call append(line(".")+6, "") 
         call append(line(".")+7, "#include <stdio.h>") 
@@ -358,8 +352,8 @@ function! Do_Set_Title()
         call append(line("."), "* File     : ".expand("%")) 
         call append(line(".")+1, "* Author   : tainzhi") 
         call append(line(".")+2, "* Mail     : qfq61@qq.com") 
-        call append(line(".")+3, "* Created  : ".strftime("%Y-%m-%d %X")) 
-        call append(line(".")+4, "* Modified : ".strftime("%Y-%m-%d %X")) 
+        call append(line(".")+3, "* Created  : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+4, "* Modified : ".strftime("%Y-%m-%d %T")) 
         call append(line(".")+5, "*******************************************************************************/") 
         call append(line(".")+6, "") 
         call append(line(".")+7, "#include <stdio.h>") 
@@ -378,8 +372,8 @@ function! Do_Set_Title()
         call append(line(".")+1, "# File        : ".expand("%")) 
         call append(line(".")+2, "# Author      : tainzhi") 
         call append(line(".")+3, "# Mail        : qfq61@qq.com") 
-        call append(line(".")+4, "# Created     : ".strftime("%Y-%m-%d %X")) 
-        call append(line(".")+5, "# Modified    : ".strftime("%Y-%m-%d %X")) 
+        call append(line(".")+4, "# Created     : ".strftime("%Y-%m-%d %T")) 
+        call append(line(".")+5, "# Modified    : ".strftime("%Y-%m-%d %T")) 
         call append(line(".")+6, "# Description :") 
         call append(line(".")+7, "# #############################################################################/") 
         call append(line(".")+8, "") 
@@ -391,7 +385,7 @@ function! Do_Set_Title()
         call cursor(line(".")+13, 1)
     endif
     "新建文件后，自动定位到文件末尾
-    autocmd BufNewFile * normal G
+    call cell('$',0)
 endfunc 
 " 匹配任意文件
 " ma     保存当前位置到'a'标记
@@ -684,11 +678,14 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " Included are syntax, indent, and filetype file for git, gitconfig,
 " gitrebase,and gitsendemail
-Plug 'tpope/vim-git', {'on': []}
+" Plug 'tpope/vim-git', {'on': []}
 
 
 
 Plug 'tpope/vim-fugitive', {'on': []}
+Plug 'airblade/vim-gitgutter'
+let g:Gitv_OpenHorizontal = 1
+Plug 'gregsexton/gitv'
 nnoremap <leader>W :Gwrite<CR>
 nnoremap <leader>C :Gcommit -v<CR>
 nnoremap <leader>S :Gstatus \| 7<CR>
@@ -881,7 +878,7 @@ function! LoadPlug(timer) abort
     call plug#load('nerdcommenter')
     call plug#load('vim-airline')
     call plug#load('vim-airline-themes')
-    call plug#load('vim-git')
+    " call plug#load('vim-git')
     call plug#load('vim-easymotion')
     call plug#load('ctrlsf.vim')
     call plug#load('vim-fugitive')
@@ -938,7 +935,7 @@ elseif g:IsOs == 0 "win32"
         colorscheme desert
     endif
 else
-    set guifont=Monospace\ 14
+    set guifont=Monospace\ 13
     if g:IsGuiRunning == 1
         colorscheme solarized
         set guioptions=Mr
