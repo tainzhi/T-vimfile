@@ -468,7 +468,7 @@ let g:nerdtree_tabs_synchronize_view = 1
 Plug 'majutsushi/tagbar', {'on': []}
 nmap <silent> <F2> :Tagbar<CR>
 if g:IsOs != 0
-    set updatetime=100
+    set updatetime=1000
     let g:tagbar_autofocus = 1
     let g:tagbar_width = 40
     let g:tagbar_left = 0
