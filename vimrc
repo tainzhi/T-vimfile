@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified :  AM
+"  Modified : 2018-07-28 12:23:43
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -467,19 +467,17 @@ let g:nerdtree_tabs_synchronize_view = 1
 " Plugin tagbar
 Plug 'majutsushi/tagbar', {'on': []}
 nmap <silent> <F2> :Tagbar<CR>
-if g:IsOs != 0
-    set updatetime=1000
-    let g:tagbar_autofocus = 1
-    let g:tagbar_width = 40
-    let g:tagbar_left = 0
-    let g:tagbar_type_markdown = {
-            \ 'ctagstype' : 'markdown',
-            \ 'kinds' : [
-                    \ 'h:headings',
-            \ ],
-        \ 'sort' : 0
-    \ }
-endif
+set updatetime=1000
+let g:tagbar_autofocus = 1
+let g:tagbar_width = 40
+let g:tagbar_left = 0
+let g:tagbar_type_markdown = {
+        \ 'ctagstype' : 'markdown',
+        \ 'kinds' : [
+                \ 'h:headings',
+        \ ],
+    \ 'sort' : 0
+\ }
 
 
 
