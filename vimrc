@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified :  AM
+"  Modified : 2018-07-29 10:42:41
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -294,10 +294,10 @@ function! Do_Update_Modified()
     let save_cursor = getcurpos()
     call cursor(1, 1) "把cursor定位到1行1列，便于search()从1行开始搜索
     let b:line_number = search('Modified\|lastmod','nw')
-    if b:line_number < 8 && match(getline(b:line_number), 'lastmod') >= 0
+    if b:line_number < 8 && match(getline(b:line_number), 'lastmod:\ [0-9]\{4\}') >= 0
         let b:line_content = 'lastmod: '.strftime("%Y-%m-%d %T")
         call setline(b:line_number, b:line_content)
-    elseif b:line_number < 8 && match(getline(b:line_number), 'Modified') >= 0
+    elseif b:line_number < 8 && match(getline(b:line_number), 'Modified\ :\ [0-9]\{4\}') >= 0
         let b:line_content = substitute(getline(b:line_number),"[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9] [0-9][0-9]:[0-9][0-9]:[0-9][0-9]",strftime("%Y-%m-%d %T"),"g") 
         call setline(b:line_number, b:line_content)
     endif
@@ -716,7 +716,7 @@ autocmd BufWritePre,FileWritePre,BufRead,BufNewFile {*.cc,*.h,*c,*.cpp} call Ult
 
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
-let g:session_directory=g:HomeVimRuntime
+let g:session_directory='./'
 let g:session_default_name='.session'
 let g:session_lock_enabled=0
 if g:IsGuiRunning == 1
