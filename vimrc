@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2018-08-03 05:24:17
+"  Modified : 2019-01-19 00:02:16
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -12,8 +12,6 @@ if has("win32")
                    " 1: unix
                    " 2: mac
     let g:HomeVimRuntime = $HOME.'\vimfiles\'
-    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
-    " set guioptions-=MT
 elseif has('mac')
     let g:IsOs = 2
     echo "Todo: set my vim runpath"
@@ -643,8 +641,8 @@ if g:IsOs == 0
     let g:ycm_server_python_interpreter = 'python'
     let g:ycm_python_binary_path = 'c:\Python35\python'
 else
-    let g:ycm_server_python_interpreter = 'python3.5'
-    let g:ycm_python_binary_path = '/usr/bin/python3.5'
+    let g:ycm_server_python_interpreter = 'python3.6'
+    let g:ycm_python_binary_path = '/usr/bin/python3.6'
 endif
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> " 跳转到定义处
 
@@ -907,6 +905,7 @@ if g:IsOs == 2 "mac"
     if g:IsGuiRunning == 1
         set macmeta
         set guifont=Andale\ Mono:h13
+        set guioptions=MT    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
     endif
     set noantialias
     set fuoptions=maxvert,maxhorz ",background:#00AAaaaa
@@ -914,15 +913,8 @@ elseif g:IsOs == 0 "win32"
     " 解决console输出乱码
     language messages zh_CN.utf-8
     if g:IsGuiRunning == 1
-        " 解决菜单乱码
-        " source $VIMRUNTIME/delmenu.vim
-        " source $VIMRUNTIME/menu.vim
-        " 设置字体
-        set guioptions=Mr
         set guifont=Consolas:h14:cANSI
-        "winpos 5 5          " 设定窗口位置    
-        "set lines=999 columns=999
-        "win 2560 1700
+        set guioptions=MT    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
         "gvim -geometry 2560*1700
         " an GUIEnter * simalt ~x           " 进入窗口后对所有文件类型(型号*匹配所有文件)全屏. 
                                             " simalt ~x模拟Alt Spacebar X. 
@@ -933,13 +925,13 @@ elseif g:IsOs == 0 "win32"
         colorscheme desert
     endif
 else
-    set guifont=Monospace\ 13
     if g:IsGuiRunning == 1
         colorscheme solarized
-        set guioptions=Mr
+        set guifont=Monospace\ 13
+        set guioptions=Mt
         set background=dark
     else
-        colorscheme desert
         set t_Co=256
+        colorscheme space-vim-dark
     endif
 endif
