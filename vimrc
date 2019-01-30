@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2019-01-19 00:02:16
+"  Modified : 2019-01-30 16:09:25
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -597,13 +597,6 @@ Plug 'Chun-Yang/vim-action-ag', {'on': []}
 nmap <leader>a <Plug>AgActionWord
 vmap <leader>a AgActionVisual
 let g:ag_highlight=1
-
-
-
-" use to line up text
-Plug 'godlygeek/tabular', {'on': []}
-nmap <leader>be :Tabularize /=<CR>
-nnoremap <leader>bu :Tabularize /
 
 
 
