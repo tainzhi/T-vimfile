@@ -101,6 +101,11 @@ nmap w- :resize -3<CR>
 nmap w, :vertical resize +3<CR>
 nmap w. :vertical resize -3<CR>
 
+nmap <silent> wk <C-W><C-k>
+nmap <silent> wj <C-W><C-j>
+nmap <silent> wh <C-W><C-h>
+nmap <silent> wl <C-W><C-l>
+
 <C-A>       select all
 <C-C>       copy
 <C-V>       paste
@@ -134,14 +139,14 @@ nnoremap // :TComment<CR>   注释
     <tr>
         <td>F2</td>
         <td></td>
-        <td>打开tagbar</td>
-        <td>nmap <silent> <F2> :Tagbar<CR></td>
+        <td>toggle NERDTree</td>
+        <td>nmap <silent> <F2> :NERDTreeToggle<CR></td>
     </tr>
     <tr>
         <td>F3</td>
         <td></td>
-        <td>toggle NERDTree</td>
-        <td>nmap <silent> <F3> :NERDTreeToggle<CR></td>
+        <td>打开tagbar</td>
+        <td>nmap <silent> <F3> :Tagbar<CR></td>
     </tr>
     <tr>
         <td>F4</td>

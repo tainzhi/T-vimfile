@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2019-01-30 16:09:25
+"  Modified : 2019-02-04 17:12:42
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -179,6 +179,9 @@ vnoremap <C-V> "+P
 "插入模式下,Ctrl+c,插入系统剪切板中的内容到光标之后
 inoremap <C-V> <esc>"+pa
 
+vmap <C-c> y:new ~/.vimbuffer<CR>VGp:x<CR> \| :!cat ~/.vimbuffer \| clip.exe <CR><CR>
+map <C-v> :r ~/.vimbuffer<CR>
+
 " Operations to vimrc
 nnoremap <leader>rs :exec 'source '.g:HomeVimRuntime.'vimrc'<CR>
 nnoremap <leader>rt :exec 'e '.g:HomeVimRuntime.'vimrc'<CR>
@@ -191,10 +194,10 @@ map <silent> <leader>. :let @+=expand('%:p').':'.line('.')<CR>
 map <silent> <leader>/ :let @+=expand('%:p:h')<CR>
 
 " Make Control-direction switch between windows (like C-W h, etc)
-nmap <silent> <C-k> <C-W><C-k>
-nmap <silent> <C-j> <C-W><C-j>
-nmap <silent> <C-h> <C-W><C-h>
-nmap <silent> <C-l> <C-W><C-l>
+nmap <silent> wk <C-W><C-k>
+nmap <silent> wj <C-W><C-j>
+nmap <silent> wh <C-W><C-h>
+nmap <silent> wl <C-W><C-l>
 
 " when pasting copy pasted text back to 
 " buffer instead replacing with owerride
@@ -441,7 +444,7 @@ let g:NERDCustomDelimiters = {
 "nerdtree
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind']}
 let g:NERDTreeWinPos = 'left'
-nmap <silent> <F3> :NERDTreeToggle<CR>
+nmap <silent> <F2> :NERDTreeToggle<CR>
 let g:NERDTreeWinSize=40
 let NERDTreeAutoDeleteBuffer=1
 let NERDTreeIgnore=['cscope.files$[[file]]', 'cscope.out$[[file]]', 'cscope.in.out$[[file]]', 'cscope.out$[[file]]]', 'cscope.po.out$[[file]]', 'tags$[[file]]']
@@ -464,7 +467,7 @@ let g:nerdtree_tabs_synchronize_view = 1
 
 " Plugin tagbar
 Plug 'majutsushi/tagbar', {'on': []}
-nmap <silent> <F2> :Tagbar<CR>
+nmap <silent> <F3> :Tagbar<CR>
 set updatetime=1000
 let g:tagbar_autofocus = 1
 let g:tagbar_width = 40
@@ -874,7 +877,6 @@ function! LoadPlug(timer) abort
     call plug#load('ultisnips')
     call plug#load('vim-snippets')
     call plug#load('vim-colors-solarized')
-    call plug#load('tabular')
     call plug#load('mru')
     call plug#load('asyncrun.vim')
     call plug#load('supertab')
