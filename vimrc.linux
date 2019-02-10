@@ -1,7 +1,19 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"  Created  : 2012-09-22 14:30:00
-"  Modified : 2019-02-10 19:53:18
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" vimrc for linux
+
+
+
+if g:IsGuiRunning == 1
+    set guioptions=M    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
+                        " this flag must be added before :syntax and :filetype
+    colorscheme solarized
+    set guifont=Monospace\ 13
+    set background=dark
+else
+    set t_Co=256
+    colorscheme desert
+endif
+
+
 
 
 set nocompatible               " be iMproved
@@ -130,15 +142,11 @@ set nowritebackup
 set noswapfile
 
 
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
-" keymap 
-
+"keyboard map command 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader = "\<Space>"
-
 "let maplocalleader = '	'      " Tab as a local leader
 
 " resize the window
@@ -192,24 +200,87 @@ autocmd BufWinEnter *.txt if &ft == 'help' | wincmd H | vertical resize 85 | nma
 noremap <leader>h :help <C-R>=expand("<cword>")<CR><CR>
 
 
-if has("win32")
-    source ~/vimfiles/vimrc.win
-elseif has('mac')
-    if has('gui_running')
-        set macmeta
-        set guifont=Andale\ Mono:h13
-        set guioptions=M    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
-                            " this flag must be added before :syntax and :filetype
-    else
-        set noantialias
-        set fuoptions=maxvert,maxhorz ",background:#00AAaaaa
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" custom functions
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! Do_Map()
+    if (&filetype == 'c')
+        set sp=2>
+        set makeprg=gcc\ -Wall\ \ %
+        nmap <silent> <F4> :call Do_CsTag(&filetype)<CR><CR><CR><CR>
+        " map <silent> <F9> <ESC>:exec ":w"<bar> :exec ":copen" <bar> :exec ":wincmd p"<bar>:exec ":make"<CR><CR>
+        map <silent> <F9> <ESC>:exec "w"<bar> :exec "copen" <bar> :exec "wincmd J" <bar> :exec "wincmd p"<bar>:exec "make"<CR><CR>
+        map <silent> <F10> <ESC>:exec '!./a.out < a.in'<CR>
+    elseif (&filetype == 'cpp')
+        set sp=2>
+        set makeprg=g++\ -Wall\ \ %
+        " :set makeprg=[[\ -f\ Makefile\ ]]\ &&\ make\ \\\|\\\|\ make\ -C\ .. 
+        nmap <silent> <F4> :call Do_CsTag(&filetype)<CR><CR><CR><CR>
+        map <silent> <F9> <ESC>:exec "w"<bar> :exec "copen" <bar> :exec "wincmd J" <bar> :exec "wincmd p"<bar>:exec "make"<CR><CR>
+        map <silent> <F10> <ESC>:exec '!./a.out < a.in'<CR>
+    elseif (&filetype == 'tex')
+        " 因为vim-latex-suite只对pdflatex良好支持, 对xelatex支持性太差
+        " 而xelatex对中文宏包xeCJK支持良好, pdflatex不支持,
+        " 故不使用其自带的编译运行快捷键
+        " nmap <silent> <F9> <leader>ll
+        " nmap <silent> <F10> <leader>lv
+        map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!xelatex '."%"<CR><CR>
+        map <silent> <F10> <ESC>:exec '!evince '.expand('%:r').'.pdf'<CR><CR>
+    elseif (&filetype == 'python')
+        set sp=2> 
+        "the last line: \%-G%.%# is meant to suppress some
+        "late error messages that I found could occur e.g.
+        "with wxPython and that prevent one from using :clast
+        "to go to the relevant file and line of the traceback
+        set efm=%A\ \ File\ \"%f\"\\\,\ line\ %l\\\,%m,
+            \%+C\ \ \ \ %.%#,
+            \%+Z%.%#Error\:\ %.%#,
+            \%A\ \ File\ \"%f\"\\\,\ line\ %l,
+            \%+C\ \ %.%#,
+            \%-C%p^,
+            \%Z%m,
+            \%-G%.%#
+        set makeprg=python3\ \ %
+        nmap <silent> <F4> :call Do_CsTag(&filetype)<CR><CR><CR><CR>
+        map <silent> <F8> :call Do_FormatePythonSrc()<CR>
+        " map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec 'AsyncRun! python3'"%"<CR>
+        map <silent> <F9> <ESC>:exec "w"<bar> :exec "copen" <bar> :exec "wincmd J" <bar> :exec "wincmd p"<bar> :exec "make %" <bar>:exec "clast" <CR><CR>
+        " map <silent> <F9> <ESC>:exec "w"<bar> :exec "copen" <bar> :exec "wincmd p"<bar> :exec "AsyncRun -program=make @%" <bar> :exec "clast" <CR><CR>
+        map <silent> <F10> <ESC>:exec 'AsyncStop'<CR> <bar> :exec ":cclose"<CR>
+    elseif (&filetype == 'markdown')
+        if g:IsOs == 0 "win32
+			" 要把chrome的安装路径添加到系统环境变量Path
+            map <buffer> <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!start chrome '"%"<CR><CR>
+            map <buffer> <silent> <F10> <ESC>:exec ":w"<CR> <bar> :exec '!start chrome '"%"<CR><CR>
+        else
+            map <buffer> <silent> <F9> <ESC>:Toc<CR>
+            map <buffer> <silent> <F10> <ESC>:exec ":w"<CR> <bar> :exec '!google-chrome '"%"<CR><CR>
+        endif
+    elseif (&filetype == 'dot')
+        map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!dot -Tjpg 'expand('%').' -o 'expand('%:r').'.jpg'<CR><CR>
+        map <silent> <F10> <ESC>:exec ":w"<CR> <bar> :exec '!xdg-open 'expand('%:r').'.jpg'<CR><CR>
+    else 
+        nmap <silent> <F9> :echo "tex compile"
+        nmap <silent> <F10> :echo "tex run"
     endif
-    echo "Todo: set my vim runpath"
-else
-    source ~/.vim/vimrc.linux
-endif
+endfunction
 
 
+autocmd  BufRead,BufNewFile {*.go}                                      setl ft=go        tabstop=2 softtabstop=2  noexpandtab smarttab
+autocmd  BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru} setl ft=ruby      tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab
+autocmd  BufRead,BufNewFile {*.local,*.sh}                              setl ft=sh
+autocmd  BufRead,BufNewFile {*.md,*.mkd,*.markdown}                     setl ft=markdown
+autocmd  BufRead,BufNewFile {*.c,*.h}                                   setl ft=c
+autocmd  BufRead,BufNewFile {*.c++,*.cc,*.cpp}                          setl ft=cpp
+autocmd  BufRead,BufNewFile {*.tex}                                     setl ft=tex
+autocmd  BufRead,BufNewFile {*.py}                                      setl ft=python
+autocmd  BufRead,BufNewFile {*.dot}                                     setl ft=dot
+autocmd!        BufReadPost {COMMIT_EDITMSG,*/COMMIT_EDITMSG}           setl ft=gitcommit      noml list|                 norm 1G
+autocmd  BufRead,BufNewFile {*.toml}                                    setl ft=toml tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab
+
+autocmd BufWritePre,FileWritePost,BufReadPost,FileReadPost {*.*}        call Do_Map()
+autocmd! BufWritePost      {*.snippet,*.snippets}                          call ReloadAllSnippets()
 
 
 function! Do_Update_Modified()
@@ -316,3 +387,17 @@ endfunc
 autocmd BufNewFile *.sh,*.txt,*.[ch],*.cpp,*.cc,*.python,*.py exec ":call Do_Set_Title()" 
 
 
+function! Do_BuildYCM(info)
+  " info is a dictionary with 3 fields
+  " - name:   name of the plugin
+  " - status: 'installed', 'updated', or 'unchanged'
+  " - force:  set on PlugInstall! or PlugUpdate!
+  if a:info.status == 'installed' || a:info.force
+    !python3 ./install.py --clang-completer --gocode-completer --tern-completer --racer-completer
+  endif
+endfunction
+
+
+function! Do_FormatePythonSrc()
+    execute "!find . -type f -name '*.py' | xargs autopep8 --in-place --aggressive --aggressive"
+endfunction
