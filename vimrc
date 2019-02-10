@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2019-02-10 21:16:27
+"  Modified : 2019-02-10 21:37:10
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -188,26 +188,6 @@ autocmd BufWinEnter *.txt if &ft == 'help' | wincmd H | vertical resize 85 | nma
 noremap <leader>h :help <C-R>=expand("<cword>")<CR><CR>
 
 
-if has("win32")
-    source ~/vimfiles/vimrc.win
-elseif has('mac')
-    if has('gui_running')
-        set macmeta
-        set guifont=Andale\ Mono:h13
-        set guioptions=M    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
-                            " this flag must be added before :syntax and :filetype
-    else
-        set noantialias
-        set fuoptions=maxvert,maxhorz ",background:#00AAaaaa
-    endif
-    echo "Todo: set my vim runpath"
-else
-    source ~/.vim/vimrc.linux
-endif
-
-
-
-
 function! Do_Update_Modified()
     let save_cursor = getcurpos()
     call cursor(1, 1) "把cursor定位到1行1列，便于search()从1行开始搜索
@@ -310,5 +290,35 @@ endfunc
 " 'a     光标回到旧位置
 " autocmd BufWritePre,FileWritePre * ma|call Do_File()|'a
 autocmd BufNewFile *.sh,*.txt,*.[ch],*.cpp,*.cc,*.python,*.py exec ":call Do_Set_Title()" 
+
+
+
+
+if has("win32")
+    try
+        source ~/vimfiles/vimrc.win
+    catch
+        " No Such file? No problem, just ignore it
+    endtry
+elseif has('mac')
+    if has('gui_running')
+        set macmeta
+        set guifont=Andale\ Mono:h13
+        set guioptions=M    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
+                            " this flag must be added before :syntax and :filetype
+    else
+        set noantialias
+        set fuoptions=maxvert,maxhorz ",background:#00AAaaaa
+    endif
+    echo "Todo: set my vim runpath"
+else
+    try
+        source ~/.vim/vimrc.linux
+    catch
+        " No Such file? No problem, just ignore it
+    endtry
+endif
+
+
 
 
