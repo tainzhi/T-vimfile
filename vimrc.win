@@ -18,3 +18,15 @@ endif
 
 filetype plugin on
 set omnifunc=syntaxcomplete#Complete
+
+
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+" keymap
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Operations to vimrc
+nnoremap <leader>rs :exec 'source ~/vimfiles/vimrc'<CR>
+nnoremap <leader>rt :exec 'e ~/vimfiles/vimrc'<CR>
+nnoremap <leader>rc :silent ! cd ~/.vim/ && git commit ~/.vim/vimrc -v <CR>
