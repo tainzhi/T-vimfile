@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2019-02-10 19:53:18
+"  Modified : 2019-02-10 21:16:27
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -180,10 +180,6 @@ map <silent> <leader>/ :let @+=expand('%:p:h')<CR>
 xnoremap p pgvy
 
 
-" Operations to vimrc
-nnoremap <leader>rs :exec 'source '.g:HomeVimRuntime.'vimrc'<CR>
-nnoremap <leader>rt :exec 'e '.g:HomeVimRuntime.'vimrc'<CR>
-nnoremap <leader>rc :silent ! cd ~/.vim/ && git commit ~/.vim/vimrc -v <CR>
 nnoremap tn :e ~/Desktop/tmp.md<CR>
 
 
