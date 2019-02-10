@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2019-02-04 17:12:42
+"  Modified : 2019-02-10 18:30:40
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -21,6 +21,8 @@ else
 endif
 if has("gui_running")
     let g:IsGuiRunning = 1
+    set guioptions=M    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
+                        " this flag must be added before :syntax and :filetype
 else
     let g:IsGuiRunning = 0
 endif
@@ -146,8 +148,13 @@ let g:netrw_liststyle = 3
 let g:netrw_sort_sequence = '[\/]$,*'
 
 
+set nobackup
+set nowritebackup
+set noswapfile
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
 "keyboard map command 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader = "\<Space>"
@@ -159,18 +166,17 @@ nmap w- :resize -3<CR>
 nmap w, :vertical resize +3<CR>
 nmap w. :vertical resize -3<CR>
 
-" 像在windows系统一样使用Ctrl-C, Ctrl-V复制粘贴，可参考mswin.vim
-" source $VIMRUNTIME/mswin.vim
-" 映射全选+复制 ctrl+a 
+" Make Control-direction switch between windows (like C-W h, etc)
+nmap <silent> wk <C-W><C-k>
+nmap <silent> wj <C-W><C-j>
+nmap <silent> wh <C-W><C-h>
+nmap <silent> wl <C-W><C-l>
+
+
 map <C-A> ggVG$
-map! <C-A> <Esc>ggvG$
 map <C-X> "+x
 " 选中状态下 Ctrl+c 复制 
 map <C-c> "+y
-"选中模式 Ctrl+c 复制选中的文本
-"vnoremap <c-c> "+y
-"普通模式下 Ctrl+c 复制文件路径
-"nnoremap <c-c> :let @+ = expand('%:p')<cr>
 
 "普通模式下,Ctrl+c,插入系统剪切板中的内容到光标之后
 noremap <C-V> "+p
@@ -178,9 +184,20 @@ noremap <C-V> "+p
 vnoremap <C-V> "+P
 "插入模式下,Ctrl+c,插入系统剪切板中的内容到光标之后
 inoremap <C-V> <esc>"+pa
+" copy to clipboard in vim of Bash On windows, WSL
+if !has("clipboard") && executable("clip.exe")
+    vmap <C-c> y:new ~/.vimbuffer<CR>VGp:x<CR> \| :!cat ~/.vimbuffer \| clip.exe <CR><CR>
+    map <C-v> :r ~/.vimbuffer<CR>
+endif
+" copy filename
+map <silent> <leader>. :let @+=expand('%:p').':'.line('.')<CR>
+" copy path
+map <silent> <leader>/ :let @+=expand('%:p:h')<CR>
 
-vmap <C-c> y:new ~/.vimbuffer<CR>VGp:x<CR> \| :!cat ~/.vimbuffer \| clip.exe <CR><CR>
-map <C-v> :r ~/.vimbuffer<CR>
+" when pasting copy pasted text back to 
+" buffer instead replacing with owerride
+xnoremap p pgvy
+
 
 " Operations to vimrc
 nnoremap <leader>rs :exec 'source '.g:HomeVimRuntime.'vimrc'<CR>
@@ -188,20 +205,6 @@ nnoremap <leader>rt :exec 'e '.g:HomeVimRuntime.'vimrc'<CR>
 nnoremap <leader>rc :silent ! cd ~/.vim/ && git commit ~/.vim/vimrc -v <CR>
 nnoremap tn :e ~/Desktop/tmp.md<CR>
 
-" copy filename
-map <silent> <leader>. :let @+=expand('%:p').':'.line('.')<CR>
-" copy path
-map <silent> <leader>/ :let @+=expand('%:p:h')<CR>
-
-" Make Control-direction switch between windows (like C-W h, etc)
-nmap <silent> wk <C-W><C-k>
-nmap <silent> wj <C-W><C-j>
-nmap <silent> wh <C-W><C-h>
-nmap <silent> wl <C-W><C-l>
-
-" when pasting copy pasted text back to 
-" buffer instead replacing with owerride
-xnoremap p pgvy
 
 " open help in vertical split
 autocmd BufWinEnter *.txt if &ft == 'help' | wincmd H | vertical resize 85 | nmap q :q<CR> | endif
@@ -411,6 +414,8 @@ function! Do_FormatePythonSrc()
 endfunction
 
 
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " install plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -418,18 +423,12 @@ call plug#begin(g:HomeVimRuntime.'/plugged')
 
 
 
-" for getting help for vim-plug itself
-Plug 'junegunn/vim-plug'
-
-
 " Colorscheme
 Plug 'altercation/vim-colors-solarized'
-Plug 'junegunn/seoul256.vim'
-Plug 'liuchengxu/space-vim-dark'
 
 
 
-Plug 'scrooloose/nerdcommenter', {'on': []}
+Plug 'scrooloose/nerdcommenter'
 let g:NERDSpaceDelims=1
 " let g:NERDCreateDefaultMappings=0
 map // <plug>NERDCommenterInvert
@@ -441,7 +440,7 @@ let g:NERDCustomDelimiters = {
 
 
 
-"nerdtree
+" nerdtree
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind']}
 let g:NERDTreeWinPos = 'left'
 nmap <silent> <F2> :NERDTreeToggle<CR>
@@ -466,7 +465,7 @@ let g:nerdtree_tabs_synchronize_view = 1
 
 
 " Plugin tagbar
-Plug 'majutsushi/tagbar', {'on': []}
+Plug 'majutsushi/tagbar', {'on': ['Tagbar']}
 nmap <silent> <F3> :Tagbar<CR>
 set updatetime=1000
 let g:tagbar_autofocus = 1
@@ -492,8 +491,6 @@ set tags=tags;**/.svn,tags;**/.git         " consider the tags first, then
                                " walk directory tree upto $HOME looking for tags
                                " note `;` sets the stop folder. :h file-search
     
-
-
 
 " rainbow_parentheses.vim
 Plug 'kien/rainbow_parentheses.vim'
@@ -529,8 +526,8 @@ let g:AutoPairsFlyMode=1
 
 
 
-Plug 'vim-airline/vim-airline', {'on': []}
-Plug 'vim-airline/vim-airline-themes', {'on': []}
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#tab_nr_type = '2' " splits and tab number
 let g:airline#extensions#tabline#buffer_idx_mode = 1
@@ -567,21 +564,21 @@ nmap <leader>+ <Plug>AirlineSelectNextTab
 
 
 
-Plug 'tpope/vim-surround', {'on': []}
+Plug 'tpope/vim-surround'
 
 
 
-Plug 'Valloric/MatchTagAlways', {'on': []}
+Plug 'Valloric/MatchTagAlways'
 nnoremap <leader>% :MtaJumpToOtherTag<CR>
 
 
 
-Plug 'vim-scripts/TaskList.vim', {'on': []}
+Plug 'vim-scripts/TaskList.vim'
 let g:tlTokenList = ['fixme', 'todo']
 
 
 
-Plug 'Lokaltog/vim-easymotion', {'on': []}
+Plug 'Lokaltog/vim-easymotion'
 "let g:Easymotion_smartcase = 0
 "let g:Easymotion_use_upper = 1
 let g:EasyMotion_do_mapping = 0
@@ -590,13 +587,13 @@ nmap <leader>ss <Plug>(easymotion-s2)
 
 
 
-Plug 'vim-scripts/DirDiff.vim', {'on': []}
+Plug 'vim-scripts/DirDiff.vim'
 let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp,.svn,cscope*,tags"
 
 
 
-Plug 'rking/ag.vim', {'on': []}
-Plug 'Chun-Yang/vim-action-ag', {'on': []}
+Plug 'rking/ag.vim'
+Plug 'Chun-Yang/vim-action-ag'
 nmap <leader>a <Plug>AgActionWord
 vmap <leader>a AgActionVisual
 let g:ag_highlight=1
@@ -656,7 +653,7 @@ nmap <silent> <C-n> <Plug>(ale_next_wrap)
 
 
 " make YouCompleteMe compatible with ultisnips
-Plug 'ervandew/supertab', {'on': []}
+Plug 'ervandew/supertab'
 " make YCM compatible with UltiSnips (using supertab)
 let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
 let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
@@ -670,11 +667,11 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " Included are syntax, indent, and filetype file for git, gitconfig,
 " gitrebase,and gitsendemail
-" Plug 'tpope/vim-git', {'on': []}
+" Plug 'tpope/vim-git'
 
 
 
-Plug 'tpope/vim-fugitive', {'on': []}
+Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 let g:Gitv_OpenHorizontal = 1
 Plug 'gregsexton/gitv'
@@ -688,7 +685,7 @@ inoremap <leader>S <Esc><leader>S
 
 
 " List the recent files
-Plug 'yegappan/mru', {'on': []}
+Plug 'yegappan/mru'
 
 
 
@@ -722,8 +719,8 @@ endif
 
 
 " for markdown
-Plug 'plasticboy/vim-markdown'
-Plug 'mzlogin/vim-markdown-toc'
+Plug 'plasticboy/vim-markdown', {'for':'markdown'}
+Plug 'mzlogin/vim-markdown-toc', {'for':'markdown'}
 " set conceallevel=1
 let g:vim_markdown_conceal = 0
 let g:vim_markdown_folding_disabled = 0
@@ -732,15 +729,9 @@ let g:vmt_cycle_list_item_markers = 1
 let g:vmt_list_item_char = '*,-,='
 let g:vim_markdown_folding_level = 6
 
+
+
 Plug 'tpope/vim-repeat'
-
-
-
-Plug 'tomtom/tlib_vim'
-" Plug 'tomtom/tlib_vim', {'on': ['TComment']}
-" Plug 'tomtom/tcomment_vim', {'on': ['TComment']}
-" nnoremap // :TComment<CR>
-" vnoremap // :TComment<CR>
 
 
 
@@ -775,40 +766,17 @@ endif
 
 
 
-Plug 'gerw/vim-latex-suite', {'for': 'tex'}
-" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
-" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
-" The following changes the default filetype back to 'tex':
-" let g:tex_flavor='latex'
-" let g:Tex_CompileRule_dvi = 'xelatex --src-specials -interaction=nonstopmode $*'
-" let g:Tex_FormatDependency_dvi = 'dvi,ps,pdf'
-" let g:Tex_IgnoredWarnings = 
-"     \"Underfull\n".
-"     \"Overfull\n".
-"     \"specifier changed to\n".
-"     \"You have requested\n".
-"     \"Missing number, treated as zero.\n".
-"     \"There were undefined references\n"
-"     \"Citation %.%# undefined\n"
-"     \"LaTex Font Warning:"
-" let g:Tex_IgnoreLevel = 8
-
-
-
-Plug 'skywind3000/asyncrun.vim', {'on': []}
+Plug 'skywind3000/asyncrun.vim'
 " Use autocmd AsyncRunStart with asyncrun#quickfix_toggle in your vimrc:
 autocmd User AsyncRunStart call asyncrun#quickfix_toggle(15, 1)
 
 
 
-Plug 'mbbill/undotree', {'on': []}
+Plug 'mbbill/undotree'
 nnoremap <leader>un :UndotreeToggle<CR>
 nnoremap <leader>unq :UndotreeToggle<CR>
 " backup current file into /tmp, deleted afterwards
-set nobackup
-set nowritebackup
 set backupdir=/tmp/
-set noswapfile
 set directory=/tmp/           " prepend(^=) $HOME/.tmp/ to default path; use full path as backup filename(//)
 " backup undo history into /tmp
 set undofile
@@ -821,11 +789,11 @@ Plug 'Vimjas/vim-python-pep8-indent'
 
 
 
-Plug 'Yggdroot/indentLine', {'on': []}
+Plug 'Yggdroot/indentLine'
 
 
 
-Plug 'terryma/vim-multiple-cursors', {'on': []}
+Plug 'terryma/vim-multiple-cursors'
 " Default mapping
 let g:multi_cursor_next_key='<C-n>'
 let g:multi_cursor_prev_key='<C-p>'
@@ -834,16 +802,11 @@ let g:multi_cursor_quit_key='<Esc>'
 
 
 
-Plug 'dyng/ctrlsf.vim', {'on': []}
-nmap     <leader>f <Plug>CtrlSFPrompt<CR>
-
-
-
 Plug 'tweekmonster/startuptime.vim'
 
 
 
-Plug 'terryma/vim-expand-region', {'on': []}
+Plug 'terryma/vim-expand-region'
 map K <Plug>(expand_region_expand)
 map - <Plug>(expand_region_shrink)
 
@@ -861,36 +824,7 @@ map <leader>da :bufdo Bdelete<CR>
 
 
 
-Plug 'vim-scripts/fcitx.vim'
 call plug#end()
-
-
-call timer_start(500, 'LoadPlug')
-function! LoadPlug(timer) abort
-    call plug#load('nerdcommenter')
-    call plug#load('vim-airline')
-    call plug#load('vim-airline-themes')
-    " call plug#load('vim-git')
-    call plug#load('vim-easymotion')
-    call plug#load('ctrlsf.vim')
-    call plug#load('vim-fugitive')
-    call plug#load('ultisnips')
-    call plug#load('vim-snippets')
-    call plug#load('vim-colors-solarized')
-    call plug#load('mru')
-    call plug#load('asyncrun.vim')
-    call plug#load('supertab')
-    call plug#load('MatchTagAlways')
-    call plug#load('tagbar')
-    call plug#load('DirDiff.vim')
-    call plug#load('indentLine')
-    call plug#load('ag.vim')
-    call plug#load('vim-action-ag')
-    call plug#load('vim-multiple-cursors')
-    call plug#load('vim-surround')
-    call plug#load('TaskList.vim')
-    call plug#load('undotree')
-endfunction
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -900,33 +834,27 @@ if g:IsOs == 2 "mac"
     if g:IsGuiRunning == 1
         set macmeta
         set guifont=Andale\ Mono:h13
-        set guioptions=MT    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
     endif
     set noantialias
     set fuoptions=maxvert,maxhorz ",background:#00AAaaaa
 elseif g:IsOs == 0 "win32"
+    colorscheme desert
     " 解决console输出乱码
     language messages zh_CN.utf-8
     if g:IsGuiRunning == 1
         set guifont=Consolas:h14:cANSI
-        set guioptions=MT    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
         "gvim -geometry 2560*1700
         " an GUIEnter * simalt ~x           " 进入窗口后对所有文件类型(型号*匹配所有文件)全屏. 
                                             " simalt ~x模拟Alt Spacebar X. 
                                             " simalt ~n最小化窗口
-        colorscheme solarized
-        set background=dark
-    else
-        colorscheme desert
     endif
 else
     if g:IsGuiRunning == 1
         colorscheme solarized
         set guifont=Monospace\ 13
-        set guioptions=Mt
         set background=dark
     else
         set t_Co=256
-        colorscheme space-vim-dark
+        colorscheme desert
     endif
 endif
