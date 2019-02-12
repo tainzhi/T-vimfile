@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2019-02-10 21:37:10
+"  Modified : 2019-02-12 23:23:22
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -152,6 +152,9 @@ nmap <silent> wk <C-W><C-k>
 nmap <silent> wj <C-W><C-j>
 nmap <silent> wh <C-W><C-h>
 nmap <silent> wl <C-W><C-l>
+nmap <silent> wt <C-W><C-t>
+nmap <silent> wb <C-W><C-b>
+nmap <silent> wp <C-W><C-p>
 
 
 map <C-A> ggVG$

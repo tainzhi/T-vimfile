@@ -80,14 +80,8 @@ function! Do_Map()
         " map <silent> <F9> <ESC>:exec "w"<bar> :exec "copen" <bar> :exec "wincmd p"<bar> :exec "AsyncRun -program=make @%" <bar> :exec "clast" <CR><CR>
         map <silent> <F10> <ESC>:exec 'AsyncStop'<CR> <bar> :exec ":cclose"<CR>
     elseif (&filetype == 'markdown')
-        if g:IsOs == 0 "win32
-			" 要把chrome的安装路径添加到系统环境变量Path
-            map <buffer> <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!start chrome '"%"<CR><CR>
-            map <buffer> <silent> <F10> <ESC>:exec ":w"<CR> <bar> :exec '!start chrome '"%"<CR><CR>
-        else
-            map <buffer> <silent> <F9> <ESC>:Toc<CR>
-            map <buffer> <silent> <F10> <ESC>:exec ":w"<CR> <bar> :exec '!google-chrome '"%"<CR><CR>
-        endif
+        map <buffer> <silent> <F9> <ESC>:Toc<CR>
+        map <buffer> <silent> <F10> <ESC>:exec ":w"<CR> <bar> :exec '!google-chrome '"%"<CR><CR>
     elseif (&filetype == 'dot')
         map <silent> <F9> <ESC>:exec ":w"<CR> <bar> :exec '!dot -Tjpg 'expand('%').' -o 'expand('%:r').'.jpg'<CR><CR>
         map <silent> <F10> <ESC>:exec ":w"<CR> <bar> :exec '!xdg-open 'expand('%:r').'.jpg'<CR><CR>
@@ -415,7 +409,7 @@ let g:ag_highlight=1
 
 Plug 'Valloric/YouCompleteMe', { 'do': function('Do_BuildYCM') }
 " " 自动补全配置
-" set completeopt=longest,menu	"让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
+set completeopt=longest,menu	"让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
 " autocmd InsertLeave * if pumvisible() == 0|pclose|endif	"离开插入模式后自动关闭预览窗口
 " inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"	"回车即选中当前项
 " "上下左右键的行为 会显示其他信息
