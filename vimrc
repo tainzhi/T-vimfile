@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 2019-02-12 23:23:22
+"  Modified : 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 
@@ -24,7 +24,7 @@ set modelines=5                " default numbers of lines to read for modeline i
 set autoread 
 set autowrite
 " 失去焦点后自动保存文件
-autocmd FocusLost * :up
+" autocmd FocusLost * :up
 " 避免在操作中频繁出现“请按Enter或其他命令继续”
 " 以及出现“更多”的提示而需要按空格键继续
 set nomore
