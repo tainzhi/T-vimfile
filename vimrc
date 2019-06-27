@@ -701,8 +701,12 @@ let g:ycm_collect_identifiers_from_comments_and_strings = 1
 " 关闭加载.ycm_extra_conf.py提示
 let g:ycm_confirm_extra_conf = 0
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR> " 跳转到定义处
-let g:ycm_server_python_interpreter = 'python'
-let g:ycm_python_binary_path = 'c:\Python35\python'
+if has('win32')
+    let g:ycm_server_python_interpreter = 'python'
+    let g:ycm_python_binary_path = 'c:\Python35\python'
+else
+    let g:ycm_server_python_interpreter = 'python3'
+endif
 
 
 
