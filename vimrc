@@ -169,7 +169,7 @@ vnoremap <C-V> "+P
 "插入模式下,Ctrl+c,插入系统剪切板中的内容到光标之后
 inoremap <C-V> <esc>"+pa
 " copy to clipboard in vim of Bash On windows, WSL
-if !has("clipboard") && executable("clip.exe")
+if has("clipboard") && executable("clip.exe")
     vmap <C-c> y:new ~/.vimbuffer<CR>VGp:x<CR> \| :!cat ~/.vimbuffer \| clip.exe <CR><CR>
     map <C-v> :r ~/.vimbuffer<CR>
 endif
