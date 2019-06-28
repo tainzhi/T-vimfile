@@ -907,7 +907,9 @@ map <leader>da :bufdo Bdelete<CR>
 
 
 
-Plug 'vim-scripts/fcitx.vim'
+" Plug 'vim-scripts/fcitx.vim'
+
+Plug 'hotoo/pangu.vim'
 call plug#end()
 
 
