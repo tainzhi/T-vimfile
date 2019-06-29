@@ -65,7 +65,8 @@ set cinwords=if,else,while,do
 set cinwords+=for,switch,case
 
 " syntax on                      " enable syntax, 但是插件管理器已经默认开启syntax
-set synmaxcol=250              " limit syntax highlighting to 128 columns
+set synmaxcol=100              " limit syntax highlighting to 128 columns
+set guioptions=M
 
 set mouse=a "enable mouse in GUI mode
 set mousehide                 " Hide mouse after chars typed
@@ -170,7 +171,7 @@ vnoremap <C-V> "+P
 inoremap <C-V> <esc>"+pa
 " copy to clipboard in vim of Bash On windows, WSL
 if has("clipboard") && executable("clip.exe")
-    vmap <C-c> y:new ~/.vimbuffer<CR>VGp:x<CR> \| :!cat ~/.vimbuffer \| clip.exe <CR><CR>
+    vmap <C-c> y:new ~/.vimbuffer<CR>VGp:x<CR> \| :!start cat ~/.vimbuffer \| clip.exe <CR><CR>
     map <C-v> :r ~/.vimbuffer<CR>
 endif
 " copy filename
@@ -292,7 +293,7 @@ endfunc
 " ma     保存当前位置到'a'标记
 " 'a     光标回到旧位置
 " autocmd BufWritePre,FileWritePre * ma|call Do_File()|'a
-autocmd BufNewFile *.sh,*.txt,*.[ch],*.cpp,*.cc,*.python,*.py exec ":call Do_Set_Title()" 
+" autocmd BufNewFile *.sh,*.txt,*.[ch],*.cpp,*.cc,*.python,*.py exec ":call Do_Set_Title()" 
 
 
 
@@ -356,20 +357,20 @@ function! Do_Map()
 endfunction
 
 
-autocmd  BufRead,BufNewFile {*.go}                                      setl ft=go        tabstop=2 softtabstop=2  noexpandtab smarttab
-autocmd  BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru} setl ft=ruby      tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab
-autocmd  BufRead,BufNewFile {*.local,*.sh}                              setl ft=sh
-autocmd  BufRead,BufNewFile {*.md,*.mkd,*.markdown}                     setl ft=markdown
-autocmd  BufRead,BufNewFile {*.c,*.h}                                   setl ft=c
-autocmd  BufRead,BufNewFile {*.c++,*.cc,*.cpp}                          setl ft=cpp
-autocmd  BufRead,BufNewFile {*.tex}                                     setl ft=tex
-autocmd  BufRead,BufNewFile {*.py}                                      setl ft=python
-autocmd  BufRead,BufNewFile {*.dot}                                     setl ft=dot
-autocmd!        BufReadPost {COMMIT_EDITMSG,*/COMMIT_EDITMSG}           setl ft=gitcommit      noml list|                 norm 1G
-autocmd  BufRead,BufNewFile {*.toml}                                    setl ft=toml tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab
+" autocmd  BufRead,BufNewFile {*.go}                                      setl ft=go        tabstop=2 softtabstop=2  noexpandtab smarttab
+" autocmd  BufRead,BufNewFile {Gemfile,Rakefile,Capfile,*.rake,config.ru} setl ft=ruby      tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab
+" autocmd  BufRead,BufNewFile {*.local,*.sh}                              setl ft=sh
+" autocmd  BufRead,BufNewFile {*.md,*.mkd,*.markdown}                     setl ft=markdown
+" autocmd  BufRead,BufNewFile {*.c,*.h}                                   setl ft=c
+" autocmd  BufRead,BufNewFile {*.c++,*.cc,*.cpp}                          setl ft=cpp
+" autocmd  BufRead,BufNewFile {*.tex}                                     setl ft=tex
+" autocmd  BufRead,BufNewFile {*.py}                                      setl ft=python
+" autocmd  BufRead,BufNewFile {*.dot}                                     setl ft=dot
+" autocmd!        BufReadPost {COMMIT_EDITMSG,*/COMMIT_EDITMSG}           setl ft=gitcommit      noml list|                 norm 1G
+" autocmd  BufRead,BufNewFile {*.toml}                                    setl ft=toml tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab
 
-autocmd BufWritePre,FileWritePost,BufReadPost,FileReadPost {*.*}        call Do_Map()
-autocmd! BufWritePost      {*.snippet,*.snippets}                          call ReloadAllSnippets()
+" autocmd BufWritePre,FileWritePost,BufReadPost,FileReadPost {*.*}        call Do_Map()
+" autocmd! BufWritePost      {*.snippet,*.snippets}                          call ReloadAllSnippets()
 
 
 function! Do_Update_Modified()
@@ -473,7 +474,7 @@ endfunc
 " ma     保存当前位置到'a'标记
 " 'a     光标回到旧位置
 " autocmd BufWritePre,FileWritePre * ma|call Do_File()|'a
-autocmd BufNewFile *.sh,*.txt,*.[ch],*.cpp,*.cc,*.python,*.py exec ":call Do_Set_Title()" 
+" autocmd BufNewFile *.sh,*.txt,*.[ch],*.cpp,*.cc,*.python,*.py exec ":call Do_Set_Title()" 
 
 
 function! Do_BuildYCM(info)
@@ -501,7 +502,7 @@ call plug#begin('~/.vim/plugged')
 
 
 
-Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdcommenter', {'on': '<plug>NERDCommenterInvert'}
 let g:NERDSpaceDelims=1
 " let g:NERDCreateDefaultMappings=0
 map // <plug>NERDCommenterInvert
@@ -599,7 +600,7 @@ let g:AutoPairsFlyMode=1
 
 
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline-themes', {'on': []}
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#tab_nr_type = '2' " splits and tab number
 let g:airline#extensions#tabline#buffer_idx_mode = 1
@@ -648,7 +649,7 @@ let g:tlTokenList = ['fixme', 'todo']
 
 
 
-Plug 'Lokaltog/vim-easymotion'
+Plug 'Lokaltog/vim-easymotion', {'on': ['<Plug>(easymotion-s)','<Plug>(easymotion-s2)']}
 "let g:Easymotion_smartcase = 0
 "let g:Easymotion_use_upper = 1
 let g:EasyMotion_do_mapping = 0
@@ -711,7 +712,7 @@ endif
 
 
 " faster checkter than syntastic, so abandon syntastic
-Plug 'w0rp/ale'
+Plug 'w0rp/ale', {'for': ['python', 'c', 'cpp', 'java']}
 let g:ale_linters = {
         \ 'python': ['flake8'],
             \}
@@ -734,46 +735,14 @@ let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 
 
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-let g:Gitv_OpenHorizontal = 1
-Plug 'gregsexton/gitv'
-nnoremap <leader>W :Gwrite<CR>
-nnoremap <leader>C :Gcommit -v<CR>
-nnoremap <leader>S :Gstatus \| 7<CR>
-inoremap <leader>W <Esc><leader>W
-inoremap <leader>C <Esc><leader>C
-inoremap <leader>S <Esc><leader>S
-
-
-
-" " List the recent files
-" Plug 'yegappan/mru'
-
-
-
 " ultimate solutions for snippets
-Plug 'Sirver/ultisnips'
+Plug 'Sirver/ultisnips', {'for': ['java', 'c', 'cpp']}
 Plug 'honza/vim-snippets'
 let g:UltiSnipsExpandTrigger = "<c-l>"
 let g:UltiSnipsJumpForwardTrigger = "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
 " let g:UltiSnipsSnippetDirectories=["UltiSnips", "plugged/vim/vim-snippets/UltiSnips"]
 
-
-
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-session'
-let g:session_directory='./'
-let g:session_default_name='.session'
-let g:session_lock_enabled=0
-if has('gui_running')
-    let g:session_autoload='no'
-    let g:session_autosave='no'
-else
-    let g:session_autoload='yes'
-    let g:session_autosave='yes'
-endif
 
 
 
@@ -841,7 +810,7 @@ Plug 'gerw/vim-latex-suite', {'for': 'tex'}
 
 
 
-Plug 'skywind3000/asyncrun.vim'
+Plug 'skywind3000/asyncrun.vim', {'on': 'AsyncRunStart'}
 " Use autocmd AsyncRunStart with asyncrun#quickfix_toggle in your vimrc:
 autocmd User AsyncRunStart call asyncrun#quickfix_toggle(15, 1)
 
@@ -879,19 +848,7 @@ let g:multi_cursor_skip_key='<C-j>'
 let g:multi_cursor_quit_key='<Esc>'
 
 
-
-Plug 'dyng/ctrlsf.vim'
-nmap     <leader>f <Plug>CtrlSFPrompt<CR>
-
-
-
 Plug 'tweekmonster/startuptime.vim'
-
-
-
-Plug 'terryma/vim-expand-region'
-map K <Plug>(expand_region_expand)
-map - <Plug>(expand_region_shrink)
 
 
 
@@ -906,8 +863,42 @@ map <leader>d :Bdelete<CR>
 map <leader>da :bufdo Bdelete<CR>
 
 
+" Plug 'dyng/ctrlsf.vim'
+" nmap     <leader>f <Plug>CtrlSFPrompt<CR>
 
-Plug 'vim-scripts/fcitx.vim'
+" Plug 'tpope/vim-fugitive'
+" Plug 'airblade/vim-gitgutter'
+" let g:Gitv_OpenHorizontal = 1
+" Plug 'gregsexton/gitv'
+" nnoremap <leader>W :Gwrite<CR>
+" nnoremap <leader>C :Gcommit -v<CR>
+" nnoremap <leader>S :Gstatus \| 7<CR>
+" inoremap <leader>W <Esc><leader>W
+" inoremap <leader>C <Esc><leader>C
+" inoremap <leader>S <Esc><leader>S
+
+" " List the recent files
+" Plug 'yegappan/mru'
+
+" Plug 'terryma/vim-expand-region'
+" map K <Plug>(expand_region_expand)
+" map - <Plug>(expand_region_shrink)
+
+" Plug 'xolox/vim-misc'
+" Plug 'xolox/vim-session'
+" let g:session_directory='./'
+" let g:session_default_name='.session'
+" let g:session_lock_enabled=0
+" if has('gui_running')
+    " let g:session_autoload='no'
+    " let g:session_autosave='no'
+" else
+    " let g:session_autoload='yes'
+    " let g:session_autosave='yes'
+" endif
+
+" Plug 'vim-scripts/fcitx.vim'
+
 call plug#end()
 
 
@@ -963,6 +954,3 @@ else
     nnoremap <leader>rt :exec 'e ~/.vim/vimrc'<CR>
     nnoremap <leader>rc :silent ! cd ~/.vim/ && git commit ~/.vim/vimrc -v <CR>
 endif
-
-
-
