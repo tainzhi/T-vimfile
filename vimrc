@@ -862,6 +862,8 @@ Plug 'moll/vim-bbye'
 map <leader>d :Bdelete<CR>
 map <leader>da :bufdo Bdelete<CR>
 
+Plug 'hotoo/pangu.vim'
+
 
 " Plug 'dyng/ctrlsf.vim'
 " nmap     <leader>f <Plug>CtrlSFPrompt<CR>
@@ -898,7 +900,6 @@ map <leader>da :bufdo Bdelete<CR>
 " endif
 
 " Plug 'vim-scripts/fcitx.vim'
-
 call plug#end()
 
 
