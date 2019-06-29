@@ -1,8 +1,54 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Modified : 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
+if has("win32")
+    if has('gui_running')
+        colorscheme solarized
+        set guifont=Consolas:h14:cANSI
+        set guioptions=M    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
+                            " this flag must be added before :syntax and :filetype
+        "gvim -geometry 2560*1700
+        " an GUIEnter * simalt ~x           " 进入窗口后对所有文件类型(型号*匹配所有文件)全屏. 
+                                            " simalt ~x模拟Alt Spacebar X. 
+                                            " simalt ~n最小化窗口
+    endif
+    " Operations to vimrc
+    nnoremap <leader>rs :exec 'source ~/vimfiles/vimrc'<CR>
+    nnoremap <leader>rt :exec 'e ~/vimfiles/vimrc'<CR>
+    nnoremap <leader>rc :silent ! cd ~/vimfile/ && git commit ~/vimfile/vimrc -v <CR>
+elseif has('mac')
+    if has('gui_running')
+        set macmeta
+        set guifont=Andale\ Mono:h13
+        set guioptions=M    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
+                            " this flag must be added before :syntax and :filetype
+    else
+        set noantialias
+        set fuoptions=maxvert,maxhorz ",background:#00AAaaaa
+    endif
+    echo "Todo: set my vim runpath"
+else
+    if has('gui_running')
+        set guioptions=M    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
+                            " this flag must be added before :syntax and :filetype
+        colorscheme solarized
+        set background=dark
+        set guifont=Consolas:h14:cANSI
+        set guioptions=M    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
+                            " this flag must be added before :syntax and :filetype
+        "gvim -geometry 2560*1700
+        " an GUIEnter * simalt ~x           " 进入窗口后对所有文件类型(型号*匹配所有文件)全屏. 
+                                            " simalt ~x模拟Alt Spacebar X. 
+                                            " simalt ~n最小化窗口
+    else
+        set t_Co=256
+        colorscheme desert
+    endif
+    " Operations to vimrc
+    nnoremap <leader>rs :exec 'source ~/.vim/vimrc'<CR>
+    nnoremap <leader>rt :exec 'e ~/.vim/vimrc'<CR>
+    nnoremap <leader>rc :silent ! cd ~/.vim/ && git commit ~/.vim/vimrc -v <CR>
+endif
 
 set nocompatible               " be iMproved
 " 中文编码支持，同时支持GBK和UTF-8编码
@@ -66,7 +112,6 @@ set cinwords+=for,switch,case
 
 " syntax on                      " enable syntax, 但是插件管理器已经默认开启syntax
 set synmaxcol=100              " limit syntax highlighting to 128 columns
-set guioptions=M
 
 set mouse=a "enable mouse in GUI mode
 set mousehide                 " Hide mouse after chars typed
@@ -901,57 +946,3 @@ Plug 'hotoo/pangu.vim'
 
 " Plug 'vim-scripts/fcitx.vim'
 call plug#end()
-
-
-filetype plugin on
-set omnifunc=syntaxcomplete#Complete
-
-
-if has("win32")
-    if has('gui_running')
-        colorscheme solarized
-        set guifont=Consolas:h14:cANSI
-        set guioptions=M    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
-                            " this flag must be added before :syntax and :filetype
-        "gvim -geometry 2560*1700
-        " an GUIEnter * simalt ~x           " 进入窗口后对所有文件类型(型号*匹配所有文件)全屏. 
-                                            " simalt ~x模拟Alt Spacebar X. 
-                                            " simalt ~n最小化窗口
-    endif
-    " Operations to vimrc
-    nnoremap <leader>rs :exec 'source ~/vimfiles/vimrc'<CR>
-    nnoremap <leader>rt :exec 'e ~/vimfiles/vimrc'<CR>
-    nnoremap <leader>rc :silent ! cd ~/vimfile/ && git commit ~/vimfile/vimrc -v <CR>
-elseif has('mac')
-    if has('gui_running')
-        set macmeta
-        set guifont=Andale\ Mono:h13
-        set guioptions=M    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
-                            " this flag must be added before :syntax and :filetype
-    else
-        set noantialias
-        set fuoptions=maxvert,maxhorz ",background:#00AAaaaa
-    endif
-    echo "Todo: set my vim runpath"
-else
-    if has('gui_running')
-        set guioptions=M    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
-                            " this flag must be added before :syntax and :filetype
-        colorscheme solarized
-        set background=dark
-        set guifont=Consolas:h14:cANSI
-        set guioptions=M    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
-                            " this flag must be added before :syntax and :filetype
-        "gvim -geometry 2560*1700
-        " an GUIEnter * simalt ~x           " 进入窗口后对所有文件类型(型号*匹配所有文件)全屏. 
-                                            " simalt ~x模拟Alt Spacebar X. 
-                                            " simalt ~n最小化窗口
-    else
-        set t_Co=256
-        colorscheme desert
-    endif
-    " Operations to vimrc
-    nnoremap <leader>rs :exec 'source ~/.vim/vimrc'<CR>
-    nnoremap <leader>rt :exec 'e ~/.vim/vimrc'<CR>
-    nnoremap <leader>rc :silent ! cd ~/.vim/ && git commit ~/.vim/vimrc -v <CR>
-endif
