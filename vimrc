@@ -13,6 +13,8 @@ if has("win32")
                                             " simalt ~n最小化窗口
     endif
     " Operations to vimrc
+    let mapleader = "\<Space>"
+    let plug_path = "~/vimfiles/plugged"
     nnoremap <leader>rs :exec 'source ~/vimfiles/vimrc'<CR>
     nnoremap <leader>rt :exec 'e ~/vimfiles/vimrc'<CR>
     nnoremap <leader>rc :silent ! cd ~/vimfile/ && git commit ~/vimfile/vimrc -v <CR>
@@ -26,6 +28,8 @@ elseif has('mac')
         set noantialias
         set fuoptions=maxvert,maxhorz ",background:#00AAaaaa
     endif
+	let mapleader = "\<Space>"
+    let plug_path = "~/vimfiles/plugged"
     echo "Todo: set my vim runpath"
 else
     if has('gui_running')
@@ -45,6 +49,8 @@ else
         colorscheme desert
     endif
     " Operations to vimrc
+    let mapleader = "\<Space>"
+    let plug_path = "~/.vim/plugged"
     nnoremap <leader>rs :exec 'source ~/.vim/vimrc'<CR>
     nnoremap <leader>rt :exec 'e ~/.vim/vimrc'<CR>
     nnoremap <leader>rc :silent ! cd ~/.vim/ && git commit ~/.vim/vimrc -v <CR>
@@ -183,10 +189,6 @@ set noswapfile
 " keymap 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let mapleader = "\<Space>"
-
-"let maplocalleader = '	'      " Tab as a local leader
-
 " resize the window
 nmap w= :resize +3<CR>
 nmap w- :resize -3<CR>
@@ -215,7 +217,7 @@ vnoremap <C-V> "+P
 "插入模式下,Ctrl+c,插入系统剪切板中的内容到光标之后
 inoremap <C-V> <esc>"+pa
 " copy to clipboard in vim of Bash On windows, WSL
-if has("clipboard") && executable("clip.exe")
+if !has('win32') && has("clipboard") && executable("clip.exe")
     vmap <C-c> y:new ~/.vimbuffer<CR>VGp:x<CR> \| :!start cat ~/.vimbuffer \| clip.exe <CR><CR>
     map <C-v> :r ~/.vimbuffer<CR>
 endif
@@ -543,11 +545,11 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " install plugin
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-call plug#begin('~/.vim/plugged')
+call plug#begin(plug_path)
 
 
 
-Plug 'scrooloose/nerdcommenter', {'on': '<plug>NERDCommenterInvert'}
+Plug 'scrooloose/nerdcommenter'
 let g:NERDSpaceDelims=1
 " let g:NERDCreateDefaultMappings=0
 map // <plug>NERDCommenterInvert
@@ -715,8 +717,7 @@ vmap <leader>a AgActionVisual
 let g:ag_highlight=1
 
 
-
-Plug 'Valloric/YouCompleteMe', { 'do': function('Do_BuildYCM') }
+Plug 'ycm-core/YouCompleteMe', { 'do': function('Do_BuildYCM') }
 " " 自动补全配置
 set completeopt=longest,menu	"让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
 " autocmd InsertLeave * if pumvisible() == 0|pclose|endif	"离开插入模式后自动关闭预览窗口
