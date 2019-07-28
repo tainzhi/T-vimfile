@@ -214,15 +214,18 @@ if has("win32")
     nnoremap <leader>rc :silent ! cd ~/vimfile/ && git commit ~/vimfile/vimrc -v <CR>
 elseif has('mac')
     if has('gui_running')
-        set macmeta
-        set guifont=Andale\ Mono:h13
+        set macseta
+        set guifont=Andale\ Mono:h18
         set guioptions=M    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
                             " this flag must be added before :syntax and :filetype
     else
         set noantialias
         set fuoptions=maxvert,maxhorz ",background:#00AAaaaa
     endif
-    echo "Todo: set my vim runpath"
+    " Operations to vimrc
+    nnoremap <leader>rs :exec 'source ~/vimfiles/vimrc'<CR>
+    nnoremap <leader>rt :exec 'e ~/vimfiles/vimrc'<CR>
+    nnoremap <leader>rc :silent ! cd ~/vimfile/ && git commit ~/vimfile/vimrc -v <CR>
 else
     if has('gui_running')
         set guioptions=M    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
