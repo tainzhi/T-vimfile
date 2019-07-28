@@ -21,7 +21,7 @@ if has("win32")
 elseif has('mac')
     if has('gui_running')
         set macmeta
-        set guifont=Andale\ Mono:h13
+        set guifont=Monaco:h18
         set guioptions=M    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
                             " this flag must be added before :syntax and :filetype
     else
@@ -29,8 +29,7 @@ elseif has('mac')
         set fuoptions=maxvert,maxhorz ",background:#00AAaaaa
     endif
 	let mapleader = "\<Space>"
-    let plug_path = "~/vimfiles/plugged"
-    echo "Todo: set my vim runpath"
+    let plug_path = "~/.vim/plugged"
 else
     if has('gui_running')
         set guioptions=M    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
