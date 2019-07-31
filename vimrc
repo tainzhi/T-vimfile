@@ -30,9 +30,9 @@ elseif has('mac')
     endif
 	let mapleader = "\<Space>"
     let plug_path = "~/.vim/plugged"
-    nnoremap <leader>rs :exec 'source ~/vimfiles/vimrc'<CR>
-    nnoremap <leader>rt :exec 'e ~/vimfiles/vimrc'<CR>
-    nnoremap <leader>rc :silent ! cd ~/vimfile/ && git commit ~/vimfile/vimrc -v <CR>
+    nnoremap <leader>rs :exec 'source ~/.vim/vimrc'<CR>
+    nnoremap <leader>rt :exec 'e ~/.vim/vimrc'<CR>
+    nnoremap <leader>rc :silent ! cd ~/.vim/ && git commit ~/.vim/vimrc -v <CR>
 else
     if has('gui_running')
         set guioptions=M    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
