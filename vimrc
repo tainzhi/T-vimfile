@@ -69,7 +69,6 @@ set whichwrap+=<,>,h,l   " 允许backspace和光标键跨越行边界(不建议)
 set colorcolumn=80     " max line length to 80
 set history=256        " Number of things to remember in history.
 set timeoutlen=250     " Time to wait after ESC (default causes an annoying delay)
-set clipboard+=unnamed " Yanks go on clipboard instead.
 set shiftround         " round indent to multiple of 'shiftwidth'
 set cm=blowfish2
 set modeline
@@ -210,6 +209,7 @@ nmap <silent> wp <C-W><C-p>
 map <C-A> ggVG$
 map <C-X> "+x
 " 选中状态下 Ctrl+c 复制 
+set clipboard=unnamedplus " Yanks go on clipboard instead.
 map <C-c> "+y
 
 "普通模式下,Ctrl+c,插入系统剪切板中的内容到光标之后
