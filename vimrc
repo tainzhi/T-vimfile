@@ -1,5 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
+"  Created  : 2012-09-22 14:30:00
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("win32")
     if has('gui_running')
@@ -25,8 +26,8 @@ elseif has('mac')
         set guioptions=M    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
                             " this flag must be added before :syntax and :filetype
     else
-        set noantialias
-        set fuoptions=maxvert,maxhorz ",background:#00AAaaaa
+        " set noantialias
+        " set fuoptions=maxvert,maxhorz ",background:#00AAaaaa
     endif
 	let mapleader = "\<Space>"
     let plug_path = "~/.vim/plugged"
@@ -209,7 +210,7 @@ nmap <silent> wp <C-W><C-p>
 map <C-A> ggVG$
 map <C-X> "+x
 " 选中状态下 Ctrl+c 复制 
-set clipboard=unnamedplus " Yanks go on clipboard instead.
+set clipboard+=unnamed " Yanks go on clipboard instead.
 map <C-c> "+y
 
 "普通模式下,Ctrl+c,插入系统剪切板中的内容到光标之后
@@ -542,6 +543,18 @@ function! Do_FormatePythonSrc()
 endfunction
 
 
+if &diff
+    " let mapleader=','
+    " let g:mapleader=','
+    map ] ]c
+    map [ [c
+    map <leader>1 :diffget LOCAL<CR>
+    map <leader>2 :diffget BASE<CR>
+    map <leader>3 :diffget REMOTE<CR>
+    hi DiffAdd    ctermfg=233 ctermbg=LightGreen guifg=#003300 guibg=#DDFFDD gui=none cterm=none
+    hi DiffChange ctermbg=white  guibg=#ececec gui=none   cterm=none
+    hi DiffText   ctermfg=233  ctermbg=yellow  guifg=#000033 guibg=#DDDDFF gui=none cterm=none
+endif
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -645,6 +658,7 @@ let g:rainbow_conf = {
 
 Plug 'jiangmiao/auto-pairs'
 let g:AutoPairsFlyMode=1
+let g:AutoPairsShortcutBackInsert='<M-b>'
 
 
 
@@ -797,8 +811,15 @@ let g:UltiSnipsJumpBackwardTrigger = "<c-k>"
 " for markdown
 Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
 Plug 'mzlogin/vim-markdown-toc', {'for': 'markdown'}
-" set conceallevel=1
+Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
+let g:instant_markdown_slow = 1
+let g:instant_markdown_autostart = 0
+map <F4> :InstantMarkdownPreview<CR>
+set conceallevel=1
+set concealcursor = "nc"
 let g:vim_markdown_conceal = 0
+let g:vim_markdown_folding_disabled=1
+let g:vim_markdown_math=1
 let g:vim_markdown_folding_disabled = 0
 let g:vim_markdown_toc_autofit = 1
 let g:vmt_cycle_list_item_markers = 1
@@ -934,18 +955,18 @@ Plug 'hotoo/pangu.vim'
 " map K <Plug>(expand_region_expand)
 " map - <Plug>(expand_region_shrink)
 
-" Plug 'xolox/vim-misc'
-" Plug 'xolox/vim-session'
-" let g:session_directory='./'
-" let g:session_default_name='.session'
-" let g:session_lock_enabled=0
-" if has('gui_running')
-    " let g:session_autoload='no'
-    " let g:session_autosave='no'
-" else
-    " let g:session_autoload='yes'
-    " let g:session_autosave='yes'
-" endif
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-session'
+let g:session_directory='./'
+let g:session_default_name='.session'
+let g:session_lock_enabled=0
+if has('gui_running')
+    let g:session_autoload='no'
+    let g:session_autosave='no'
+else
+    let g:session_autoload='yes'
+    let g:session_autosave='yes'
+endif
 
 " Plug 'vim-scripts/fcitx.vim'
 call plug#end()
