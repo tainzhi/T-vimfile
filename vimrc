@@ -549,9 +549,9 @@ if &diff
     " let g:mapleader=','
     map ] ]c
     map [ [c
-    map <leader>1 :diffget LOCAL<CR>
-    map <leader>2 :diffget BASE<CR>
-    map <leader>3 :diffget REMOTE<CR>
+    map <feader>l :diffget LOCAL<CR>
+    map <leader>b :diffget BASE<CR>
+    map <leader>r :diffget REMOTE<CR>
     hi DiffAdd    ctermfg=233 ctermbg=LightGreen guifg=#003300 guibg=#DDFFDD gui=none cterm=none
     hi DiffChange ctermbg=white  guibg=#ececec gui=none   cterm=none
     hi DiffText   ctermfg=233  ctermbg=yellow  guifg=#000033 guibg=#DDDDFF gui=none cterm=none
