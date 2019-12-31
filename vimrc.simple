@@ -155,17 +155,6 @@ nmap <silent> wb <C-W><C-b>
 nmap <silent> wp <C-W><C-p>
 
 
-map <C-A> ggVG$
-map <C-X> "+x
-" 选中状态下 Ctrl+c 复制 
-map <C-c> "+y
-
-"普通模式下,Ctrl+c,插入系统剪切板中的内容到光标之后
-noremap <C-V> "+p
-"选中模式下,Ctrl+c,插入系统剪切板中的内容到光标之前
-vnoremap <C-V> "+P
-"插入模式下,Ctrl+c,插入系统剪切板中的内容到光标之后
-inoremap <C-V> <esc>"+pa
 " copy to clipboard in vim of Bash On windows, WSL
 if !has("clipboard") && executable("clip.exe")
     vmap <C-c> y:new ~/.vimbuffer<CR>VGp:x<CR> \| :!cat ~/.vimbuffer \| clip.exe <CR><CR>
@@ -213,14 +202,30 @@ if has("win32")
     nnoremap <leader>rs :exec 'source ~/vimfiles/vimrc'<CR>
     nnoremap <leader>rt :exec 'e ~/vimfiles/vimrc'<CR>
     nnoremap <leader>rc :silent ! cd ~/vimfile/ && git commit ~/vimfile/vimrc -v <CR>
+    map <C-A> ggVG$
+    map <C-X> "+x
+    map <C-C> "+y
+    map <C-V> <esc>"+pa
 elseif has('mac')
     if has('gui_running')
         set macseta
         set guifont=Andale\ Mono:h18
         set guioptions=M    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
                             " this flag must be added before :syntax and :filetype
+        " 终端下，command键被item2捕获，无法传递到vim，所以使用ctrl
+        map <D-a> ggVG$
+        map <D-x> "+x
+        set clipboard+=unnamed " Yanks go on clipboard instead.
+        map <D-c> "+y
+        map <D-v> <esc>"+pa
     else
         set noantialias
+        " 终端下，command键被item2捕获，无法传递到vim，所以使用ctrl
+        map <C-a> ggVG$
+        map <C-x> "+x
+        set clipboard+=unnamed " Yanks go on clipboard instead.
+        map <C-c> "+y
+        map <C-v> <esc>"+pa
     endif
     " Operations to vimrc
     nnoremap <leader>rs :exec 'source ~/vimfiles/vimrc'<CR>
@@ -247,4 +252,8 @@ else
     nnoremap <leader>rs :exec 'source ~/.vim/vimrc'<CR>
     nnoremap <leader>rt :exec 'e ~/.vim/vimrc'<CR>
     nnoremap <leader>rc :silent ! cd ~/.vim/ && git commit ~/.vim/vimrc -v <CR>
+    map <C-A> ggVG$
+    map <C-X> "+x
+    map <C-C> "+y
+    map <C-V> <esc>"+pa
 endif

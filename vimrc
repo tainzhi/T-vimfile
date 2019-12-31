@@ -19,15 +19,34 @@ if has("win32")
     nnoremap <leader>rs :exec 'source ~/vimfiles/vimrc'<CR>
     nnoremap <leader>rt :exec 'e ~/vimfiles/vimrc'<CR>
     nnoremap <leader>rc :silent ! cd ~/vimfile/ && git commit ~/vimfile/vimrc -v <CR>
+    map <C-A> ggVG$
+    map <C-X> "+x
+    " 选中状态下 Ctrl+c 复制 
+    set clipboard+=unnamed " Yanks go on clipboard instead.
+    map <C-c> "+y
+    map <C-V> <esc>"+pa
 elseif has('mac')
     if has('gui_running')
         set macmeta
         set guifont=Monaco:h18
         set guioptions=M    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
                             " this flag must be added before :syntax and :filetype
+        map <D-a> ggVG$
+        map <D-x> "+x
+        " 选中状态下 Ctrl+c 复制 
+        set clipboard+=unnamed " Yanks go on clipboard instead.
+        map <D-c> "+y
+        map <D-v> <esc>"+pa
     else
         " set noantialias
         " set fuoptions=maxvert,maxhorz ",background:#00AAaaaa
+        " 终端下，command键被item2捕获，无法传递到vim，所以使用ctrl
+        map <C-a> ggVG$
+        map <C-x> "+x
+        " 选中状态下 Ctrl+c 复制 
+        set clipboard+=unnamed " Yanks go on clipboard instead.
+        map <C-c> "+y
+        map <C-v> <esc>"+pa
     endif
 	let mapleader = "\<Space>"
     let plug_path = "~/.vim/plugged"
@@ -57,6 +76,12 @@ else
     nnoremap <leader>rs :exec 'source ~/.vim/vimrc'<CR>
     nnoremap <leader>rt :exec 'e ~/.vim/vimrc'<CR>
     nnoremap <leader>rc :silent ! cd ~/.vim/ && git commit ~/.vim/vimrc -v <CR>
+    map <C-A> ggVG$
+    map <C-X> "+x
+    " 选中状态下 Ctrl+c 复制 
+    set clipboard+=unnamed " Yanks go on clipboard instead.
+    map <C-c> "+y
+    map <C-V> <esc>"+pa
 endif
 
 set nocompatible               " be iMproved
@@ -207,19 +232,6 @@ nmap <silent> wt <C-W><C-t>
 nmap <silent> wb <C-W><C-b>
 nmap <silent> wp <C-W><C-p>
 
-
-map <C-A> ggVG$
-map <C-X> "+x
-" 选中状态下 Ctrl+c 复制 
-set clipboard+=unnamed " Yanks go on clipboard instead.
-map <C-c> "+y
-
-"普通模式下,Ctrl+c,插入系统剪切板中的内容到光标之后
-noremap <C-V> "+p
-"选中模式下,Ctrl+c,插入系统剪切板中的内容到光标之前
-vnoremap <C-V> "+P
-"插入模式下,Ctrl+c,插入系统剪切板中的内容到光标之后
-inoremap <C-V> <esc>"+pa
 " copy to clipboard in vim of Bash On windows, WSL
 if !has('win32') && has("clipboard") && executable("clip.exe")
     vmap <C-c> y:new ~/.vimbuffer<CR>VGp:x<CR> \| :!start cat ~/.vimbuffer \| clip.exe <CR><CR>
@@ -549,7 +561,7 @@ if &diff
     " let g:mapleader=','
     map ] ]c
     map [ [c
-    map <feader>l :diffget LOCAL<CR>
+    map <leader>l :diffget LOCAL<CR>
     map <leader>b :diffget BASE<CR>
     map <leader>r :diffget REMOTE<CR>
     hi DiffAdd    ctermfg=233 ctermbg=LightGreen guifg=#003300 guibg=#DDFFDD gui=none cterm=none
@@ -714,9 +726,8 @@ let g:tlTokenList = ['fixme', 'todo']
 
 
 Plug 'Lokaltog/vim-easymotion', {'on': ['<Plug>(easymotion-s)','<Plug>(easymotion-s2)']}
-"let g:Easymotion_smartcase = 0
-"let g:Easymotion_use_upper = 1
 let g:EasyMotion_do_mapping = 0
+let g:Easymotion_smartcase = 1
 nmap <leader>s <Plug>(easymotion-s)
 nmap <leader>ss <Plug>(easymotion-s2)
 
