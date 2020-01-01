@@ -945,6 +945,10 @@ map <leader>da :bufdo Bdelete<CR>
 
 Plug 'hotoo/pangu.vim'
 
+" mac下，切换输入法，方便在insert模式下ESC后返回normal模式
+Plug 'rlue/vim-barbaric'
+let g:barbaric_scope = 'window'
+
 
 " Plug 'dyng/ctrlsf.vim'
 " nmap     <leader>f <Plug>CtrlSFPrompt<CR>
@@ -979,6 +983,7 @@ else
     let g:session_autoload='yes'
     let g:session_autosave='yes'
 endif
+
 
 " Plug 'vim-scripts/fcitx.vim'
 call plug#end()
