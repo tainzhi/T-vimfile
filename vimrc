@@ -1,6 +1,6 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "  Created  : 2012-09-22 14:30:00
-"  Created  : 2012-09-22 14:30:00
+"  Modified : 2020-03-16 22:23:16
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has("win32")
     if has('gui_running')
@@ -19,34 +19,34 @@ if has("win32")
     nnoremap <leader>rs :exec 'source ~/vimfiles/vimrc'<CR>
     nnoremap <leader>rt :exec 'e ~/vimfiles/vimrc'<CR>
     nnoremap <leader>rc :silent ! cd ~/vimfile/ && git commit ~/vimfile/vimrc -v <CR>
-    map <C-A> ggVG$
+    map <C-A> <esc>ggVG$
     map <C-X> "+x
     " 选中状态下 Ctrl+c 复制 
     set clipboard+=unnamed " Yanks go on clipboard instead.
     map <C-c> "+y
-    map <C-V> <esc>"+pa
+    map <C-V> <esc>"+p
 elseif has('mac')
     if has('gui_running')
         set macmeta
         set guifont=Monaco:h18
         set guioptions=M    " 不需要菜单栏和工具栏, 而且不source "$VIMRUNTIME/menu.vim"
                             " this flag must be added before :syntax and :filetype
-        map <D-a> ggVG$
+        map <D-a> <esc>ggVG$
         map <D-x> "+x
         " 选中状态下 Ctrl+c 复制 
         set clipboard+=unnamed " Yanks go on clipboard instead.
         map <D-c> "+y
-        map <D-v> <esc>"+pa
+        map <D-v> "+p
     else
         " set noantialias
         " set fuoptions=maxvert,maxhorz ",background:#00AAaaaa
         " 终端下，command键被item2捕获，无法传递到vim，所以使用ctrl
-        map <C-a> ggVG$
+        map <C-a> <esc>ggVG$
         map <C-x> "+x
         " 选中状态下 Ctrl+c 复制 
         set clipboard+=unnamed " Yanks go on clipboard instead.
         map <C-c> "+y
-        map <C-v> <esc>"+pa
+        map <C-v> "+p
     endif
 	let mapleader = "\<Space>"
     let plug_path = "~/.vim/plugged"
@@ -76,12 +76,12 @@ else
     nnoremap <leader>rs :exec 'source ~/.vim/vimrc'<CR>
     nnoremap <leader>rt :exec 'e ~/.vim/vimrc'<CR>
     nnoremap <leader>rc :silent ! cd ~/.vim/ && git commit ~/.vim/vimrc -v <CR>
-    map <C-A> ggVG$
+    map <C-A> <esc>ggVG$
     map <C-X> "+x
     " 选中状态下 Ctrl+c 复制 
     set clipboard+=unnamed " Yanks go on clipboard instead.
     map <C-c> "+y
-    map <C-V> <esc>"+pa
+    map <C-V> <esc>"+p
 endif
 
 set nocompatible               " be iMproved
@@ -827,9 +827,10 @@ Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 let g:instant_markdown_slow = 1
 let g:instant_markdown_autostart = 0
 map <F4> :InstantMarkdownPreview<CR>
-set conceallevel=1
-set concealcursor = "nc"
+set conceallevel=0
+set concealcursor = "ni"
 let g:vim_markdown_conceal = 0
+let g:vim_markdown_conceal_code_blocks = 0
 let g:vim_markdown_folding_disabled=1
 let g:vim_markdown_math=1
 let g:vim_markdown_folding_disabled = 0
@@ -986,4 +987,7 @@ endif
 
 
 " Plug 'vim-scripts/fcitx.vim'
+
+Plug 'rhysd/vim-github-actions', {'for': ['yml']}
+
 call plug#end()
