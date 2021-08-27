@@ -1,88 +1,8 @@
 Information about my vim notes, configures and plugins
 
-<!-- vim-markdown-toc GFM -->
-
-* [Configure initial](#configure-initial)
-    - [for *nix](#for-nix)
-    - [for windows](#for-windows)
-* [Support multi languages](#support-multi-languages)
-* [自定义map](#自定义map)
-* [美化插件](#美化插件)
-    - [solarized.vim](#solarizedvim)
-    - [space-vim-dark](#space-vim-dark)
-    - [rainbow_parentheses](#rainbow_parentheses)
-* [普通插件](#普通插件)
-    - [vim-plug](#vim-plug)
-    - [NERDTree](#nerdtree)
-    - [vim-surround](#vim-surround)
-    - [delimitMate](#delimitmate)
-    - [MatchTagAlways](#matchtagalways)
-    - [tabular](#tabular)
-    - [TaskkList.vim](#taskklistvim)
-    - [vim-easymotion](#vim-easymotion)
-    - [DirDiff](#dirdiff)
-    - [vim-git](#vim-git)
-    - [vim-fugitive](#vim-fugitive)
-    - [vim-sessiong](#vim-sessiong)
-    - [mru.vim](#mruvim)
-    - [vim-auto-save](#vim-auto-save)
-    - [vim-expand-region](#vim-expand-region)
-    - [vim-airline](#vim-airline)
-    - [vimim中文输入法](#vimim中文输入法)
-    - [Snippet](#snippet)
-    - [fcitx.vim](#fcitxvim)
-    - [asyncrun.vim](#asyncrunvim)
-    - [undotree](#undotree)
-    - [vim-python-pep8-indent](#vim-python-pep8-indent)
-    - [indentLine](#indentline)
-* [依赖包的插件](#依赖包的插件)
-    - [tagbar](#tagbar)
-    - [vim-latex-suite](#vim-latex-suite)
-    - [ag.vim](#agvim)
-    - [cscope](#cscope)
-    - [ale](#ale)
-    - [YouCompleteMe](#youcompleteme)
-        + [auto install(recommend)](#auto-installrecommend)
-        + [manual install](#manual-install)
-        + [使用配置](#使用配置)
-* [vim help](#vim-help)
-    - [跳转移动光标](#跳转移动光标)
-    - [插入](#插入)
-    - [删除进入Normal模式](#删除进入normal模式)
-    - [复制与寄存器](#复制与寄存器)
-    - [粘贴与寄存器](#粘贴与寄存器)
-    - [visual模式](#visual模式)
-    - [移动多行](#移动多行)
-    - [代码折叠](#代码折叠)
-    - [翻屏](#翻屏)
-    - [文件](#文件)
-    - [窗口操作](#窗口操作)
-    - [vimdiff](#vimdiff)
-    - [tab标签](#tab标签)
-    - [set autochdir](#set-autochdir)
-    - [recent old files](#recent-old-files)
-    - [mark](#mark)
-    - [vim和shell](#vim和shell)
-    - [宏](#宏)
-    - [帮助](#帮助)
-    - [setting](#setting)
-    - [替换](#替换)
-    - [查找](#查找)
-    - [vim EX mode](#vim-ex-mode)
-    - [vim tags](#vim-tags)
-    - [设置保存编码格式](#设置保存编码格式)
-    - [vim打开16进制](#vim打开16进制)
-    - [vim buffer](#vim-buffer)
-    - [加密/解密文件](#加密解密文件)
-    - [长行断行/整行](#长行断行整行)
-* [其他](#其他)
-    - [全屏快捷键](#全屏快捷键)
-
-<!-- vim-markdown-toc -->
-
 ## Configure initial
 
-### for *nix
+### for linux
 ```
 # clone recursively with vundle
 git clone https://github.com/tainzhi/Q-vimfile.git ~/.vim
@@ -96,6 +16,54 @@ vim .vim/vimrc +PlugUpdate +qall
 git clone https://github.com/tainzhi/Q-vimfile.git %userprofile%\vimfiles
 vim %userprofile%\vimfiles\vimrc +PlugUpdate +qall                     
 ```
+
+### 其他
+为了特定插件的使用，最好安转以下软件或做好配置
+#### 安转python
+为了使得vim能正常使用python，最好通过查询一下vim所支持的python版本
+在vim中使用命令`:version`，找到`-DDYNAMIC_PTTHON`相关的字段，找到python版本的库，就是该vim编译所用的python库。
+并在`~/.vimrc`中修改python路径
+```
+let g:ycm_server_python_interpreter = 'python'
+let g:ycm_python_binary_path = 'c:\Python35\python'
+```
+
+#### ctags配置，通过插件tagbar显示markdown文件预览
+无论在windows还是linux下都需要添加`~/.ctags`, 内容如下
+```
+--langdef=markdown
+--langmap=markdown:.md
+--regex-markdown=/^#{1}[ \t]*([^#]+.*)/. \1/h,headings/
+--regex-markdown=/^#{2}[ \t]*([^#]+.*)/.   \1/h,headings/
+--regex-markdown=/^#{3}[ \t]*([^#]+.*)/.     \1/h,headings/
+--regex-markdown=/^#{4}[ \t]*([^#]+.*)/.       \1/h,headings/
+--regex-markdown=/^#{5}[ \t]*([^#]+.*)/.         \1/h,headings/
+--regex-markdown=/^#{6}[ \t]*([^#]+.*)/.           \1/h,headings/
+```
+
+#### YouCompleteMe的安转
+
+[参考](https://github.com/Valloric/YouCompleteMe#windows)
+
+linux下很方便，此处省略。windows下安转略麻烦, 步骤如下
+ 
+- 1 安装python, 默认使用python3
+- 2 安装[Cmake](https://cmake.org/download/), 添加进系统变量
+- 3 安装VisualStudio Community. 安装时选择使用C++的桌面开发即可. 同时把msbuild路径添加到path系统环境变量中. 如下`C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin`
+- 4 编译并安装youcompleteme
+```
+cd %USERPROFILE%/vimfiles/plugged/YouCompleteMe
+python install.py --clang-completer
+```
+- 5 修改`%USERPROFILE%/vimfiles/vimrc`相关行如下
+```
+let g:ycm_server_python_interpreter = 'python'
+let g:ycm_python_binary_path = 'c:\Python35\python'
+```
+
+#### cscope&&ctags
+Todo:[集成2者，同时跨平台](https://github.com/ruben2020/codequery)
+那么我就要修改得cscope相关配置了
 
 ## Support multi languages
 - YouCompleteMe
@@ -270,6 +238,86 @@ nnoremap // :TComment<CR>   注释
 autocmd BufWritePre,FileWritePost,BufReadPost,FileReadPost *.cc,*.c,*.cpp,*.h,*.tex,*py call Do_Map()
 autocmd BufNewFile *.sh,*.txt,*.[ch],*.cpp,*.cc,*.python,*.java,*.py exec ":call Do_Set_Title()" 
 ```
+新语言设置缩进样式
+```
+autocmd  BufRead,BufNewFile {*.toml}                                    setl ft=toml tabstop=2 softtabstop=2 shiftwidth=2 expandtab smarttab
+
+
+
+```
+
+
+
+
+## 依赖包的插件
+### tagbar
+[tagbar](https://github.com/majutsushi/tagbar)
+**依赖包：ctags**
+
+tagbar按作用域归类不同的标签。按名字空间 n_foo、类 Foo 进行归类,在内部有声明、有定义;
+显示标签类型。名字空间、类、函数等等;
+显示完整函数原型;
+图形化显示共有成员(+)、私有成员(-)、保护成员(#);
+**Usage**
+```
+s       Toggle sort order between name and file order
+```
+
+### vim-latex-suite
+[vim-latex-suite](https://github.com/gerw/vim-latex-suite)
+
+
+### ag.vim
+[ag.vim](https://github.com/rking/ag.vim)
+
+[vim-action-ag](https://github.com/Chun-Yang/vim-action-ag): 使得普通模式的搜索(按*键)即可全工程搜索
+```
+:Ag str
+:LAg str        search in quickfix
+```
+**依赖包: [ag](https://github.com/ggreer/the_silver_searcher)**
+
+### cscope
+[autoload_cscope](https://github.com/tainzhi/autoload_cscope.vim)
+
+依赖包: cscope. zhe
+
+**usage**:
+```
+set nocst    "在cscope数据库添加成功的时候不在命令栏现实提示信息.
+set cspc=6 "cscope的查找结果在格式上最多显示6层目录.
+let g:autocscope_menus=0 "关闭autocscope插件的快捷健映射.防止和我们定义的快捷键冲突.
+"个人cscope的快捷键映射
+""cscope相关的快捷键映射
+"s:查找即查找C语言符号出现的地方
+nmap fs :cs find s <C-R>=expand("<cword>")<CR><CR>
+"g:查找函数、宏、枚举等定义的位置
+nmap fg :cs find g <C-R>=expand("<cword>")<CR><CR>
+"c:查找光标下的函数被调用的地方
+nmap fc :cs find c <C-R>=expand("<cword>")<CR><CR>
+""t: 查找指定的字符串出现的地方
+nmap ft :cs find t <C-R>=expand("<cword>")<CR><CR>
+"e:egrep模式查找,相当于egrep功能
+nmap fe :cs find e <C-R>=expand("<cword>")<CR><CR>
+""f: 查找文件名,相当于lookupfile
+nmap fn :cs find f <C-R>=expand("<cfile>")<CR><CR>
+""f: 查找文件名,相当于lookupfile
+nmap ff :cs find f <C-R>=expand("<cword>")<CR><CR>
+"i: 查找当前文件名出现过的地方
+nmap fi :cs find i <C-R>=expand("<cfile>")<CR><CR>
+""d: 查找本当前函数调用的函数
+nmap fd :cs find d <C-R>=expand("<cword>")<CR><CR>
+```
+### ale
+
+[ale](https://github.com/w0rp/ale), a asynchonous syntax checker
+
+```
+# moving between warnings and errors quickly.
+nmap <silent> <C-p> <Plug>(ale_previous_wrap)
+nmap <silent> <C-n> <Plug>(ale_next_wrap)
+```
+
 
 
 
