@@ -6,8 +6,14 @@
 scoop install ripgrep
 choco install mingw
 
-# install packer.nvim to $HOME/
+# install packer.nvim to $HOME\AppData\Local\nvim-data\site\pack\packer\start\packer.nvim
 git clone https://github.com/wbthomason/packer.nvim "$env:LOCALAPPDATA\nvim-data\site\pack\packer\start\packer.nvim"
+
+# clone config to $HOME\AppData\Local\nvim
+git clone https://github.com/tainzhi/Q-vimfile "$env:LOCALAPPDATA\nvim"
+
+# launch nvim
+$ nvim +'hi NormalFloat guibg=#1e222a' +PackerSync
 ```
 #### plugin manager: [packer.nvim](https://github.com/wbthomason/packer.nvim#notices)
 
