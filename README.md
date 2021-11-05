@@ -1,6 +1,6 @@
 ## install && sync
 [参考:NvChad](https://nvchad.netlify.app/getting-started/setup)
-- windows
+- windows powershell
 ```shell
 # 依赖程序
 scoop install ripgrep
