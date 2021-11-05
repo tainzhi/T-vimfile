@@ -5,9 +5,6 @@ if not present then
    return
 end
 
--- function executed for top right close button in bufferline
-vim.cmd "function! NvChad_bufferline_quitvim(a,b,c,d) \n qa \n endfunction"
-
 bufferline.setup {
    options = {
       offsets = { { filetype = "NvimTree", text = "", padding = 1 } },
@@ -61,6 +58,16 @@ bufferline.setup {
          gui = "bold",
       },
       buffer_visible = {
+         guifg = colors.light_grey,
+         guibg = colors.black2,
+      },
+
+      -- for diagnostics = "nvim_lsp"
+      error = {
+         guifg = colors.light_grey,
+         guibg = colors.black2,
+      },
+      error_diagnostic = {
          guifg = colors.light_grey,
          guibg = colors.black2,
       },

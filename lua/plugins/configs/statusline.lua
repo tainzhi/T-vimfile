@@ -42,17 +42,25 @@ local icon_styles = {
    },
 }
 
-local user_statusline_style = require("core.utils").load_config().ui.plugin.statusline.style
+local config = require("core.utils").load_config().plugins.options.statusline
+-- statusline style
+local user_statusline_style = config.style
 local statusline_style = icon_styles[user_statusline_style]
+-- if show short statusline on small screens
+local shortline = config.shortline == false and true
 
 -- Initialize the components table
 local components = {
-   left = { active = {}, inactive = {} },
-   mid = { active = {}, inactive = {} },
-   right = { active = {}, inactive = {} },
+   active = {},
+   inactive = {},
 }
 
-components.left.active[1] = {
+-- Initialize left, mid and right
+table.insert(components.active, {})
+table.insert(components.active, {})
+table.insert(components.active, {})
+
+components.active[1][1] = {
    provider = statusline_style.main_icon,
 
    hl = {
@@ -62,29 +70,23 @@ components.left.active[1] = {
 
    right_sep = { str = statusline_style.right, hl = {
       fg = colors.nord_blue,
-      bg = colors.one_bg2,
+      bg = colors.lightbg,
    } },
 }
 
-components.left.active[2] = {
-   provider = statusline_style.right,
-
-   hl = {
-      fg = colors.one_bg2,
-      bg = colors.lightbg,
-   },
-}
-
-components.left.active[3] = {
+components.active[1][2] = {
    provider = function()
       local filename = vim.fn.expand "%:t"
       local extension = vim.fn.expand "%:e"
       local icon = require("nvim-web-devicons").get_icon(filename, extension)
       if icon == nil then
-         icon = ""
+         icon = " "
          return icon
       end
-      return icon .. " " .. filename .. " "
+      return " " .. icon .. " " .. filename .. " "
+   end,
+   enabled = shortline or function(winid)
+      return vim.api.nvim_win_get_width(winid) > 70
    end,
    hl = {
       fg = colors.white,
@@ -94,23 +96,30 @@ components.left.active[3] = {
    right_sep = { str = statusline_style.right, hl = { fg = colors.lightbg, bg = colors.lightbg2 } },
 }
 
-components.left.active[4] = {
+components.active[1][3] = {
    provider = function()
       local dir_name = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
       return "  " .. dir_name .. " "
+   end,
+
+   enabled = shortline or function(winid)
+      return vim.api.nvim_win_get_width(winid) > 80
    end,
 
    hl = {
       fg = colors.grey_fg2,
       bg = colors.lightbg2,
    },
-   right_sep = { str = statusline_style.right, hi = {
-      fg = colors.lightbg2,
-      bg = colors.statusline_bg,
-   } },
+   right_sep = {
+      str = statusline_style.right,
+      hi = {
+         fg = colors.lightbg2,
+         bg = colors.statusline_bg,
+      },
+   },
 }
 
-components.left.active[5] = {
+components.active[1][4] = {
    provider = "git_diff_added",
    hl = {
       fg = colors.grey_fg2,
@@ -119,7 +128,7 @@ components.left.active[5] = {
    icon = " ",
 }
 -- diffModfified
-components.left.active[6] = {
+components.active[1][5] = {
    provider = "git_diff_changed",
    hl = {
       fg = colors.grey_fg2,
@@ -128,7 +137,7 @@ components.left.active[6] = {
    icon = "   ",
 }
 -- diffRemove
-components.left.active[7] = {
+components.active[1][6] = {
    provider = "git_diff_removed",
    hl = {
       fg = colors.grey_fg2,
@@ -137,16 +146,17 @@ components.left.active[7] = {
    icon = "  ",
 }
 
-components.left.active[8] = {
+components.active[1][7] = {
    provider = "diagnostic_errors",
    enabled = function()
       return lsp.diagnostics_exist "Error"
    end,
+
    hl = { fg = colors.red },
    icon = "  ",
 }
 
-components.left.active[9] = {
+components.active[1][8] = {
    provider = "diagnostic_warnings",
    enabled = function()
       return lsp.diagnostics_exist "Warning"
@@ -155,7 +165,7 @@ components.left.active[9] = {
    icon = "  ",
 }
 
-components.left.active[10] = {
+components.active[1][9] = {
    provider = "diagnostic_hints",
    enabled = function()
       return lsp.diagnostics_exist "Hint"
@@ -164,7 +174,7 @@ components.left.active[10] = {
    icon = "  ",
 }
 
-components.left.active[11] = {
+components.active[1][10] = {
    provider = "diagnostic_info",
    enabled = function()
       return lsp.diagnostics_exist "Information"
@@ -173,7 +183,7 @@ components.left.active[11] = {
    icon = "  ",
 }
 
-components.mid.active[1] = {
+components.active[2][1] = {
    provider = function()
       local Lsp = vim.lsp.util.get_progress_messages()[1]
       if Lsp then
@@ -203,10 +213,13 @@ components.mid.active[1] = {
       end
       return ""
    end,
+   enabled = shortline or function(winid)
+      return vim.api.nvim_win_get_width(winid) > 80
+   end,
    hl = { fg = colors.green },
 }
 
-components.right.active[1] = {
+components.active[3][1] = {
    provider = function()
       if next(vim.lsp.buf_get_clients()) ~= nil then
          return "  LSP"
@@ -214,68 +227,25 @@ components.right.active[1] = {
          return ""
       end
    end,
+   enabled = shortline or function(winid)
+      return vim.api.nvim_win_get_width(winid) > 70
+   end,
    hl = { fg = colors.grey_fg2, bg = colors.statusline_bg },
 }
 
-components.right.active[2] = {
-   -- taken from: https://github.com/hoob3rt/lualine.nvim/blob/master/lua/lualine/components/branch.lua
-   provider = function()
-      local git_branch = ""
-
-      -- first try with gitsigns
-      local gs_dict = vim.b.gitsigns_status_dict
-      if gs_dict then
-         git_branch = (gs_dict.head and #gs_dict.head > 0 and gs_dict.head) or git_branch
-      else
-         -- path seperator
-         local branch_sep = package.config:sub(1, 1)
-         -- get file dir so we can search from that dir
-         local file_dir = vim.fn.expand "%:p:h" .. ";"
-         -- find .git/ folder genaral case
-         local git_dir = vim.fn.finddir(".git", file_dir)
-         -- find .git file in case of submodules or any other case git dir is in
-         -- any other place than .git/
-         local git_file = vim.fn.findfile(".git", file_dir)
-         -- for some weird reason findfile gives relative path so expand it to fullpath
-         if #git_file > 0 then
-            git_file = vim.fn.fnamemodify(git_file, ":p")
-         end
-         if #git_file > #git_dir then
-            -- separate git-dir or submodule is used
-            local file = io.open(git_file)
-            git_dir = file:read()
-            git_dir = git_dir:match "gitdir: (.+)$"
-            file:close()
-            -- submodule / relative file path
-            if git_dir:sub(1, 1) ~= branch_sep and not git_dir:match "^%a:.*$" then
-               git_dir = git_file:match "(.*).git" .. git_dir
-            end
-         end
-
-         if #git_dir > 0 then
-            local head_file = git_dir .. branch_sep .. "HEAD"
-            local f_head = io.open(head_file)
-            if f_head then
-               local HEAD = f_head:read()
-               f_head:close()
-               local branch = HEAD:match "ref: refs/heads/(.+)$"
-               if branch then
-                  git_branch = branch
-               else
-                  git_branch = HEAD:sub(1, 6)
-               end
-            end
-         end
-      end
-      return (git_branch ~= "" and "  " .. git_branch) or git_branch
+components.active[3][2] = {
+   provider = "git_branch",
+   enabled = shortline or function(winid)
+      return vim.api.nvim_win_get_width(winid) > 70
    end,
    hl = {
       fg = colors.grey_fg2,
       bg = colors.statusline_bg,
    },
+   icon = "  ",
 }
 
-components.right.active[3] = {
+components.active[3][3] = {
    provider = " " .. statusline_style.left,
    hl = {
       fg = colors.one_bg2,
@@ -313,7 +283,7 @@ local chad_mode_hl = function()
    }
 end
 
-components.right.active[4] = {
+components.active[3][4] = {
    provider = statusline_style.left,
    hl = function()
       return {
@@ -323,7 +293,7 @@ components.right.active[4] = {
    end,
 }
 
-components.right.active[5] = {
+components.active[3][5] = {
    provider = statusline_style.vi_mode_icon,
    hl = function()
       return {
@@ -333,38 +303,47 @@ components.right.active[5] = {
    end,
 }
 
-components.right.active[6] = {
+components.active[3][6] = {
    provider = function()
       return " " .. mode_colors[vim.fn.mode()][1] .. " "
    end,
    hl = chad_mode_hl,
 }
 
-components.right.active[7] = {
+components.active[3][7] = {
    provider = statusline_style.left,
+   enabled = shortline or function(winid)
+      return vim.api.nvim_win_get_width(winid) > 90
+   end,
    hl = {
       fg = colors.grey,
       bg = colors.one_bg,
    },
 }
 
-components.right.active[8] = {
+components.active[3][8] = {
    provider = statusline_style.left,
+   enabled = shortline or function(winid)
+      return vim.api.nvim_win_get_width(winid) > 90
+   end,
    hl = {
       fg = colors.green,
       bg = colors.grey,
    },
 }
 
-components.right.active[9] = {
+components.active[3][9] = {
    provider = statusline_style.position_icon,
+   enabled = shortline or function(winid)
+      return vim.api.nvim_win_get_width(winid) > 90
+   end,
    hl = {
       fg = colors.black,
       bg = colors.green,
    },
 }
 
-components.right.active[10] = {
+components.active[3][10] = {
    provider = function()
       local current_line = vim.fn.line "."
       local total_line = vim.fn.line "$"
@@ -378,6 +357,10 @@ components.right.active[10] = {
       return " " .. result .. "%% "
    end,
 
+   enabled = shortline or function(winid)
+      return vim.api.nvim_win_get_width(winid) > 90
+   end,
+
    hl = {
       fg = colors.green,
       bg = colors.one_bg,
@@ -385,7 +368,9 @@ components.right.active[10] = {
 }
 
 require("feline").setup {
-   default_bg = colors.statusline_bg,
-   default_fg = colors.fg,
+   colors = {
+      bg = colors.statusline_bg,
+      fg = colors.fg,
+   },
    components = components,
 }
