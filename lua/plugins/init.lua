@@ -7,14 +7,14 @@ end
 local use = packer.use
 
 return packer.startup(function()
-   local status = require("core.utils").load_config().plugins.status
+   local status = require("core.config").plugins.status
 
    -- FUNCTION: override_req, use `chadrc` plugin config override if present
    -- name = name inside `default_config` / `chadrc`
    -- default_req = run this if 'name' does not exist in `default_config` / `chadrc`
    -- if override or default_req start with `(`, then strip that and assume override calls a function, not a whole file
    local override_req = function(name, default_req)
-      local override = require("core.utils").load_config().plugins.default_plugin_config_replace[name]
+      local override = require("core.config").plugins.default_plugin_config_replace[name]
       local result
 
       if override == nil then

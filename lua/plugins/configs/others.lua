@@ -1,6 +1,6 @@
 local M = {}
 
-local chadrc_config = require("core.utils").load_config()
+local config = require("core.config")
 M.autopairs = function()
    local present1, autopairs = pcall(require, "nvim-autopairs")
    local present2, cmp_autopairs = pcall(require, "nvim-autopairs.completion.cmp")
@@ -18,8 +18,8 @@ end
 
 M.better_escape = function()
    require("better_escape").setup {
-      mapping = chadrc_config.mappings.plugins.better_escape.esc_insertmode,
-      timeout = chadrc_config.plugins.options.esc_insertmode_timeout,
+      mapping = config.mappings.plugins.better_escape.esc_insertmode,
+      timeout = config.plugins.options.esc_insertmode_timeout,
    }
 end
 
@@ -80,7 +80,7 @@ M.luasnip = function()
       updateevents = "TextChanged,TextChangedI",
    }
 
-   require("luasnip/loaders/from_vscode").load { paths = chadrc_config.plugins.options.luasnip.snippet_path }
+   require("luasnip/loaders/from_vscode").load { paths = config.plugins.options.luasnip.snippet_path }
    require("luasnip/loaders/from_vscode").load()
 end
 

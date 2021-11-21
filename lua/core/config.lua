@@ -18,7 +18,7 @@ M.options = {
    number = true,
    -- relative numbers in normal mode tool at the bottom of options.lua
    numberwidth = 2,
-   relativenumber = false,
+   relativenumber = true,
    expandtab = true,
    shiftwidth = 2,
    smartindent = true,

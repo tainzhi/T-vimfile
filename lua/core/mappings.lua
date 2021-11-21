@@ -1,7 +1,6 @@
 local utils = require "core.utils"
-local hooks = require "core.hooks"
+local config = require "core.config"
 
-local config = utils.load_config()
 local map = utils.map
 
 local maps = config.mappings
@@ -69,7 +68,7 @@ M.misc = function()
          map(
             "n",
             maps.theme_toggler,
-            ":lua require('nvchad').toggle_theme(require('core.utils').load_config().ui.theme_toggler) <CR>"
+            ":lua require('nvchad').toggle_theme(require('core.config').ui.theme_toggler) <CR>"
          )
       end
    end
@@ -116,7 +115,6 @@ M.misc = function()
    non_config_mappings()
    optional_mappings()
    required_mappings()
-   hooks.run("setup_mappings", map)
 end
 
 -- below are all plugin related mappings

@@ -1,5 +1,3 @@
-local overrides = require("core.hooks").createOverrides "lsp"
-
 local function on_attach(_, bufnr)
    local function buf_set_keymap(...)
       vim.api.nvim_buf_set_keymap(bufnr, ...)
@@ -62,18 +60,17 @@ lspSymbol("Information", "")
 lspSymbol("Hint", "")
 lspSymbol("Warning", "")
 
-local lsp_publish_diagnostics_options = overrides.get("publish_diagnostics", {
-   virtual_text = {
-      prefix = "",
-      spacing = 0,
-   },
-   signs = true,
-   underline = true,
-   update_in_insert = false, -- update diagnostics insert mode
-})
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
    vim.lsp.diagnostic.on_publish_diagnostics,
-   lsp_publish_diagnostics_options
+   {
+      virtual_text = {
+         prefix = "",
+         spacing = 0,
+      },
+      signs = true,
+      underline = true,
+      update_in_insert = false, -- update diagnostics insert mode
+   }
 )
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
    border = "single",
@@ -96,7 +93,7 @@ end
 
 -- requires a file containing user's lspconfigs
 
-local addlsp_confs = require("core.utils").load_config().plugins.options.lspconfig.setup_lspconf
+local addlsp_confs = require("core.config").plugins.options.lspconfig.setup_lspconf
 
 if string.len(addlsp_confs) ~= 0 then
    require(addlsp_confs).setup_lsp(on_attach, capabilities)

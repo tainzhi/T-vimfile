@@ -21,7 +21,7 @@ local white = colors.white
 local yellow = colors.yellow
 local one_bg3 = colors.one_bg3
 
-local ui = require("core.utils").load_config().ui
+local ui = require("core.config").ui
 
 -- Define bg color
 -- @param group Group

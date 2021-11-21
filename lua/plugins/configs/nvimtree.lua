@@ -1,5 +1,5 @@
 local present, nvimtree = pcall(require, "nvim-tree")
-local git_status = require("core.utils").load_config().plugins.options.nvimtree.enable_git
+local git_status = require("core.config").plugins.options.nvimtree.enable_git
 
 if not present then
    return

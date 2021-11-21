@@ -42,7 +42,7 @@ local icon_styles = {
    },
 }
 
-local config = require("core.utils").load_config().plugins.options.statusline
+local config = require("core.config").plugins.options.statusline
 -- statusline style
 local user_statusline_style = config.style
 local statusline_style = icon_styles[user_statusline_style]
