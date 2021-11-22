@@ -82,7 +82,7 @@ M.plugins = {
          enable_git = 0,
       },
       luasnip = {
-         snippet_path = {},
+         snippet_path = {'../../extra/snippets'},
       },
       statusline = { -- statusline related options
          -- these are filetypes, not pattern matched

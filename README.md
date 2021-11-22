@@ -39,6 +39,9 @@ git clone https://github.com/wbthomason/packer.nvim "$env:LOCALAPPDATA\nvim-data
 
 Neovim会查看`runtimepath`目录下的lua文件，也会查看`runtimepath/lua/?.lua`和`runtimepth/lua/?/init.lua`
 
+## snippets
+插件 [LuaSnip](https://github.com/L3MON4D3/LuaSnip/blob/master/Examples/snippets.lua) 可以识别 [vscode style snippets](https://code.visualstudio.com/docs/editor/userdefinedsnippets); 也集成了通用的[friendly snippets](https://github.com/rafamadriz/friendly-snippets/blob/main/README.md)
+
 ## 参考
 [菜鸟：lua教程](https://www.runoob.com/lua/lua-coroutine.html)
 [viml和lua相互引用示例](https://teukka.tech/luanvim.html)
@@ -91,4 +94,3 @@ https://neovim.io/doc/user/quickref.html
 
 :h tutor
 :h autocmd
-:
