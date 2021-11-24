@@ -262,5 +262,7 @@ return packer.startup(function()
       end,
    }
 
-   require("core.hooks").run("install_plugins", use)
+   use {
+      "../../extra/plugins/logtool.nvim"
+   }
 end)
