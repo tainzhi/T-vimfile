@@ -40,7 +40,33 @@ git clone https://github.com/wbthomason/packer.nvim "$env:LOCALAPPDATA\nvim-data
 Neovim会查看`runtimepath`目录下的lua文件，也会查看`runtimepath/lua/?.lua`和`runtimepth/lua/?/init.lua`
 
 ## snippets
-插件 [LuaSnip](https://github.com/L3MON4D3/LuaSnip/blob/master/Examples/snippets.lua) 可以识别 [vscode style snippets](https://code.visualstudio.com/docs/editor/userdefinedsnippets); 也集成了通用的[friendly snippets](https://github.com/rafamadriz/friendly-snippets/blob/main/README.md)
+- 插件 [LuaSnip](https://github.com/L3MON4D3/LuaSnip/blob/master/Examples/snippets.lua) 可以识别 [vscode style snippets](https://code.visualstudio.com/docs/editor/userdefinedsnippets); 也集成了通用的[friendly snippets](https://github.com/rafamadriz/friendly-snippets/blob/main/README.md)
+- snippets可以处理 copyboard 中的数据
+
+## 自定义插件
+
+自定义插件目录在 `extra/plugins/logtool.nvim`, 那么通过 Packer.nvim 使用为 `use "~/AppData/Local/nvim/extra/plugins/logtool.nvim"`。必须使用绝对路径，相对路径无法识别，暂未找到解决办法。
+
+执行 VimL 中的函数
+```viml
+:exec LuaDoItVimL()
+```
+执行 VimL 中的 lua block
+```
+:luado lua_do_it_lua()
+
+:[range]luado {body}    每一行执行 lua function
+```
+执行 lua 中的global 函数
+```lua
+:lua doit()
+```
+debugging: 快速调试lua文件，修改后快速加载到 embedded lua interpreter
+```
+:luafile %
+```
+
+- [参考:nvim-example-lua-plugin](https://github.com/jacobsimpson/nvim-example-lua-plugin)
 
 ## 参考
 [菜鸟：lua教程](https://www.runoob.com/lua/lua-coroutine.html)

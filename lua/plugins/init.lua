@@ -262,7 +262,7 @@ return packer.startup(function()
       end,
    }
 
-   use {
-      "../../extra/plugins/logtool.nvim"
-   }
+   -- use "../../extra/plugins/logtool.nvim"
+   use "~/AppData/Local/nvim/extra/plugins/logtool.nvim"
+   
 end)
