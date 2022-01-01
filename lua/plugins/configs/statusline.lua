@@ -343,7 +343,28 @@ components.active[3][9] = {
    },
 }
 
+-- fileformat | fileencoding
 components.active[3][10] = {
+   provider = function ()
+      local filename = (vim.o.fileformat):upper()
+      local fileencoding = (vim.o.enc):upper()
+      return " " .. filename .. "|" .. fileencoding .. " "
+   end,
+   hl = {
+      fg = colors.grey_fg2,
+      bg = colors.statusline_bg,
+   },
+}
+
+components.active[3][11] = {
+   provider = statusline_style.position_icon,
+   hl = {
+      fg = colors.black,
+      bg = colors.green,
+   },
+}
+
+components.active[3][12] = {
    provider = function()
       local current_line = vim.fn.line "."
       local total_line = vim.fn.line "$"
