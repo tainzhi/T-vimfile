@@ -80,8 +80,8 @@ M.luasnip = function()
       updateevents = "TextChanged,TextChangedI",
    }
 
-   require("luasnip/loaders/from_vscode").load { paths = config.plugins.options.luasnip.snippet_path }
-   require("luasnip/loaders/from_vscode").load()
+   require("luasnip.loaders.from_vscode").load { paths = "C:\\Users\\qiufq1\\AppData\\Local\\nvim\\snippets"}
+   require("luasnip.loaders.from_vscode").load()
 end
 
 M.signature = function()

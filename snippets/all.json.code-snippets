@@ -1,0 +1,11 @@
+{
+    "engine analyze": {
+        "prefix": "auth",
+        "body": [
+            "Author: tainzhi",
+            "MaiL:   QFQ61@QQ.COM",
+            "$0"
+        ],
+        "description": "author infomation"
+    },
+}
