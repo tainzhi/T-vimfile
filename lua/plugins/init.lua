@@ -35,13 +35,8 @@ return packer.startup(function()
    -- this is arranged on the basis of when a plugin starts
 
    -- this is the nvchad core repo containing utilities for some features like theme swticher, no need to lazy load
-   use {
-      "Nvchad/extensions",
-   }
-
-   use {
-      "nvim-lua/plenary.nvim",
-   }
+   use "Nvchad/extensions"
+   use "nvim-lua/plenary.nvim"
 
    use {
       "wbthomason/packer.nvim",
@@ -63,7 +58,7 @@ return packer.startup(function()
    }
 
    use {
-      "famiu/feline.nvim",
+      "feline-nvim/feline.nvim",
       disable = not status.feline,
       after = "nvim-web-devicons",
       config = override_req("feline", "plugins.configs.statusline"),
@@ -95,7 +90,6 @@ return packer.startup(function()
 
    use {
       "nvim-treesitter/nvim-treesitter",
-      branch = "0.5-compat",
       event = "BufRead",
       config = override_req("nvim_treesitter", "plugins.configs.treesitter"),
    }
@@ -262,7 +256,26 @@ return packer.startup(function()
       end,
    }
 
-   -- use "../../extra/plugins/logtool.nvim"
-   use "~/AppData/Local/nvim/extra/plugins/logtool.nvim"
+   use {
+      "blackCauldron7/surround.nvim",
+      event = "InsertEnter",
+      config = function()
+         require"surround".setup {mappings_style = "surround"}
+      end
+   }
+
+   use {
+      "ms-jpq/chadtree",
+      branch = "chad",
+      run = "python -m chadtree deps"
+   }
+
+   use {
+      'phaazon/hop.nvim',
+      branch = 'v1', -- optional but strongly recommended
+      config = override_req("hop", "plugins.configs.hop"),
+   }
+
+
    
 end)

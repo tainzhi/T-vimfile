@@ -12,7 +12,7 @@ vim.o.termguicolors = true
 g.nvim_tree_add_trailing = 0 -- append a trailing slash to folder names
 g.nvim_tree_git_hl = git_status
 g.nvim_tree_gitignore = 0
-g.nvim_tree_highlight_opened_files = 0
+g.nvim_tree_highlight_opened_files = 3
 g.nvim_tree_indent_markers = 1
 g.nvim_tree_ignore = { ".git", "node_modules", ".cache" }
 g.nvim_tree_quit_on_open = 0 -- closes tree when file's opened
@@ -62,12 +62,14 @@ nvimtree.setup {
    },
    filters = {
       dotfiles = false,
+      -- not show file.gz 
+      custom = { '.DS_Store', '*.gz' , '*.zip'}
    },
    disable_netrw = true,
    hijack_netrw = true,
    ignore_ft_on_setup = { "dashboard" },
    auto_close = false,
-   open_on_tab = false,
+   open_on_tab = true,
    hijack_cursor = true,
    update_cwd = true,
    update_focused_file = {
@@ -75,8 +77,11 @@ nvimtree.setup {
       update_cwd = false,
    },
    view = {
-      allow_resize = true,
+      allow_resize = false,
+      auto_resize = false,
+      number = true,
+      relativenumber = true,
       side = "left",
-      width = 25,
+      width = "25%"
    },
 }
