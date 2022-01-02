@@ -106,7 +106,6 @@ return packer.startup(function()
    }
 
    -- lsp stuff
-
    use {
       "neovim/nvim-lspconfig",
       opt = true,
@@ -117,6 +116,12 @@ return packer.startup(function()
             vim.cmd 'if &ft == "packer" | echo "" | else | silent! e %'
          end, 0)
       end,
+      requires = {
+         {
+            "nvim-telescope/telescope-fzf-native.nvim",
+            run = "make",
+         },
+      },
       config = override_req("lspconfig", "plugins.configs.lspconfig"),
    }
 
@@ -267,7 +272,8 @@ return packer.startup(function()
    use {
       "ms-jpq/chadtree",
       branch = "chad",
-      run = "python -m chadtree deps"
+      run = "python -m chadtree deps",
+      cmd = { "CHADopen", "CHADdeps" },
    }
 
    use {
@@ -276,6 +282,13 @@ return packer.startup(function()
       config = override_req("hop", "plugins.configs.hop"),
    }
 
+   -- use "../../extra/plugins/logtool.nvim"
+   use "~/AppData/Local/nvim/extra/plugins/rgflow.nvim"
+   use "~/AppData/Local/nvim/extra/plugins/syntaxs.nvim"
 
+   use {
+      "dstein64/vim-startuptime",
+      cmd = { "StartupTime"}
+   }
    
 end)

@@ -36,6 +36,32 @@ windows powershell
 git clone https://github.com/wbthomason/packer.nvim "$env:LOCALAPPDATA\nvim-data\site\pack\packer\start\packer.nvim"
 
 ```
+## Packer.nvim用法
+>-- You must run this or `PackerSync` whenever you make changes to your plugin configuration
+-- Regenerate compiled loader file
+:PackerCompile
+-- Remove any disabled or unused plugins
+:PackerClean
+-- Clean, then install missing plugins
+:PackerInstall
+-- Clean, then update and install plugins
+:PackerUpdate
+-- Perform `PackerUpdate` and then `PackerCompile`
+:PackerSync
+-- Loads opt plugin immediately
+:PackerLoad completion-nvim ale
+
+## 启动速度优化相关
+安装插件[vim-startuptime](https://github.com/dstein64/vim-startuptime)后 `:StartupTime`
+
+或者使用 hyperfine
+```sh
+hyperfine "nvim --headless +qa" --warmup 5
+```
+初步检测启动时间是400ms
+
+## nvim-qt的替代gui
+[neovide](https://github.com/neovide/neovide)： 
 
 ## lua相关
 
@@ -78,6 +104,11 @@ endfunction
 au BufEnter surfingkeys://* call ResizeSurfingkeysWindow()
 ```
 **缺陷**：暂时无法更改编写框的大小
+
+## LSP
+用于lua跳转，折叠等
+### for vscode
+vscode安装插件[lua-language-server](https://github.com/sumneko/lua-language-server)后，在lua项目（即nvim目录）添加`.vscode/settings.json`, 其中内容拷贝自[lua-lsp-wiki-settings](https://github.com/sumneko/vscode-lua/blob/master/setting/setting.json.)，最后就可以使用跳转等操作了。
 
 ## 自定义插件
 
@@ -170,3 +201,4 @@ https://neovim.io/doc/user/quickref.html
 
 ## todo
 - [conceal filename and line number in quickfix](https://vi.stackexchange.com/questions/18353/how-to-conceal-filename-and-line-number-in-quickfix-window)
+- treesitter for bash, vim; indent, fold
