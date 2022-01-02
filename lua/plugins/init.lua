@@ -118,8 +118,9 @@ return packer.startup(function()
       end,
       requires = {
          {
-            "nvim-telescope/telescope-fzf-native.nvim",
-            run = "make",
+            "williamboman/nvim-lsp-installer",
+            opt="true",
+            cmd = { "PackerUpdate", "PackerSync", "PackerInstall"}
          },
       },
       config = override_req("lspconfig", "plugins.configs.lspconfig"),
@@ -149,7 +150,6 @@ return packer.startup(function()
    }
 
    -- load luasnips + cmp related in insert mode only
-
    use {
       "rafamadriz/friendly-snippets",
       disable = not status.cmp,
@@ -282,13 +282,13 @@ return packer.startup(function()
       config = override_req("hop", "plugins.configs.hop"),
    }
 
-   -- use "../../extra/plugins/logtool.nvim"
-   use "~/AppData/Local/nvim/extra/plugins/rgflow.nvim"
-   use "~/AppData/Local/nvim/extra/plugins/syntaxs.nvim"
-
    use {
       "dstein64/vim-startuptime",
       cmd = { "StartupTime"}
    }
+
+   -- use "../../extra/plugins/logtool.nvim"
+   use "~/AppData/Local/nvim/extra/plugins/rgflow.nvim"
+   use "~/AppData/Local/nvim/extra/plugins/syntaxs.nvim"
    
 end)

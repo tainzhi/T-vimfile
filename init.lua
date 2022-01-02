@@ -1,5 +1,11 @@
-local ok, err = pcall(require, "core")
+local core_modules = {
+   "core",
+   "lsp",
+}
 
-if not ok then
-   error("Error loading core" .. "\n\n" .. err)
+for _, module in ipairs(core_modules) do
+   local ok, err = pcall(require, module)
+   if not ok then
+      error("Error loading " .. module .. "\n\n" .. err)
+   end
 end
