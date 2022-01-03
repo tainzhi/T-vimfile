@@ -106,41 +106,26 @@ au BufEnter surfingkeys://* call ResizeSurfingkeysWindow()
 **缺陷**：暂时无法更改编写框的大小
 
 ## LSP
-用于lua跳转，折叠等
+Language Server Protocol (LSP) 是微软为开发工具提出的一个协议， 它将编程工具解耦成了Language Server 与 Language Client 两部分
+
+Client 专注于页面样式实现， Server 负责提供语言支持，包括常见的自动补全，跳转到定义，查找引用，悬停文档提示等功能。
+
+
 ### for vscode
 vscode安装插件[lua-language-server](https://github.com/sumneko/lua-language-server)后，在lua项目（即nvim目录）添加`.vscode/settings.json`, 其中内容拷贝自[lua-lsp-wiki-settings](https://github.com/sumneko/vscode-lua/blob/master/setting/setting.json.)，最后就可以使用跳转等操作了。
+### for neovim
+[参考](https://github.com/nshen/learn-neovim-lua/blob/main/docs/lsp.md)
 
-## 自定义插件
+而我们所说的 Neovim 内置 LSP 就是 client 端的实现，这样我们就可以链接到和 VSCode 相同的 language servers ，实现高质量的语法补全
 
-自定义插件目录在 `extra/plugins/logtool.nvim`, 那么通过 Packer.nvim 使用为 `use "~/AppData/Local/nvim/extra/plugins/logtool.nvim"`。必须使用绝对路径，相对路径无法识别，暂未找到解决办法。
+`:h lsp` 查看帮助文档。
 
-执行 VimL 中的函数
+Neovim是客户端，默认不包含 [language-server](https://microsoft.github.io/language-server-protocol/implementors/servers/), 需要自己安装. 通过插件 [nvim-lsp-installer](https://github.com/williamboman/nvim-lsp-installer#available-lsps)可以自动安装。
 
-```viml
-:exec LuaDoItVimL()
-```
+已经在 `lua/lsp` 目录下安装了lua server(`lua/lsp/lua.lua`)和bash server(`lua/lsp/bash.lua`)， 如果需要安装其他的server，[查询](https://github.com/williamboman/nvim-lsp-installer#available-lsps)
 
-执行 VimL 中的 lua block
+自动安装完成后 `:LspInstallInfo`查看安装的server
 
-```
-:luado lua_do_it_lua()
-
-:[range]luado {body}    每一行执行 lua function
-```
-
-执行 lua 中的global 函数
-
-```lua
-:lua doit()
-```
-
-debugging: 快速调试lua文件，修改后快速加载到 embedded lua interpreter
-
-```
-:luafile %
-```
-
-- [参考:nvim-example-lua-plugin](https://github.com/jacobsimpson/nvim-example-lua-plugin)
 
 ## 参考
 
@@ -202,3 +187,4 @@ https://neovim.io/doc/user/quickref.html
 ## todo
 - [conceal filename and line number in quickfix](https://vi.stackexchange.com/questions/18353/how-to-conceal-filename-and-line-number-in-quickfix-window)
 - treesitter for bash, vim; indent, fold
+- [vim-im-select](https://github.com/brglng/vim-im-select)

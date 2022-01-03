@@ -116,15 +116,20 @@ return packer.startup(function()
             vim.cmd 'if &ft == "packer" | echo "" | else | silent! e %'
          end, 0)
       end,
-      requires = {
-         {
-            "williamboman/nvim-lsp-installer",
-            opt="true",
-            cmd = { "PackerUpdate", "PackerSync", "PackerInstall"}
-         },
-      },
+      -- requires = {
+      --    {
+      --       "williamboman/nvim-lsp-installer",
+      --       opt="true",
+      --    },
+      -- },
       config = override_req("lspconfig", "plugins.configs.lspconfig"),
    }
+
+   use {
+      "williamboman/nvim-lsp-installer",
+      module = "nvim-lspconfig",
+   }
+
 
    use {
       "ray-x/lsp_signature.nvim",
