@@ -188,3 +188,9 @@ https://neovim.io/doc/user/quickref.html
 - [conceal filename and line number in quickfix](https://vi.stackexchange.com/questions/18353/how-to-conceal-filename-and-line-number-in-quickfix-window)
 - treesitter for bash, vim; indent, fold
 - [vim-im-select](https://github.com/brglng/vim-im-select)
+- [which-key](https://github.com/folke/which-key.nvim)
+- [refactor参考: remove plugin/packer_compiled_lua](https://github.com/ibhagwan/nvim-lua/blob/main/lua/plugins/init.lua)
+- [plugin renamer](https://github.com/filipdutescu/renamer.nvim)
+- [plugin harpoon用于快速跳转到特定的buffer，terminal](https://github.com/ThePrimeagen/harpoon)
+- [plugin auto-session](https://github.com/rmagatti/auto-session)
+

@@ -292,8 +292,6 @@ return packer.startup(function()
       cmd = { "StartupTime"}
    }
 
-   -- use "../../extra/plugins/logtool.nvim"
    use "~/AppData/Local/nvim/extra/plugins/rgflow.nvim"
    use "~/AppData/Local/nvim/extra/plugins/syntaxs.nvim"
-   
 end)

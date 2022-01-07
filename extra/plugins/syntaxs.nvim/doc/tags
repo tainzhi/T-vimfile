@@ -1,0 +1,17 @@
+headlines	headlines.txt	/*headlines*
+headlines-changelog	headlines.txt	/*headlines-changelog*
+headlines-codeblock_sign	headlines.txt	/*headlines-codeblock_sign*
+headlines-dash_highlight	headlines.txt	/*headlines-dash_highlight*
+headlines-dash_pattern	headlines.txt	/*headlines-dash_pattern*
+headlines-headline_pattern	headlines.txt	/*headlines-headline_pattern*
+headlines-headline_signs	headlines.txt	/*headlines-headline_signs*
+headlines-highlights	headlines.txt	/*headlines-highlights*
+headlines-introduction	headlines.txt	/*headlines-introduction*
+headlines-license	headlines.txt	/*headlines-license*
+headlines-setup	headlines.txt	/*headlines-setup*
+headlines-source_pattern_end	headlines.txt	/*headlines-source_pattern_end*
+headlines-source_pattern_start	headlines.txt	/*headlines-source_pattern_start*
+headlines.txt	headlines.txt	/*headlines.txt*
+hl-CodeBlock	headlines.txt	/*hl-CodeBlock*
+hl-Dash	headlines.txt	/*hl-Dash*
+hl-Headline	headlines.txt	/*hl-Headline*
