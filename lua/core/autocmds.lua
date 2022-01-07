@@ -26,3 +26,5 @@ vim.api.nvim_exec([[
 ]], false)
 
 
+-- open help in vertical split
+vim.cmd [[ autocmd BufWinEnter *.txt if &ft == 'help' | wincmd L | vertical resize 90 | nmap q :q<CR> | endif ]]

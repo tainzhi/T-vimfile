@@ -13,6 +13,10 @@ M.options = {
    hidden = true,
    ignorecase = true,
    smartcase = true,
+   -- wrapscan default option is on
+   -- means, when "search next" reaches end of file, it wraps around to the beginning
+   -- so :set nowrapscan
+   wrapscan = false,
    mapleader = " ",
    mouse = "a",
    number = true,
@@ -89,6 +93,8 @@ M.plugins = {
             "dashboard",
             "NvimTree",
             "terminal",
+            "CHADTree",
+            "idart",
          },
          -- show short statusline on small screens
          shortline = true,
@@ -113,6 +119,7 @@ M.mappings = {
    new_tab = "<C-t>b", -- open a new vim tab
    save_file = "<C-s>", -- save file using :w
    theme_toggler = "<leader>tt", -- for theme toggler, see in ui.theme_toggler
+   open_help = "<leader>h", -- open help for word under cusor
    -- navigation in insert mode, only if enabled in options
    insert_nav = {
       backward = "<C-h>",

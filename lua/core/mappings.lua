@@ -28,6 +28,9 @@ M.misc = function()
 
       -- use ESC to turn off search highlighting
       map("n", "<Esc>", ":noh <CR>")
+
+      -- open help for word under cursor
+      map("n", maps.open_help, ':help <C-R>=expand("<cword>")<CR><CR>')
    end
 
    local function optional_mappings()
