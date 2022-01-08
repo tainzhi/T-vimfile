@@ -75,9 +75,19 @@ Neovim会查看 `runtimepath`目录下的lua文件，也会查看 `runtimepath/l
 ## snippets
 
 - 插件 [LuaSnip](https://github.com/L3MON4D3/LuaSnip/blob/master/Examples/snippets.lua) 可以识别 [vscode style snippets](https://code.visualstudio.com/docs/editor/userdefinedsnippets); 也集成了通用的[friendly snippets](https://github.com/rafamadriz/friendly-snippets/blob/main/README.md)
-- snippets可以处理 copyboard 中的数据
-- `nvim/snippets`定义了通用的`all.json.code-snippets`，也定义了针对idar的特定snippet
-- 插件`LuaSnip` load 自定义snippet需要指定绝对路径， 在windows下是这样的 `require("luasnip.loaders.from_vscode").load { paths = "C:\\Users\\qiufq1\\AppData\\Local\\nvim\\snippets"}`. 虽然LuaSnip的官网中介绍`load()`不指定path，那么将会从`:echo &rtp`目录下查找目录 `snippets`，但是没有查找成功，故需要指定绝对路径（相对路径也无法加载）
+- [luasnip example](https://github.com/L3MON4D3/LuaSnip/blob/master/Examples/snippets.lua) 给常用的操作提供了案例
+
+我自定义的luasnip的在目录 `lua/snippets`下，分别定义了通用的 all.lua 和 针对 idart的 idart.lua.
+
+对于 idart.lua ，有一个功能是对拷贝自 quickfix 的text 替换掉文件名和行号生成snippet
+
+## 自定义插件
+extra/plugins/rgflow.vnim 为自定义插件。自定义插件目录下 `plugin/rgflow.vim`为全局配置，而`ftplugin/{idart.vim,qf.vim,rgflow.vim}`为特定filetype的buf有效。对于一个新的文件，可以指定filetype `:set ft=idart`, 查看 ft `:echo &ft`
+
+那么 surfingkeys打开的buffer，通过autocmd 指定 ft=idart，然后就可以使用 idart.lua snippet.
+
+针对idart，有ftplugin/idart.vim 重定义了 p 快捷键，copy自quickfix的text删除掉行号和文件名
+
 
 ## 插件
 - https://github.com/blackCauldron7/surround.nvim
@@ -188,6 +198,7 @@ https://neovim.io/doc/user/quickref.html
 - [conceal filename and line number in quickfix](https://vi.stackexchange.com/questions/18353/how-to-conceal-filename-and-line-number-in-quickfix-window)
 - treesitter for bash, vim; indent, fold
 - [vim-im-select](https://github.com/brglng/vim-im-select)
+- lsp for lua
 - [which-key](https://github.com/folke/which-key.nvim)
 - [refactor参考: remove plugin/packer_compiled_lua](https://github.com/ibhagwan/nvim-lua/blob/main/lua/plugins/init.lua)
 - [plugin renamer](https://github.com/filipdutescu/renamer.nvim)

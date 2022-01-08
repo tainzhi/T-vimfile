@@ -531,7 +531,7 @@ local function get_config(flags, pattern, path)
     api.nvim_set_var('rgflow_flags', flags)
 
     -- Default flags always included
-    local rg_args    = {"--no-heading", "--with-filename","--line-number", "--column", "--no-ignore-messages", "--replace",  zs_ze.."$0"..zs_ze}
+    local rg_args    = {"--sort=path", "--no-heading", "--with-filename","--line-number", "--column", "--no-ignore-messages", "--replace",  zs_ze.."$0"..zs_ze}
 
     -- 1. Add the flags first to the Ripgrep command
     local flags_list = vim.split(flags, " ")
@@ -705,6 +705,23 @@ function rgflow.start_via_hotkey_current(mode)
     local pattern = get_pattern(mode) or ""
     local path    = vim.fn.expand("%:p")
     rgflow.buf, rgflow.wini, rgflow.winh = start_ui(flags, pattern, path)
+end
+
+
+function rgflow.paste_fixed_clipboard()
+    local res = {}
+    local textlines = vim.fn.getreg('+', 1, true)
+    for _, line in ipairs(textlines) do
+        -- 替换掉从quixfix拷贝的内容的文件名和行号
+        -- anr_2021-12-31-15-38-32-806.20211231_1538.txt|4 col 24| Cmd line: com.android.camera
+        -- 删除第二个竖线前面的所有内容
+        -- 使用的 lua 匹配规则，而不是 vim 匹配规则
+        local removed_fc = string.gsub(line,".-|.-| ","")
+        -- 删除插件 rgflow生成的quickfix行中的换号符号 \30
+        local removed_delimiter = string.gsub(removed_fc, zs_ze, "")
+        table.insert(res, removed_delimiter)
+    end
+    vim.api.nvim_put(res, '', true, true)
 end
 
 return rgflow
