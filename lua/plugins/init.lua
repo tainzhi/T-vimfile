@@ -164,7 +164,7 @@ return packer.startup(function()
       disable = not status.cmp,
       wants = "friendly-snippets",
       after = "nvim-cmp",
-      config = override_req("luasnip", "(plugins.configs.others).luasnip()"),
+      config = override_req("luasnip", "plugins.configs.luasnip"),
    }
 
    use {

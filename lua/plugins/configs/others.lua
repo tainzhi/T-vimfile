@@ -69,21 +69,6 @@ M.comment = function()
    end
 end
 
-M.luasnip = function()
-   local present, luasnip = pcall(require, "luasnip")
-   if not present then
-      return
-   end
-
-   luasnip.config.set_config {
-      history = true,
-      updateevents = "TextChanged,TextChangedI",
-   }
-
-   require("luasnip.loaders.from_vscode").load { paths = "C:\\Users\\qiufq1\\AppData\\Local\\nvim\\snippets"}
-   require("luasnip.loaders.from_vscode").load()
-end
-
 M.signature = function()
    local present, lspsignature = pcall(require, "lsp_signature")
    if present then
@@ -104,6 +89,33 @@ M.signature = function()
          zindex = 200, -- by default it will be on top of all floating windows, set to 50 send it to bottom
          padding = "", -- character to pad on left and right of signature can be ' ', or '|'  etc
       }
+   end
+end
+
+M.dap_lua = function()
+   local dap = require"dap"
+   dap.configurations.lua = { 
+   { 
+      type = 'nlua', 
+      request = 'attach',
+      name = "Attach to running Neovim instance",
+      host = function()
+         local value = vim.fn.input('Host [127.0.0.1]: ')
+         if value ~= "" then
+         return value
+         end
+         return '127.0.0.1'
+      end,
+      port = function()
+         local val = tonumber(vim.fn.input('Port: '))
+         assert(val, "Please provide a port number")
+         return val
+      end,
+   }
+   }
+
+   dap.adapters.nlua = function(callback, config)
+   callback({ type = 'server', host = config.host, port = config.port })
    end
 end
 
