@@ -1,2 +1,3 @@
 .netrwhist
-plugin/
+!/extra/*/plugin
+/plugin

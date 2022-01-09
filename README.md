@@ -198,6 +198,9 @@ https://neovim.io/doc/user/quickref.html
 - [conceal filename and line number in quickfix](https://vi.stackexchange.com/questions/18353/how-to-conceal-filename-and-line-number-in-quickfix-window)
 - treesitter for bash, vim; indent, fold
 - [vim-im-select](https://github.com/brglng/vim-im-select)
+- gui
+>- goneovim: 速度很快,ui酷炫; 缺点是打开rgflow输入框看不到, 有时会莫名其妙的自动关闭
+>- neovide: rust写的; 缺点是打开500M的文件会很卡
 - lsp for lua
 - [which-key](https://github.com/folke/which-key.nvim)
 - [refactor参考: remove plugin/packer_compiled_lua](https://github.com/ibhagwan/nvim-lua/blob/main/lua/plugins/init.lua)
