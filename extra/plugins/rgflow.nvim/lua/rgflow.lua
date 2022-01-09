@@ -51,6 +51,27 @@ local loop = vim.loop
 local zs_ze = "\30"  -- The start and end of pattern match invisible marker
 rgflow = {}
 
+local original_patterns = {
+    "blocked by",
+    "held by thread",
+    "waiting to lock",
+    "mEvent=ERROR",
+    "MotoCamera: ",
+    "I am_anr.*camera",
+    "lowmemorykiller",
+    "FATAL_EXCEPTION",
+    "AndroidRuntime",
+    "NullPointerException",
+    "Input dispatching timed out.*camera3",
+    "Dump ERROR Stack Trace",
+    "am_proc_start.*camera3",
+    "am_kill.*camera3",
+    "E CamX : [ERROR]",
+    "begin ANR dump all threads",
+}
+local buffer_search_pattern_history = {}
+local buffer_search_results_history = {}
+
 
 --- Prints a @msg to the command line with error highlighting.
 -- Does not raise an error.
@@ -252,36 +273,28 @@ end
 
 
 local function get_patterns_data(base)
-    local original_patterns = {
-        "blocked by",
-        "held by thread",
-        "waiting to lock",
-        "mEvent=ERROR",
-        "MotoCamera: ",
-        "I am_anr.*camera",
-        "lowmemorykiller",
-        "FATAL_EXCEPTION",
-        "AndroidRuntime",
-        "NullPointerException",
-        "Input dispatching timed out.*camera3",
-        "Dump ERROR Stack Trace",
-        "am_proc_start.*camera3",
-        "am_kill.*camera3",
-        "E CamX : [ERROR]",
-        "begin ANR dump all threads",
-    }
-    local filter_patterns = {}
-    for i, line in ipairs(original_patterns) do
+    local patterns = {}
+    -- 先把最近的搜索历史添加进补全库
+    for i = 1, #buffer_search_pattern_history do
+        patterns[#patterns+1] = buffer_search_pattern_history[i]
+    end
+    -- 再把默认的patterns添加进补全库
+    for i = 1, #original_patterns do
+        patterns[#patterns+1] = original_patterns[i]
+    end
+    -- 最后对补全库进行过滤
+    local filterd_patterns = {}
+    for i, line in ipairs(patterns) do
         local reg_base = ''
         for i=1,#base do
             reg_base = reg_base .. string.sub(base, i, i) .. ".*"
         end
         -- 给base字符串每个字符之间添加一个.*, 用于正则匹配
         if not base or string.find(string.lower(line), reg_base) then
-            table.insert(filter_patterns, line)
+            table.insert(filterd_patterns, line)
         end
     end
-    return filter_patterns 
+    return filterd_patterns 
 end
 
 
@@ -592,6 +605,8 @@ function rgflow.search()
     -- Add a command to the history which can be invoked to repeat this search
     local rg_cmd = ':lua rgflow.start_with_args([['..flags..']], [['..pattern..']], [['..path..']])'
     vim.fn.histadd('cmd', rg_cmd)
+
+    table.insert(buffer_search_pattern_history,pattern)
 
     -- Global config used by the async job
     config = get_config(flags, pattern, path)
