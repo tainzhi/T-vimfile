@@ -453,6 +453,11 @@ local function on_stdout(err, data)
                 config.match_cnt = config.match_cnt + 1
                 if string.sub(d, -1, -1) == "\13" then d = string.sub(d, 1, -2) end
                 table.insert(config.results, d)
+                table.insert(buffer_search_results_history, {
+                    match_cnt = config.match_cnt,
+                    pattern = config.pattern,
+                    results = config.results
+                })
             end
         end
         local plural = "s"
@@ -462,38 +467,43 @@ local function on_stdout(err, data)
 end
 
 
+local function add_results_to_qf()
+    local plural = "s"
+    if config.match_cnt == 1 then plural = "" end
+    print("Adding "..config.match_cnt.." result"..plural.." to the quickfix list...")
+    api.nvim_command('redraw!')
+
+    -- Create a new qf list, so use ' '. Applies to colder/cnewer etc.
+    -- Refer to `:help setqflist`
+    vim.fn.setqflist({}, ' ', {title=config.title, lines=config.results})
+
+    if api.nvim_get_var('rgflow_open_qf_list') ~= 0 then
+        api.nvim_command('copen')
+        local height = config.match_cnt
+        local max = api.nvim_get_var('rgflow_qf_max_height')
+        if height > max then height = max end
+        if height < 3 then height = 3 end
+        local win = vim.fn.getqflist({winid=1}).winid
+        api.nvim_win_set_height(win, height)
+    end
+
+    -- Remember 0 is considered true in lua
+    if api.nvim_get_var('rgflow_set_incsearch') ~= 0 then
+        -- Set incremental search to be the same value as pattern
+        vim.fn.setreg("/", config.pattern, "c")
+        -- Trigger the highlighting of search by turning hl on
+        api.nvim_set_option("hlsearch", true)
+    end
+
+    -- Note: rgflow.hl_qf_matches() is called via ftplugin when a QF window
+    -- is opened.
+end
+
+
 --- The handler for when the spawned job exits
 local function on_exit()
     if config.match_cnt > 0 then
-        local plural = "s"
-        if config.match_cnt == 1 then plural = "" end
-        print("Adding "..config.match_cnt.." result"..plural.." to the quickfix list...")
-        api.nvim_command('redraw!')
-
-        -- Create a new qf list, so use ' '. Applies to colder/cnewer etc.
-        -- Refer to `:help setqflist`
-        vim.fn.setqflist({}, ' ', {title=config.title, lines=config.results})
-
-        if api.nvim_get_var('rgflow_open_qf_list') ~= 0 then
-            api.nvim_command('copen')
-            local height = config.match_cnt
-            local max = api.nvim_get_var('rgflow_qf_max_height')
-            if height > max then height = max end
-            if height < 3 then height = 3 end
-            local win = vim.fn.getqflist({winid=1}).winid
-            api.nvim_win_set_height(win, height)
-        end
-
-        -- Remember 0 is considered true in lua
-        if api.nvim_get_var('rgflow_set_incsearch') ~= 0 then
-            -- Set incremental search to be the same value as pattern
-            vim.fn.setreg("/", config.pattern, "c")
-            -- Trigger the highlighting of search by turning hl on
-            api.nvim_set_option("hlsearch", true)
-        end
-
-        -- Note: rgflow.hl_qf_matches() is called via ftplugin when a QF window
-        -- is opened.
+        add_results_to_qf()
     end
     -- Print exit message
     local msg = " "..config.pattern.." │ "..config.match_cnt.." result"..(config.match_cnt==1 and '' or 's')
@@ -737,6 +747,60 @@ function rgflow.paste_fixed_clipboard()
         table.insert(res, removed_delimiter)
     end
     vim.api.nvim_put(res, '', true, true)
+end
+
+function rgflow.pop_results_history_menu()
+    local Menu = require("nui.menu")
+    local event = require("nui.utils.autocmd").event
+
+    local menu_items = {}
+    for i, item in ipairs(buffer_search_results_history) do
+        table.insert(menu_items, Menu.item({id = i, text = item.pattern}))
+    end
+
+    local menu = Menu({
+        position = "20%",
+        size = {
+            width = 60,
+            height = 5,
+        },
+        relative = "editor",
+        border = {
+            style = "single",
+            text = {
+            top = "Choose Search History",
+            top_align = "center",
+            },
+        },
+        win_options = {
+            winblend = 10,
+            winhighlight = "Normal:Normal",
+        },
+        }, {
+        lines = menu_items,
+        max_width = 20,
+        keymap = {
+            focus_next = { "j", "<Down>", "<Tab>" },
+            focus_prev = { "k", "<Up>", "<S-Tab>" },
+            close = { "<Esc>", "<C-c>" },
+            submit = { "<CR>", "<Space>" },
+    },
+    on_close = function()
+        print("CLOSED")
+    end,
+    on_submit = function(item)
+        local select_history = buffer_search_results_history[item.id]
+        config.match_cnt = select_history.match_cnt
+        config.results = select_history.results
+        add_results_to_qf()
+    end,
+    })
+
+    -- mount the component
+    menu:mount()
+
+    -- close menu when cursor leaves buffer
+    menu:on(event.BufLeave, menu.menu_props.on_close, { once = true })
 end
 
 return rgflow

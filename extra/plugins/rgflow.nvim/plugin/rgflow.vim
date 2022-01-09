@@ -103,6 +103,7 @@ if g:rgflow_search_keymaps
     xnoremap <leader>rg :<C-U>call v:lua.rgflow.start_via_hotkey(visualmode())<Cr>
     " Rip grep in current file, use <cword> under the cursor as starting point
     nnoremap <leader>rc :<C-U>lua rgflow.start_via_hotkey_current('n')<CR>
+    nnoremap <leader>rh :<C-U>lua rgflow.pop_results_history_menu()<CR>
 endif
 
 function! ResizeSurfingkeysWindow()

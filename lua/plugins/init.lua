@@ -283,6 +283,13 @@ return packer.startup(function()
       cmd = { "StartupTime"}
    }
 
-   use "~/AppData/Local/nvim/extra/plugins/rgflow.nvim"
+   use {
+      "~/AppData/Local/nvim/extra/plugins/rgflow.nvim",
+      requires = {
+         {
+            "MunifTanjim/nui.nvim",
+         }
+      }
+   }
    use "~/AppData/Local/nvim/extra/plugins/syntaxs.nvim"
 end)
