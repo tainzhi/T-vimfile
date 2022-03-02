@@ -284,6 +284,11 @@ return packer.startup(function()
    }
 
    use {
+      "hotoo/pangu.vim",
+      ft = {"markdown", "md", "text"},
+   }
+
+   use {
       "~/AppData/Local/nvim/extra/plugins/rgflow.nvim",
       requires = {
          {
