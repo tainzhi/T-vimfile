@@ -206,6 +206,8 @@ https://neovim.io/doc/user/quickref.html
 >- goneovim: 速度很快,ui酷炫; 缺点是打开rgflow输入框看不到, 有时会莫名其妙的自动关闭
 >- neovide: rust写的; 缺点是打开500M的文件会很卡
 - lsp for lua
+- synatx: 参考当前目录下extra/plugins/syntaxs.nvim, 参考[github kmonad-vim](https://github.com/kmonad/kmonad-vim/blob/master/syntax/kbd.vim)
+- lsp for shell, [shell check](https://github.com/koalaman/shellcheck)
 - [which-key](https://github.com/folke/which-key.nvim)
 - [refactor参考: remove plugin/packer_compiled_lua](https://github.com/ibhagwan/nvim-lua/blob/main/lua/plugins/init.lua)
 - [plugin renamer](https://github.com/filipdutescu/renamer.nvim)
