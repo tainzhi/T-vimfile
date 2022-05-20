@@ -16,7 +16,7 @@ local copy_from_reg = function(_, _, _)
     local res = {}
     local textlines = vim.fn.getreg('+', 1, true)
     for _, line in ipairs(textlines) do
-        -- 替换掉从quixfix拷贝的内容的文件名和行号
+        -- 替换掉从quicxfix拷贝的内容的文件名和行号
         -- anr_2021-12-31-15-38-32-806.20211231_1538.txt|4 col 24| Cmd line: com.android.camera
         -- 删除第二个竖线前面的所有内容
         -- 使用的 lua 匹配规则，而不是 vim 匹配规则
@@ -44,6 +44,15 @@ local M = {
         f(copy_from_reg, {}, ""),
         -- t({vim.fn.getreg('+'), ""}),
         t({"", [[{code}]], ""}),
+        i(0),
+    }),
+
+    s("fix", {
+        t({"It has been fixed by "}),
+        -- put content in + register
+        f(copy_from_reg, {}, ""),
+        -- t({vim.fn.getreg('+'), ""}),
+        t({" and waiting to be merged."}),
         i(0),
     }),
 }

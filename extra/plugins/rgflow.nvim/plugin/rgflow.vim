@@ -91,6 +91,7 @@ nnoremap <Plug>RgflowUnmarkQuickfixLine   :<C-U>call v:lua.rgflow.qf_mark_operat
 vnoremap <Plug>RgflowUnmarkQuickfixVisual :<C-U>call v:lua.rgflow.qf_mark_operator(v:false, visualmode())<CR>
 nnoremap <Plug>RgflowChangeConceallevel   :<C-U>call v:lua.rgflow.change_conceallevel()<CR>
 nnoremap <Plug>RgflowPasteFixdClipboard   :<C-U>call v:lua.rgflow.paste_fixed_clipboard()<CR>
+vnoremap <Plug>RgflowPasteFixdClipboardVisual   :<C-U>call v:lua.rgflow.paste_fixed_clipboard()<CR>
 
 
 if g:rgflow_search_keymaps

@@ -5,4 +5,4 @@ endif
 let b:did_ftplugin = 1
 
 nmap <silent> <buffer> p        <Plug>RgflowPasteFixdClipboard
-vmap <silent> <buffer> p        <Plug>RgflowPasteFixdClipboard
+vmap <silent> <buffer> p        <Plug>RgflowPasteFixdClipboardVisual
