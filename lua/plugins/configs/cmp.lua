@@ -6,6 +6,15 @@ end
 
 vim.opt.completeopt = "menuone,noselect"
 
+-- https://github.com/dmitmel/cmp-cmdline-history
+for _, cmd_type in ipairs({':', '/', '?', '@', '='}) do
+  cmp.setup.cmdline(cmd_type, {
+    sources = {
+      { name = 'cmdline_history' },
+    },
+  })
+end
+
 -- nvim-cmp setup
 cmp.setup {
    snippet = {

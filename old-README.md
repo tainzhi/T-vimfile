@@ -1021,7 +1021,7 @@ q				（Normal模式）结束宏的录制
 :set ignorecase     不区分大小写
 :sy clear			取消语法高亮
 :set guifont=Monospace\ 12      字体设置
-:set guifont=*	
+:set guifont=*	    fontsize设置查询,弹出help文档,当前系统可使用的字体列表
 	
 :colorscheme tesla  修改主题为tesla
 ```

@@ -52,6 +52,7 @@ local zs_ze = "\30"  -- The start and end of pattern match invisible marker
 rgflow = {}
 
 local original_patterns = {
+    "AutoFocusStateMachine|CameraKpiTag: AUTO_FOCUS",
     "blocked by",
     "held by thread",
     "waiting to lock",
@@ -754,8 +755,8 @@ function rgflow.pop_results_history_menu()
     local event = require("nui.utils.autocmd").event
 
     local menu_items = {}
-    for i, item in ipairs(buffer_search_results_history) do
-        table.insert(menu_items, Menu.item({id = i, text = item.pattern}))
+    for i, itm in ipairs(buffer_search_results_history) do
+        table.insert(menu_items, Menu.item({id = i, text = itm.pattern}))
     end
 
     local menu = Menu({
@@ -790,6 +791,7 @@ function rgflow.pop_results_history_menu()
     end,
     on_submit = function(item)
         local select_history = buffer_search_results_history[item.id]
+        config.pattern = select_history.pattern
         config.match_cnt = select_history.match_cnt
         config.results = select_history.results
         add_results_to_qf()

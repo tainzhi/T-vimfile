@@ -196,6 +196,13 @@ return packer.startup(function()
       disable = not status.cmp,
       after = "cmp-buffer",
    }
+
+   use {
+      "dmitmel/cmp-cmdline-history",
+      disable = not status.cmp,
+      after = "cmp-buffer",
+   }
+
    -- misc plugins
    use {
       "windwp/nvim-autopairs",

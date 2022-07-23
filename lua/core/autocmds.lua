@@ -20,3 +20,4 @@ vim.cmd [[ autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4 sof
 vim.cmd [[ autocmd BufWinEnter *.txt if &ft == 'help' | wincmd L | vertical resize 100 | nmap q :q<CR> | endif ]]
 
 vim.cmd [[ autocmd BufWritePre *.md if &ft == 'markdown' | PanguAll]]
+vim.cmd [[ autocmd BufWinEnter *.md if &ft == 'markdown' | set shada="NONE"]]

@@ -38,6 +38,11 @@ local M = {
         t({"Please MCF further analyze it.", ""}),
         i(0),
     }),
+    s("iq",{
+        -- "" is newline
+        t({"Please engine further analyze it.", ""}),
+        i(0),
+    }),
     s("code", {
         t({[[{code}]], ""}),
         -- put content in + register
@@ -54,6 +59,12 @@ local M = {
         -- t({vim.fn.getreg('+'), ""}),
         t({" and waiting to be merged."}),
         i(0),
+    }),
+
+    s("report",{
+        t({"It's user version which printed logs is restricted and has no detailed logs about camera app running", ""}),
+        t({"Would you help to ask the reporter to reupload a recording video and picture to describe that taken scene?", ""}),
+        t({"BR"}),
     }),
 }
 return M
