@@ -34,8 +34,6 @@ return packer.startup(function()
 
    -- this is arranged on the basis of when a plugin starts
 
-   -- this is the nvchad core repo containing utilities for some features like theme swticher, no need to lazy load
-   use "Nvchad/extensions"
    use "nvim-lua/plenary.nvim"
 
    use {
@@ -44,24 +42,56 @@ return packer.startup(function()
    }
 
    use {
-      "NvChad/nvim-base16.lua",
-      after = "packer.nvim",
-      config = function()
-         require("colors").init()
-      end,
-   }
-
-   use {
       "kyazdani42/nvim-web-devicons",
-      after = "nvim-base16.lua",
-      config = override_req("nvim_web_devicons", "plugins.configs.icons"),
+      module = "nvim-web-devicons",
    }
 
    use {
-      "feline-nvim/feline.nvim",
-      disable = not status.feline,
+      'nvim-lualine/lualine.nvim',
       after = "nvim-web-devicons",
-      config = override_req("feline", "plugins.configs.statusline"),
+      requires = { 'kyazdani42/nvim-web-devicons', opt = true },
+      setup = function()
+         require('lualine').setup {
+            options = {
+               icons_enabled = true,
+               theme = 'auto',
+               component_separators = { left = '', right = '' },
+               section_separators = { left = '', right = '' },
+               disabled_filetypes = {
+                  statusline = {},
+                  winbar = {},
+               },
+               ignore_focus = {},
+               always_divide_middle = true,
+               globalstatus = false,
+               refresh = {
+                  statusline = 1000,
+                  tabline = 1000,
+                  winbar = 1000,
+               }
+            },
+            sections = {
+               lualine_a = { 'mode' },
+               lualine_b = { 'branch', 'diff', 'diagnostics' },
+               lualine_c = { 'filename' },
+               lualine_x = { 'encoding', 'fileformat', 'filetype' },
+               lualine_y = { 'progress' },
+               lualine_z = { 'location' }
+            },
+            inactive_sections = {
+               lualine_a = {},
+               lualine_b = {},
+               lualine_c = { 'filename' },
+               lualine_x = { 'location' },
+               lualine_y = {},
+               lualine_z = {}
+            },
+            tabline = {},
+            winbar = {},
+            inactive_winbar = {},
+            extensions = {}
+         }
+      end
    }
 
    use {
@@ -245,19 +275,19 @@ return packer.startup(function()
       "nvim-telescope/telescope.nvim",
       module = "telescope",
       cmd = "Telescope",
-      requires = {
-         {
-            "nvim-telescope/telescope-fzf-native.nvim",
-            run = "make",
-         },
-         {
-            "nvim-telescope/telescope-media-files.nvim",
-            disable = not status.telescope_media,
-            setup = function()
-               require("core.mappings").telescope_media()
-            end,
-         },
-      },
+      -- requires = {
+      --    {
+      --       "nvim-telescope/telescope-fzf-native.nvim",
+      --       run = "make",
+      --    },
+      --    {
+      --       "nvim-telescope/telescope-media-files.nvim",
+      --       disable = not status.telescope_media,
+      --       setup = function()
+      --          require("core.mappings").telescope_media()
+      --       end,
+      --    },
+      -- },
       config = override_req("telescope", "plugins.configs.telescope"),
       setup = function()
          require("core.mappings").telescope()
@@ -265,10 +295,10 @@ return packer.startup(function()
    }
 
    use {
-      "blackCauldron7/surround.nvim",
+      "kylechui/nvim-surround",
       event = "InsertEnter",
       config = function()
-         require"surround".setup {mappings_style = "surround"}
+         require"nvim-surround".setup {mappings_style = "surround"}
       end
    }
 
@@ -304,4 +334,14 @@ return packer.startup(function()
       }
    }
    use "~/AppData/Local/nvim/extra/plugins/syntaxs.nvim"
+   use "~/AppData/Local/nvim/extra/plugins/log.vim"
+
+   -- colorscheme
+   use 'folke/tokyonight.nvim'
+   -- https://github.com/shaunsingh/solarized.nvim
+   use 'shaunsingh/solarized.nvim'
+   -- https://github.com/ellisonleao/gruvbox.nvim
+   use 'ellisonleao/gruvbox.nvim'
+   -- https://github.com/EdenEast/nightfox.nvim
+   use 'EdenEast/nightfox.nvim'
 end)
