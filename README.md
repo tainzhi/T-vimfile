@@ -40,14 +40,19 @@ git clone https://github.com/wbthomason/packer.nvim "$env:LOCALAPPDATA\nvim-data
 >-- You must run this or `PackerSync` whenever you make changes to your plugin configuration
 -- Regenerate compiled loader file
 :PackerCompile
+
 -- Remove any disabled or unused plugins
 :PackerClean
+
 -- Clean, then install missing plugins
 :PackerInstall
+
 -- Clean, then update and install plugins
 :PackerUpdate
+
 -- Perform `PackerUpdate` and then `PackerCompile`
 :PackerSync
+
 -- Loads opt plugin immediately
 :PackerLoad completion-nvim ale
 
@@ -63,6 +68,7 @@ hyperfine "nvim --headless +qa" --warmup 5
 ## nvim-qt的替代gui
 [neovide](https://github.com/neovide/neovide)： 
 
+[config 参考](https://neovide.dev/configuration.html): 通过命令行配置, 而不是文件配置
 ## lua相关
 
 `:h lua` 查看lua example
@@ -195,21 +201,22 @@ https://neovim.io/doc/user/quickref.html
 :h autocmd
 
 ## todo
+- lualine设置 statusline
 - [conceal filename and line number in quickfix](https://vi.stackexchange.com/questions/18353/how-to-conceal-filename-and-line-number-in-quickfix-window)
 - treesitter for bash, vim; indent, fold
 - [vim-im-select](https://github.com/brglng/vim-im-select)
 - nvim lua debug https://github.com/rcarriga/nvim-dap-ui
 - rgflow @ nui.nvim对搜索历史记录的选择ui
 - rgflow @ pleantary.file记录pattern的历史，cmp怎么快速补全, https://github.com/ixpectus/history.nvim/blob/main/lua/history/init.lua
-- rgflow和extra/plugin/syntaxs的高亮log文件， https://github.com/MTDL9/vim-log-highlighting
 - gui
->- goneovim: 速度很快,ui酷炫; 缺点是打开rgflow输入框看不到, 有时会莫名其妙的自动关闭
 >- neovide: rust写的; 缺点是打开500M的文件会很卡
+>- goneovim: 速度很快,ui酷炫; 缺点是打开rgflow输入框看不到, 有时会莫名其妙的自动关闭
 - lsp for lua
+- rgflow和extra/plugin/syntaxs的高亮log文件， https://github.com/MTDL9/vim-log-highlighting
 - synatx: 参考当前目录下extra/plugins/syntaxs.nvim, 参考[github kmonad-vim](https://github.com/kmonad/kmonad-vim/blob/master/syntax/kbd.vim)
 - lsp for shell, [shell check](https://github.com/koalaman/shellcheck)
 - [which-key](https://github.com/folke/which-key.nvim)
-- [refactor参考: remove plugin/packer_compiled_lua](https://github.com/ibhagwan/nvim-lua/blob/main/lua/plugins/init.lua)
+- [refactor参考: remove plugin/packer_compiled_lua, 参考NvchadVim](https://github.com/ibhagwan/nvim-lua/blob/main/lua/plugins/init.lua)
 - [plugin renamer](https://github.com/filipdutescu/renamer.nvim)
 - [plugin harpoon用于快速跳转到特定的buffer，terminal](https://github.com/ThePrimeagen/harpoon)
 - [plugin auto-session](https://github.com/rmagatti/auto-session)

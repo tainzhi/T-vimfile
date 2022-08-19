@@ -1,6 +1,6 @@
 local core_modules = {
    "core",
-   "lsp",
+   -- "lsp",
 }
 
 for _, module in ipairs(core_modules) do
