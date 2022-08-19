@@ -91,10 +91,9 @@ vim.notify = function(msg, log_level, _opts)
    end
 end
 
+-- todo
 -- requires a file containing user's lspconfigs
-
-local addlsp_confs = require("core.config").plugins.options.lspconfig.setup_lspconf
-
+local addlsp_confs = ""
 if string.len(addlsp_confs) ~= 0 then
    require(addlsp_confs).setup_lsp(on_attach, capabilities)
 end

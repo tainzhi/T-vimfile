@@ -1,11 +1,6 @@
 local utils = require "core.utils"
-local config = require "core.config"
 
 local map = utils.map
-
-local maps = config.mappings
-local plugin_maps = maps.plugins
-local nvChad_options = config.options.nvChad
 
 local cmd = vim.cmd
 
@@ -30,73 +25,53 @@ M.misc = function()
       map("n", "<Esc>", ":noh <CR>")
 
       -- open help for word under cursor
-      map("n", maps.open_help, ':help <C-R>=expand("<cword>")<CR><CR>')
+      map("n", "<leader>h", ':help <C-R>=expand("<cword>")<CR><CR>')
    end
 
    local function optional_mappings()
       -- don't yank text on cut ( x )
-      if not nvChad_options.copy_cut then
-         map({ "n", "v" }, "x", '"_x')
-      end
+      map({ "n", "v" }, "x", '"_x')
 
       -- don't yank text on delete ( dd )
-      if not nvChad_options.copy_del then
-         map({ "n", "v" }, "d", '"_d')
-      end
+      map({ "n", "v" }, "d", '"_d')
 
       -- navigation within insert mode
-      if nvChad_options.insert_nav then
-         local inav = maps.insert_nav
-
-         map("i", inav.backward, "<Left>")
-         map("i", inav.end_of_line, "<End>")
-         map("i", inav.forward, "<Right>")
-         map("i", inav.next_line, "<Up>")
-         map("i", inav.prev_line, "<Down>")
-         map("i", inav.beginning_of_line, "<ESC>^i")
-      end
+      map("i", "<C-h>", "<Left>")
+      map("i", "<C-e>", "<End>")
+      map("i", "<C-l>", "<Right>")
+      map("i", "<C-k>", "<Up>")
+      map("i", "<C-j>", "<Down>")
+      map("i", "<C-a>", "<ESC>^i")
 
       -- easier navigation between windows
-      if nvChad_options.window_nav then
-         local wnav = maps.window_nav
-
-         map("n", wnav.moveLeft, "<C-w>h")
-         map("n", wnav.moveRight, "<C-w>l")
-         map("n", wnav.moveUp, "<C-w>k")
-         map("n", wnav.moveDown, "<C-w>j")
-      end
-
-      -- check the theme toggler
-      if nvChad_options.theme_toggler then
-         map(
-            "n",
-            maps.theme_toggler,
-            ":lua require('nvchad').toggle_theme(require('core.config').ui.theme_toggler) <CR>"
-         )
-      end
+      map("n", "<C-h>", "<C-w>h")
+      map("n", "<C-l>", "<C-w>l")
+      map("n", "<C-k>", "<C-w>k")
+      map("n", "<C-j>", "<C-w>j")
    end
 
    local function required_mappings()
-      map("n", maps.close_buffer, ":lua require('core.utils').close_buffer() <CR>") -- close  buffer
-      map("n", maps.copy_whole_file, ":%y+ <CR>") -- copy whole file content
-      map("n", maps.new_buffer, ":enew <CR>") -- new buffer
-      map("n", maps.new_tab, ":tabnew <CR>") -- new tabs
-      map("n", maps.line_number_toggle, ":set nu! <CR>") -- toggle numbers
-      map("n", maps.save_file, ":w <CR>") -- ctrl + s to save file
+      -- close current focused buffer
+      map("n", "<leader>x", ":lua require('core.utils').close_buffer() <CR>")
+      map("n", "<C-a>", ":%y+ <CR>") -- copy whole file content
+      map("n", "<S-t>", ":enew <CR>") -- new buffer
+      map("n", "<C-t>b", ":tabnew <CR>") -- new tabs
+      map("n", "<leader>n", ":set nu! <CR>") -- toggle numbers
+      map("n", "<C-s>", ":w <CR>") -- ctrl + s to save file
 
       -- terminal mappings --
-      local term_maps = maps.terminal
+      -- multiple mappings can be given for esc_termmode and esc_hide_termmode
       -- get out of terminal mode
-      map("t", term_maps.esc_termmode, "<C-\\><C-n>")
+      map("t", "jk", "<C-\\><C-n>")
       -- hide a term from within terminal mode
-      map("t", term_maps.esc_hide_termmode, "<C-\\><C-n> :lua require('core.utils').close_buffer() <CR>")
-      -- pick a hidden term
-      map("n", term_maps.pick_term, ":Telescope terms <CR>")
+      map("t", "JK", "<C-\\><C-n> :lua require('core.utils').close_buffer() <CR>")
+      -- show & recover hidden terminal buffers in a telescope picker
+      map("n", "<leader>W", ":Telescope terms <CR>")
       -- Open terminals
       -- TODO this opens on top of an existing vert/hori term, fixme
-      map("n", term_maps.new_horizontal, ":execute 15 .. 'new +terminal' | let b:term_type = 'hori' | startinsert <CR>")
-      map("n", term_maps.new_vertical, ":execute 'vnew +terminal' | let b:term_type = 'vert' | startinsert <CR>")
-      map("n", term_maps.new_window, ":execute 'terminal' | let b:term_type = 'wind' | startinsert <CR>")
+      map("n", "<leader>h", ":execute 15 .. 'new +terminal' | let b:term_type = 'hori' | startinsert <CR>")
+      map("n", "<leader>v", ":execute 'vnew +terminal' | let b:term_type = 'vert' | startinsert <CR>")
+      map("n", "<leader>w", ":execute 'terminal' | let b:term_type = 'wind' | startinsert <CR>")
       -- terminal mappings end --
 
       -- Add Packer commands because we are not loading it at startup
@@ -107,12 +82,6 @@ M.misc = function()
       cmd "silent! command PackerSync lua require 'plugins' require('packer').sync()"
       cmd "silent! command PackerUpdate lua require 'plugins' require('packer').update()"
 
-      -- add NvChadUpdate command and mapping
-      cmd "silent! command! NvChadUpdate lua require('nvchad').update_nvchad()"
-      map("n", maps.update_nvchad, ":NvChadUpdate <CR>")
-
-      -- add ChadReload command and maping
-      -- cmd "silent! command! NvChadReload lua require('nvchad').reload_config()"
    end
 
    non_config_mappings()
@@ -123,51 +92,53 @@ end
 -- below are all plugin related mappings
 
 M.bufferline = function()
-   local m = plugin_maps.bufferline
-
-   map("n", m.next_buffer, ":BufferLineCycleNext <CR>")
-   map("n", m.prev_buffer, ":BufferLineCyclePrev <CR>")
+   -- next buffer
+   map("n", "<Tab>", ":BufferLineCycleNext <CR>")
+   -- previous buffer
+   map("n", "<S-Tab>", ":BufferLineCyclePrev <CR>")
 end
 
 M.comment = function()
-   local m = plugin_maps.comment.toggle
-   map("n", m, ":CommentToggle <CR>")
-   map("v", m, ":CommentToggle <CR>")
+   -- toggle comment (works on multiple lines)
+   map("n", "<leader>/", ":CommentToggle <CR>")
+   map("v", "<leader>/", ":CommentToggle <CR>")
 end
 
-M.dashboard = function()
-   local m = plugin_maps.dashboard
+-- -- NeoVim 'home screen' on open
+-- M.dashboard = function()
+--    map("n", "<leader>bm", ":DashboardJumpMarks <CR>")
+--    -- basically create a new buffer
+--    map("n", "<leader>fn", ":DashboardNewFile <CR>")
+--    -- open dashboard
+--    map("n", "<leader>db", ":Dashboard <CR>")
+--    -- load a saved session
+--    map("n", "<leader>l", ":SessionLoad <CR>")
+--    -- save a session
+--    map("n", "<leader>s", ":SessionSave <CR>")
+-- end
 
-   map("n", m.bookmarks, ":DashboardJumpMarks <CR>")
-   map("n", m.new_file, ":DashboardNewFile <CR>")
-   map("n", m.open, ":Dashboard <CR>")
-   map("n", m.session_load, ":SessionLoad <CR>")
-   map("n", m.session_save, ":SessionSave <CR>")
-end
-
+-- file explorer/tree
 M.nvimtree = function()
-   map("n", plugin_maps.nvimtree.toggle, ":NvimTreeToggle <CR>")
-   map("n", plugin_maps.nvimtree.focus, ":NvimTreeFocus <CR>")
+   map("n", "<C-n>", ":NvimTreeToggle <CR>")
+   map("n", "<leader>e", ":NvimTreeFocus <CR>")
 end
 
+-- multitool for finding & picking things
 M.telescope = function()
-   local m = plugin_maps.telescope
-
-   map("n", m.buffers, ":Telescope buffers <CR>")
-   map("n", m.find_files, ":Telescope find_files <CR>")
-   map("n", m.find_hiddenfiles, ":Telescope find_files hidden=true <CR>")
-   map("n", m.git_commits, ":Telescope git_commits <CR>")
-   map("n", m.git_status, ":Telescope git_status <CR>")
-   map("n", m.help_tags, ":Telescope help_tags <CR>")
-   map("n", m.live_grep, ":Telescope live_grep <CR>")
-   map("n", m.oldfiles, ":Telescope oldfiles <CR>")
-   map("n", m.themes, ":Telescope themes <CR>")
+   map("n", "<leader>fb", ":Telescope buffers <CR>")
+   map("n", "<leader>ff", ":Telescope find_files <CR>")
+   map("n", "<leader>fa", ":Telescope find_files hidden=true <CR>")
+   map("n", "<leader>cm", ":Telescope git_commits <CR>")
+   map("n", "<leader>gt", ":Telescope git_status <CR>")
+   map("n", "<leader>fh", ":Telescope help_tags <CR>")
+   map("n", "<leader>fw", ":Telescope live_grep <CR>")
+   map("n", "<leader>fo", ":Telescope oldfiles <CR>")
+   map("n", "<leaderth", ":Telescope colorscheme <CR>")
+   map("n", "<leader>tk", ":Telescope keymaps <CR>")
 end
 
 M.telescope_media = function()
-   local m = plugin_maps.telescope.telescope_media
-
-   map("n", m.media_files, ":Telescope media_files <CR>")
+   map("n", "<leader>fp", ":Telescope media_files <CR>")
 end
 
 return M

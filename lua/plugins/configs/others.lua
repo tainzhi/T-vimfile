@@ -1,6 +1,5 @@
 local M = {}
 
-local config = require("core.config")
 M.autopairs = function()
    local present1, autopairs = pcall(require, "nvim-autopairs")
    local present2, cmp_autopairs = pcall(require, "nvim-autopairs.completion.cmp")
@@ -18,8 +17,9 @@ end
 
 M.better_escape = function()
    require("better_escape").setup {
-      mapping = config.mappings.plugins.better_escape.esc_insertmode,
-      timeout = config.plugins.options.esc_insertmode_timeout,
+      -- todo
+      mapping = "jk",
+      timeout = 300,
    }
 end
 

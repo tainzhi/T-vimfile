@@ -1,35 +1,37 @@
 local opt = vim.opt
 local g = vim.g
 
--- export user config as a global varibale
-g.nvchad_user_config = "chadrc"
-
-local options = require("core.config").options
-
+opt.termguicolors = true
+opt.guifont = "Cascadia Code:h11"
 opt.title = true
-opt.clipboard = options.clipboard
-opt.cmdheight = options.cmdheight
+
+opt.clipboard = "unnamedplus"
+opt.cmdheight = 1
 opt.cul = true -- cursor line
 
 -- Indentline
-opt.expandtab = options.expandtab
-opt.shiftwidth = options.shiftwidth
-opt.smartindent = options.smartindent
+opt.expandtab = true
+opt.shiftwidth = 2
+opt.smartindent = true
 
 -- disable tilde on end of buffer: https://github.com/neovim/neovim/pull/8546#issuecomment-643643758
 opt.fillchars = { eob = " " }
 
-opt.hidden = options.hidden
-opt.ignorecase = options.ignorecase
-opt.smartcase = options.smartcase
-opt.wrapscan = options.wrapscan
-opt.mouse = options.mouse
+opt.hidden = true
+opt.ignorecase = true
+opt.smartcase = true
+-- wrapscan default option is on
+-- means, when "search next" reaches end of file, it wraps around to the beginning
+-- so :set nowrapscan
+opt.wrapscan = false
+opt.mouse = "a"
 
 -- Numbers
-opt.number = options.number
-opt.numberwidth = options.numberwidth
-opt.relativenumber = options.relativenumber
-opt.ruler = options.ruler
+opt.number = true
+-- relative numbers in normal mode tool at the bottom of options.lua
+opt.numberwidth = 2
+opt.relativenumber = true
+opt.ruler = false
 
 -- disable nvim intro
 opt.shortmess:append "sI"
@@ -37,19 +39,30 @@ opt.shortmess:append "sI"
 opt.signcolumn = "yes"
 opt.splitbelow = true
 opt.splitright = true
-opt.tabstop = options.tabstop
+-- Number of spaces that a <Tab> in the file counts for
+opt.tabstop = 8
 opt.termguicolors = true
-opt.timeoutlen = options.timeoutlen
-opt.undofile = options.undofile
+opt.timeoutlen = 400
+-- keep a permanent undo (across restarts)
+opt.undofile = true
 
 -- interval for writing swap file to disk, also used by gitsigns
-opt.updatetime = options.updatetime
+opt.updatetime = 250
 
 -- go to previous/next line with h,l,left arrow and right arrow
 -- when cursor reaches end/beginning of line
 opt.whichwrap:append "<>[]hl"
+-- space 
+g.mapleader = " "
 
-g.mapleader = options.mapleader
+-- set default theme
+-- storm, night, day
+g.tokyonight_style = "night"
+g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
+-- Change the "hint" color to the "orange" color, and make the "error" color bright red
+-- vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
+-- Load the colorscheme
+vim.cmd[[colorscheme tokyonight]]
 
 -- disable some builtin vim plugins
 local disabled_built_ins = {

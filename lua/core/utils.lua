@@ -115,25 +115,26 @@ M.close_buffer = function(bufexpr, force)
 end
 
 -- hide statusline
-M.hide_statusline = function()
-   local hidden = require("core.config").plugins.options.statusline.hidden
-   local shown = require("core.config").plugins.options.statusline.shown
-   local api = vim.api
-   local buftype = api.nvim_buf_get_option("%", "ft")
+-- todo remove or fix
+-- M.hide_statusline = function()
+--    local hidden = require("core.config").plugins.options.statusline.hidden
+--    local shown = require("core.config").plugins.options.statusline.shown
+--    local api = vim.api
+--    local buftype = api.nvim_buf_get_option("%", "ft")
 
-   -- shown table from config has the highest priority
-   if vim.tbl_contains(shown, buftype) then
-      api.nvim_set_option("laststatus", 2)
-      return
-   end
+--    -- shown table from config has the highest priority
+--    if vim.tbl_contains(shown, buftype) then
+--       api.nvim_set_option("laststatus", 2)
+--       return
+--    end
 
-   if vim.tbl_contains(hidden, buftype) then
-      api.nvim_set_option("laststatus", 0)
-      return
-   else
-      api.nvim_set_option("laststatus", 2)
-   end
-end
+--    if vim.tbl_contains(hidden, buftype) then
+--       api.nvim_set_option("laststatus", 0)
+--       return
+--    else
+--       api.nvim_set_option("laststatus", 2)
+--    end
+-- end
 
 M.map = function(mode, keys, cmd, opt)
    local options = { noremap = true, silent = true }
