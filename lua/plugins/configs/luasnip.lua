@@ -8,9 +8,5 @@ ls.config.set_config {
     updateevents = "TextChanged,TextChangedI",
 }
 
-ls.snippets = {
-    all = require("snippets.all"),
-    idart = require("snippets.idart"),
-}
-
-require("luasnip.loaders.from_vscode").load()
+require("luasnip.loaders.from_lua").lazy_load( { paths =  "./lua/snippets" })
+require("luasnip.loaders.from_vscode").lazy_load()

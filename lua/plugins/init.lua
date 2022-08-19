@@ -182,16 +182,6 @@ return packer.startup(function()
    }
 
    use {
-      "glepnir/dashboard-nvim",
-      config = function ()
-         require("plugins.configs.dashboard")
-      end,
-      setup = function()
-         require("core.mappings").dashboard()
-      end,
-   }
-
-   use {
       "terrortylor/nvim-comment",
       cmd = "CommentToggle",
       config = function()
