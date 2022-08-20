@@ -256,6 +256,18 @@ return packer.startup(function()
       cmd = { "StartupTime"}
    }
 
+   -- colorscheme
+   use 'folke/tokyonight.nvim'
+   -- https://github.com/shaunsingh/solarized.nvim
+   use 'shaunsingh/solarized.nvim'
+   -- https://github.com/ellisonleao/gruvbox.nvim
+   use 'ellisonleao/gruvbox.nvim'
+   -- https://github.com/EdenEast/nightfox.nvim
+   use 'EdenEast/nightfox.nvim'
+
+
+   -- 格式化文本文件, 比如半角字符转换为全角字符, 
+   -- 英文和数字如果在中文之间使用前后插入空格
    use {
       "hotoo/pangu.vim",
       ft = {"markdown", "md", "text"},
@@ -276,12 +288,8 @@ return packer.startup(function()
       ft = {"log", "txt"}
    }
 
-   -- colorscheme
-   use 'folke/tokyonight.nvim'
-   -- https://github.com/shaunsingh/solarized.nvim
-   use 'shaunsingh/solarized.nvim'
-   -- https://github.com/ellisonleao/gruvbox.nvim
-   use 'ellisonleao/gruvbox.nvim'
-   -- https://github.com/EdenEast/nightfox.nvim
-   use 'EdenEast/nightfox.nvim'
+   use {
+      'glacambre/firenvim',
+      run = function() vim.fn['firenvim#install'](0) end
+   }
 end)

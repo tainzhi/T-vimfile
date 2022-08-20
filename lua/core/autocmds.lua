@@ -21,3 +21,7 @@ vim.cmd [[ autocmd BufWinEnter *.txt if &ft == 'help' | wincmd L | vertical resi
 
 vim.cmd [[ autocmd BufWritePre *.md if &ft == 'markdown' | PanguAll]]
 vim.cmd [[ autocmd BufWinEnter *.md if &ft == 'markdown' | set shada="NONE"]]
+
+-- for chrome plugin firenvim
+vim.cmd [[ au BufEnter idart.mot.com_*.txt set filetype=idart lines=30 ]]
+vim.cmd [[ au BufEnter github.com_*.txt set filetype=markdown lines=30 ]]
