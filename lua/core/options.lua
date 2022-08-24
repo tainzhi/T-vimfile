@@ -64,11 +64,10 @@ g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
 -- Load the colorscheme
 vim.cmd[[colorscheme tokyonight]]
 
-if vim.fn.exists("g:neovide") == true then
-   g.neovide_remember_window_size = true
-   g.neovide_cursor_vfx_mode = "railgun"
-   g.neovide_underline_automatic_scaling = true
-end
+g.neovide_remember_window_size = true
+g.neovide_cursor_vfx_mode = "railgun"
+g.neovide_underline_automatic_scaling = true
+g.neovide_fullscreen = true
 
 -- disable some builtin vim plugins
 local disabled_built_ins = {

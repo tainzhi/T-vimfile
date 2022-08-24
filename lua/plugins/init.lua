@@ -59,6 +59,7 @@ return packer.startup(function()
    use {
       "nvim-treesitter/nvim-treesitter",
       event = "BufRead",
+      ft = {"c", "c++", "lua", "sh", "java"},
       config = function()
          require("plugins.configs.treesitter")
       end
@@ -67,6 +68,7 @@ return packer.startup(function()
    -- git stuff
    use {
       "lewis6991/gitsigns.nvim",
+      cmd = "Gitsigns",
       opt = true,
       config = function()
          require("plugins.configs.gitsigns")
@@ -79,6 +81,7 @@ return packer.startup(function()
    -- lsp stuff
    use {
       "neovim/nvim-lspconfig",
+      ft = {"c", "c++", "lua", "sh", "java"},
       opt = true,
       setup = function()
          require("core.utils").packer_lazy_load "nvim-lspconfig"
@@ -93,6 +96,7 @@ return packer.startup(function()
    }
 
    use {
+      ft = {"c", "c++", "lua", "sh", "java"},
       "williamboman/nvim-lsp-installer"
    }
    use {
@@ -275,7 +279,6 @@ return packer.startup(function()
 
    use {
       "~/AppData/Local/nvim/extra/plugins/rgflow.nvim",
-      ft = {"log", "txt"},
       requires = {
          {
             "MunifTanjim/nui.nvim",
@@ -290,6 +293,13 @@ return packer.startup(function()
 
    use {
       'glacambre/firenvim',
-      run = function() vim.fn['firenvim#install'](0) end
+      run = function() vim.fn['firenvim#install'](0) end,
+      config = function ()
+         require("plugins.configs.firenvim")
+      end,
+      -- lazy load, if g:started_by_firenvim == v:true
+      cond = function()
+         return vim.fn.exists('g:started_by_firenvim') == 1
+      end
    }
 end)
