@@ -194,4 +194,13 @@ M.packer_lazy_load = function(plugin, timer)
    end
 end
 
+M.neovide_fullscreen = function()
+   local orginalValue = vim.g.neovide_fullscreen
+   if orginalValue == 1 then
+      vim.cmd[[ let g:neovide_fullscreen = 0]]
+   else
+      vim.cmd[[ let g:neovide_fullscreen = 1]]
+   end
+end
+
 return M

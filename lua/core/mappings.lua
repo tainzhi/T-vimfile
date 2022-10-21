@@ -26,14 +26,16 @@ M.misc = function()
 
       -- open help for word under cursor
       map("n", "<leader>h", ':help <C-R>=expand("<cword>")<CR><CR>')
+
+      map({ "n", "v" , "i"}, "<F11>", ":lua require('core.utils').neovide_fullscreen() <CR>")
    end
 
    local function optional_mappings()
       -- don't yank text on cut ( x )
       map({ "n", "v" }, "x", '"_x')
 
-      -- don't yank text on delete ( dd )
-      map({ "n", "v" }, "d", '"_d')
+      -- -- don't yank text on delete ( dd )
+      -- map({ "n", "v" }, "d", '"_d')
 
       -- navigation within insert mode
       map("i", "<C-h>", "<Left>")
