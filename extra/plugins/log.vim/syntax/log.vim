@@ -48,7 +48,9 @@ if exists('b:current_syntax')
   syn match logDateDay '\s\{1,2}\d\{1,2}' contained
   
   " Matches 12:09:38 or 00:03:38.129Z or 01:32:12.102938 +0700
-  syn match logTime '\d\{2}:\d\{2}:\d\{2}\(\.\d\{2,6}\)\?\(\s\?[-+]\d\{2,4}\|Z\)\?\>' nextgroup=logTimeZone,logSysColumns skipwhite
+  " 不match android log中类似这样的时间 08-19 15:55:06.148
+  " vimregep
+  syn match logTime '\(\d\{2}-\d\{2}\s\)\@<!\d\{2}:\d\{2}:\d\{2}\(\.\d\{2,6}\)\?\(\s\?[-+]\d\{2,4}\|Z\)\?\>' nextgroup=logTimeZone,logSysColumns skipwhite
   
   " Follows logTime, matches UTC or PDT 2019 or 2019 EDT
   syn match logTimeZone '[A-Z]\{2,5}\>\( \d\{4}\)\?' contained
@@ -92,7 +94,7 @@ if exists('b:current_syntax')
   " Camera
   "---------------------------------------------------------------------------
   syn match fsm 'Fsm'
-  syn match fsmTransition 'Transition from'
+  syn match fsmTransition 'Transition from \[.*\] to \[.*\]'
 
   
   "  hi def link fsmTransition Identifier

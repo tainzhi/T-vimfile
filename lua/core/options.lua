@@ -67,7 +67,6 @@ vim.cmd[[colorscheme tokyonight]]
 g.neovide_remember_window_size = true
 g.neovide_cursor_vfx_mode = "railgun"
 g.neovide_underline_automatic_scaling = true
-g.neovide_fullscreen = true
 
 -- disable some builtin vim plugins
 local disabled_built_ins = {

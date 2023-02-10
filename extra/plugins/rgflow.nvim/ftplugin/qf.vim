@@ -12,6 +12,12 @@ setlocal colorcolumn=
 set conceallevel=2
 set concealcursor=nvic
 
+
+syn match fsm 'Fsm'
+syn match fsmTransition 'Transition from \[.*\] to \[.*\]'
+hi fsmTransition gui=NONE guifg=#B501FF ctermfg=Blue 
+hi fsm gui=NONE guifg=#F07000 ctermfg=Green 
+
 if g:rgflow_qf_keymaps
     "Disable accidental alternate buffer switching in quickfix window
     nnoremap <buffer> <C-^>   <Nop>

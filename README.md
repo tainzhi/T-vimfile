@@ -203,6 +203,7 @@ https://neovim.io/doc/user/quickref.html
 ## todo
 - lualine设置 statusline
 - [conceal filename and line number in quickfix](https://vi.stackexchange.com/questions/18353/how-to-conceal-filename-and-line-number-in-quickfix-window)
+- treesitter 替换 logger
 - treesitter for bash, vim; indent, fold
 - [vim-im-select](https://github.com/brglng/vim-im-select)
 - nvim lua debug https://github.com/rcarriga/nvim-dap-ui
