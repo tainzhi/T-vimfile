@@ -235,6 +235,7 @@ return packer.startup(function()
    use {
       "kylechui/nvim-surround",
       event = "InsertEnter",
+      tag = "*",
       config = function()
          require"nvim-surround".setup {mappings_style = "surround"}
       end
@@ -246,13 +247,12 @@ return packer.startup(function()
       run = "python -m chadtree deps",
       cmd = { "CHADopen", "CHADdeps" },
    }
-
+   
    use {
+      -- easy-motion的替代
       'phaazon/hop.nvim',
-      branch = 'v1', -- optional but strongly recommended
-      config = function()
-         require("plugins.configs.hop")
-      end
+      branch = 'v2', -- optional but strongly recommended
+      config = function() require("plugins.configs.hop") end
    }
 
    use {
@@ -301,5 +301,12 @@ return packer.startup(function()
       cond = function()
          return vim.fn.exists('g:started_by_firenvim') == 1
       end
+   }
+   
+   use {
+      'keaising/im-select.nvim',
+      config = function()
+         require("plugins.configs.others").im_select()
+      end,
    }
 end)
