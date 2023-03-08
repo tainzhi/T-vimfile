@@ -33,8 +33,6 @@ vim.cmd [[
         " set eventignore+=FileType
         " save memory when other file is viewed
         setlocal bufhidden=unload
-        " is read-only (write with :w new_filename)
-        setlocal buftype=nowrite
         " no undo possible
         setlocal undolevels=-1
         " display message
