@@ -51,6 +51,10 @@ return packer.startup(function()
    use {
       "norcalli/nvim-colorizer.lua",
       event = "BufRead",
+      -- 使用了vscode-neovim作为vscode的插件，那么neovim作为其后端的时候，不加载一些插件
+      cond = function()
+         return vim.g.vscode == nil
+      end,
       config = function()
          require("plugins.configs.others").colorizer()
       end
@@ -203,6 +207,9 @@ return packer.startup(function()
       config = function()
          require("plugins.configs.nvimtree")
       end,
+      cond = function()
+         return vim.g.vscode == nil
+      end,
       setup = function()
          require("core.mappings").nvimtree()
       end,
@@ -212,6 +219,9 @@ return packer.startup(function()
       "nvim-telescope/telescope.nvim",
       module = "telescope",
       cmd = "Telescope",
+      cond = function()
+         return vim.g.vscode == nil
+      end,
       -- requires = {
       --    {
       --       "nvim-telescope/telescope-fzf-native.nvim",
@@ -244,6 +254,9 @@ return packer.startup(function()
    use {
       "ms-jpq/chadtree",
       branch = "chad",
+      cond = function()
+         return vim.g.vscode == nil
+      end,
       run = "python -m chadtree deps",
       cmd = { "CHADopen", "CHADdeps" },
    }
@@ -255,40 +268,11 @@ return packer.startup(function()
       config = function() require("plugins.configs.hop") end
    }
 
-   use {
-      "dstein64/vim-startuptime",
-      cmd = { "StartupTime"}
-   }
-
-   -- colorscheme
-   use 'folke/tokyonight.nvim'
-   -- https://github.com/shaunsingh/solarized.nvim
-   use 'shaunsingh/solarized.nvim'
-   -- https://github.com/ellisonleao/gruvbox.nvim
-   use 'ellisonleao/gruvbox.nvim'
-   -- https://github.com/EdenEast/nightfox.nvim
-   use 'EdenEast/nightfox.nvim'
-
-
    -- 格式化文本文件, 比如半角字符转换为全角字符, 
    -- 英文和数字如果在中文之间使用前后插入空格
    use {
       "hotoo/pangu.vim",
       ft = {"markdown", "md", "text"},
-   }
-
-   use {
-      "~/AppData/Local/nvim/extra/plugins/rgflow.nvim",
-      requires = {
-         {
-            "MunifTanjim/nui.nvim",
-         }
-      }
-   }
-   use "~/AppData/Local/nvim/extra/plugins/syntaxs.nvim"
-   use {
-      "~/AppData/Local/nvim/extra/plugins/log.vim",
-      ft = {"log", "txt"}
    }
 
    use {
@@ -308,5 +292,45 @@ return packer.startup(function()
       config = function()
          require("plugins.configs.others").im_select()
       end,
+   }
+
+   -- colorscheme
+   use 'folke/tokyonight.nvim'
+   -- https://github.com/shaunsingh/solarized.nvim
+   use 'shaunsingh/solarized.nvim'
+   -- https://github.com/ellisonleao/gruvbox.nvim
+   use 'ellisonleao/gruvbox.nvim'
+   -- https://github.com/EdenEast/nightfox.nvim
+   use 'EdenEast/nightfox.nvim'
+
+   use {
+      "dstein64/vim-startuptime",
+      cmd = { "StartupTime"}
+   }
+
+   use {
+      "~/AppData/Local/nvim/extra/plugins/rgflow.nvim",
+      cond = function()
+         return vim.g.vscode == nil
+      end,
+      requires = {
+         {
+            "MunifTanjim/nui.nvim",
+         }
+      }
+   }
+   use {
+      "~/AppData/Local/nvim/extra/plugins/syntaxs.nvim",
+      cond = function()
+         return vim.g.vscode == nil
+      end,
+   }
+
+   use {
+      "~/AppData/Local/nvim/extra/plugins/log.vim",
+      cond = function()
+         return vim.g.vscode == nil
+      end,
+      ft = {"log", "txt"}
    }
 end)
