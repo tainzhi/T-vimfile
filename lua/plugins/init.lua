@@ -309,7 +309,9 @@ return packer.startup(function()
    }
 
    use {
-      "~/AppData/Local/nvim/extra/plugins/rgflow.nvim",
+
+      vim.fn.stdpath "config" .. "/extra/plugins/rgflow.nvim",
+      -- "~/AppData/Local/nvim/extra/plugins/rgflow.nvim",
       cond = function()
          return vim.g.vscode == nil
       end,
@@ -320,14 +322,16 @@ return packer.startup(function()
       }
    }
    use {
-      "~/AppData/Local/nvim/extra/plugins/syntaxs.nvim",
+      vim.fn.stdpath "config" .. "/extra/plugins/syntaxs.nvim",
+      -- "~/AppData/Local/nvim/extra/plugins/syntaxs.nvim",
       cond = function()
          return vim.g.vscode == nil
       end,
    }
 
    use {
-      "~/AppData/Local/nvim/extra/plugins/log.vim",
+      vim.fn.stdpath "config" .. "/extra/plugins/log.nvim",
+      -- "~/AppData/Local/nvim/extra/plugins/log.vim",
       cond = function()
          return vim.g.vscode == nil
       end,
