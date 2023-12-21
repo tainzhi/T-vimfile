@@ -10,7 +10,7 @@ scoop install ripgrep
 scoop install mingw
 
 # install packer.nvim to $HOME\AppData\Local\nvim-data\site\pack\packer\start\packer.nvim
-git clone https://github.com/wbthomason/packer.nvim "$env:LOCALAPPDATA\nvim-data\site\pack\packer\start\packer.nvim"
+git clone --depth 1 https://github.com/wbthomason/packer.nvim "$env:LOCALAPPDATA\nvim-data\site\pack\packer\start\packer.nvim"
 
 # clone config to $HOME\AppData\Local\nvim
 git clone https://github.com/tainzhi/Q-vimfile "$env:LOCALAPPDATA\nvim"

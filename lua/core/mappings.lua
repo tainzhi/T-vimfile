@@ -10,7 +10,7 @@ local M = {}
 M.misc = function()
    local function non_config_mappings()
       -- Don't copy the replaced text after pasting in visual mode
-      map("v", "p", '"_dP')
+      -- map("v", "p", '"_dP')
 
       -- Allow moving the cursor through wrapped lines with j, k, <Up> and <Down>
       -- http://www.reddit.com/r/vim/comments/2k4cbr/problem_with_gj_and_gk/
@@ -55,7 +55,9 @@ M.misc = function()
    local function required_mappings()
       -- close current focused buffer
       map("n", "<leader>x", ":lua require('core.utils').close_buffer() <CR>")
-      map("n", "<C-a>", ":%y+ <CR>") -- copy whole file content
+      map("n", "<C-a>", "<esc>ggVG$") -- select all
+      map("n", "<C-v>", "+p") -- paste
+      map("n", "<C-c>", "+y") -- copy
       map("n", "<S-t>", ":enew <CR>") -- new buffer
       map("n", "<C-t>b", ":tabnew <CR>") -- new tabs
       map("n", "<leader>n", ":set nu! <CR>") -- toggle numbers

@@ -37,7 +37,8 @@ nvimtree.setup {
       number = true,
       relativenumber = true,
       side = "left",
-      width = 30,
+      width = 60,
+      preserve_window_proportions = true,
    },
    renderer = {
       -- append a trailing slash to folder names
@@ -45,4 +46,9 @@ nvimtree.setup {
       highlight_opened_files = "all",
       root_folder_modifier = table.concat { ":t:gs?$?/..", string.rep(" ", 1000), "?:gs?^??" }
    },
+   actions = {
+      open_file = {
+         resize_window = false,
+      }
+   }
 }

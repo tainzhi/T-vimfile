@@ -4,8 +4,8 @@ local g = vim.g
 opt.termguicolors = true
 opt.guifont = "Cascadia Code:h11"
 opt.title = true
-
-opt.clipboard = "unnamedplus"
+-- vimscript: set clipboard += unnamedplus
+opt.clipboard:append { "unnamedplus" }
 opt.cmdheight = 1
 opt.cul = true -- cursor line
 
