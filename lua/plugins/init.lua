@@ -1,9 +1,8 @@
 -- All plugins have lazy=true by default,to load a plugin on startup just lazy=false
 -- List of all default plugins & their definitions
 local default_plugins = {
-   "nvim-lua/plenary.nvim",
+   { "nvim-lua/plenary.nvim" },
 
-   "kyazdani42/nvim-web-devicons",
 
    {
       -- statusline
@@ -320,13 +319,13 @@ local default_plugins = {
    },
 
    -- colorscheme
-   'folke/tokyonight.nvim',
+   { 'folke/tokyonight.nvim' , lazy=false},
    -- https://github.com/shaunsingh/solarized.nvim
-   'shaunsingh/solarized.nvim',
+   { 'shaunsingh/solarized.nvim' },
    -- https://github.com/ellisonleao/gruvbox.nvim
-   'ellisonleao/gruvbox.nvim',
+   { 'ellisonleao/gruvbox.nvim' },
    -- https://github.com/EdenEast/nightfox.nvim
-   'EdenEast/nightfox.nvim',
+   { 'EdenEast/nightfox.nvim' },
 
    {
       "dstein64/vim-startuptime",
