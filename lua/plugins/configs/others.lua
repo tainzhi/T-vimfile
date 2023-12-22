@@ -23,24 +23,24 @@ M.better_escape = function()
    }
 end
 
-M.blankline = function()
-   require("indent_blankline").setup {
+M.blankline =  {
       indentLine_enabled = 1,
       char = "▏",
       filetype_exclude = {
-         "help",
-         "terminal",
          "dashboard",
-         "packer",
+         "help",
+         "lazy",
          "lspinfo",
+         "terminal",
          "TelescopePrompt",
          "TelescopeResults",
       },
       buftype_exclude = { "terminal" },
       show_trailing_blankline_indent = false,
       show_first_indent_level = false,
+      show_current_context = true,
+      show_current_context_start = true,
    }
-end
 
 M.colorizer = function()
    local present, colorizer = pcall(require, "colorizer")

@@ -1,54 +1,81 @@
-local present, nvimtree = pcall(require, "nvim-tree")
-
-if not present then
-   return
-end
-
-nvimtree.setup {
-   diagnostics = {
-      enable = false,
-      icons = {
-         hint = "",
-         info = "",
-         warning = "",
-         error = "",
-      },
-   },
+local options = {
    filters = {
       dotfiles = false,
-      -- not show file.gz 
-      custom = { '.DS_Store', '*.gz' , '*.zip', ".git", "node_modules", ".cache" }
+      -- not show file.gz
+      custom = { '.DS_Store', '*.gz', '*.zip', ".git", "node_modules", ".cache" }
    },
    disable_netrw = true,
    hijack_netrw = true,
-   ignore_ft_on_setup = { "dashboard" },
    hijack_cursor = true,
+   hijack_unnamed_buffer_when_opening = false,
    sync_root_with_cwd = true,
    update_focused_file = {
       enable = true,
-      update_cwd = false,
-   },
-   tab = {
-      sync = {
-         
-      }
+      update_root = false,
    },
    view = {
       number = true,
       relativenumber = true,
+      adaptive_size = false,
       side = "left",
-      width = 60,
+      width = 45,
       preserve_window_proportions = true,
    },
-   renderer = {
-      -- append a trailing slash to folder names
-      add_trailing = false,
-      highlight_opened_files = "all",
-      root_folder_modifier = table.concat { ":t:gs?$?/..", string.rep(" ", 1000), "?:gs?^??" }
+   git = {
+      enable = false,
+      ignore = true,
+   },
+   filesystem_watchers = {
+      enable = true,
    },
    actions = {
       open_file = {
          resize_window = false,
-      }
-   }
+      },
+   },
+   renderer = {
+      root_folder_label = false,
+      highlight_git = false,
+      highlight_opened_files = "none",
+      root_folder_modifier = table.concat { ":t:gs?$?/..", string.rep(" ", 1000), "?:gs?^??" },
+
+      indent_markers = {
+         enable = false,
+      },
+
+      icons = {
+         show = {
+            file = true,
+            folder = true,
+            folder_arrow = true,
+            git = false,
+         },
+
+         glyphs = {
+            default = "󰈚",
+            symlink = "",
+            folder = {
+               default = "",
+               empty = "",
+               empty_open = "",
+               open = "",
+               symlink = "",
+               symlink_open = "",
+               arrow_open = "",
+               arrow_closed = "",
+            },
+            git = {
+               unstaged = "✗",
+               staged = "✓",
+               unmerged = "",
+               renamed = "➜",
+               untracked = "★",
+               deleted = "",
+               ignored = "◌",
+            },
+         },
+      },
+   },
 }
+
+return options

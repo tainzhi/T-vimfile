@@ -1,14 +1,12 @@
-local present, ts_config = pcall(require, "nvim-treesitter.configs")
-if not present then
-   return
-end
+local options = {
+  ensure_installed = { "lua" },
 
-ts_config.setup {
-   ensure_installed = {
-      "lua",
-   },
-   highlight = {
-      enable = true,
-      use_languagetree = true,
-   },
+  highlight = {
+    enable = true,
+    use_languagetree = true,
+  },
+
+  indent = { enable = true },
 }
+
+return options

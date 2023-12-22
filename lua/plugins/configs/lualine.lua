@@ -1,9 +1,4 @@
-local present, lualine = pcall(require, "lualine")
-if not present then
-   return
-end
-
-lualine.setup {
+local options ={
    options = {
       icons_enabled = true,
       theme = 'auto',
@@ -52,3 +47,5 @@ lualine.setup {
    extensions = {}
 
 }
+
+return options

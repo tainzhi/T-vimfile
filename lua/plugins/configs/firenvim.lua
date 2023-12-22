@@ -8,7 +8,7 @@ vim.api.nvim_exec(
         \  },
         \ 'localSettings': {
             \ '.*': {
-                \ 'cmdline': 'neovim',
+                \ 'cmdline': 'nvim',
                 \ 'content': 'text',
                 \ 'priority': 0,
                 \ 'selector': 'textarea',

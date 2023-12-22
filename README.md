@@ -9,52 +9,14 @@
 scoop install ripgrep
 scoop install mingw
 
-# install packer.nvim to $HOME\AppData\Local\nvim-data\site\pack\packer\start\packer.nvim
-git clone --depth 1 https://github.com/wbthomason/packer.nvim "$env:LOCALAPPDATA\nvim-data\site\pack\packer\start\packer.nvim"
 
 # clone config to $HOME\AppData\Local\nvim
 git clone https://github.com/tainzhi/Q-vimfile "$env:LOCALAPPDATA\nvim"
 
-# launch nvim
+# 插件管理： lazy.nvim
+# launch nvim and use 
 $ nvim +'hi NormalFloat guibg=#1e222a' +PackerSync
 ```
-
-#### plugin manager: [packer.nvim](https://github.com/wbthomason/packer.nvim#notices)
-
-linux
-
-```shell
-git clone --depth 1 https://github.com/wbthomason/packer.nvim\
- ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-
-sudo apt install nodejs ripgrep
-```
-
-windows powershell
-
-```powershell
-git clone https://github.com/wbthomason/packer.nvim "$env:LOCALAPPDATA\nvim-data\site\pack\packer\start\packer.nvim"
-
-```
-## Packer.nvim 用法
->-- You must run this or `PackerSync` whenever you make changes to your plugin configuration
--- Regenerate compiled loader file
-:PackerCompile
-
--- Remove any disabled or unused plugins
-:PackerClean
-
--- Clean, then install missing plugins
-:PackerInstall
-
--- Clean, then update and install plugins
-:PackerUpdate
-
--- Perform `PackerUpdate` and then `PackerCompile`
-:PackerSync
-
--- Loads opt plugin immediately
-:PackerLoad completion-nvim ale
 
 ## 启动速度优化相关
 安装插件[vim-startuptime](https://github.com/dstein64/vim-startuptime)后 `:StartupTime`
@@ -206,7 +168,6 @@ https://neovim.io/doc/user/quickref.html
 https://github.com/tainzhi/autoload_cscope.vim
 https://zhuanlan.zhihu.com/p/366496399
 https://github.com/nanotee/nvim-lua-guide
-https://github.com/NvChad/NvChad
 https://github.com/skywind3000/vim-terminal-help
 https://github.com/ranger/ranger
 https://github.com/mjlbach/starter.nvim/blob/master/init.lua
@@ -234,7 +195,6 @@ https://github.com/ojroques/vim-oscyank
 - synatx: 参考当前目录下 extra/plugins/syntaxs.nvim, 参考[github kmonad-vim](https://github.com/kmonad/kmonad-vim/blob/master/syntax/kbd.vim)
 - lsp for shell, [shell check](https://github.com/koalaman/shellcheck)
 - [which-key](https://github.com/folke/which-key.nvim)
-- [refactor 参考：remove plugin/packer_compiled_lua, 参考 NvchadVim](https://github.com/ibhagwan/nvim-lua/blob/main/lua/plugins/init.lua)
 - [plugin renamer](https://github.com/filipdutescu/renamer.nvim)
 - [plugin harpoon 用于快速跳转到特定的 buffer，terminal](https://github.com/ThePrimeagen/harpoon)
 - [plugin auto-session](https://github.com/rmagatti/auto-session)

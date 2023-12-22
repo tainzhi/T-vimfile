@@ -1,11 +1,14 @@
-local core_modules = {
-   "core",
-   -- "lsp",
-}
+require "core"
+-- require "lsp"
 
-for _, module in ipairs(core_modules) do
-   local ok, err = pcall(require, module)
-   if not ok then
-      error("Error loading " .. module .. "\n\n" .. err)
-   end
+-- require("core.utils").load_mappings()
+
+local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+
+-- bootstrap lazy.nvim!
+if not vim.loop.fs_stat(lazypath) then
+  require("core.bootstrap").lazy(lazypath)
 end
+
+vim.opt.rtp:prepend(lazypath)
+require "plugins"

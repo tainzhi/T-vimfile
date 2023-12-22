@@ -1,14 +1,8 @@
-local present, bufferline = pcall(require, "bufferline")
-if not present then
-   return
-end
-
-bufferline.setup {
+local options = {
    options = {
       offsets = { { filetype = "NvimTree", text = "", padding = 1 } },
       buffer_close_icon = "",
       modified_icon = "",
-      -- close_icon = "%@NvChad_bufferline_quitvim@%X",
       close_icon = "",
       show_close_icon = true,
       left_trunc_marker = "",
@@ -43,3 +37,5 @@ bufferline.setup {
       end,
    },
 }
+
+return options
