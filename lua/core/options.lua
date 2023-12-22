@@ -58,7 +58,7 @@ g.mapleader = " "
 -- -- set default theme
 -- -- storm, night, day
 -- g.tokyonight_style = "night"
--- g.tokyonight_sidebars = { "qf", "vista_kind", "terminal", "packer" }
+-- g.tokyonight_sidebars = { "qf", "vista_kind", "terminal"}
 -- -- Change the "hint" color to the "orange" color, and make the "error" color bright red
 -- -- vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
 -- -- Load the colorscheme

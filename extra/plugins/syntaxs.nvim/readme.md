@@ -11,7 +11,7 @@ This plugin adds 3 kind of horizontal highlights for text filetypes, like
 
 Use your favourite plugin manager to install.
 
-#### Example with Packer
+#### [Deprecated, replaced by lazy.nvim]Example with Packer
 
 [wbthomason/packer.nvim](https://github.com/wbthomason/packer.nvim)
 

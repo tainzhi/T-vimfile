@@ -8,11 +8,11 @@ local default_plugins = {
    {
       -- statusline
       'nvim-lualine/lualine.nvim',
-      dependencies = { 'kyazdani42/nvim-web-devicons', lazy = true } ,
+      dependencies = { 'kyazdani42/nvim-web-devicons', lazy = true },
       opts = function()
          return require("plugins.configs.lualine")
       end,
-      config = function (_, opts)
+      config = function(_, opts)
          require("lualine").setup(opts)
       end
    },
@@ -37,25 +37,52 @@ local default_plugins = {
       init = function()
          require("core.utils").lazy_load "indent-blankline.nvim"
       end,
-      opts = function()
-         return require("plugins.configs.others").blankline
-      end,
-      config = function(_, opts)
-         require("ibl").setup(opts)
+      config = function()
+         local highlight = {
+            "RainbowRed",
+            "RainbowYellow",
+            "RainbowBlue",
+            "RainbowOrange",
+            "RainbowGreen",
+            "RainbowViolet",
+            "RainbowCyan",
+         }
+
+         local hooks = require "ibl.hooks"
+         -- create the highlight groups in the highlight setup hook, so they are reset
+         -- every time the colorscheme changes
+         hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+            vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
+            vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
+            vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
+            vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
+            vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
+            vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
+            vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
+         end)
+
+         require("ibl").setup { indent = { highlight = highlight } }
       end
    },
 
-   {
-      "norcalli/nvim-colorizer.lua",
-      event = "BufRead",
-      -- 使用了vscode-neovim作为vscode的插件，那么neovim作为其后端的时候，不加载一些插件
-      cond = function()
-         return vim.g.vscode == nil
-      end,
-      config = function()
-         require("plugins.configs.others").colorizer()
-      end
-   },
+   -- {
+   --    "NvChad/nvim-colorizer.lua",
+   --    -- 使用了vscode-neovim作为vscode的插件，那么neovim作为其后端的时候，不加载一些插件
+   --    cond = function()
+   --       return vim.g.vscode == nil
+   --    end,
+   --    init = function()
+   --       require("core.utils").lazy_load "nvim-colorizer.lua"
+   --    end,
+   --    config = function(_, opts)
+   --       require("colorizer").setup(opts)
+
+   --       -- execute colorizer as soon as possible
+   --       vim.defer_fn(function()
+   --          require("colorizer").attach_to_buffer(0)
+   --       end, 0)
+   --    end,
+   -- },
 
    {
       "nvim-treesitter/nvim-treesitter",
@@ -129,48 +156,48 @@ local default_plugins = {
       "hrsh7th/nvim-cmp",
       event = "InsertEnter",
       dependencies = {
-        {
-          -- snippet plugin
-          "L3MON4D3/LuaSnip",
-          dependencies = "rafamadriz/friendly-snippets",
-          opts = { history = true, updateevents = "TextChanged,TextChangedI" },
-          config = function(_, opts)
-            require("plugins.configs.luasnip").luasnip(opts)
-          end,
-        },
-  
-        -- autopairing of (){}[] etc
-        {
-          "windwp/nvim-autopairs",
-          opts = {
-            fast_wrap = {},
-            disable_filetype = { "TelescopePrompt", "vim" },
-          },
-          config = function(_, opts)
-            require("nvim-autopairs").setup(opts)
-  
-            -- setup cmp for autopairs
-            local cmp_autopairs = require "nvim-autopairs.completion.cmp"
-            require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
-          end,
-        },
-  
-        -- cmp sources plugins
-        {
-          "saadparwaiz1/cmp_luasnip",
-          "hrsh7th/cmp-nvim-lua",
-          "hrsh7th/cmp-nvim-lsp",
-          "hrsh7th/cmp-buffer",
-          "hrsh7th/cmp-path",
-        },
+         {
+            -- snippet plugin
+            "L3MON4D3/LuaSnip",
+            dependencies = "rafamadriz/friendly-snippets",
+            opts = { history = true, updateevents = "TextChanged,TextChangedI" },
+            config = function(_, opts)
+               require("plugins.configs.luasnip").luasnip(opts)
+            end,
+         },
+
+         -- autopairing of (){}[] etc
+         {
+            "windwp/nvim-autopairs",
+            opts = {
+               fast_wrap = {},
+               disable_filetype = { "TelescopePrompt", "vim" },
+            },
+            config = function(_, opts)
+               require("nvim-autopairs").setup(opts)
+
+               -- setup cmp for autopairs
+               local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+               require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
+            end,
+         },
+
+         -- cmp sources plugins
+         {
+            "saadparwaiz1/cmp_luasnip",
+            "hrsh7th/cmp-nvim-lua",
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+         },
       },
       opts = function()
-        return require "plugins.configs.cmp"
+         return require "plugins.configs.cmp"
       end,
       config = function(_, opts)
-        require("cmp").setup(opts)
+         require("cmp").setup(opts)
       end,
-    },
+   },
 
    -- misc plugins
    {
@@ -280,7 +307,7 @@ local default_plugins = {
       config = function()
          require("plugins.configs.firenvim")
       end,
-      build = function() 
+      build = function()
          vim.fn['firenvim#install'](0)
       end,
    },

@@ -23,45 +23,6 @@ M.better_escape = function()
    }
 end
 
-M.blankline =  {
-      indentLine_enabled = 1,
-      char = "▏",
-      filetype_exclude = {
-         "dashboard",
-         "help",
-         "lazy",
-         "lspinfo",
-         "terminal",
-         "TelescopePrompt",
-         "TelescopeResults",
-      },
-      buftype_exclude = { "terminal" },
-      show_trailing_blankline_indent = false,
-      show_first_indent_level = false,
-      show_current_context = true,
-      show_current_context_start = true,
-   }
-
-M.colorizer = function()
-   local present, colorizer = pcall(require, "colorizer")
-   if present then
-      colorizer.setup({ "*" }, {
-         RGB = true, -- #RGB hex codes
-         RRGGBB = true, -- #RRGGBB hex codes
-         names = false, -- "Name" codes like Blue
-         RRGGBBAA = false, -- #RRGGBBAA hex codes
-         rgb_fn = false, -- CSS rgb() and rgba() functions
-         hsl_fn = false, -- CSS hsl() and hsla() functions
-         css = false, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
-         css_fn = false, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-
-         -- Available modes: foreground, background
-         mode = "background", -- Set the display mode.
-      })
-      vim.cmd "ColorizerReloadAllBuffers"
-   end
-end
-
 M.comment = function()
    local present, nvim_comment = pcall(require, "nvim_comment")
    if present then
@@ -82,40 +43,40 @@ M.signature = function()
          hint_scheme = "String",
          hi_parameter = "Search",
          max_height = 22,
-         max_width = 120, -- max_width of signature floating_window, line will be wrapped if exceed max_width
+         max_width = 120,      -- max_width of signature floating_window, line will be wrapped if exceed max_width
          handler_opts = {
             border = "single", -- double, single, shadow, none
          },
-         zindex = 200, -- by default it will be on top of all floating windows, set to 50 send it to bottom
-         padding = "", -- character to pad on left and right of signature can be ' ', or '|'  etc
+         zindex = 200,         -- by default it will be on top of all floating windows, set to 50 send it to bottom
+         padding = "",         -- character to pad on left and right of signature can be ' ', or '|'  etc
       }
    end
 end
 
 M.dap_lua = function()
-   local dap = require"dap"
-   dap.configurations.lua = { 
-   { 
-      type = 'nlua', 
-      request = 'attach',
-      name = "Attach to running Neovim instance",
-      host = function()
-         local value = vim.fn.input('Host [127.0.0.1]: ')
-         if value ~= "" then
-         return value
-         end
-         return '127.0.0.1'
-      end,
-      port = function()
-         local val = tonumber(vim.fn.input('Port: '))
-         assert(val, "Please provide a port number")
-         return val
-      end,
-   }
+   local dap = require "dap"
+   dap.configurations.lua = {
+      {
+         type = 'nlua',
+         request = 'attach',
+         name = "Attach to running Neovim instance",
+         host = function()
+            local value = vim.fn.input('Host [127.0.0.1]: ')
+            if value ~= "" then
+               return value
+            end
+            return '127.0.0.1'
+         end,
+         port = function()
+            local val = tonumber(vim.fn.input('Port: '))
+            assert(val, "Please provide a port number")
+            return val
+         end,
+      }
    }
 
    dap.adapters.nlua = function(callback, config)
-   callback({ type = 'server', host = config.host, port = config.port })
+      callback({ type = 'server', host = config.host, port = config.port })
    end
 end
 
