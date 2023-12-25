@@ -18,7 +18,9 @@ local default_plugins = {
 
    {
       "akinsho/bufferline.nvim",
-      dependencies = { "kyazdani42/nvim-web-devicons" },
+      lazy = false,
+      version = "*",
+      dependencies = "kyazdani42/nvim-web-devicons",
       opts = function()
          return require("plugins.configs.bufferline")
       end,
@@ -333,7 +335,6 @@ local default_plugins = {
    },
 
    {
-
       dir = vim.fn.stdpath "config" .. "/extra/plugins/rgflow.nvim",
       lazy = false,
       -- "~/AppData/Local/nvim/extra/plugins/rgflow.nvim",
@@ -345,11 +346,11 @@ local default_plugins = {
 
    {
       dir = vim.fn.stdpath "config" .. "/extra/plugins/syntaxs.nvim",
-      lazy = false,
       -- "~/AppData/Local/nvim/extra/plugins/syntaxs.nvim",
       cond = function()
          return vim.g.vscode == nil
       end,
+      ft = { "log", "txt", "markdown" , "md", "qf", "text"}
    },
 
    {
@@ -359,7 +360,7 @@ local default_plugins = {
       cond = function()
          return vim.g.vscode == nil
       end,
-      ft = { "log", "txt" }
+      ft = { "log", "txt" , "text"}
    },
 }
 
