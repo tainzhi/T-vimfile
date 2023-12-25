@@ -55,15 +55,6 @@ opt.whichwrap:append "<>[]hl"
 -- space 
 g.mapleader = " "
 
--- -- set default theme
--- -- storm, night, day
--- g.tokyonight_style = "night"
--- g.tokyonight_sidebars = { "qf", "vista_kind", "terminal"}
--- -- Change the "hint" color to the "orange" color, and make the "error" color bright red
--- -- vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
--- -- Load the colorscheme
--- vim.cmd[[colorscheme tokyonight]]
-
 g.neovide_remember_window_size = true
 g.neovide_cursor_vfx_mode = "railgun"
 g.neovide_underline_automatic_scaling = true

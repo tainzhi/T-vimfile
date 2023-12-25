@@ -115,6 +115,8 @@ end
 
 -- file explorer/tree
 M.nvimtree = function()
+   local api = require "nvim-tree.api"
+   vim.keymap.set('n', '?',     api.tree.toggle_help, { desc = "nvim-tree: " .. "Help", noremap = true, silent = true, nowait = true })
    map("n", "<C-n>", ":NvimTreeToggle <CR>")
    map("n", "<leader>e", ":NvimTreeFocus <CR>")
 end

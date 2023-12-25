@@ -321,13 +321,27 @@ local default_plugins = {
    },
 
    -- colorscheme
-   { 'folke/tokyonight.nvim' , lazy=false},
-   -- https://github.com/shaunsingh/solarized.nvim
-   { 'shaunsingh/solarized.nvim' },
-   -- https://github.com/ellisonleao/gruvbox.nvim
-   { 'ellisonleao/gruvbox.nvim' },
-   -- https://github.com/EdenEast/nightfox.nvim
-   { 'EdenEast/nightfox.nvim' },
+   {
+      "folke/tokyonight.nvim",
+      lazy = false,    -- make sure we load this during startup if it is your main colorscheme
+      priority = 1000, -- make sure to load this before all the other start plugins
+      config = function()
+         -- set default theme
+         -- storm, night, day
+         vim.g.tokyonight_style = "night"
+         vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal" }
+         -- Change the "hint" color to the "orange" color, and make the "error" color bright red
+         vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
+         -- Load the colorscheme
+         vim.cmd [[colorscheme tokyonight]]
+      end,
+   },
+   -- -- https://github.com/shaunsingh/solarized.nvim
+   -- { 'shaunsingh/solarized.nvim' , lazy=true},
+   -- -- https://github.com/ellisonleao/gruvbox.nvim
+   -- { 'ellisonleao/gruvbox.nvim', lazy=true},
+   -- -- https://github.com/EdenEast/nightfox.nvim
+   -- { 'EdenEast/nightfox.nvim' ,lazy=true},
 
    {
       "dstein64/vim-startuptime",
@@ -350,7 +364,7 @@ local default_plugins = {
       cond = function()
          return vim.g.vscode == nil
       end,
-      ft = { "log", "txt", "markdown" , "md", "qf", "text"}
+      ft = { "log", "txt", "markdown", "md", "qf", "text" }
    },
 
    {
@@ -360,7 +374,7 @@ local default_plugins = {
       cond = function()
          return vim.g.vscode == nil
       end,
-      ft = { "log", "txt" , "text"}
+      ft = { "log", "txt", "text" }
    },
 }
 
