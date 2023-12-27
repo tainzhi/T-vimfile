@@ -115,8 +115,6 @@ end
 
 -- file explorer/tree
 M.nvimtree = function()
-   local api = require "nvim-tree.api"
-   vim.keymap.set('n', '?',     api.tree.toggle_help, { desc = "nvim-tree: " .. "Help", noremap = true, silent = true, nowait = true })
    map("n", "<C-n>", ":NvimTreeToggle <CR>")
    map("n", "<leader>e", ":NvimTreeFocus <CR>")
 end
@@ -138,5 +136,69 @@ end
 M.telescope_media = function()
    map("n", "<leader>fp", ":Telescope media_files <CR>")
 end
+
+M.gitsigns = {
+  plugin = true,
+
+  n = {
+    -- Navigation through hunks
+    ["]c"] = {
+      function()
+        if vim.wo.diff then
+          return "]c"
+        end
+        vim.schedule(function()
+          require("gitsigns").next_hunk()
+        end)
+        return "<Ignore>"
+      end,
+      "Jump to next hunk",
+      opts = { expr = true },
+    },
+
+    ["[c"] = {
+      function()
+        if vim.wo.diff then
+          return "[c"
+        end
+        vim.schedule(function()
+          require("gitsigns").prev_hunk()
+        end)
+        return "<Ignore>"
+      end,
+      "Jump to prev hunk",
+      opts = { expr = true },
+    },
+
+    -- Actions
+    ["<leader>rh"] = {
+      function()
+        require("gitsigns").reset_hunk()
+      end,
+      "Reset hunk",
+    },
+
+    ["<leader>ph"] = {
+      function()
+        require("gitsigns").preview_hunk()
+      end,
+      "Preview hunk",
+    },
+
+    ["<leader>gb"] = {
+      function()
+        package.loaded.gitsigns.blame_line()
+      end,
+      "Blame line",
+    },
+
+    ["<leader>td"] = {
+      function()
+        require("gitsigns").toggle_deleted()
+      end,
+      "Toggle deleted",
+    },
+  },
+}
 
 return M

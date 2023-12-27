@@ -1,4 +1,5 @@
 local M = {}
+local utils = require "core.utils"
 
 M.autopairs = function()
    local present1, autopairs = pcall(require, "nvim-autopairs")
@@ -79,6 +80,21 @@ M.dap_lua = function()
       callback({ type = 'server', host = config.host, port = config.port })
    end
 end
+
+
+M.gitsigns = {
+  signs = {
+    add = { text = "│" },
+    change = { text = "│" },
+    delete = { text = "󰍵" },
+    topdelete = { text = "‾" },
+    changedelete = { text = "~" },
+    untracked = { text = "│" },
+  },
+  on_attach = function(bufnr)
+    utils.load_mappings("gitsigns", { buffer = bufnr })
+  end,
+}
 
 
 M.im_select = function()
