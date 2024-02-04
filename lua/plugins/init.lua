@@ -295,16 +295,6 @@ local default_plugins = {
    },
 
    {
-      "ms-jpq/chadtree",
-      branch = "chad",
-      cond = function()
-         return vim.g.vscode == nil
-      end,
-      build = "python -m chadtree deps",
-      cmd = { "CHADopen", "CHADdeps" },
-   },
-
-   {
       -- easy-motion的替代
       'phaazon/hop.nvim',
       branch = 'v2', -- optional but strongly recommended
@@ -362,11 +352,6 @@ local default_plugins = {
    -- { 'ellisonleao/gruvbox.nvim', lazy=true},
    -- -- https://github.com/EdenEast/nightfox.nvim
    -- { 'EdenEast/nightfox.nvim' ,lazy=true},
-
-   {
-      "dstein64/vim-startuptime",
-      cmd = { "StartupTime" }
-   },
 
    {
       dir = vim.fn.stdpath "config" .. "/extra/plugins/rgflow.nvim",

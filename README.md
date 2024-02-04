@@ -15,17 +15,8 @@ git clone https://github.com/tainzhi/Q-vimfile "$env:LOCALAPPDATA\nvim"
 
 # 插件管理： lazy.nvim
 # launch nvim and use 
-$ nvim +'hi NormalFloat guibg=#1e222a' +PackerSync
+$ nvim 
 ```
-
-## 启动速度优化相关
-安装插件[vim-startuptime](https://github.com/dstein64/vim-startuptime)后 `:StartupTime`
-
-或者使用 hyperfine
-```sh
-hyperfine "nvim --headless +qa" --warmup 5
-```
-初步检测启动时间是 400ms
 
 ## nvim-qt 的替代 gui
 [neovide](https://github.com/neovide/neovide)：
