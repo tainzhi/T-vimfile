@@ -51,24 +51,20 @@ local loop = vim.loop
 local zs_ze = "\30"  -- The start and end of pattern match invisible marker
 rgflow = {}
 
+-- lowmemorykiller杀死camera3导致camera3闪退
+-- Kill 'com.motorola.camera3' 有问题，所以替换成 Kill .com.motorola.camera3
 local original_patterns = {
+    "CaptureFailed|Dump ERROR Stack Trace|onCaptureFailed|One-shot did not succeed|processFrames failed|No frames found|not enough frames|E McfSnapshotManagementThread:|onSaveError|allFailed=true|BG-Process Job is cancelled|Unable to configure streams",
+    "CaptureFailed",
+    "F DEBUG|FATAL_EXCEPTION|AndroidRuntime|NullPointerException|Kill .com.motorola.camera3. |Dump ERROR Stack Trace|Unable to configure streams",
     "AutoFocusStateMachine|CameraKpiTag: AUTO_FOCUS",
-    "blocked by",
-    "held by thread",
-    "waiting to lock",
-    "mEvent=ERROR",
+    "mem|cpuload",
     "MotoCamera: ",
-    "I am_anr.*camera",
     "lowmemorykiller",
-    "FATAL_EXCEPTION",
-    "AndroidRuntime",
-    "NullPointerException",
-    "Input dispatching timed out.*camera3",
-    "Dump ERROR Stack Trace",
     "am_proc_start.*camera3",
     "am_kill.*camera3",
     "E CamX : [ERROR]",
-    "begin ANR dump all threads",
+    "anr|Input dispatching timed out.*camera3|blocked by|held by thread|waiting to lock|I am_anr.*camera|begin ANR dump all threads",
 }
 local buffer_search_pattern_history = {}
 local buffer_search_results_history = {}

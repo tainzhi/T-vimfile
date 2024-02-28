@@ -44,11 +44,11 @@ local M = {
         i(0),
     }),
     s("code", {
-        t({[[{code}]], ""}),
+        t({[[{noformat}]], ""}),
         -- put content in + register
         f(copy_from_reg, {}, ""),
         -- t({vim.fn.getreg('+'), ""}),
-        t({"", [[{code}]], ""}),
+        t({"", [[{noformat}]], ""}),
         i(0),
     }),
 

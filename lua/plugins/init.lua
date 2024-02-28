@@ -323,12 +323,13 @@ local default_plugins = {
       end,
    },
 
-   {
-      'keaising/im-select.nvim',
-      config = function()
-         require("plugins.configs.others").im_select()
-      end,
-   },
+   -- 中英文切换，normal模式自动切换到英文
+   -- {
+   --    'keaising/im-select.nvim',
+   --    config = function()
+   --       require("plugins.configs.others").im_select()
+   --    end,
+   -- },
 
    -- colorscheme
    {
