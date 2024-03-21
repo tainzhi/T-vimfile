@@ -54,17 +54,20 @@ rgflow = {}
 -- lowmemorykiller杀死camera3导致camera3闪退
 -- Kill 'com.motorola.camera3' 有问题，所以替换成 Kill .com.motorola.camera3
 local original_patterns = {
-    "CaptureFailed|Dump ERROR Stack Trace|onCaptureFailed|One-shot did not succeed|processFrames failed|No frames found|not enough frames|E McfSnapshotManagementThread:|onSaveError|allFailed=true|BG-Process Job is cancelled|Unable to configure streams",
-    "CaptureFailed",
-    "F DEBUG|FATAL_EXCEPTION|AndroidRuntime|NullPointerException|Kill .com.motorola.camera3. |Dump ERROR Stack Trace|Unable to configure streams",
+    "拍照失败|CaptureFailed|camera2.*Exception|Dump ERROR Stack Trace|onCaptureFailed|One-shot did not succeed|processFrames failed|No frames found|not enough frames|E McfSnapshotManagementThread:|onSaveError|allFailed=true|BG-Process Job is cancelled|Unable to configure streams|No capture record|Capture failed|ToastUIComponent",
+    "崩溃|Fatal exception|FATAL_EXCEPTION|AndroidRuntime|F DEBUG|NullPointerException|Kill .com.motorola.camera3. |Dump ERROR Stack Trace|Unable to configure streams",
+    "camera生命周期|CameraLifeCycle|wm_.*activity.*Camera,|wm_on.*called,Camera,|am_proc_start.*camera3|am_kill.*camera3",
     "AutoFocusStateMachine|CameraKpiTag: AUTO_FOCUS",
-    "mem|cpuload",
-    "MotoCamera: ",
+    "lowmemorykiller|mempsi|low memory|cpuload|CPU usage.*\\d\\d\\d\\dms|CameraKpiTag.*\\d\\d\\d\\d ms|ActivityManager.*\\d\\d\\d\\dms",
+    "MotoCamera: |CameraKpiTag",
     "lowmemorykiller",
-    "am_proc_start.*camera3",
-    "am_kill.*camera3",
-    "E CamX : [ERROR]",
-    "anr|Input dispatching timed out.*camera3|blocked by|held by thread|waiting to lock|I am_anr.*camera|begin ANR dump all threads",
+    "ShotSlot=INVALID",
+    "engine错误|E CamX : [ERROR]|E CamX.*Buffer|CAM_ERR|CamX.*error|CamX.*Failure|CamX.*failed|E CHI|E CamX.*Buffer|CAM_ERR|there might be a leak|failed to get buffer|Unable to.*buffer|E CamX.*TimedWait|E MtkCam",
+    "anr|Input dispatching timed out.*camera3|blocked by|held by thread|waiting to lock|I am_anr.*camera|begin ANR dump all threads|ANR at|ActivityManager.*error|Looper.*slow|Looper.*Drained",
+    "CpuFreq :",
+    "系统重启|reboot|bootstat:|bootstat:.*kernel_panel",
+    "点击事件|input_interaction: Interaction with|KPI-6PA-ID.*motion event",
+
 }
 local buffer_search_pattern_history = {}
 local buffer_search_results_history = {}

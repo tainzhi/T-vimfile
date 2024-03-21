@@ -22,24 +22,25 @@ vim.cmd [[ autocmd BufWinEnter *.txt if &ft == 'help' | wincmd L | vertical resi
 vim.cmd [[ autocmd BufWritePre *.md if &ft == 'markdown' | PanguAll]]
 vim.cmd [[ autocmd BufWinEnter *.md if &ft == 'markdown' | set shada="NONE"]]
 
--- 关闭一些选项，加快打开大文件
--- https://vim.fandom.com/wiki/Faster_loading_of_large_files
-local maxSize = 20 * 1024 * 1024
-vim.cmd [[
-    let g:LargeFile = 1024 * 1024 * 10
-    function! LargeFile()
-        set nobackup noswapfile noundofile
-        " no syntax highlighting etc
-        " set eventignore+=FileType
-        " save memory when other file is viewed
-        setlocal bufhidden=unload
-        " no undo possible
-        setlocal undolevels=-1
-        " display message
-        autocmd VimEnter *  echo "The file is larger than " . (g:LargeFile / 1024 / 1024) .  "MB, so some options are changed (see .vimrc for details)."
-    endfunction
-]]
-vim.cmd[[augroup LargeFile]]
-vim.cmd[[  autocmd!]]
-vim.cmd[[  autocmd BufReadPre * if (getfsize(expand("<afile>:p")) > g:LargeFile) | call LargeFile() | endif ]]
-vim.cmd[[augroup END]]
+-- 不启用，因为某些情况下会导致打开nvim时卡住，不响应任何按键
+-- -- 关闭一些选项，加快打开大文件
+-- -- https://vim.fandom.com/wiki/Faster_loading_of_large_files
+-- local maxSize = 20 * 1024 * 1024
+-- vim.cmd [[
+--     let g:LargeFile = 1024 * 1024 * 10
+--     function! LargeFile()
+--         set nobackup noswapfile noundofile
+--         " no syntax highlighting etc
+--         " set eventignore+=FileType
+--         " save memory when other file is viewed
+--         setlocal bufhidden=unload
+--         " no undo possible
+--         setlocal undolevels=-1
+--         " display message
+--         autocmd VimEnter *  echo "The file is larger than " . (g:LargeFile / 1024 / 1024) .  "MB, so some options are changed (see .vimrc for details)."
+--     endfunction
+-- ]]
+-- vim.cmd[[augroup LargeFile]]
+-- vim.cmd[[  autocmd!]]
+-- vim.cmd[[  autocmd BufReadPre * if (getfsize(expand("<afile>:p")) > g:LargeFile) | call LargeFile() | endif ]]
+-- vim.cmd[[augroup END]]
