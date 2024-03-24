@@ -10,6 +10,12 @@ return {
             not_loaded = "",
         },
     },
+    -- for debug plugin, but not needed
+    -- dev = {
+    --   path = vim.fn.stdpath "config" .. "/extra/plugins",
+    --   patterns = {"rgflow"},
+    --   fallback = false,
+    -- },
 
     performance = {
         rtp = {

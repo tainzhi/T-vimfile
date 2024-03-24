@@ -1,6 +1,6 @@
 local core_modules = {
-   "core.options",
    "core.autocmds",
+   "core.options",
    "core.mappings",
 }
 
@@ -10,6 +10,3 @@ for _, module in ipairs(core_modules) do
       error("Error loading " .. module .. "\n\n" .. err)
    end
 end
-
--- set all the non plugin mappings
-require("core.mappings").misc()

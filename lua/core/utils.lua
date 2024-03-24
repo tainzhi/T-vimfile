@@ -136,53 +136,6 @@ end
 --    end
 -- end
 
-M.map = function(mode, keys, cmd, opt)
-   local options = { noremap = true, silent = true }
-   if opt then
-      options = vim.tbl_extend("force", options, opt)
-   end
-
-   -- all valid modes allowed for mappings
-   -- :h map-modes
-   local valid_modes = {
-      [""] = true,
-      ["n"] = true,
-      ["v"] = true,
-      ["s"] = true,
-      ["x"] = true,
-      ["o"] = true,
-      ["!"] = true,
-      ["i"] = true,
-      ["l"] = true,
-      ["c"] = true,
-      ["t"] = true,
-   }
-
-   -- helper function for M.map
-   -- can gives multiple modes and keys
-   local function map_wrapper(mode, lhs, rhs, options)
-      if type(lhs) == "table" then
-         for _, key in ipairs(lhs) do
-            map_wrapper(mode, key, rhs, options)
-         end
-      else
-         if type(mode) == "table" then
-            for _, m in ipairs(mode) do
-               map_wrapper(m, lhs, rhs, options)
-            end
-         else
-            if valid_modes[mode] and lhs and rhs then
-               vim.api.nvim_set_keymap(mode, lhs, rhs, options)
-            else
-               mode, lhs, rhs = mode or "", lhs or "", rhs or ""
-               print("Cannot set mapping [ mode = '" .. mode .. "' | key = '" .. lhs .. "' | cmd = '" .. rhs .. "' ]")
-            end
-         end
-      end
-   end
-
-   map_wrapper(mode, keys, cmd, options)
-end
 
 -- load plugin after entering vim ui
 M.lazy_load = function(plugin)
@@ -211,32 +164,6 @@ M.lazy_load = function(plugin)
        end
      end,
    })
-end
-
--- reference: https://github.com/NvChad/NvChad/blob/v2.0/lua/core/utils.lua
-M.load_mappings = function(section, mapping_opt)
-  vim.schedule(function()
-    local function set_section_map(section_values)
-      if section_values.plugin then
-        return
-      end
-
-      section_values.plugin = nil
-
-      for mode, mode_values in pairs(section_values) do
-        local default_opts = merge_tb("force", { mode = mode }, mapping_opt or {})
-        for keybind, mapping_info in pairs(mode_values) do
-          -- merge default + user opts
-          local opts = merge_tb("force", default_opts, mapping_info.opts or {})
-
-          mapping_info.opts, opts.mode = nil, nil
-          opts.desc = mapping_info[2]
-
-          vim.keymap.set(mode, keybind, mapping_info[1], opts)
-        end
-      end
-    end
-  end)
 end
 
 M.neovide_fullscreen = function()

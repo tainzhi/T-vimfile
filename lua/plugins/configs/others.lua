@@ -31,29 +31,6 @@ M.comment = function()
    end
 end
 
-M.signature = function()
-   local present, lspsignature = pcall(require, "lsp_signature")
-   if present then
-      lspsignature.setup {
-         bind = true,
-         doc_lines = 0,
-         floating_window = true,
-         fix_pos = true,
-         hint_enable = true,
-         hint_prefix = " ",
-         hint_scheme = "String",
-         hi_parameter = "Search",
-         max_height = 22,
-         max_width = 120,      -- max_width of signature floating_window, line will be wrapped if exceed max_width
-         handler_opts = {
-            border = "single", -- double, single, shadow, none
-         },
-         zindex = 200,         -- by default it will be on top of all floating windows, set to 50 send it to bottom
-         padding = "",         -- character to pad on left and right of signature can be ' ', or '|'  etc
-      }
-   end
-end
-
 M.dap_lua = function()
    local dap = require "dap"
    dap.configurations.lua = {
@@ -61,17 +38,22 @@ M.dap_lua = function()
          type = 'nlua',
          request = 'attach',
          name = "Attach to running Neovim instance",
+         autoReload = {
+            enable = true,
+         },
          host = function()
-            local value = vim.fn.input('Host [127.0.0.1]: ')
-            if value ~= "" then
-               return value
-            end
+            -- local value = vim.fn.input('Host [127.0.0.1]: ')
+            -- if value ~= "" then
+            --    return value
+            -- end
             return '127.0.0.1'
          end,
          port = function()
-            local val = tonumber(vim.fn.input('Port: '))
-            assert(val, "Please provide a port number")
-            return val
+            -- local value = vim.fn.input('Port [8086]: ')
+            -- if value ~= "" then
+            --    return value
+            -- end
+            return "8086"
          end,
       }
    }
@@ -80,21 +62,6 @@ M.dap_lua = function()
       callback({ type = 'server', host = config.host, port = config.port })
    end
 end
-
-
-M.gitsigns = {
-  signs = {
-    add = { text = "│" },
-    change = { text = "│" },
-    delete = { text = "󰍵" },
-    topdelete = { text = "‾" },
-    changedelete = { text = "~" },
-    untracked = { text = "│" },
-  },
-  on_attach = function(bufnr)
-    utils.load_mappings("gitsigns", { buffer = bufnr })
-  end,
-}
 
 
 M.im_select = function()

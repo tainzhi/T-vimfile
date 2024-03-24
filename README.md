@@ -170,12 +170,10 @@ https://github.com/skywind3000/awesome-cheatsheets/blob/master/editors/vim.txt
 https://github.com/ojroques/vim-oscyank
 
 ## todo
-- lualine 设置 statusline
 - [conceal filename and line number in quickfix](https://vi.stackexchange.com/questions/18353/how-to-conceal-filename-and-line-number-in-quickfix-window)
 - treesitter 替换 logger
 - treesitter for bash, vim; indent, fold
-- [vim-im-select](https://github.com/brglng/vim-im-select)
-- nvim lua debug https://github.com/rcarriga/nvim-dap-ui
+- [vim-m-select](https://github.com/brglng/vim-im-select)
 - rgflow @ nui.nvim 对搜索历史记录的选择 ui
 - rgflow @ pleantary.file 记录 pattern 的历史，cmp 怎么快速补全，https://github.com/ixpectus/history.nvim/blob/main/lua/history/init.lua
 - gui

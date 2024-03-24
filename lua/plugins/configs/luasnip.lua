@@ -1,7 +1,7 @@
-local M = {}
-
-M.luasnip = function(opts)
-    require("luasnip").config.set_config(opts)
+return function()
+    require("luasnip").config.set_config({
+        history = true, updateevents = "TextChanged,TextChangedI",
+    })
 
     -- vscode format
     require("luasnip.loaders.from_vscode").lazy_load()
@@ -27,5 +27,3 @@ M.luasnip = function(opts)
         end,
     })
 end
-
-return M

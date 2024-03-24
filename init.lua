@@ -1,7 +1,4 @@
 require "core"
--- require "lsp"
-
--- require("core.utils").load_mappings()
 
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 

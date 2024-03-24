@@ -8,12 +8,7 @@ local default_plugins = {
       -- statusline
       'nvim-lualine/lualine.nvim',
       dependencies = { 'kyazdani42/nvim-web-devicons', lazy = true },
-      opts = function()
-         return require("plugins.configs.lualine")
-      end,
-      config = function(_, opts)
-         require("lualine").setup(opts)
-      end
+      conifg = require("plugins.configs.lualine")
    },
 
    {
@@ -21,15 +16,7 @@ local default_plugins = {
       lazy = false,
       version = "*",
       dependencies = "kyazdani42/nvim-web-devicons",
-      opts = function()
-         return require("plugins.configs.bufferline")
-      end,
-      config = function(_, opts)
-         require("bufferline").setup(opts)
-      end,
-      init = function()
-         require("core.mappings").bufferline()
-      end,
+      config = require("plugins.configs.bufferline")
    },
 
    {
@@ -66,25 +53,6 @@ local default_plugins = {
       end
    },
 
-   -- {
-   --    "NvChad/nvim-colorizer.lua",
-   --    -- 使用了vscode-neovim作为vscode的插件，那么neovim作为其后端的时候，不加载一些插件
-   --    cond = function()
-   --       return vim.g.vscode == nil
-   --    end,
-   --    init = function()
-   --       require("core.utils").lazy_load "nvim-colorizer.lua"
-   --    end,
-   --    config = function(_, opts)
-   --       require("colorizer").setup(opts)
-
-   --       -- execute colorizer as soon as possible
-   --       vim.defer_fn(function()
-   --          require("colorizer").attach_to_buffer(0)
-   --       end, 0)
-   --    end,
-   -- },
-
    {
       "nvim-treesitter/nvim-treesitter",
       event = "BufRead",
@@ -118,43 +86,91 @@ local default_plugins = {
             end,
          })
       end,
-      opts = function()
-         return require("plugins.configs.others").gitsigns
-      end,
-      config = function(_, opts)
-         require("gitsigns").setup(opts)
-      end,
    },
 
-   -- 参考：https://github.com/NvChad/NvChad/blob/c8777040fbda6a656f149877b796d120085cd918/lua/plugins/configs/lspconfig.lua
-   -- -- lsp stuff
+   -- references: https://github.com/AstroNvim/AstroNvim
+   -- {
+   --    "williamboman/mason.nvim",
+   --    cmd = {
+   --       "Mason",
+   --       "MasonInstall",
+   --       "MasonUninstall",
+   --       "MasonUninstallAll",
+   --       "MasonLog",
+   --       "MasonUpdate",
+   --       "MasonUpdateAll",
+   --    },
+   --    opts = {
+   --       ui = {
+   --          icons = {
+   --             package_installed = "✓",
+   --             package_uninstalled = "✗",
+   --             package_pending = "⟳",
+   --          },
+   --       },
+   --    },
+   --    build = ":MasonUpdate",
+   --    -- config = require "plugins.configs.mason",
+   -- },
    -- {
    --    "neovim/nvim-lspconfig",
-   --    ft = { "c", "c++", "lua", "sh", "java" },
-   --    lazy = true,
-   --    init = function()
-   --       require("core.utils").lazy_load "nvim-lspconfig"
-   --       -- reload the current file so lsp actually starts for it
-   --       vim.defer_fn(function()
-   --          vim.cmd 'if &ft ==  echo "" | else | silent! e %'
-   --       end, 0)
-   --    end,
-   --    config = function()
-   --       require("plugins.configs.lspconfig")
-   --    end
+   --    lazy = false,
+   --    dependencies = {
+   --       {
+   --          "williamboman/mason-lspconfig.nvim",
+   --          cmd = { "LspInstall", "LspUninstall" },
+   --          opts = {
+   --             ensure_installed = { "lua_ls" }
+   --          },
+   --          config = function(_, opts)
+   --             require("mason-lspconfig").setup(opts)
+   --          end,
+   --       },
+   --    },
+   --    config =  require "plugins.configs.lspconfig",
    -- },
-
-   {
-      "williamboman/nvim-lsp-installer",
-      ft = { "c", "c++", "lua", "sh", "java" },
-   },
-   {
-      "ray-x/lsp_signature.nvim",
-      dependencies = { "nvim-lspconfig" },
-      config = function()
-         require("plugins.configs.others").signature()
-      end
-   },
+   -- {
+   --    "jose-elias-alvarez/null-ls.nvim",
+   --    dependencies = {
+   --       {
+   --          "jay-babu/mason-null-ls.nvim",
+   --          cmd = { "NullLsInstall", "NullLsUninstall" },
+   --          opts = { handlers = {} },
+   --       },
+   --    },
+   -- },
+   -- {
+   --    "mfussenegger/nvim-dap",
+   --    -- enabled = vim.fn.has "win32" == 0,
+   --    -- lazy = false,
+   --    ft = { "lua", "cpp", "h", "python", "bash" },
+   --    dependencies = {
+   --       {
+   --          "folke/neodev.nvim",
+   --       },
+   --       {
+   --          'jbyuki/one-small-step-for-vimkind',
+   --       },
+   --       {
+   --          "jay-babu/mason-nvim-dap.nvim",
+   --          dependencies = { "nvim-dap" },
+   --          cmd = { "DapInstall", "DapUninstall" },
+   --          opts = { handlers = {} },
+   --       },
+   --       {
+   --          "rcarriga/nvim-dap-ui",
+   --          dependencies = { "nvim-neotest/nvim-nio" },
+   --          opts = { floating = { border = "rounded" } },
+   --       },
+   --       {
+   --          "rcarriga/cmp-dap",
+   --          dependencies = { "nvim-cmp" },
+   --       },
+   --    },
+   --    config = function()
+   --       require("plugins.configs.others").dap_lua()
+   --    end,
+   -- },
 
    {
       "andymass/vim-matchup",
@@ -181,21 +197,17 @@ local default_plugins = {
             -- snippet plugin
             "L3MON4D3/LuaSnip",
             dependencies = "rafamadriz/friendly-snippets",
-            opts = { history = true, updateevents = "TextChanged,TextChangedI" },
-            config = function(_, opts)
-               require("plugins.configs.luasnip").luasnip(opts)
-            end,
+            config = require("plugins.configs.luasnip")
          },
 
          -- autopairing of (){}[] etc
          {
             "windwp/nvim-autopairs",
-            opts = {
-               fast_wrap = {},
-               disable_filetype = { "TelescopePrompt", "vim" },
-            },
-            config = function(_, opts)
-               require("nvim-autopairs").setup(opts)
+            config = function()
+               require("nvim-autopairs").setup({
+                  fast_wrap = {},
+                  disable_filetype = { "TelescopePrompt", "vim" },
+               })
 
                -- setup cmp for autopairs
                local cmp_autopairs = require "nvim-autopairs.completion.cmp"
@@ -212,12 +224,7 @@ local default_plugins = {
             "hrsh7th/cmp-path",
          },
       },
-      opts = function()
-         return require "plugins.configs.cmp"
-      end,
-      config = function(_, opts)
-         require("cmp").setup(opts)
-      end,
+      config = require "plugins.configs.cmp",
    },
 
    -- misc plugins
@@ -235,24 +242,13 @@ local default_plugins = {
       config = function()
          require("plugins.configs.others").comment()
       end,
-      init = function()
-         require("core.mappings").comment()
-      end,
    },
 
    -- file managing , picker etc
    {
       "kyazdani42/nvim-tree.lua",
       cmd = { "NvimTreeToggle", "NvimTreeFocus" },
-      init = function()
-         require("core.mappings").nvimtree()
-      end,
-      opts = function()
-         return require("plugins.configs.nvimtree")
-      end,
-      config = function(_, opts)
-         require("nvim-tree").setup(opts)
-      end,
+      config = require("plugins.configs.nvimtree"),
       cond = function()
          return vim.g.vscode == nil
       end,
@@ -272,16 +268,10 @@ local default_plugins = {
       --    },
       --    {
       --       "nvim-telescope/telescope-media-files.nvim",
-      --       setup = function()
-      --          require("core.mappings").telescope_media()
-      --       end,
       --    },
       -- },
       config = function()
          require("plugins.configs.telescope")
-      end,
-      init = function()
-         require("core.mappings").telescope()
       end,
    },
 
@@ -347,12 +337,13 @@ local default_plugins = {
          vim.cmd [[colorscheme tokyonight]]
       end,
    },
-   -- -- https://github.com/shaunsingh/solarized.nvim
-   -- { 'shaunsingh/solarized.nvim' , lazy=true},
-   -- -- https://github.com/ellisonleao/gruvbox.nvim
-   -- { 'ellisonleao/gruvbox.nvim', lazy=true},
-   -- -- https://github.com/EdenEast/nightfox.nvim
-   -- { 'EdenEast/nightfox.nvim' ,lazy=true},
+   -- https://github.com/shaunsingh/solarized.nvim
+   { 'shaunsingh/solarized.nvim', lazy = true, cmd = { "Colorscheme" } },
+   -- https://github.com/ellisonleao/gruvbox.nvim
+   { 'ellisonleao/gruvbox.nvim',  lazy = true, cmd = { "Colorscheme" } },
+
+   -- https://github.com/EdenEast/nightfox.nvim
+   { 'EdenEast/nightfox.nvim',    lazy = true, cmd = { "Colorscheme" } },
 
    {
       dir = vim.fn.stdpath "config" .. "/extra/plugins/rgflow.nvim",
@@ -375,12 +366,11 @@ local default_plugins = {
 
    {
       dir = vim.fn.stdpath "config" .. "/extra/plugins/log.nvim",
-      lazy = false,
       -- "~/AppData/Local/nvim/extra/plugins/log.vim",
       cond = function()
          return vim.g.vscode == nil
       end,
-      ft = { "log", "txt", "text" }
+      ft = { "log", "txt", "markdown", "md", "qf", "text" }
    },
 }
 
