@@ -24,12 +24,6 @@ M.better_escape = function()
    }
 end
 
-M.comment = function()
-   local present, nvim_comment = pcall(require, "nvim_comment")
-   if present then
-      nvim_comment.setup()
-   end
-end
 
 M.dap_lua = function()
    local dap = require "dap"

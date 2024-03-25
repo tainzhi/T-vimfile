@@ -57,9 +57,7 @@ local default_plugins = {
       "nvim-treesitter/nvim-treesitter",
       event = "BufRead",
       ft = { "c", "c++", "lua", "sh", "java" },
-      config = function()
-         require("plugins.configs.treesitter")
-      end
+      config = require("plugins.configs.treesitter"),
    },
 
    -- git stuff
@@ -239,9 +237,6 @@ local default_plugins = {
    {
       "terrortylor/nvim-comment",
       cmd = "CommentToggle",
-      config = function()
-         require("plugins.configs.others").comment()
-      end,
    },
 
    -- file managing , picker etc
@@ -270,9 +265,7 @@ local default_plugins = {
       --       "nvim-telescope/telescope-media-files.nvim",
       --    },
       -- },
-      config = function()
-         require("plugins.configs.telescope")
-      end,
+      config = require("plugins.configs.telescope")
    },
 
    {
@@ -288,7 +281,11 @@ local default_plugins = {
       -- easy-motion的替代
       'phaazon/hop.nvim',
       branch = 'v2', -- optional but strongly recommended
-      config = function() require("plugins.configs.hop") end
+      config = function()
+         require "hop".setup {
+            keys = 'etovxqpdygfblzhckisuran'
+         }
+      end,
    },
 
    -- 格式化文本文件, 比如半角字符转换为全角字符,

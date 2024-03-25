@@ -111,3 +111,14 @@ map("n", "<S-F10>", ":lua require('dap').repl_open()<CR>")
 map("n", "<F12>", ":lua require('dap.ui.widgets').hover()<CR>")
 map("n", "<F5>", ":lua require('dap').run_last()<CR>")
 map("n", "<S-F9>", ":lua require('osv').launch({port = 8086})<CR>")
+
+
+-- plugin: hop easy-motion的替代
+map('n', '<leader>s', ":lua require'hop'.hint_char1()<cr>", {})
+map('n', '<leader>ss', ":lua require'hop'.hint_char2()<cr>", {})
+map('n', 'f', ":lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = false })<cr>", {})
+map('n', 'F', ":lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = false })<cr>", {})
+map('o', 'f', ":lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, inclusive_jump = true })<cr>", {})
+map('o', 'F', ":lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, inclusive_jump = true })<cr>", {})
+map('', 't', ":lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>", {})
+map('', 'T', ":lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>", {})
