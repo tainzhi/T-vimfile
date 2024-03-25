@@ -110,56 +110,6 @@ local default_plugins = {
    -- references 1: https://github.com/AstroNvim/AstroNvim
    -- references 2: https://github.com/nvim-lua/kickstart.nvim/blob/master/lua/kickstart/plugins/debug.lua
    -- {
-   --    "williamboman/mason.nvim",
-   --    cmd = {
-   --       "Mason",
-   --       "MasonInstall",
-   --       "MasonUninstall",
-   --       "MasonUninstallAll",
-   --       "MasonLog",
-   --       "MasonUpdate",
-   --       "MasonUpdateAll",
-   --    },
-   --    opts = {
-   --       ui = {
-   --          icons = {
-   --             package_installed = "✓",
-   --             package_uninstalled = "✗",
-   --             package_pending = "⟳",
-   --          },
-   --       },
-   --    },
-   --    build = ":MasonUpdate",
-   --    -- config = require "plugins.configs.mason",
-   -- },
-   -- {
-   --    "neovim/nvim-lspconfig",
-   --    lazy = false,
-   --    dependencies = {
-   --       {
-   --          "williamboman/mason-lspconfig.nvim",
-   --          cmd = { "LspInstall", "LspUninstall" },
-   --          opts = {
-   --             ensure_installed = { "lua_ls" }
-   --          },
-   --          config = function(_, opts)
-   --             require("mason-lspconfig").setup(opts)
-   --          end,
-   --       },
-   --    },
-   --    config =  require "plugins.configs.lspconfig",
-   -- },
-   -- {
-   --    "jose-elias-alvarez/null-ls.nvim",
-   --    dependencies = {
-   --       {
-   --          "jay-babu/mason-null-ls.nvim",
-   --          cmd = { "NullLsInstall", "NullLsUninstall" },
-   --          opts = { handlers = {} },
-   --       },
-   --    },
-   -- },
-   -- {
    --    "mfussenegger/nvim-dap",
    --    -- enabled = vim.fn.has "win32" == 0,
    --    -- lazy = false,
@@ -192,10 +142,8 @@ local default_plugins = {
    --    end,
    -- },
    {
-      -- NOTE: Yes, you can install new plugins here!
       'mfussenegger/nvim-dap',
       ft = { "lua", "cpp", "h", "python", "bash" },
-      -- NOTE: And you can specify dependencies as well
       dependencies = {
 
          'jbyuki/one-small-step-for-vimkind',
@@ -266,6 +214,35 @@ local default_plugins = {
             },
          }
 
+   -- dap.configurations.lua = {
+   --    {
+   --       type = 'nlua',
+   --       request = 'attach',
+   --       name = "Attach to running Neovim instance",
+   --       autoReload = {
+   --          enable = true,
+   --       },
+   --       host = function()
+   --          -- local value = vim.fn.input('Host [127.0.0.1]: ')
+   --          -- if value ~= "" then
+   --          --    return value
+   --          -- end
+   --          return '127.0.0.1'
+   --       end,
+   --       port = function()
+   --          -- local value = vim.fn.input('Port [8086]: ')
+   --          -- if value ~= "" then
+   --          --    return value
+   --          -- end
+   --          return "8086"
+   --       end,
+   --    }
+   -- }
+
+   dap.adapters.nlua = function(callback, config)
+      callback({ type = 'server', host = config.host, port = config.port })
+   end
+
          -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
          vim.keymap.set('n', '<F7>', dapui.toggle, { desc = 'Debug: See last session result.' })
 
@@ -293,8 +270,16 @@ local default_plugins = {
       },
       config = function()
          vim.api.nvim_create_autocmd('LspAttach', {
-            group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
+            group = vim.api.nvim_create_augroup('lsp-attach', { clear = true }),
             callback = function(event)
+               -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+               vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+               vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+               vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+               vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+
+               -- Enable completion triggered by <c-x><c-o>
+               vim.bo[event.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
                local map = function(keys, func, desc)
                   vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
                end
@@ -302,6 +287,7 @@ local default_plugins = {
                -- Jump to the definition of the word under your cursor.
                --  This is where a variable was first declared, or where a function is defined, etc.
                --  To jump back, press <C-t>.
+               map('<C-]>', vim.lsp.buf.declaration, 'Lsp: Go to declaration')
                map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
                -- Find references for the word under your cursor.

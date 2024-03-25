@@ -24,40 +24,6 @@ M.better_escape = function()
    }
 end
 
-
-M.dap_lua = function()
-   local dap = require "dap"
-   dap.configurations.lua = {
-      {
-         type = 'nlua',
-         request = 'attach',
-         name = "Attach to running Neovim instance",
-         autoReload = {
-            enable = true,
-         },
-         host = function()
-            -- local value = vim.fn.input('Host [127.0.0.1]: ')
-            -- if value ~= "" then
-            --    return value
-            -- end
-            return '127.0.0.1'
-         end,
-         port = function()
-            -- local value = vim.fn.input('Port [8086]: ')
-            -- if value ~= "" then
-            --    return value
-            -- end
-            return "8086"
-         end,
-      }
-   }
-
-   dap.adapters.nlua = function(callback, config)
-      callback({ type = 'server', host = config.host, port = config.port })
-   end
-end
-
-
 M.im_select = function()
    local present, im_select = pcall(require, "im_select")
    if present then
