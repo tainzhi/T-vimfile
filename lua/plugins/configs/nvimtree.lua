@@ -7,7 +7,7 @@ return function()
       end
 
       -- copy default mappings here from defaults in next section
-      vim.keymap.set('n', '<C-]>', api.tree.change_root_to_node, opts('CD'))
+      vim.keymap.set('n', '+', api.tree.change_root_to_node, opts('CD'))
       vim.keymap.set('n', '<C-e>', api.node.open.replace_tree_buffer, opts('Open: In Place'))
       ---
       -- OR use all default mappings
@@ -45,7 +45,7 @@ return function()
             files_first = false,
          },
          view = {
-            centralize_selection = false,
+            centralize_selection = true,
             cursorline = true,
             debounce_delay = 15,
             side = "left",
@@ -150,8 +150,8 @@ return function()
             auto_open = true,
          },
          update_focused_file = {
-            enable = false,
-            update_root = false,
+            enable = true,
+            update_root = true,
             ignore_list = {},
          },
          system_open = {
