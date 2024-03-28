@@ -13,9 +13,6 @@ return function()
       -- OR use all default mappings
       api.config.mappings.default_on_attach(bufnr)
 
-      -- remove a default
-      vim.keymap.del('n', '<C-]>', { buffer = bufnr })
-
       -- override a default
       vim.keymap.set('n', '<C-e>', api.tree.reload, opts('Refresh'))
 
@@ -210,7 +207,7 @@ return function()
          actions = {
             use_system_clipboard = true,
             change_dir = {
-               enable = true,
+               enable = false,
                global = false,
                restrict_above_cwd = false,
             },
