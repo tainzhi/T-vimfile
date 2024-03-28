@@ -1,7 +1,5 @@
 local map = vim.keymap.set
 
-local cmd = vim.cmd
-
 -- Don't copy the replaced text after pasting in visual mode
 -- map("v", "p", '"_dP')
 

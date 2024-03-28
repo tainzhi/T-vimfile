@@ -214,34 +214,34 @@ local default_plugins = {
             },
          }
 
-   -- dap.configurations.lua = {
-   --    {
-   --       type = 'nlua',
-   --       request = 'attach',
-   --       name = "Attach to running Neovim instance",
-   --       autoReload = {
-   --          enable = true,
-   --       },
-   --       host = function()
-   --          -- local value = vim.fn.input('Host [127.0.0.1]: ')
-   --          -- if value ~= "" then
-   --          --    return value
-   --          -- end
-   --          return '127.0.0.1'
-   --       end,
-   --       port = function()
-   --          -- local value = vim.fn.input('Port [8086]: ')
-   --          -- if value ~= "" then
-   --          --    return value
-   --          -- end
-   --          return "8086"
-   --       end,
-   --    }
-   -- }
+         dap.configurations.lua = {
+            {
+               type = 'nlua',
+               request = 'attach',
+               name = "Attach to running Neovim instance",
+               autoReload = {
+                  enable = true,
+               },
+               host = function()
+                  -- local value = vim.fn.input('Host [127.0.0.1]: ')
+                  -- if value ~= "" then
+                  --    return value
+                  -- end
+                  return '127.0.0.1'
+               end,
+               port = function()
+                  -- local value = vim.fn.input('Port [8086]: ')
+                  -- if value ~= "" then
+                  --    return value
+                  -- end
+                  return "8086"
+               end,
+            }
+         }
 
-   dap.adapters.nlua = function(callback, config)
-      callback({ type = 'server', host = config.host, port = config.port })
-   end
+         dap.adapters.nlua = function(callback, config)
+            callback({ type = 'server', host = config.host, port = config.port })
+         end
 
          -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
          vim.keymap.set('n', '<F7>', dapui.toggle, { desc = 'Debug: See last session result.' })
@@ -580,10 +580,11 @@ local default_plugins = {
       dir = vim.fn.stdpath "config" .. "/extra/plugins/rgflow.nvim",
       lazy = false,
       -- "~/AppData/Local/nvim/extra/plugins/rgflow.nvim",
+    
       cond = function()
          return vim.g.vscode == nil
       end,
-      dependencies = { "MunifTanjim/nui.nvim", }
+      dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" }
    },
 
    {

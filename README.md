@@ -63,7 +63,7 @@ from nvimtree to chadtree. 因为 nvimtree 在打开长目录文件时后自动 
 > c/C change directory, b back to working directory
 
 ## Surfingkeys neovim on Edge/Chrome
-[参考: server config](https://github.com/brookhong/Surfingkeys/blob/master/src/nvim/server/Readme.md)
+[参考：server config](https://github.com/brookhong/Surfingkeys/blob/master/src/nvim/server/Readme.md)
 
 在 server.lua 中添加如下代码，设定打开的 buffer 为 idar， 然后可以使用针对 idart 文件类型的 snippt
 ```vim

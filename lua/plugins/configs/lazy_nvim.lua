@@ -11,6 +11,7 @@ return {
         },
     },
     -- for debug plugin, but not needed
+    -- 只有在debug github上下载的plugin才有作用
     -- dev = {
     --   path = vim.fn.stdpath "config" .. "/extra/plugins",
     --   patterns = {"rgflow"},
