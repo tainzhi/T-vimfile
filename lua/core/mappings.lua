@@ -74,8 +74,8 @@ map("n", "<Tab>", ":BufferLineCycleNext <CR>")
 map("n", "<S-Tab>", ":BufferLineCyclePrev <CR>")
 
 -- toggle comment (works on multiple lines)
-map("n", "<leader>/", ":CommentToggle <CR>")
-map("v", "<leader>/", ":CommentToggle <CR>")
+map("n", "<leader>/", ":lua require('Comment.api').toggle.linewise.current() <CR>", {desc="Toggle comment"})
+map("v", "<leader>/", ":lua require('Comment.api').toggle.linewise(vim.fn.visualmode()) <CR>", {desc="Toggle comment"})
 
 
 -- file explorer/tree

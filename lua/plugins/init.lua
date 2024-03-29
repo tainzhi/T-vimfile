@@ -488,8 +488,11 @@ local default_plugins = {
    },
 
    {
-      "terrortylor/nvim-comment",
-      cmd = "CommentToggle",
+      "numToStr/Comment.nvim",
+      ft = { "lua", "cpp", "h", "python", "bash" },
+      config = function()
+         require('Comment').setup()
+      end
    },
 
    -- file managing , picker etc
