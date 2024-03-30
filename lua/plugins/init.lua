@@ -429,6 +429,10 @@ local default_plugins = {
       init = function()
          require("core.utils").lazy_load "vim-matchup"
       end,
+      cond = function()
+         -- 当前buffer类型不是help
+         return vim.api.nvim_buf_get_option(0, 'filetype') ~= 'help'
+      end,
    },
 
    {
@@ -473,18 +477,12 @@ local default_plugins = {
             "hrsh7th/cmp-nvim-lsp",
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path",
+            -- 对于超大文件，自动全局遍历文件后补全命令行会非常的慢，故禁用
+            -- "hrsh7th/cmp-cmdline",
+            "dmitmel/cmp-cmdline-history",
          },
       },
       config = require "plugins.configs.cmp",
-   },
-
-   -- misc plugins
-   {
-      "windwp/nvim-autopairs",
-      dependencies = { "nvim-cmp" },
-      config = function()
-         require("plugins.configs.others").autopairs()
-      end
    },
 
    {

@@ -5,8 +5,8 @@ return function()
    local cmp_ui = {
       icons = true,
       lspkind_text = true,
-      style = "default",         -- default/flat_light/flat_dark/atom/atom_colored
-      border_color = "grey_fg",  -- only applicable for "default" style, use color names from base30 variables
+      style = "default",            -- default/flat_light/flat_dark/atom/atom_colored
+      border_color = "grey_fg",     -- only applicable for "default" style, use color names from base30 variables
       selected_item_bg = "colored", -- colored / simple
    }
    local cmp_style = cmp_ui.style
@@ -165,4 +165,26 @@ return function()
    end
 
    cmp.setup(options)
+   cmp.setup.cmdline({ '/', '?' , ':', '#'}, {
+      sources = {
+         {name = "cmdline_history"},
+         {name = "path"},
+      }
+   })
+
+   -- cmp.setup.cmdline({ '/', '?' }, {
+   --    mapping = cmp.mapping.preset.cmdline(),
+   --    sources = {
+   --       { name = 'buffer' }
+   --    }
+   -- })
+   -- cmp.setup.cmdline(':', {
+   --    mapping = cmp.mapping.preset.cmdline(),
+   --    sources = cmp.config.sources({
+   --       { name = 'path' }
+   --    }, {
+   --       { name = 'cmdline' }
+   --    }),
+   --    matching = { disallow_symbol_nonprefix_matching = false }
+   -- })
 end
