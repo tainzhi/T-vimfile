@@ -595,14 +595,6 @@ local default_plugins = {
       end,
       ft = { "log", "txt", "markdown", "md", "qf", "text" }
    },
-
-   {
-      dir = vim.fn.stdpath "config" .. "/extra/plugins/log.nvim",
-      cond = function()
-         return vim.g.vscode == nil
-      end,
-      event = "VeryLazy",
-   },
 }
 
 local lazy_config = require "plugins.configs.lazy_nvim"

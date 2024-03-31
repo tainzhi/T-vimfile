@@ -14,8 +14,8 @@ scoop install mingw
 git clone https://github.com/tainzhi/Q-vimfile "$env:LOCALAPPDATA\nvim"
 
 # 插件管理： lazy.nvim
-# launch nvim and use 
-$ nvim 
+# launch nvim and use
+$ nvim
 ```
 
 ## nvim-qt 的替代 gui
@@ -98,14 +98,6 @@ Neovim 是客户端，默认不包含 [language-server](https://microsoft.github
 自动安装完成后 `:LspInstallInfo`查看安装的 server
 
 
-## 参考
-
-[菜鸟：lua 教程](https://www.runoob.com/lua/lua-coroutine.html)
-[viml 和 lua 相互引用示例](https://teukka.tech/luanvim.html)
-[Libuv 在 Neovim 中异步调用案例](https://teukka.tech/luanvim.html)
-
-[should i use vim or neovim](https://www.reddit.com/r/vim/comments/opvv66/should_i_use_vim_or_neovim/): Neovim 比 vim 有默认的配置
-
 ## [vim-surround](https://github.com/tpope/vim-surround)
 
 基本操作
@@ -173,18 +165,24 @@ https://github.com/ojroques/vim-oscyank
 - [conceal filename and line number in quickfix](https://vi.stackexchange.com/questions/18353/how-to-conceal-filename-and-line-number-in-quickfix-window)
 - treesitter 替换 logger
 - treesitter for bash, vim; indent, fold
-- [vim-m-select](https://github.com/brglng/vim-im-select)
+- [vim-im-select](https://github.com/brglng/vim-im-select)
 - rgflow @ nui.nvim 对搜索历史记录的选择 ui
 - rgflow @ pleantary.file 记录 pattern 的历史，cmp 怎么快速补全，https://github.com/ixpectus/history.nvim/blob/main/lua/history/init.lua
 - gui
 >- neovide: rust 写的；缺点是打开 500M 的文件会很卡
 >- goneovim: 速度很快，ui 酷炫；缺点是打开 rgflow 输入框看不到，有时会莫名其妙的自动关闭
-- lsp for lua
 - rgflow 和 extra/plugin/syntaxs 的高亮 log 文件， https://github.com/MTDL9/vim-log-highlighting
 - synatx: 参考当前目录下 extra/plugins/syntaxs.nvim, 参考[github kmonad-vim](https://github.com/kmonad/kmonad-vim/blob/master/syntax/kbd.vim)
-- lsp for shell, [shell check](https://github.com/koalaman/shellcheck)
 - [which-key](https://github.com/folke/which-key.nvim)
 - [plugin renamer](https://github.com/filipdutescu/renamer.nvim)
 - [plugin harpoon 用于快速跳转到特定的 buffer，terminal](https://github.com/ThePrimeagen/harpoon)
 - [plugin auto-session](https://github.com/rmagatti/auto-session)
 
+
+## 参考
+
+[菜鸟：lua 教程](https://www.runoob.com/lua/lua-coroutine.html)
+[viml 和 lua 相互引用示例](https://teukka.tech/luanvim.html)
+[Libuv 在 Neovim 中异步调用案例](https://teukka.tech/luanvim.html)
+
+[should i use vim or neovim](https://www.reddit.com/r/vim/comments/opvv66/should_i_use_vim_or_neovim/): Neovim 比 vim 有默认的配置
