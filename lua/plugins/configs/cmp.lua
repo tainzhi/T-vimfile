@@ -171,6 +171,12 @@ return function()
          {name = "path"},
       }
    })
+   -- 对 rgflow.nvim 的自动补全
+   cmp.setup.filetype('rgflow', {
+      sources = {
+         {name = "cmp-rgflow"},
+      }
+   })
 
    -- cmp.setup.cmdline({ '/', '?' }, {
    --    mapping = cmp.mapping.preset.cmdline(),

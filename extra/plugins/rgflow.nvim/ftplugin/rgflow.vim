@@ -5,7 +5,8 @@ noremap <buffer> <CR> <cmd>lua rgflow.search()<CR>
 
 " Map various abort like keys to cancel search
 noremap <buffer> <ESC> <cmd>lua rgflow.abort()<CR>
-noremap <buffer> <C-]> <cmd>lua rgflow.abort()<CR>
+" remove ，因为map冲突了
+" noremap <buffer> <C-]> <cmd>lua rgflow.abort()<CR>
 noremap <buffer> <C-C> <cmd>lua rgflow.abort()<CR>
 
 " Map tab to be general autocomplete flags/buffer/file depending on which line user is on

@@ -97,14 +97,13 @@ vnoremap <Plug>RgflowPasteFixdClipboardVisual   :<C-U>call v:lua.rgflow.paste_fi
 if g:rgflow_search_keymaps
     " KEY MAPPINGS
     " Rip grep in files, use <cword> under the cursor as starting point
-    nnoremap <leader>rg :<C-U>lua rgflow.start_via_hotkey('n')<CR>
+    nnoremap <leader>rg :<C-U>lua rgflow.start_via_hotkey_root('n')<CR>
     " Start and paste contents of search register
-    nnoremap <leader>rr :<C-U>lua rgflow.start_via_hotkey('n')<CR>0D"/p
+    nnoremap <leader>rr :<C-U>lua rgflow.start_via_hotkey_root('n')<CR>0D"/p
     " Rip grep in files, use visual selection as starting point
-    xnoremap <leader>rg :<C-U>call v:lua.rgflow.start_via_hotkey(visualmode())<Cr>
+    xnoremap <leader>rg :<C-U>call v:lua.rgflow.start_via_hotkey_root(visualmode())<Cr>
     " Rip grep in current file, use <cword> under the cursor as starting point
-    nnoremap <leader>rc :<C-U>lua rgflow.start_via_hotkey_current('n')<CR>
-    nnoremap <leader>rh :<C-U>lua rgflow.pop_results_history_menu()<CR>
+    nnoremap <leader>rc :<C-U>lua rgflow.start_via_hotkey_current_file('n')<CR>
 endif
 
 function! ResizeSurfingkeysWindow()
@@ -113,5 +112,10 @@ function! ResizeSurfingkeysWindow()
     setlocal lines=40 columns=120
 endfunction
 au BufEnter surfingkeys://* call ResizeSurfingkeysWindow()
+
+ set completeopt-=preview " 可选，移除预览窗口
+ " 禁止默认的omnifunc补全
+ autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
+ set omnifunc= ""    " 禁用内置的omnifunc
 
 let g:loaded_rgflow = 1

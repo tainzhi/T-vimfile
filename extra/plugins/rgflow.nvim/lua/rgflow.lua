@@ -48,29 +48,12 @@ hotkeys:
 
 local api = vim.api
 local loop = vim.loop
+local history = require"history"
+local log = require"log"
 local zs_ze = "\30"  -- The start and end of pattern match invisible marker
 rgflow = {}
+local config = {}
 
--- lowmemorykiller杀死camera3导致camera3闪退
--- Kill 'com.motorola.camera3' 有问题，所以替换成 Kill .com.motorola.camera3
-local original_patterns = {
-    "拍照失败|CaptureFailed|camera2.*Exception|Dump ERROR Stack Trace|onCaptureFailed|One-shot did not succeed|processFrames failed|No frames found|not enough frames|E McfSnapshotManagementThread:|onSaveError|allFailed=true|BG-Process Job is cancelled|Unable to configure streams|No capture record|Capture failed|ToastUIComponent",
-    "崩溃|Fatal exception|FATAL_EXCEPTION|AndroidRuntime|F DEBUG|NullPointerException|Kill .com.motorola.camera3. |Dump ERROR Stack Trace|Unable to configure streams",
-    "黑屏|NO CAMERAS|E SettingsManager",
-    "camera生命周期|CameraLifeCycle|wm_.*activity.*Camera,|wm_on.*called,Camera,|am_proc_start.*camera3|am_kill.*camera3",
-    "AutoFocusStateMachine|CameraKpiTag: AUTO_FOCUS",
-    "lowmemorykiller|mempsi|low memory|cpuload|CPU usage.*\\d\\d\\d\\dms|CameraKpiTag.*\\d\\d\\d\\d ms|ActivityManager.*\\d\\d\\d\\dms",
-    "MotoCamera: |CameraKpiTag",
-    "lowmemorykiller",
-    "ShotSlot=INVALID",
-    "engine错误|E CamX : [ERROR]|E CamX.*Buffer|CAM_ERR|CamX.*error|CamX.*Failure|CamX.*failed|E CHI|E CamX.*Buffer|CAM_ERR|there might be a leak|failed to get buffer|Unable to.*buffer|E CamX.*TimedWait|E MtkCam",
-    "anr|Input dispatching timed out.*camera3|blocked by|held by thread|waiting to lock|I am_anr.*camera|begin ANR dump all threads|ANR at|ActivityManager.*error|Looper.*slow|Looper.*Drained",
-    "CpuFreq :",
-    "系统重启|reboot|bootstat:|bootstat:.*kernel_panel",
-    "点击事件|input_interaction: Interaction with|KPI-6PA-ID.*motion event",
-
-}
-local buffer_search_pattern_history = {}
 local buffer_search_results_history = {}
 
 
@@ -275,14 +258,16 @@ end
 
 local function get_patterns_data(base)
     local patterns = {}
+    local buffer_search_pattern_history = require("history").get_search_patterns()
     -- 先把最近的搜索历史添加进补全库
     for i = 1, #buffer_search_pattern_history do
         patterns[#patterns+1] = buffer_search_pattern_history[i]
     end
     -- 再把默认的patterns添加进补全库
-    for i = 1, #original_patterns do
-        patterns[#patterns+1] = original_patterns[i]
+    for _, v in ipairs(require("default_search_pattern")) do
+        table.insert(patterns, v)
     end
+
     -- 最后对补全库进行过滤
     local filterd_patterns = {}
     for i, line in ipairs(patterns) do
@@ -454,11 +439,6 @@ local function on_stdout(err, data)
                 config.match_cnt = config.match_cnt + 1
                 if string.sub(d, -1, -1) == "\13" then d = string.sub(d, 1, -2) end
                 table.insert(config.results, d)
-                table.insert(buffer_search_results_history, {
-                    match_cnt = config.match_cnt,
-                    pattern = config.pattern,
-                    results = config.results
-                })
             end
         end
         local plural = "s"
@@ -503,6 +483,7 @@ end
 
 --- The handler for when the spawned job exits
 local function on_exit()
+    history.store_search_result(config.path, config.pattern, config.match_cnt, table.concat(config.results, '\n'))
     if config.match_cnt > 0 then
         add_results_to_qf()
     end
@@ -575,7 +556,7 @@ local function get_config(flags, pattern, path)
     -- 3. Add the search path
     table.insert(rg_args, path)
 
-    local config = {
+    return {
         rg_args=rg_args,
         demo_cmd=flags.." "..pattern.." "..path,
         pattern=pattern,
@@ -585,7 +566,6 @@ local function get_config(flags, pattern, path)
         title="  "..pattern.."    "..path,
         results={},
     }
-    return config
 end
 
 
@@ -617,11 +597,20 @@ function rgflow.search()
     local rg_cmd = ':lua rgflow.start_with_args([['..flags..']], [['..pattern..']], [['..path..']])'
     vim.fn.histadd('cmd', rg_cmd)
 
-    table.insert(buffer_search_pattern_history,pattern)
-
     -- Global config used by the async job
     config = get_config(flags, pattern, path)
-    spawn_job()
+    local stored = history.restore_search_result(config.path, config.pattern)
+    if stored ~= nil then
+        log.debug("restore search result, pattern:" .. stored.pattern .. ", match_cnt:" .. stored.match_cnt)
+        config.pattern = stored.pattern
+        config.match_cnt = stored.match_cnt
+        config.results = vim.split(stored.results, '\n')
+        config.title = "Restored search results for " .. config.pattern
+        add_results_to_qf()
+    else
+        log.debug("new search result")
+        spawn_job()
+    end
 end
 
 
@@ -712,7 +701,7 @@ end
 
 -- Begins Rgflow search via a hotkey
 -- @mode - Refer to module doc string at top of this file.
-function rgflow.start_via_hotkey(mode)
+function rgflow.start_via_hotkey_root(mode)
     -- If called from the hotkey
     -- api.nvim_command("messages clear")
     local flags   = api.nvim_get_var('rgflow_flags')
@@ -724,7 +713,7 @@ end
 
 -- Begins Rgflow search via a hotkey
 -- @mode - Refer to module doc string at top of this file.
-function rgflow.start_via_hotkey_current(mode)
+function rgflow.start_via_hotkey_current_file(mode)
     -- If called from the hotkey
     -- api.nvim_command("messages clear")
     local flags   = api.nvim_get_var('rgflow_flags')
@@ -748,61 +737,6 @@ function rgflow.paste_fixed_clipboard()
         table.insert(res, removed_delimiter)
     end
     vim.api.nvim_put(res, '', true, true)
-end
-
-function rgflow.pop_results_history_menu()
-    local Menu = require("nui.menu")
-    local event = require("nui.utils.autocmd").event
-
-    local menu_items = {}
-    for i, itm in ipairs(buffer_search_results_history) do
-        table.insert(menu_items, Menu.item({id = i, text = itm.pattern}))
-    end
-
-    local menu = Menu({
-        position = "20%",
-        size = {
-            width = 60,
-            height = 5,
-        },
-        relative = "editor",
-        border = {
-            style = "single",
-            text = {
-            top = "Choose Search History",
-            top_align = "center",
-            },
-        },
-        win_options = {
-            winblend = 10,
-            winhighlight = "Normal:Normal",
-        },
-        }, {
-        lines = menu_items,
-        max_width = 20,
-        keymap = {
-            focus_next = { "j", "<Down>", "<Tab>" },
-            focus_prev = { "k", "<Up>", "<S-Tab>" },
-            close = { "<Esc>", "<C-c>" },
-            submit = { "<CR>", "<Space>" },
-    },
-    on_close = function()
-        print("CLOSED")
-    end,
-    on_submit = function(item)
-        local select_history = buffer_search_results_history[item.id]
-        config.pattern = select_history.pattern
-        config.match_cnt = select_history.match_cnt
-        config.results = select_history.results
-        add_results_to_qf()
-    end,
-    })
-
-    -- mount the component
-    menu:mount()
-
-    -- close menu when cursor leaves buffer
-    menu:on(event.BufLeave, menu.menu_props.on_close, { once = true })
 end
 
 return rgflow
