@@ -2,7 +2,7 @@ local opt = vim.opt
 local g = vim.g
 
 opt.termguicolors = true
-opt.guifont = "Cascadia Code:h11"
+opt.guifont = "Cascadia Code:h10"
 opt.title = true
 -- vimscript: set clipboard += unnamedplus
 opt.clipboard:append { "unnamedplus" }

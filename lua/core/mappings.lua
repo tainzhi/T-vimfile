@@ -74,8 +74,11 @@ map("n", "<Tab>", ":BufferLineCycleNext <CR>")
 map("n", "<S-Tab>", ":BufferLineCyclePrev <CR>")
 
 -- toggle comment (works on multiple lines)
+-- 除了默认的gcc可以comment，新定义了 <leader>/和 <C-/> 也可以comment
 map("n", "<leader>/", ":lua require('Comment.api').toggle.linewise.current() <CR>", {desc="Toggle comment"})
 map("v", "<leader>/", ":lua require('Comment.api').toggle.linewise(vim.fn.visualmode()) <CR>", {desc="Toggle comment"})
+map("n", "<C-/>", ":lua require('Comment.api').toggle.linewise.current() <CR>", {desc="Toggle comment"})
+map("v", "<C-/>", ":lua require('Comment.api').toggle.linewise(vim.fn.visualmode()) <CR>", {desc="Toggle comment"})
 
 
 -- file explorer/tree

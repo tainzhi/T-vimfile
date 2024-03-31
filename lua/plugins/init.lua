@@ -499,7 +499,7 @@ local default_plugins = {
       cmd = { "NvimTreeToggle", "NvimTreeFocus" },
       config = require("plugins.configs.nvimtree"),
       cond = function()
-         return vim.g.vscode == nil
+         return vim.g.vscode == nil or vim.fn.file ~= 'help'
       end,
    },
 
@@ -578,19 +578,18 @@ local default_plugins = {
    { 'EdenEast/nightfox.nvim',    lazy = true, cmd = { "Colorscheme" } },
 
    {
+      -- "~/AppData/Local/nvim/extra/plugins/rgflow.nvim",
       dir = vim.fn.stdpath "config" .. "/extra/plugins/rgflow.nvim",
       lazy = false,
-      -- "~/AppData/Local/nvim/extra/plugins/rgflow.nvim",
     
       cond = function()
          return vim.g.vscode == nil
       end,
-      dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" }
+      dependencies = { "nvim-lua/plenary.nvim",  "nvim-cmp" }
    },
 
    {
       dir = vim.fn.stdpath "config" .. "/extra/plugins/syntaxs.nvim",
-      -- "~/AppData/Local/nvim/extra/plugins/syntaxs.nvim",
       cond = function()
          return vim.g.vscode == nil
       end,
@@ -599,11 +598,10 @@ local default_plugins = {
 
    {
       dir = vim.fn.stdpath "config" .. "/extra/plugins/log.nvim",
-      -- "~/AppData/Local/nvim/extra/plugins/log.vim",
       cond = function()
          return vim.g.vscode == nil
       end,
-      ft = { "log", "txt", "markdown", "md", "qf", "text" }
+      event = "VeryLazy",
    },
 }
 
