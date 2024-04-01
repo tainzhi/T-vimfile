@@ -544,6 +544,18 @@ local default_plugins = {
          vim.fn['firenvim#install'](0)
       end,
    },
+   {
+      "folke/which-key.nvim",
+      event = "VeryLazy",
+      init = function()
+         vim.o.timeout = true
+         vim.o.timeoutlen = 300
+      end,
+      opts = {
+         icons = { group = vim.g.icons_enabled and "" or "+", separator = "" },
+         disable = { filetypes = { "TelescopePrompt" } },
+      },
+   },
 
    -- 中英文切换，normal模式自动切换到英文
    -- {
@@ -581,11 +593,11 @@ local default_plugins = {
       -- "~/AppData/Local/nvim/extra/plugins/rgflow.nvim",
       dir = vim.fn.stdpath "config" .. "/extra/plugins/rgflow.nvim",
       lazy = false,
-    
+
       cond = function()
          return vim.g.vscode == nil
       end,
-      dependencies = { "nvim-lua/plenary.nvim",  "nvim-cmp" }
+      dependencies = { "nvim-lua/plenary.nvim", "nvim-cmp" }
    },
 
    {
