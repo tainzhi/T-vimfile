@@ -495,6 +495,7 @@ local function on_exit()
         -- msg = msg.." │ "..config.demo_cmd
         msg = msg.." │ "..config.path
     end
+    log.info("demo cmd:" .. "rg " .. config.demo_cmd)
     schedule_print(msg, true)
 end
 
@@ -505,6 +506,8 @@ local function spawn_job()
     local stdin  = loop.new_pipe(false)
     local stdout = loop.new_pipe(false)
     local stderr = loop.new_pipe(false)
+
+    log.info("search cmd:" .. "rg " .. table.concat(config.rg_args, " "))
 
     print("Rgflow start search for:  "..config.pattern)
     -- Append the following makes it too long (results in one having to press enter)
@@ -593,9 +596,10 @@ function rgflow.search()
     api.nvim_win_close(rgflow.wini, true)
     -- api.nvim_win_close(rgflow.winh, true)
 
-    -- Add a command to the history which can be invoked to repeat this search
-    local rg_cmd = ':lua rgflow.start_with_args([['..flags..']], [['..pattern..']], [['..path..']])'
-    vim.fn.histadd('cmd', rg_cmd)
+    -- deprecated, not needed
+    -- -- Add a command to the history which can be invoked to repeat this search
+    -- local rg_cmd = ':lua rgflow.start_with_args([['..flags..']], [['..pattern..']], [['..path..']])'
+    -- vim.fn.histadd('cmd', rg_cmd)
 
     -- Global config used by the async job
     config = get_config(flags, pattern, path)

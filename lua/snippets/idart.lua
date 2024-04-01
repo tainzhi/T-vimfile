@@ -66,5 +66,11 @@ local M = {
         t({"Would you help to ask the reporter to reupload a recording video and picture to describe that taken scene?", ""}),
         t({"BR"}),
     }),
+
+    s("retest",{
+        t({"According to the log, we are unable to locate the specific issue and cannot reproduce it on the build. So we request a retest.",""}),
+        t({""}),
+        t({"This issue may be due to the App's inability to obtain the underlying configuration. Sufficient logs are needed to analyze this issue. If possible, please retest on the userdebug system and use bug2go to collect log, and better to provide a recording video if possible. Thanks a lot.",""}),
+    })
 }
 return M

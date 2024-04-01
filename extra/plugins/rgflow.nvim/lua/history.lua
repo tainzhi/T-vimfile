@@ -1,7 +1,7 @@
 -- log文件是  ~/user/Temp/nvim/rgflow.log
--- 
+--
 -- history_record.txt是  ~/user/Temp/nvim/rgflow/history_record.txt
--- history_record.txt格式：[[hash(path和pattern拼接) pattern pattern_match_cnt]] 
+-- history_record.txt格式：[[hash(path和pattern拼接) pattern pattern_match_cnt]]
 -- 每次搜索成功都会把 文件标识和pattern拼接后的[[hash(path和pattern拼接) pattern pattern_match_cnt]] 添加到 history_record.txt末尾
 --
 -- 每次搜索结果单独存储一个文件，文件名是 hash(path和pattern拼接)，该文件在 ~/user/Temp/nvim/rgflow/中
@@ -14,24 +14,28 @@ local history_record_limit = 5
 local records_cache = {}
 
 local history = {
-  record_file = Path:new({vim.fn.stdpath("cache"), "rgflow", "history_record.txt"}),
+  record_file = Path:new({ vim.fn.stdpath("cache"), "rgflow", "history_record.txt" }),
 }
 
 -- 对 url 进行base64编码
 -- 参考：https://github.com/glacambre/firenvim
 local function base64_enc(data)
-    local b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/' -- You will need this for encoding/decoding
-    return ((data:gsub('.', function(x) 
-        local r,b='',x:byte()
-        for i=8,1,-1 do r=r..(b%2^i-b%2^(i-1)>0 and '1' or '0') end
-        return r;
-    end)..'0000'):gsub('%d%d%d?%d?%d?%d?', function(x)
-        if (#x < 6) then return '' end
-        local c=0
-        for i=1,6 do c=c+(x:sub(i,i)=='1' and 2^(6-i) or 0) end
-        return b:sub(c+1,c+1)
-    end)..({ '', '==', '=' })[#data%3+1])
+  -- local b =
+  -- 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/' -- You will need this for encoding/decoding
+  -- local result = ((data:gsub('.', function(x)
+  --   local r, b = '', x:byte()
+  --   for i = 8, 1, -1 do r = r .. (b % 2 ^ i - b % 2 ^ (i - 1) > 0 and '1' or '0') end
+  --   return r;
+  -- end) .. '0000'):gsub('%d%d%d?%d?%d?%d?', function(x)
+  --   if (#x < 6) then return '' end
+  --   local c = 0
+  --   for i = 1, 6 do c = c + (x:sub(i, i) == '1' and 2 ^ (6 - i) or 0) end
+  --   return b:sub(c + 1, c + 1)
+  -- end) .. ({ '', '==', '=' })[#data % 3 + 1])
+  -- return string.sub(result, 1, math.min(#result, 64))
+  return vim.fn.sha256(data)
 end
+
 
 -- 从history_record.txt中获取搜索pattern
 -- 并且合并默认搜索pattern
@@ -61,7 +65,7 @@ function history.get_search_patterns()
         if not seen_items[pattern] then
           seen_items[pattern] = true
           items[#items + 1] = pattern
-      end
+        end
       end
     end
     log.debug("add " .. #lines .. " history patterns")
@@ -82,13 +86,13 @@ end
 
 -- 把搜索pattern添加到history_record.txt文件末尾
 -- 每一行存储一个搜索记录，其形式为
--- 
+--
 -- key pattern pattern_match_cnt
--- 
+--
 -- 其中key是path和pattern的拼接字符串hash
 function history.write_search_pattern(key, pattern, pattern_match_cnt)
   if not history.record_file:exists() then
-    history.record_file:touch {parents = true}
+    history.record_file:touch { parents = true }
     log.info("create " .. history.record_file:absolute())
   end
   -- 把 path和pattern的拼接字符串hash作为key，存入每行第一个，pattern作为每行的第2个
@@ -101,13 +105,13 @@ end
 
 function history.store_search_result(path, pattern, match_cnt, results)
   local key = base64_enc(path .. pattern)
-  records_cache[key] = {key, pattern, match_cnt}
+  records_cache[key] = { key, pattern, match_cnt }
   -- 先存储单挑搜索pattern记录
   history.write_search_pattern(key, pattern, match_cnt)
   -- 再存储该搜索记录的结果到单独文件中
   log.info("key: " .. key .. ", store search results for " .. path .. " and pattern:" .. pattern)
-  local results_path = Path:new({vim.fn.stdpath("cache"), "rgflow", key})
-  results_path:touch {parents = true}
+  local results_path = Path:new({ vim.fn.stdpath("cache"), "rgflow", key })
+  results_path:touch { parents = true }
   results_path:write(results, 'w')
 end
 
@@ -116,12 +120,12 @@ function history.restore_search_result(path, pattern)
   if rawget(records_cache, key) then
     local record = records_cache[key]
     log.info("get saved search results for " .. path .. " and pattern:" .. pattern)
-    local results_path = Path:new({vim.fn.stdpath("cache"), "rgflow", key})
+    local results_path = Path:new({ vim.fn.stdpath("cache"), "rgflow", key })
     if results_path:exists() then
       return {
         pattern = record[2],
         match_cnt = record[3],
-        results= results_path:read(),
+        results = results_path:read(),
       }
     else
       log.error("but saved search results for " .. path .. " and pattern:" .. pattern .. " missing")
@@ -134,15 +138,15 @@ function history.restore_search_result(path, pattern)
 end
 
 function history.write_search_result(key, result)
-  local path = Path:new({vim.fn.stdpath("cache"), "rgflow", key})
+  local path = Path:new({ vim.fn.stdpath("cache"), "rgflow", key })
   if not path:exists() then
-    path:touch {parents = true}
+    path:touch { parents = true }
   end
   history.record_file:write(result, 'w')
 end
 
 function history:get_search_result(key)
-  local path = Path:new({vim.fn.stdpath("cache"), "rgflow", key})
+  local path = Path:new({ vim.fn.stdpath("cache"), "rgflow", key })
   if path:exists() then
     return path:read()
   end
@@ -150,22 +154,21 @@ function history:get_search_result(key)
 end
 
 function history.test()
-
-  local record_file = Path:new({vim.fn.stdpath("cache"), "rgflow", "history_record.txt"})
+  local record_file = Path:new({ vim.fn.stdpath("cache"), "rgflow", "history_record.txt" })
   if not record_file:exists() then
-    record_file:touch {parents = true}
+    record_file:touch { parents = true }
   end
-  log.debug("write text to:" ,record_file:absolute())
+  log.debug("write text to:", record_file:absolute())
   log.info "test end, write text end"
 
   -- 用路径来标记
   -- 把路径中的分隔符和冒号替换成下划线
-  local path  = vim.fn.getcwd()
-  path = string.gsub(path, Path.path.sep, '_')
-  path = string.gsub(path, ':', '_')
+  local path    = vim.fn.getcwd()
+  path          = string.gsub(path, Path.path.sep, '_')
+  path          = string.gsub(path, ':', '_')
 
   local pattern = "hello|wolrd\\| dkfd * ? dfkd"
-  local record = path .. '\t' .. vim.fn.sha256(pattern) .. '\t' .. pattern .. '\n'
+  local record  = path .. '\t' .. vim.fn.sha256(pattern) .. '\t' .. pattern .. '\n'
   record_file:write(record, 'a')
   record_file:write(record, 'a')
   record_file:write(record, 'a')
@@ -184,16 +187,16 @@ function history.test()
     print(lines[10])
     print(last_record[1], last_record[2], last_record[3])
   else
-      last_record = vim.split(lines[1], '\t')
-      print(lines[1])
-      print(last_record[1], last_record[2], last_record[3])
+    last_record = vim.split(lines[1], '\t')
+    print(lines[1])
+    print(last_record[1], last_record[2], last_record[3])
   end
 
 
-  local current_record_file = Path:new({vim.fn.stdpath("cache"), "rgflow", last_record[2]})
+  local current_record_file = Path:new({ vim.fn.stdpath("cache"), "rgflow", last_record[2] })
   if not current_record_file:exists() then
     print("create new record file")
-    -- current_record_file:touch() 
+    -- current_record_file:touch()
     local result = "hello\r\nworld\r\nnew file\r\n"
     current_record_file:write(result, 'w')
   else
