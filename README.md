@@ -166,12 +166,9 @@ https://github.com/ojroques/vim-oscyank
 - treesitter 替换 logger
 - treesitter for bash, vim; indent, fold
 - [vim-im-select](https://github.com/brglng/vim-im-select)
-- rgflow @ nui.nvim 对搜索历史记录的选择 ui
-- rgflow @ pleantary.file 记录 pattern 的历史，cmp 怎么快速补全，https://github.com/ixpectus/history.nvim/blob/main/lua/history/init.lua
 - gui
 >- neovide: rust 写的；缺点是打开 500M 的文件会很卡
 >- goneovim: 速度很快，ui 酷炫；缺点是打开 rgflow 输入框看不到，有时会莫名其妙的自动关闭
-- rgflow 和 extra/plugin/syntaxs 的高亮 log 文件， https://github.com/MTDL9/vim-log-highlighting
 - synatx: 参考当前目录下 extra/plugins/syntaxs.nvim, 参考[github kmonad-vim](https://github.com/kmonad/kmonad-vim/blob/master/syntax/kbd.vim)
 - [which-key](https://github.com/folke/which-key.nvim)
 - [plugin renamer](https://github.com/filipdutescu/renamer.nvim)
