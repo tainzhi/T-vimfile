@@ -1,1 +1,1 @@
-require("cmp").register_source("cmp-rgflow", require("cmp-rgflow").new())
+require("cmp").register_source("cmp-rgflow", require("rgflow.cmp").new())

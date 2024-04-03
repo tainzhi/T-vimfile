@@ -9,7 +9,7 @@
 -- 1. 定期清理历史记录，只保留最近10条记录
 
 local Path = require "plenary.path"
-local log = require "log"
+local log = require "rgflow.log"
 local history_record_limit = 5
 local records_cache = {}
 
@@ -74,7 +74,7 @@ function history.get_search_patterns()
   end
 
   -- 添加默认搜索pattern
-  for _, v in ipairs(require("default_search_pattern")) do
+  for _, v in ipairs(require("rgflow.default_search_pattern")) do
     if not seen_items[v] then
       seen_items[v] = true
       table.insert(items, v)

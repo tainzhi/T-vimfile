@@ -48,10 +48,10 @@ hotkeys:
 
 local api = vim.api
 local loop = vim.loop
-local history = require"history"
-local log = require"log"
+local history = require"rgflow.history"
+local log = require"rgflow.log"
 local zs_ze = "\30"  -- The start and end of pattern match invisible marker
-rgflow = {}
+local M = {}
 local config = {}
 
 local buffer_search_results_history = {}
@@ -152,7 +152,7 @@ end
 
 --- An operator to delete linewise from the quickfix window.
 -- @mode - Refer to module doc string at top of this file.
-function rgflow.qf_del_operator(mode)
+function M.qf_del_operator(mode)
     -- Only operates linewise, since 1 Quickfix entry is tied to 1 line.
     local win_pos = vim.fn.winsaveview()
     local startl, endl = get_line_range(mode)
@@ -170,7 +170,7 @@ end
 --- An operator to mark lines in the quickfix window.
 -- Marking is accomplished by prefixing the line with a given string.
 -- @mode - Refer to module doc string at top of this file.
-function rgflow.qf_mark_operator(add_not_remove, mode)
+function M.qf_mark_operator(add_not_remove, mode)
     -- Only operates linewise, since 1 Quickfix entry is tied to 1 line.
     local win_pos = vim.fn.winsaveview()
     local startl, endl = get_line_range(mode)
@@ -236,7 +236,7 @@ end
 
 --- Auto-complete function for ripgrap flags
 -- @param findstart and @base, and @return refer to :help complete-functions
-function rgflow.flags_complete(findstart, base)
+function M.flags_complete(findstart, base)
     if findstart == 1 then
         local pos = api.nvim_win_get_cursor(0)
         row = pos[1]
@@ -258,13 +258,13 @@ end
 
 local function get_patterns_data(base)
     local patterns = {}
-    local buffer_search_pattern_history = require("history").get_search_patterns()
+    local buffer_search_pattern_history = history.get_search_patterns()
     -- 先把最近的搜索历史添加进补全库
     for i = 1, #buffer_search_pattern_history do
         patterns[#patterns+1] = buffer_search_pattern_history[i]
     end
     -- 再把默认的patterns添加进补全库
-    for _, v in ipairs(require("default_search_pattern")) do
+    for _, v in ipairs(require("rgflow.default_search_pattern")) do
         table.insert(patterns, v)
     end
 
@@ -286,7 +286,7 @@ end
 
 --- Auto-complete function for ripgrap flags
 -- @param findstart and @base, and @return refer to :help complete-functions
-function rgflow.patterns_complete(findstart, base)
+function M.patterns_complete(findstart, base)
     if findstart == 1 then
         local pos = api.nvim_win_get_cursor(0)
         row = pos[1]
@@ -307,7 +307,7 @@ end
 
 
 --- Highlight the search pattern matches in the quickfix window.
-function rgflow.hl_qf_matches()
+function M.hl_qf_matches()
     -- Needs to be called whenever quickfix window is opened
     -- :cclose will clear the following highlighting
     -- Called via the ftplugin mechanism.
@@ -362,7 +362,7 @@ end
 
 
 --- Within the input dialogue, call the appropriate auto-complete function.
-function rgflow.complete()
+function M.complete()
     local linenr = api.nvim_win_get_cursor(0)[1]
     if vim.fn.pumvisible() ~= 0 then
         api.nvim_input("<C-N>")
@@ -562,13 +562,13 @@ end
 
 
 --- Closes the input dialogue when <ESC> is pressed
-function rgflow.abort()
+function M.abort()
     api.nvim_win_close(rgflow.wini, true)
 end
 
 
 --- From the UI, it starts the ripgrep search.
-function rgflow.search()
+function M.search()
     local flags, pattern, path = unpack(api.nvim_buf_get_lines(bufi, 0, 3, true))
 
     if pattern == "" then
@@ -686,7 +686,7 @@ end
 -- Begins Rgflow search via the command search history, ie. q:
 -- @param flags/pattern/path are saved in the command history, and then passed
 --        into this function.
-function rgflow.start_with_args(flags, pattern, path)
+function M.start_with_args(flags, pattern, path)
     -- If called from the command history, for example by c_^F or q:
     rgflow.buf, rgflow.wini, rgflow.winh = start_ui(flags, pattern, path)
 end
@@ -694,7 +694,7 @@ end
 
 -- Begins Rgflow search via a hotkey
 -- @mode - Refer to module doc string at top of this file.
-function rgflow.start_via_hotkey_root(mode)
+function M.start_via_hotkey_root(mode)
     -- If called from the hotkey
     -- api.nvim_command("messages clear")
     local flags   = api.nvim_get_var('rgflow_flags')
@@ -706,7 +706,7 @@ end
 
 -- Begins Rgflow search via a hotkey
 -- @mode - Refer to module doc string at top of this file.
-function rgflow.start_via_hotkey_current_file(mode)
+function M.start_via_hotkey_current_file(mode)
     -- If called from the hotkey
     -- api.nvim_command("messages clear")
     local flags   = api.nvim_get_var('rgflow_flags')
@@ -716,7 +716,7 @@ function rgflow.start_via_hotkey_current_file(mode)
 end
 
 
-function rgflow.paste_fixed_clipboard()
+function M.paste_fixed_clipboard()
     local res = {}
     local textlines = vim.fn.getreg('+', 1, true)
     for _, line in ipairs(textlines) do
@@ -737,7 +737,7 @@ end
 -- and 0 is current window
 -- conceallevel = 0 show filename and row columen number
 -- conceallevel = 2 hide
-function rgflow.change_conceallevel()
+function M.change_conceallevel()
     if vim.api.nvim_win_get_option(0, "conceallevel") == 0 then
         -- set conceallevel = 2
         vim.api.nvim_win_set_option(0, "conceallevel", 2)
@@ -748,4 +748,4 @@ function rgflow.change_conceallevel()
     end
 end
 
-return rgflow
+return M
