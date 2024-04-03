@@ -350,11 +350,11 @@ function rgflow.hl_qf_matches()
     id = vim.fn.matchadd("Conceal", "\\v^[^|]*\\|[^|]*\\| ", 12, -1, {conceal="", window=win})
     table.insert(rgflow_matches, id)
 
-    -- Highlight the matches between the invisible chars
-    -- \{-n,} means match at least n chars, none greedy version
-    -- priority 0, so that incsearch at priority 1 takes preference
-    id = vim.fn.matchadd("RgFlowQfPattern", zs_ze..".\\{-1,}"..zs_ze, 0, -1, {window=win})
-    table.insert(rgflow_matches, id)
+    -- -- Highlight the matches between the invisible chars
+    -- -- \{-n,} means match at least n chars, none greedy version
+    -- -- priority 0, so that incsearch at priority 1 takes preference
+    -- id = vim.fn.matchadd("RgFlowQfPattern", zs_ze..".\\{-1,}"..zs_ze, 0, -1, {window=win})
+    -- table.insert(rgflow_matches, id)
 
     -- Store the matches as a window local list, so they can be deleted next time.
     api.nvim_win_set_var(win, 'rgflow_matches', rgflow_matches)
@@ -377,20 +377,6 @@ function rgflow.complete()
     elseif linenr == 3 then
         -- Filename line
         api.nvim_input("<C-X><C-F>")
-    end
-end
-
--- conceal is window local option
--- and 0 is current window
--- conceallevel = 0 show filename and row columen number
--- conceallevel = 2 hide
-function rgflow.change_conceallevel()
-    if vim.api.nvim_win_get_option(0, "conceallevel") == 0 then
-        -- set conceallevel = 2
-        vim.api.nvim_win_set_option(0, "conceallevel", 2)
-    elseif vim.api.nvim_win_get_option(0, "conceallevel") == 2 then
-        -- set conceallevel = 0
-        vim.api.nvim_win_set_option(0, "conceallevel", 0)
     end
 end
 
@@ -475,6 +461,9 @@ local function add_results_to_qf()
         -- Trigger the highlighting of search by turning hl on
         api.nvim_set_option("hlsearch", true)
     end
+
+    -- 把quickfix也是用text.vim的高亮syntax
+    api.nvim_command("set syntax=text")
 
     -- Note: rgflow.hl_qf_matches() is called via ftplugin when a QF window
     -- is opened.
@@ -741,6 +730,22 @@ function rgflow.paste_fixed_clipboard()
         table.insert(res, removed_delimiter)
     end
     vim.api.nvim_put(res, '', true, true)
+end
+
+
+-- conceal is window local option
+-- and 0 is current window
+-- conceallevel = 0 show filename and row columen number
+-- conceallevel = 2 hide
+function rgflow.change_conceallevel()
+    if vim.api.nvim_win_get_option(0, "conceallevel") == 0 then
+        -- set conceallevel = 2
+        vim.api.nvim_win_set_option(0, "conceallevel", 2)
+        rgflow.hl_qf_matches()
+    elseif vim.api.nvim_win_get_option(0, "conceallevel") == 2 then
+        -- set conceallevel = 0
+        vim.api.nvim_win_set_option(0, "conceallevel", 0)
+    end
 end
 
 return rgflow

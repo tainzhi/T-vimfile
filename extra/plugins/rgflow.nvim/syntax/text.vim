@@ -91,18 +91,39 @@ if exists('b:current_syntax')
   syn match logXmlEntity       /&#\?\w\+;/
 
 
+
   " Camera
   "---------------------------------------------------------------------------
-  syn match fsm 'Fsm'
-  syn match fsmTransition 'Transition from \[.*\] to \[.*\]'
-
-  
-  "  hi def link fsmTransition Identifier
-  "  hi def link fsm Function
-  hi fsmTransition gui=NONE guifg=#B501FF ctermfg=Blue 
+  syn match fsm "Fsm"
   hi fsm gui=NONE guifg=#F07000 ctermfg=Green 
+
+  " 匹配fsm中的状态，高亮不同颜色
+  syn match fsmTransitionState "\[.\{-}\]" contained
+  hi fsmTransitionState gui=underline guifg=#1001ff ctermfg=Yellow
+
+  syn match fsmTransition "Transition from \[.*\] to \[.*\]" contains=fsmTransitionState
+  hi fsmTransition gui=NONE guifg=#B501FF ctermfg=Blue 
+
+  syn match androidStackTraceLine "AndroidRuntime.*" contained
+  syn region stackTrace start="AndroidRuntime:.*" skip="AndroidRuntim" end="$" 
+  hi link stackTrace Error
+
+  " rgflow search 结果用 \30 给包裹起来，所以需要单独高亮
+  syn match rgflowSearchPattern "\%d30.*\%d30" 
+  hi link rgflowSearchPattern Identifier
+
+  syn match cpupsi "cpupsi [56789]\d\.\d%\|cpupsi 100"
+  hi link cpupsi Constant
+
+  " 匹配 cpu load 大于50%，而且只能在 rgflowSearchPattern 才高亮
+  syn match cpuload "cpuload [56789]\d\|cpuload 100" containedin=rgflowSearchPattern
+  hi link cpuload Constant
+  " 匹配 lowmemorykiller: PARTIAL stall, KSWAPD reclaim，导致一行过长，故将其隐藏
+  syn match lmkPartital "PARTIAL stall, KSWAPD reclaim, " containedin=rgflowSearchPattern conceal
   
-  
+ 
+
+
   " Levels
   "---------------------------------------------------------------------------
   syn keyword logLevelEmergency EMERGENCY EMERG
