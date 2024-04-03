@@ -50,6 +50,7 @@ local api = vim.api
 local loop = vim.loop
 local history = require"rgflow.history"
 local log = require"rgflow.log"
+local default_search_pattern =  require("rgflow.default_search_pattern")
 local zs_ze = "\30"  -- The start and end of pattern match invisible marker
 local M = {}
 local config = {}
@@ -264,7 +265,7 @@ local function get_patterns_data(base)
         patterns[#patterns+1] = buffer_search_pattern_history[i]
     end
     -- 再把默认的patterns添加进补全库
-    for _, v in ipairs(require("rgflow.default_search_pattern")) do
+    for _, v in ipairs(default_search_pattern) do
         table.insert(patterns, v)
     end
 

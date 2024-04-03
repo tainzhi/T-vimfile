@@ -10,6 +10,7 @@
 
 local Path = require "plenary.path"
 local log = require "rgflow.log"
+local default_search_pattern =  require("rgflow.default_search_pattern")
 local history_record_limit = 5
 local records_cache = {}
 
@@ -74,7 +75,7 @@ function history.get_search_patterns()
   end
 
   -- 添加默认搜索pattern
-  for _, v in ipairs(require("rgflow.default_search_pattern")) do
+  for _, v in ipairs(default_search_pattern) do
     if not seen_items[v] then
       seen_items[v] = true
       table.insert(items, v)
