@@ -166,6 +166,7 @@ return function()
 
    cmp.setup(options)
    cmp.setup.cmdline({ '/', '?' , ':', '#'}, {
+      mapping = cmp.mapping.preset.cmdline(),
       sources = {
          {name = "cmdline_history"},
          {name = "path"},
