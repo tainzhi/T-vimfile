@@ -98,8 +98,8 @@ if exists('b:current_syntax')
   hi fsm gui=NONE guifg=#F07000 ctermfg=Green 
 
   " 匹配fsm中的状态，高亮不同颜色
-  syn match fsmTransitionState "\[.\{-}\]" contained
-  hi fsmTransitionState gui=underline guifg=#1001ff ctermfg=Yellow
+  syn match fsmTransitionState "\[.\{-}\]"hs=s+1,he=e-1 contained
+  hi fsmTransitionState gui=underline guifg=#ff0c39 ctermfg=Yellow
 
   syn match fsmTransition "Transition from \[.*\] to \[.*\]" contains=fsmTransitionState
   hi fsmTransition gui=NONE guifg=#B501FF ctermfg=Blue 
@@ -120,8 +120,12 @@ if exists('b:current_syntax')
   hi link cpuload Constant
   " 匹配 lowmemorykiller: PARTIAL stall, KSWAPD reclaim，导致一行过长，故将其隐藏
   syn match lmkPartital "PARTIAL stall, KSWAPD reclaim, " containedin=rgflowSearchPattern conceal
+
+
+  " syn region myFold start="{" end="}" transparent fold
+  " syn sync fromstart
+  " set foldmethod=syntax
   
- 
 
 
   " Levels
