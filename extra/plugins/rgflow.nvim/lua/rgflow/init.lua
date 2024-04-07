@@ -55,8 +55,6 @@ local zs_ze = "\30"  -- The start and end of pattern match invisible marker
 local M = {}
 local config = {}
 
-local buffer_search_results_history = {}
-
 
 --- Prints a @msg to the command line with error highlighting.
 -- Does not raise an error.
@@ -564,7 +562,7 @@ end
 
 --- Closes the input dialogue when <ESC> is pressed
 function M.abort()
-    api.nvim_win_close(rgflow.wini, true)
+    api.nvim_win_close(M.wini, true)
 end
 
 
@@ -583,8 +581,8 @@ function M.search()
 
     -- api.nvim_win_close(wini, true)
     -- Closing the input window triggers an Autocmd to close the heading window
-    api.nvim_win_close(rgflow.wini, true)
-    -- api.nvim_win_close(rgflow.winh, true)
+    api.nvim_win_close(M.wini, true)
+    -- api.nvim_win_close(M.winh, true)
 
     -- deprecated, not needed
     -- -- Add a command to the history which can be invoked to repeat this search
@@ -689,7 +687,7 @@ end
 --        into this function.
 function M.start_with_args(flags, pattern, path)
     -- If called from the command history, for example by c_^F or q:
-    rgflow.buf, rgflow.wini, rgflow.winh = start_ui(flags, pattern, path)
+    M.buf, M.wini, M.winh = start_ui(flags, pattern, path)
 end
 
 
@@ -701,7 +699,7 @@ function M.start_via_hotkey_root(mode)
     local flags   = api.nvim_get_var('rgflow_flags')
     local pattern = get_pattern(mode) or ""
     local path    = vim.fn.getcwd()
-    rgflow.buf, rgflow.wini, rgflow.winh = start_ui(flags, pattern, path)
+    M.buf, M.wini, M.winh = start_ui(flags, pattern, path)
 end
 
 
@@ -713,7 +711,7 @@ function M.start_via_hotkey_current_file(mode)
     local flags   = api.nvim_get_var('rgflow_flags')
     local pattern = get_pattern(mode) or ""
     local path    = vim.fn.expand("%:p")
-    rgflow.buf, rgflow.wini, rgflow.winh = start_ui(flags, pattern, path)
+    M.buf, M.wini, M.winh = start_ui(flags, pattern, path)
 end
 
 
@@ -742,7 +740,7 @@ function M.change_conceallevel()
     if vim.api.nvim_win_get_option(0, "conceallevel") == 0 then
         -- set conceallevel = 2
         vim.api.nvim_win_set_option(0, "conceallevel", 2)
-        rgflow.hl_qf_matches()
+        M.hl_qf_matches()
     elseif vim.api.nvim_win_get_option(0, "conceallevel") == 2 then
         -- set conceallevel = 0
         vim.api.nvim_win_set_option(0, "conceallevel", 0)
