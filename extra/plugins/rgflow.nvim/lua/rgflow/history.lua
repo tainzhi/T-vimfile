@@ -10,8 +10,8 @@
 
 local Path = require "plenary.path"
 local log = require "rgflow.log"
-local default_search_pattern =  require "rgflow.default_search_pattern"
-local history_record_limit = 5
+local default_search_pattern = require "rgflow.default_search_pattern"
+local HISTORY_RECORD_LIMIT = 8
 local records_cache = {}
 -- record item: key - {key, path, pattern, match_cnt}
 local RECORD_ITEM_CNT = 4
@@ -55,7 +55,7 @@ function M.get_search_patterns()
     -- 添加历史搜索pattern
     -- 读取最后10行的记录，
     -- 因为读取的是字符串，所以需要用换行符分割成数组
-    local lines = M.record_file:tail(history_record_limit)
+    local lines = M.record_file:tail(HISTORY_RECORD_LIMIT)
     lines = vim.split(lines, '\n')
     -- 每一条记录组成是 '文件标识和pattern拼接后的hash pattern'，用\t分割
     -- 所以，需要拆分
@@ -85,6 +85,44 @@ function M.get_search_patterns()
       seen_items[v] = true
       table.insert(items, v)
     end
+  end
+  log.debug("finally add " .. #items .. " patterns")
+  return items
+end
+
+function M.get_search_records()
+  local items = {}
+  if M.record_file:exists() then
+    -- 添加历史搜索pattern
+    -- 读取最后10行的记录，
+    -- 因为读取的是字符串，所以需要用换行符分割成数组
+    local lines = M.record_file:tail(HISTORY_RECORD_LIMIT)
+    lines = vim.split(lines, '\n')
+    -- 每一条记录组成是 '文件标识和pattern拼接后的hash pattern'，用\t分割
+    -- 所以，需要拆分
+    for i = 1, #lines do
+      local line = lines[i]
+      local fields = vim.split(line, '\t')
+      if (#fields) == RECORD_ITEM_CNT then
+        table.insert(items, {
+          path = fields[RECORD_ITEM_PATH_INDEX],
+          pattern = fields[RECORD_ITEM_PATTERN_INDEX],
+          match_cnt = fields[RECORD_ITEM_MATCH_CNT_INDEX],
+        })
+      end
+    end
+    log.debug("add " .. #lines .. " history patterns")
+  else
+    log.info("no history patterns")
+  end
+
+  -- 添加默认搜索pattern
+  for _, v in ipairs(default_search_pattern) do
+    table.insert(items, {
+      path = '',
+      pattern = v,
+      match_cnt = 0,
+    })
   end
   log.debug("finally add " .. #items .. " patterns")
   return items
