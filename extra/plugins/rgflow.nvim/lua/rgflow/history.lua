@@ -197,6 +197,14 @@ function M.get_search_result(key)
   return nil
 end
 
+function M.clear()
+  local path = Path:new({ vim.fn.stdpath("cache"), "rgflow"})
+  if path:exists() then
+    path:rm{recursive = true}
+    log.info("clear " .. path:absolute())
+  end
+end
+
 function M.test()
   local record_file = Path:new({ vim.fn.stdpath("cache"), "rgflow", "history_record.txt" })
   if not record_file:exists() then

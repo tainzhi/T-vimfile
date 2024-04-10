@@ -98,12 +98,13 @@ if g:rgflow_search_keymaps
     " KEY MAPPINGS
     " Rip grep in files, use <cword> under the cursor as starting point
     nnoremap <leader>rg :<C-U>lua rgflow.start_via_hotkey_root('n')<CR>
-    " Start and paste contents of search register
-    nnoremap <leader>rr :<C-U>lua rgflow.start_via_hotkey_root('n')<CR>0D"/p
+    " " Start and paste contents of search register
+    " nnoremap <leader>rr :<C-U>lua rgflow.start_via_hotkey_root('n')<CR>0D"/p
     " Rip grep in files, use visual selection as starting point
     xnoremap <leader>rg :<C-U>call v:lua.rgflow.start_via_hotkey_root(visualmode())<Cr>
     " Rip grep in current file, use <cword> under the cursor as starting point
-    nnoremap <leader>rc :<C-U>lua rgflow.start_via_hotkey_current_file('n')<CR>
+    nnoremap <leader>rc :<C-U>call v:lua.rgflow.start_via_hotkey_current_file('n')<CR>
+    nnoremap <leader>rr :<C-U>call v:lua.rgflow.clear()<CR>
 endif
 
 function! ResizeSurfingkeysWindow()

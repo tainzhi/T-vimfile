@@ -747,4 +747,9 @@ function M.change_conceallevel()
     end
 end
 
+-- 清除缓存数据
+function M.clear()
+  history.clear()
+end
+
 return M
