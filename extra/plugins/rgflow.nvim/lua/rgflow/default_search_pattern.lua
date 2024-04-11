@@ -12,7 +12,7 @@ local default_patterns = {
     "lowmemorykiller",
     "ShotSlot=INVALID",
     "engine错误|E CamX : [ERROR]|E CamX.*Buffer|E CamX.*TimedWait|E CamX.*not|CAM_ERR.*Unexpected state|CamX.*error|CamX.*Failure|CamX.*failed|E CHI|E CHI.*bad state|CAM_ERR|there might be a leak|failed to get buffer|Unable to.*buffer|E MtkCam",
-    "anr|Input dispatching timed out.*camera3|blocked by|held by thread|waiting to lock|I am_anr.*camera|begin ANR dump all threads|ANR at|ActivityManager.*error|Looper.*slow|Looper.*Drained",
+    "ANR at|anr traces|Input dispatching timed out.*camera3|blocked by|held by thread|waiting to lock|I am_anr.*camera|begin ANR dump all threads|ActivityManager.*error|Looper.*slow|Looper.*Drained",
     "系统重启|reboot|bootstat:|bootstat:.*kernel_panel",
     "点击事件|input_interaction: Interaction with|KPI-6PA-ID.*motion event",
 
