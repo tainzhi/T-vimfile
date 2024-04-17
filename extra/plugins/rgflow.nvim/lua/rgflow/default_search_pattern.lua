@@ -5,7 +5,7 @@ local default_patterns = {
     "拍照失败|CaptureFailed|camera2.*Exception|Dump ERROR Stack Trace|onCaptureFailed|One-shot did not succeed|processFrames failed|No frames found|not enough frames|E McfSnapshotManagementThread:|onSaveError|allFailed=true|BG-Process Job is cancelled|Unable to configure streams|No capture record|Capture failed|ToastUIComponent",
     "崩溃|Fatal exception|FATAL_EXCEPTION|AndroidRuntime|F DEBUG|NullPointerException|Kill .com.motorola.camera3. |Dump ERROR Stack Trace|Unable to configure streams|CameraAccessException|kill.*com.motorola.deviceguard",
     "黑屏|其他|NO CAMERAS|E SettingsManager|E MotoCameraController|W Error|E CameraCaptureSession",
-    "camera生命周期|CameraLifeCycle|wm_.*activity.*Camera,|wm_on.*called,Camera,|am_proc_start.*camera3|am_kill.*camera3",
+    "camera生命周期|CameraLifeCycle|wm_.*activity.*Camera,|wm_.*,Camera,|am_proc_start.*camera3|am_kill.*camera3",
     "AutoFocusStateMachine|CameraKpiTag: AUTO_FOCUS",
     "lowmemorykiller.*cpuload ([456789]\\d|100)|lowmemorykiller.*cpu psi [456789]\\d|mempsi \\d\\d|low memory|cpuload ([789]\\d|100)|CPU usage.*\\d\\d\\d\\dms|CameraKpiTag.*\\d\\d\\d\\d ms|ActivityManager.*\\d\\d\\d\\dms",
     "MotoCamera: |CameraKpiTag",
