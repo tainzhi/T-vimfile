@@ -567,27 +567,41 @@ local default_plugins = {
 
    -- colorscheme
    {
-      "folke/tokyonight.nvim",
+      "f-person/auto-dark-mode.nvim",
+      -- https://github.com/shaunsingh/solarized.nvim
+      -- https://github.com/sainnhe/everforest
+      -- https://github.com/EdenEast/nightfox.nvim
+      -- https://github.com/ellisonleao/gruvbox.nvim
+      dependencies = { "folke/tokyonight.nvim" , "sainnhe/everforest", "shaunsingh/solarized.nvim"},
       lazy = false,    -- make sure we load this during startup if it is your main colorscheme
       priority = 1000, -- make sure to load this before all the other start plugins
-      config = function()
-         -- set default theme
-         -- storm, night, day
-         vim.g.tokyonight_style = "night"
-         vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal" }
-         -- Change the "hint" color to the "orange" color, and make the "error" color bright red
-         vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
-         -- Load the colorscheme
-         vim.cmd [[colorscheme tokyonight]]
-      end,
+      config = {
+         set_dark_mode = function()
+            vim.api.nvim_set_option("background", "dark")
+            vim.cmd [[colorscheme everforest]]
+         end,
+         set_light_mode = function()
+            vim.api.nvim_set_option("background", "light")
+            vim.cmd [[colorscheme everforest]]
+         end,
+      }
    },
-   -- https://github.com/shaunsingh/solarized.nvim
-   { 'shaunsingh/solarized.nvim', lazy = true, cmd = { "Colorscheme" } },
-   -- https://github.com/ellisonleao/gruvbox.nvim
-   { 'ellisonleao/gruvbox.nvim',  lazy = true, cmd = { "Colorscheme" } },
+   -- {
+   --    "folke/tokyonight.nvim",
+   --    lazy = false,    -- make sure we load this during startup if it is your main colorscheme
+   --    priority = 1000, -- make sure to load this before all the other start plugins
+   --    config = function()
+   --       -- set default theme
+   --       -- storm, night, day
+   --       vim.g.tokyonight_style = "day"
+   --       vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal" }
+   --       -- Change the "hint" color to the "orange" color, and make the "error" color bright red
+   --       vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
+   --       -- Load the colorscheme
+   --       vim.cmd [[colorscheme tokyonight]]
+   --    end,
+   -- },
 
-   -- https://github.com/EdenEast/nightfox.nvim
-   { 'EdenEast/nightfox.nvim',    lazy = true, cmd = { "Colorscheme" } },
 
    {
       -- "~/AppData/Local/nvim/extra/plugins/rgflow.nvim",
