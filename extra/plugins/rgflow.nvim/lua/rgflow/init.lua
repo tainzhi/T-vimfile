@@ -527,7 +527,7 @@ local function get_config(flags, pattern, path)
     api.nvim_set_var('rgflow_flags', flags)
 
     -- Default flags always included
-    local rg_args    = {"--sort=path", "--no-heading", "--with-filename","--line-number", "--column", "--no-ignore-messages", "--replace",  zs_ze.."$0"..zs_ze}
+    local rg_args    = {"--sort=path", "--no-heading", "--with-filename","-U","-a", "--line-number", "--column", "--no-ignore-messages", "--replace",  zs_ze.."$0"..zs_ze}
 
     -- 1. Add the flags first to the Ripgrep command
     local flags_list = vim.split(flags, " ")
