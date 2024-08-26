@@ -2,7 +2,7 @@
 -- lowmemorykiller杀死camera3导致camera3闪退
 -- Kill 'com.motorola.camera3' 有问题，所以替换成 Kill .com.motorola.camera3
 local default_patterns = {
-    "拍照失败|CaptureFailed|camera2.*Exception|Dump ERROR Stack Trace|onCaptureFailed|One-shot did not succeed|processFrames failed|No frames found|not enough frames|E McfSnapshotManagementThread:|onSaveError|allFailed=true|BG-Process Job is cancelled|Unable to configure streams|No capture record|Capture failed|ToastUIComponent|aborting capture",
+    "拍照失败|CaptureFailed|camera2.*Exception|Dump ERROR Stack Trace|onCaptureFailed|One-shot did not succeed|processFrames failed|No frames found|not enough frames|E McfSnapshotManagementThread:|onSaveError|allFailed=true|BG-Process Job is cancelled|Unable to configure streams|No capture record|Capture failed|ToastUIComponent|aborting capture|ALGORITHM_FAILURE|STATE_MACHINE_FAILURE|FRAME_COLLECTION_FAILURE|REPROCESS_FAILURE|SWJPEG_REPROC_FAILURE",
     "崩溃|Fatal exception|FATAL_EXCEPTION|AndroidRuntime|F DEBUG|NullPointerException|Kill .com.motorola.camera3. |Dump ERROR Stack Trace|Unable to configure streams|CameraAccessException|kill.*com.motorola.deviceguard|E CameraFsm|E CameraDevice|W CameraDevice|E Camera3-Device",
     "黑屏|其他|NO CAMERAS|E SettingsManager|E MotoCameraController|W Error|E CameraCaptureSession|E Mcf",
     "camera生命周期|CameraLifeCycle|wm_.*activity.*Camera,|wm_.*,Camera,|am_proc_start.*Camera|am_kill.*Camera",
