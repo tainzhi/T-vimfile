@@ -11,7 +11,7 @@ scoop install mingw
 
 
 # clone config to $HOME\AppData\Local\nvim
-git clone https://github.com/tainzhi/Q-vimfile "$env:LOCALAPPDATA\nvim"
+git clone https://github.com/tainzhi/T-vimfile "$env:LOCALAPPDATA\nvim"
 
 # 插件管理： lazy.nvim
 # launch nvim and use
