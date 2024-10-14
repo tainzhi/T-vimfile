@@ -22,6 +22,12 @@ vim.cmd [[ autocmd BufWinEnter *.txt if &ft == 'help' | wincmd L | vertical resi
 vim.cmd [[ autocmd BufWritePre *.md if &ft == 'markdown' | PanguAll]]
 vim.cmd [[ autocmd BufWinEnter *.md if &ft == 'markdown' | set shada="NONE"]]
 
+-- -- [deprecated] 对vscode-nvim不起作用，
+-- -- insert mode, vscode-nvim 输入法切换到中文
+-- vim.cmd [[ autocmd InsertEnter * if exists('g:vscode') | call jobstart("c:\\im-select.exe 2052")]]
+-- -- normal mode, vscode-nvim 输入法切换到英文
+-- vim.cmd [[ autocmd InsertLeave * if exists('g:vscode') | call jobstart("c:\\im-select.exe 1033")]]
+
 -- 不启用，因为某些情况下会导致打开nvim时卡住，不响应任何按键
 -- -- 关闭一些选项，加快打开大文件
 -- -- https://vim.fandom.com/wiki/Faster_loading_of_large_files

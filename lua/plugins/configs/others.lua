@@ -24,9 +24,9 @@ M.im_select = function()
 
          -- Can be binary's name or binary's full path,
          -- e.g. 'im-select' or '/usr/local/bin/im-select'
-         -- For Windows/WSL, default: "im-select.exe"
+         -- For Windows/WSL, default: "C:\\Progra~1\\im-select.exe" 即在 C:\\program files目录下
          -- For macOS, default: "im-select"
-         default_command      = 'C:\\Progra~1\\im-select.exe'
+         default_command      = 'C:\\im-select.exe'
       }
    end
 end
