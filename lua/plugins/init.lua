@@ -1,7 +1,9 @@
 -- All plugins have lazy=true by default,to load a plugin on startup just lazy=false
 -- List of all default plugins & their definitions
 local default_plugins = {
-   { "nvim-lua/plenary.nvim" },
+   {
+      "nvim-lua/plenary.nvim",
+   },
 
    {
       -- statusline
@@ -10,17 +12,19 @@ local default_plugins = {
       conifg = require("plugins.configs.lualine")
    },
 
-   {
-      "akinsho/bufferline.nvim",
-      lazy = false,
-      version = "*",
-      dependencies = "kyazdani42/nvim-web-devicons",
-      config = require("plugins.configs.bufferline")
-   },
+   -- {
+   --    "akinsho/bufferline.nvim",
+   --    lazy = false,
+   --    version = "*",
+   --    dependencies = "kyazdani42/nvim-web-devicons",
+   --    config = require("plugins.configs.bufferline")
+   -- },
 
    {
       "lukas-reineke/indent-blankline.nvim",
       main = "ibl",
+      event = "VeryLazy",
+      lazy = true,
       init = function()
          require("core.utils").lazy_load "indent-blankline.nvim"
       end,
@@ -54,32 +58,29 @@ local default_plugins = {
 
    {
       "nvim-treesitter/nvim-treesitter",
-      event = "BufRead",
       ft = { "c", "c++", "lua", "sh", "java" },
       config = require("plugins.configs.treesitter"),
    },
 
-   {
-      "nvim-telescope/telescope.nvim",
-      event = "VimEnter",
-      cond = function()
-         return vim.g.vscode == nil
-      end,
-      dependencies = {
-         {
-            "nvim-telescope/telescope-fzf-native.nvim",
-            build = "make",
-            cond = function()
-               return vim.fn.executable 'make' == 1
-            end
-         },
-         {
-            "nvim-telescope/telescope-media-files.nvim",
-         },
-         { 'nvim-telescope/telescope-ui-select.nvim' },
-      },
-      config = require("plugins.configs.telescope")
-   },
+   -- 加载耗时，弃用
+   -- {
+   --    "nvim-telescope/telescope.nvim",
+   --    event = "VeryLazy",
+   --    dependencies = {
+   --       {
+   --          "nvim-telescope/telescope-fzf-native.nvim",
+   --          build = "make",
+   --          cond = function()
+   --             return vim.fn.executable 'make' == 1
+   --          end
+   --       },
+   --       {
+   --          "nvim-telescope/telescope-media-files.nvim",
+   --       },
+   --       { 'nvim-telescope/telescope-ui-select.nvim' },
+   --    },
+   --    config = require("plugins.configs.telescope")
+   -- },
 
    -- git stuff
    {
@@ -426,6 +427,7 @@ local default_plugins = {
    {
       "andymass/vim-matchup",
       lazy = true,
+      ft = { "c", "c++", "lua", "sh", "java" },
       init = function()
          require("core.utils").lazy_load "vim-matchup"
       end,
@@ -499,7 +501,7 @@ local default_plugins = {
       cmd = { "NvimTreeToggle", "NvimTreeFocus" },
       config = require("plugins.configs.nvimtree"),
       cond = function()
-         return vim.g.vscode == nil or vim.fn.file ~= 'help'
+         return vim.fn.file ~= 'help'
       end,
    },
 
@@ -523,12 +525,14 @@ local default_plugins = {
       end,
    },
 
-   -- 格式化文本文件, 比如半角字符转换为全角字符,
-   -- 英文和数字如果在中文之间使用前后插入空格
-   {
-      "hotoo/pangu.vim",
-      ft = { "markdown", "md", "text" },
-   },
+   -- -- 加载耗时，弃用
+   -- -- 格式化文本文件, 比如半角字符转换为全角字符,
+   -- -- 英文和数字如果在中文之间使用前后插入空格
+   -- {
+   --    "hotoo/pangu.vim",
+   --    event = "InsertEnter",
+   --    ft = { "markdown", "md", "text" },
+   -- },
 
    {
       'glacambre/firenvim',
@@ -544,85 +548,101 @@ local default_plugins = {
          vim.fn['firenvim#install'](0)
       end,
    },
-   {
-      "folke/which-key.nvim",
-      event = "VeryLazy",
-      init = function()
-         vim.o.timeout = true
-         vim.o.timeoutlen = 300
-      end,
-      opts = {
-         icons = { group = vim.g.icons_enabled and "" or "+", separator = "" },
-         disable = { filetypes = { "TelescopePrompt" } },
-      },
-   },
+   -- 加载耗时，弃用
+   -- {
+   --    "folke/which-key.nvim",
+   --    event = "VeryLazy",
+   --    init = function()
+   --       vim.o.timeout = true
+   --       vim.o.timeoutlen = 300
+   --    end,
+   --    opts = {
+   --       icons = { group = vim.g.icons_enabled and "" or "+", separator = "" },
+   --       disable = { filetypes = { "TelescopePrompt" } },
+   --    },
+   -- },
 
    -- 中英文切换，normal模式自动切换到英文
-   -- {
-   --    'keaising/im-select.nvim',
-   --    config = function()
-   --       require("plugins.configs.others").im_select()
-   --    end,
-   -- },
+   {
+      'keaising/im-select.nvim',
+      ft = { "markdown", "md", "text" },
+      event = "InsertEnter",
+      config = function()
+         require("plugins.configs.others").im_select()
+      end,
+   },
 
    -- colorscheme
-   {
-      "f-person/auto-dark-mode.nvim",
-      -- https://github.com/shaunsingh/solarized.nvim
-      -- https://github.com/sainnhe/everforest
-      -- https://github.com/EdenEast/nightfox.nvim
-      -- https://github.com/ellisonleao/gruvbox.nvim
-      dependencies = { "folke/tokyonight.nvim" , "sainnhe/everforest", "shaunsingh/solarized.nvim"},
-      lazy = false,    -- make sure we load this during startup if it is your main colorscheme
-      priority = 1000, -- make sure to load this before all the other start plugins
-      config = {
-         set_dark_mode = function()
-            vim.api.nvim_set_option("background", "dark")
-            vim.cmd [[colorscheme everforest]]
-         end,
-         set_light_mode = function()
-            vim.api.nvim_set_option("background", "light")
-            vim.cmd [[colorscheme everforest]]
-         end,
-      }
-   },
+   -- 加载非常耗时，故弃用
    -- {
-   --    "folke/tokyonight.nvim",
+   --    "f-person/auto-dark-mode.nvim",
+   --    -- https://github.com/shaunsingh/solarized.nvim
+   --    -- https://github.com/sainnhe/everforest
+   --    -- https://github.com/EdenEast/nightfox.nvim
+   --    -- https://github.com/ellisonleao/gruvbox.nvim
+   --    dependencies = { "folke/tokyonight.nvim" , "sainnhe/everforest", "shaunsingh/solarized.nvim"},
    --    lazy = false,    -- make sure we load this during startup if it is your main colorscheme
    --    priority = 1000, -- make sure to load this before all the other start plugins
-   --    config = function()
-   --       -- set default theme
-   --       -- storm, night, day
-   --       vim.g.tokyonight_style = "day"
-   --       vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal" }
-   --       -- Change the "hint" color to the "orange" color, and make the "error" color bright red
-   --       vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
-   --       -- Load the colorscheme
-   --       vim.cmd [[colorscheme tokyonight]]
-   --    end,
+   --    config = {
+   --       set_dark_mode = function()
+   --          vim.api.nvim_set_option("background", "dark")
+   --          vim.cmd [[colorscheme everforest]]
+   --       end,
+   --       set_light_mode = function()
+   --          vim.api.nvim_set_option("background", "light")
+   --          vim.cmd [[colorscheme everforest]]
+   --       end,
+   --    }
    -- },
+   {
+      "folke/tokyonight.nvim",
+      lazy = false,    -- make sure we load this during startup if it is your main colorscheme
+      priority = 1000, -- make sure to load this before all the other start plugins
+      config = function()
+         -- set default theme
+         -- storm, night, day
+         vim.g.tokyonight_style = "day"
+         vim.g.tokyonight_sidebars = { "qf", "vista_kind", "terminal" }
+         -- Change the "hint" color to the "orange" color, and make the "error" color bright red
+         vim.g.tokyonight_colors = { hint = "orange", error = "#ff0000" }
+         -- Load the colorscheme
+         vim.cmd [[colorscheme tokyonight]]
+      end,
+   },
 
 
    {
       -- "~/AppData/Local/nvim/extra/plugins/rgflow.nvim",
       dir = vim.fn.stdpath "config" .. "/extra/plugins/rgflow.nvim",
-      lazy = false,
-
-      cond = function()
-         return vim.g.vscode == nil
-      end,
+      event = "VeryLazy",
       dependencies = { "nvim-lua/plenary.nvim", "nvim-cmp" }
    },
 
    {
       dir = vim.fn.stdpath "config" .. "/extra/plugins/syntaxs.nvim",
-      cond = function()
-         return vim.g.vscode == nil
-      end,
+      event = "InsertEnter",
       ft = { "log", "txt", "markdown", "md", "qf", "text" }
    },
 }
 
-local lazy_config = require "plugins.configs.lazy_nvim"
-
-require("lazy").setup(default_plugins, lazy_config)
+if vim.g.vscode == nil then
+   local lazy_config = require "plugins.configs.lazy_nvim"
+   require("lazy").setup(default_plugins, lazy_config)
+else
+   -- -- normal mode, switch to english
+   -- vim.api.nvim_create_autocmd({"InsertLeave"}, {
+   --    pattern = "*",
+   --    callback = function()
+   --       -- vim.fn.jobstart({"c:\\im-select.exe", "1033"})
+   --       vim.fn.jobstart("c:\\im-select.exe 1033")
+   --    end,
+   -- })
+   -- -- insert mode, switch to chinese
+   -- vim.api.nvim_create_autocmd({"InsertEnter"}, {
+   --    pattern = "*",
+   --    callback = function()
+   --       -- vim.fn.jobstart({"c:\\im-select.exe", "2052"})
+   --       vim.fn.jobstart("c:\\im-select.exe 2052")
+   --    end,
+   -- })
+end
