@@ -62,25 +62,24 @@ local default_plugins = {
       config = require("plugins.configs.treesitter"),
    },
 
-   -- 加载耗时，弃用
-   -- {
-   --    "nvim-telescope/telescope.nvim",
-   --    event = "VeryLazy",
-   --    dependencies = {
-   --       {
-   --          "nvim-telescope/telescope-fzf-native.nvim",
-   --          build = "make",
-   --          cond = function()
-   --             return vim.fn.executable 'make' == 1
-   --          end
-   --       },
-   --       {
-   --          "nvim-telescope/telescope-media-files.nvim",
-   --       },
-   --       { 'nvim-telescope/telescope-ui-select.nvim' },
-   --    },
-   --    config = require("plugins.configs.telescope")
-   -- },
+   {
+      "nvim-telescope/telescope.nvim",
+      event = "VeryLazy",
+      dependencies = {
+         {
+            "nvim-telescope/telescope-fzf-native.nvim",
+            build = "make",
+            cond = function()
+               return vim.fn.executable 'make' == 1
+            end
+         },
+         {
+            "nvim-telescope/telescope-media-files.nvim",
+         },
+         { 'nvim-telescope/telescope-ui-select.nvim' },
+      },
+      config = require("plugins.configs.telescope")
+   },
 
    -- git stuff
    {
@@ -518,6 +517,7 @@ local default_plugins = {
       -- easy-motion的替代
       'phaazon/hop.nvim',
       branch = 'v2', -- optional but strongly recommended
+      event = "BufRead",
       config = function()
          require "hop".setup {
             keys = 'etovxqpdygfblzhckisuran'
