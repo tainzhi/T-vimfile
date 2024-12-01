@@ -53,6 +53,10 @@ opt.updatetime = 250
 -- when cursor reaches end/beginning of line
 opt.whichwrap:append "<>[]hl"
 -- space 
+-- references: https://github.com/vscode-neovim/vscode-neovim/issues/1137
+-- vscode nvim mapleader not working
+-- The default mapping for <Space> need to be deleted for this to work. Since vim.keymap.del is not working so mapping it to <Nop> should do the trick.
+vim.keymap.set("", "<Space>", "<Nop>")
 g.mapleader = " "
 
 g.neovide_remember_window_size = true
