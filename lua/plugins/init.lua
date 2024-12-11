@@ -536,17 +536,11 @@ local default_plugins = {
 
    {
       'glacambre/firenvim',
-      -- -- lazy load, if g:started_by_firenvim == v:true
-      -- cond = function()
-      --    return vim.fn.exists('g:started_by_firenvim') == 1
-      -- end
       lazy = not vim.g.started_by_firenvim,
       config = function()
          require("plugins.configs.firenvim")
       end,
-      build = function()
-         vim.fn['firenvim#install'](0)
-      end,
+      build = ":call firenvim#install(0)",
    },
    -- 加载耗时，弃用
    -- {

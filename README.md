@@ -17,6 +17,17 @@ git clone https://github.com/tainzhi/T-vimfile "$env:LOCALAPPDATA\nvim"
 # launch nvim and use
 $ nvim
 ```
+- linux
+```shell
+# download then start to auto intall plugins
+git clone https://github.com/tainzhi/T-vimfile ~/.config/nvim
+```
+
+启动nvim，并执行nvim命令后启动插件安装，特别是安装 firenvim. 若是遇到问题， 参考 [firenvim troubleshooting](https://github.com/glacambre/firenvim/blob/master/TROUBLESHOOTING.md)
+```vim
+:Lazy load firenvim
+:call firenvim#install(0)
+```
 
 ## nvim-qt 的替代 gui
 [neovide](https://github.com/neovide/neovide)：
