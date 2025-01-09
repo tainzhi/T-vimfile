@@ -67,6 +67,12 @@ local M = {
         t({"BR"}),
     }),
 
+    s("incomplete", {
+        t({"It's user version which printed logs is restricted and has no detailed logs to analysis.", ""}), 
+        t({"So I will track it.", ""}),
+        t({"If it happens again, I will reopen it.", ""}),
+    }),
+
     s("retest",{
         t({"According to the log, we are unable to locate the specific issue and cannot reproduce it on the build. So we request a retest.",""}),
         t({""}),

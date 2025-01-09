@@ -101,8 +101,14 @@ if exists('b:current_syntax')
   syn match fsmTransitionState "\[.\{-}\]"hs=s+1,he=e-1 contained
   hi fsmTransitionState gui=underline guifg=#ff0c39 ctermfg=Yellow
 
+  " 匹配 Transition from [RESET] to [INIT, PERMISSIONS_OPTIONAL]
   syn match fsmTransition "Transition from \[.*\] to \[.*\]" contains=fsmTransitionState
   hi fsmTransition gui=NONE guifg=#B501FF ctermfg=Blue 
+
+
+  " 匹配 [RESET] to [INIT, PERMISSIONS_OPTIONAL]
+  syn match fsmNonTransition "\[.*\] to \[.*\]" contains=fsmTransitionState
+  hi fsmNonTransition gui=NONE guifg=#B501FF ctermfg=Blue 
 
   syn match androidStackTraceLine "AndroidRuntime.*" contained
   syn region stackTrace start="AndroidRuntime:.*" skip="AndroidRuntim" end="$" 
