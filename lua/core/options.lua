@@ -2,7 +2,16 @@ local opt = vim.opt
 local g = vim.g
 
 opt.termguicolors = true
-opt.guifont = "Cascadia Code:h10"
+-- 必须要系统安装而 NerdFonts 字体，否则会显示乱码
+if jit.os == "Windows" then
+   opt.guifont = "Cascadia Code:h10"
+-- ubuntu默认的 DejaVu Sans Mono 不是 NerdFonts 字体，需要重新下载安装
+-- 从 https://www.nerdfonts.com/font-downloads 选择 DejaVuSansM Nerd Font下载安装
+elseif jit.os == "Linux" then
+   opt.guifont = "DejaVu Sans Mono:h12"
+elseif jit.os == "OSX" then
+   opt.guifont = "Helvetia:h10"
+end
 opt.title = true
 -- vimscript: set clipboard += unnamedplus
 opt.clipboard:append { "unnamedplus" }
