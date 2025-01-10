@@ -59,6 +59,7 @@ local default_plugins = {
    {
       "nvim-treesitter/nvim-treesitter",
       ft = { "c", "c++", "lua", "sh", "java" },
+      build = ":TSUpdate",
       config = require("plugins.configs.treesitter"),
    },
 

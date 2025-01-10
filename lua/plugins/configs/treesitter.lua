@@ -15,13 +15,15 @@ return function()
       ensure_installed = {
         "bash",
         "c",
+        "vimdoc",
+        "luadoc",
+        "vim",
         "lua",
         "markdown",
         "markdown_inline",
         "python",
+        "cpp",
         "query",
-        "vim",
-        "vimdoc",
       },
       incremental_selection = { enable = true },
       textobjects = {
