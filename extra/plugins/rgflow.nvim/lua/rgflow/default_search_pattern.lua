@@ -8,7 +8,7 @@ local default_patterns = {
     "camera生命周期|CameraLifeCycle|wm_.*activity.*Camera,|wm_.*,Camera,|am_proc_start.*Camera|am_kill.*Camera",
     "AutoFocusStateMachine|CameraKpiTag: AUTO_FOCUS",
     "lowmemorykiller.*cpuload ([456789]\\d|100)|lowmemorykiller.*cpu psi [456789]\\d|mempsi \\d\\d|low memory|cpuload ([789]\\d|100)|CPU usage.*\\d\\d\\d\\dms|CameraKpiTag.*\\d\\d\\d\\d ms|ActivityManager.*\\d\\d\\d\\dms",
-    "Fsm |MotoCamera: |CameraKpiTag|ActivityBase|setupForMode|logicalCameraId is|logicalCameraId=",
+    " Fsm |MotoCamera: |CameraKpiTag| ActivityBase:|setupForMode|logicalCameraId is|logicalCameraId=",
     "lowmemorykiller",
     "ShotSlot=INVALID",
     "engine错误|E CamX : [ERROR]|E CamX.*Buffer|E CamX.*TimedWait|E CamX.*not|CAM_ERR.*Unexpected state|CamX.*error|CamX.*Failure|CamX.*failed|CamxResultETimeout|E CHI|E CHI.*bad state|CAM_ERR|there might be a leak|failed to get buffer|Unable to.*buffer|E MtkCam",
