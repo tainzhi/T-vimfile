@@ -29,14 +29,18 @@ vim.api.nvim_exec(
         \ l:ui.client.name =~? 'Firenvim'
     endfunction
 
+
     function! OnUIEnter(event) abort
         if s:IsFirenvimActive(a:event)
-            nnoremap <space> :set lines=50 columns=210 <CR>
+            set relativenumber
 
-            let s:fontsize = 14
+            let s:fontsize = 10
+            execute "set guifont=Consolas:h" . s:fontsize
+
             function! AdjustFontSizeF(amount)
                 let s:fontsize = s:fontsize+a:amount
-                execute "set guifont=SauceCodePro\\ Nerd\\ Font:h" . s:fontsize
+                execute "set guifont=Consolas:h" . s:fontsize
+                set relativenumber
                 call rpcnotify(0, 'Gui', 'WindowMaximized', 1)
             endfunction
 
@@ -45,6 +49,8 @@ vim.api.nvim_exec(
             inoremap <C-=> :call AdjustFontSizeF(1)<CR>
             inoremap <C--> :call AdjustFontSizeF(-1)<CR>
             noremap  <C-S> :wq<CR>
+            " 放大窗口, 放大字体
+            nnoremap <space> :set lines=50 columns=210<CR>:set guifont=Consolas:h14<CR>
         endif
     endfunction
 
