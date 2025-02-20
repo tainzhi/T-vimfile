@@ -612,12 +612,6 @@ local default_plugins = {
       event = "VeryLazy",
       dependencies = { "nvim-lua/plenary.nvim", "nvim-cmp" }
    },
-
-   {
-      dir = vim.fn.stdpath "config" .. "/extra/plugins/syntaxs.nvim",
-      event = "InsertEnter",
-      ft = { "log", "txt", "markdown", "md", "qf", "text" }
-   },
 }
 
 if vim.g.vscode == nil then
