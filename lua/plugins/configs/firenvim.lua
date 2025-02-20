@@ -1,3 +1,7 @@
+
+-- 改成never这样不自动触发firenvim，通过快捷键 CTRL+I 手动触发
+-- Turn the currently focused element into a neovim iframe
+-- 当然需要在chrome的firenvim插件中设置快捷键为 CTRL+I
 vim.api.nvim_exec(
 [[
     let g:firenvim_config = { 
@@ -9,15 +13,16 @@ vim.api.nvim_exec(
         \ 'localSettings': {
             \ '.*': {
                 \ 'cmdline': 'nvim',
-                \ 'content': 'text',
+                \ 'content': 'html',
                 \ 'priority': 0,
                 \ 'selector': 'textarea',
-                \ 'takeover': 'always',
+                \ 'takeover': 'never',
             \ },
         \ }
     \ }
    let fc = g:firenvim_config['localSettings']
-   let fc['https://idart.mot.com/'] = {'filename': '{hostname%32}_{pathname%32}.idart', 'selector': 'textarea[id="comment"]'}
+   " let fc['https://idart.mot.com/'] = {'filename': '{hostname%32}_{pathname%32}_addcomment.idart', 'selector': 'div[id="addcomment"] textarea[id="comment"]'}
+   " let fc['https://idart.mot.com/'] = {'filename': '{hostname%32}_{pathname%32}_dialog.idart', 'selector': 'div.jira-dialog textarea[id="comment"]'}
 
     " Increase the font size to solve the `text too small` issue
     function! s:IsFirenvimActive(event) abort
@@ -48,13 +53,14 @@ vim.api.nvim_exec(
             noremap  <C--> :call AdjustFontSizeF(-1)<CR>
             inoremap <C-=> :call AdjustFontSizeF(1)<CR>
             inoremap <C--> :call AdjustFontSizeF(-1)<CR>
-            noremap  <C-S> :wq<CR>
+            noremap  <C-S> <Esc>:wq<CR>
             " 放大窗口, 放大字体
             nnoremap <space> :set lines=50 columns=210<CR>:set guifont=Consolas:h14<CR>
         endif
     endfunction
 
     autocmd UIEnter * call OnUIEnter(deepcopy(v:event))
+    " 设置idart.mot.com的buffer的filetype为idart, 这样就可以使用idart的自动补全
     autocmd BufEnter idart.mot.com_* set filetype=idart
     autocmd BufEnter github.com_*.txt set filetype=markdown
 ]], true)
