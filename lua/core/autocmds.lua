@@ -22,6 +22,15 @@ vim.cmd [[ autocmd BufWinEnter *.txt if &ft == 'help' | wincmd L | vertical resi
 vim.cmd [[ autocmd BufWritePre *.md if &ft == 'markdown' | PanguAll]]
 vim.cmd [[ autocmd BufWinEnter *.md if &ft == 'markdown' | set shada="NONE"]]
 
+vim.cmd [[ autocmd BufReadPost *.txt,*.log syntax enable]]
+vim.api.nvim_create_autocmd({"BufRead","BufWinEnter", "BufNewFile"}, {
+    pattern = {"*.txt", "*.log"},
+    callback = function()
+        vim.bo.filetype = "text"
+        vim.opt.syntax = "on"
+    end,
+})
+
 -- -- [deprecated] 对vscode-nvim不起作用，
 -- -- insert mode, vscode-nvim 输入法切换到中文
 -- vim.cmd [[ autocmd InsertEnter * if exists('g:vscode') | call jobstart("c:\\im-select.exe 2052")]]

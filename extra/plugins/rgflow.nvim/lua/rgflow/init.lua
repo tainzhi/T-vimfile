@@ -142,6 +142,9 @@ local function get_pattern(mode)
     local default_pattern
     if visual_modes[mode] then
         default_pattern = get_visual_selection(mode)
+    -- insert mode不需要输入任何内容
+    elseif mode == 'i' then
+        return ""
     else
         default_pattern = vim.fn.expand('<cword>')
     end
@@ -256,20 +259,11 @@ end
 
 
 local function get_patterns_data(base)
-    local patterns = {}
     local buffer_search_pattern_history = history.get_search_patterns()
-    -- 先把最近的搜索历史添加进补全库
-    for i = 1, #buffer_search_pattern_history do
-        patterns[#patterns+1] = buffer_search_pattern_history[i]
-    end
-    -- 再把默认的patterns添加进补全库
-    for _, v in ipairs(default_search_pattern) do
-        table.insert(patterns, v)
-    end
 
-    -- 最后对补全库进行过滤
+    -- 对补全库进行处理
     local filterd_patterns = {}
-    for i, line in ipairs(patterns) do
+    for i, line in ipairs(buffer_search_pattern_history) do
         local reg_base = ''
         for i=1,#base do
             reg_base = reg_base .. string.sub(base, i, i) .. ".*"
@@ -420,7 +414,6 @@ local function on_stdout(err, data)
         local vals = vim.split(data, "\n")
         for _, d in pairs(vals) do
             if d ~= "" then
-                -- If the last char is a ASCII 13 / ^M / <CR> then trim it
                 config.match_cnt = config.match_cnt + 1
                 if string.sub(d, -1, -1) == "\13" then d = string.sub(d, 1, -2) end
                 table.insert(config.results, d)
@@ -461,8 +454,8 @@ local function add_results_to_qf()
         api.nvim_set_option("hlsearch", true)
     end
 
-    -- 把quickfix也是用text.vim的高亮syntax
-    api.nvim_command("set syntax=text")
+    -- -- 把quickfix也是用text.vim的高亮syntax
+    -- api.nvim_command("set syntax=text")
 
     -- Note: rgflow.hl_qf_matches() is called via ftplugin when a QF window
     -- is opened.

@@ -7,10 +7,12 @@ let b:did_ftplugin = 1
 setlocal nowrap
 setlocal norelativenumber
 setlocal colorcolumn=
+syntax enable
 
 " conceal options are always window local
 set conceallevel=2
 set concealcursor=nvic
+set relativenumber
 
 if g:rgflow_qf_keymaps
     "Disable accidental alternate buffer switching in quickfix window

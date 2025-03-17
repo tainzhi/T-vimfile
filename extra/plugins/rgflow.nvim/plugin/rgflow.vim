@@ -70,12 +70,12 @@ else
 
     " The QF window is set to the height of the number of matches, but bounded
     " to be between a min of 3 and a max of this variable:
-    let g:rgflow_qf_max_height = get(g:, 'rgflow_qf_max_height', 30)
+    let g:rgflow_qf_max_height = get(g:, 'rgflow_qf_max_height', 42)
 endif
 
 " SOURCE MODULE
 if testing
-    lua rgflow = dofile('/home/michael/.config/nvim/tmp/nvim-rgflow.lua/lua/rgflow.lua')
+    lua rgflow = dofile('/home/tainzhi/.config/nvim/extra/plugins/rgflow.nvim/lua/rgflow/init.lua')
 else
     lua rgflow = require('rgflow')
 endif
@@ -114,9 +114,9 @@ function! ResizeSurfingkeysWindow()
 endfunction
 au BufEnter surfingkeys://* call ResizeSurfingkeysWindow()
 
- set completeopt-=preview " 可选，移除预览窗口
- " 禁止默认的omnifunc补全
- autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
- set omnifunc= ""    " 禁用内置的omnifunc
+set completeopt-=preview " 可选，移除预览窗口
+" 禁止默认的omnifunc补全
+autocmd InsertLeave * if pumvisible() == 0 | pclose | endif
+set omnifunc= ""    " 禁用内置的omnifunc
 
 let g:loaded_rgflow = 1

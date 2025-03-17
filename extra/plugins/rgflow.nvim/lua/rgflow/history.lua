@@ -59,7 +59,8 @@ function M.get_search_patterns()
     lines = vim.split(lines, '\n')
     -- 每一条记录组成是 '文件标识和pattern拼接后的hash pattern'，用\t分割
     -- 所以，需要拆分
-    for i = 1, #lines do
+    -- 要倒序添加进补全库，因为从历史缓存是按照时间顺序写入的，在这里倒序后可以保证最近写入的搜索记录排在前面
+    for i = #lines, 1, -1 do
       local line = lines[i]
       local fields = vim.split(line, '\t')
       if (#fields) == RECORD_ITEM_CNT then
@@ -78,7 +79,7 @@ function M.get_search_patterns()
   else
     log.info("no history patterns")
   end
-
+  
   -- 添加默认搜索pattern
   for _, v in ipairs(default_search_pattern) do
     if not seen_items[v] then
