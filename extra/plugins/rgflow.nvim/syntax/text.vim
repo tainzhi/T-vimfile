@@ -7,14 +7,22 @@ if exists('b:current_syntax')
 
   " Moto Camera log syntax
   "---------------------------------------------------------------------------
-  syn match keyErrorFatal "Error\|ERROR\|fatal\|Fatal\|ERR"
+  syn match keyErrorFatal "Error\|ERROR\|error\|fatal\|Fatal\|ERR"
   syn match keyInvalid "Invalid\|INVALID"
   syn match keyNullEmpty "Null\|Empty\|NULL\|empty\|null"
-  syn match keyTime "timeout"
+  syn match keyTime "timeout|Timeout\|TIMEOUT"
   syn match keyKillCrash "killed\|Killed\|kill\|\|Kill\|crash\|Crash\|die\|died\|dying"
   " failed在前，优先级priority更高
-  syn match keyFail "failed\|fail\|Fail"
-  syn match keyException "Exception\|EXCEPTION|NullPointerException"
+  syn match keyFail "failed\|Failed\|Failutre\|FAILURE\|failure\|fail\|Fail"
+  syn match keyException "NullPointerException\|Exception\|EXCEPTION"
+  syn match keyNo "\<not\>\|\<NOT\>\|\<Not\>\|\<no\>\|\<No\>\|\<NO\>"
+  syn match keyAbnormal "abnormal\|Abnormal\|Abnoraml\|ABNORMAL"
+  syn match keyFreeze "freeze\|Freeze\|froze\|Froze\|frozen\|Frozen"
+  syn match keyAble "disable\|Disable\|DISABLE\|unable\|UNABLE"
+  syn match keyCancel "cancelling\|cancelled\|cancel\|Cancel\|CANCEL"
+  syn match keyLeak "leak\|Leak\|LEAK"
+  syn match keyQuit "quit\|Quit\|QUIT\|abort\|Abort\|ABORT\|exit\|Exit\|EXIT"
+  syn match keyClose "Closing\|closing\|closed\|Closed\|close\|Close\|CLOSE"
   hi link keyErrorFatal Error
   hi link keyInvalid Error
   hi link keyNullEmpty Error
@@ -22,6 +30,13 @@ if exists('b:current_syntax')
   hi link keyKillCrash Error
   hi link keyFail Error
   hi link keyException Error
+  hi link keyNo Error
+  hi link keyAbnormal Error
+  hi link keyFreeze Error
+  hi link keyAble Error
+  hi link keyCancel Error
+  hi link keyLeak Error
+  hi link keyClose Error
 
   syn match motCamera "com.motorola.camera"
   hi link motCamera Constant

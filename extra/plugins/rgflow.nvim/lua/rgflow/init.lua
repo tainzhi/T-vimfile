@@ -24,7 +24,6 @@
 -- To see contents of a table use: print(vim.inspect(table))
 --
 --[[
-TODO
 - When altering color palette (Alt-1 ALT-2) it messes up the color highlighting (match add in setup windows)
 - Before opening an new rgflow window, check if one is already open
 - Investigate &buftype = prompt
@@ -50,10 +49,9 @@ local api = vim.api
 local loop = vim.loop
 local history = require"rgflow.history"
 local log = require"rgflow.log"
-local default_search_pattern =  require("rgflow.default_search_pattern")
 local zs_ze = "\30"  -- The start and end of pattern match invisible marker
 local M = {}
-local config = {}
+local config = {need_sort = 0}
 
 
 --- Prints a @msg to the command line with error highlighting.
@@ -405,36 +403,38 @@ end
 
 --- The stdout handler for the spawned job
 -- @param err and data - Refer to module doc string at top of this file.
+-- rg搜索每个文件的结果，都会调用这个函数，若是需要对所有文件搜索结果进行后处理，不能在该函数
 local function on_stdout(err, data)
     if err then
         config.error_cnt = config.error_cnt + 1
         schedule_print("ERROR: "..vim.inspect(err).." >>> "..vim.inspect(data), true)
     end
     if data then
-        local vals = vim.split(data, "\n")
-        for _, d in pairs(vals) do
-            if d ~= "" then
-                config.match_cnt = config.match_cnt + 1
-                if string.sub(d, -1, -1) == "\13" then d = string.sub(d, 1, -2) end
-                table.insert(config.results, d)
-            end
-        end
-        local plural = "s"
-        if config.match_cnt == 1 then plural = "" end
-        schedule_print("Found "..config.match_cnt.." result"..plural.." ... ", false)
+        table.insert(config.data, data)
+    else
+        schedule_print("ERROR: rgflow done searching, with nothing" .. vim.inspect(err), true)
     end
 end
 
 
-local function add_results_to_qf()
+local function add_results_to_qf(results)
     local plural = "s"
     if config.match_cnt == 1 then plural = "" end
     print("Adding "..config.match_cnt.." result"..plural.." to the quickfix list...")
     api.nvim_command('redraw!')
 
-    -- Create a new qf list, so use ' '. Applies to colder/cnewer etc.
     -- Refer to `:help setqflist`
-    vim.fn.setqflist({}, ' ', {title=config.title, lines=config.results})
+    -- 分成每次1万行的批次，并使用 vim.fn.setqflist 的 a 操作符将这些批次追加到 quickfix 列表中。避免一次性处理大量数据导致的性能问题
+    local batch_size = 10000
+    local total_results = #results
+    local start_index = 1
+    while start_index <= total_results do
+        local end_index = math.min(start_index + batch_size - 1, total_results)
+        local batch = {title=config.title, lines=table.move(results, start_index, end_index, 1, {})}
+        -- Use 'a' to append to the quickfix list
+        vim.fn.setqflist({}, 'a', batch)
+        start_index = end_index + 1
+    end
 
     if api.nvim_get_var('rgflow_open_qf_list') ~= 0 then
         api.nvim_command('copen')
@@ -464,20 +464,90 @@ end
 
 --- The handler for when the spawned job exits
 local function on_exit()
-    history.store_search_result(config.path, config.pattern, config.match_cnt, table.concat(config.results, '\n'))
+    log.debug("on_exit")
+    if config.need_sort == 1 then
+        local processed_lines = {}
+        -- config.data 是rg搜索的结果，流水线似地添加到config.data中，故合并成单个字符串，无需添加\n
+        -- Replace \r\n with \n to handle Windows line endings
+        for line in string.gmatch(table.concat(config.data, ''), "[^\r\n]+") do
+            if line ~= "" then
+                config.match_cnt = config.match_cnt + 1
+                -- If the last char is a ASCII 13 / ^M / <CR> then trim it
+                if string.sub(line, -1, -1) == "\13" then line = string.sub(line, 1, -2) end
+                local file, line_num, col_num, timestamp, pid, tid, log_level,log_content = line:match("([^:]+):(%d+):(%d+):(%d+-%d+ %d+:%d+:%d+%.%d+)%s+(%d+)%s+(%d+)%s+([VIEWD])(.*)")
+                if timestamp ~= nil then
+                    table.insert(processed_lines, {
+                        file = file,
+                        log_line_id = timestamp .. " " .. pid .. " " .. tid .. " " .. log_level .. " " .. string.sub(log_content, 1, 10),
+                        timestamp = timestamp,
+                        original_line = line,
+                    })
+                -- else
+                --     log.error("cannot parse timestamp from line:" .. string.sub(line, 1, 20))
+                end
+            end
+        end
+
+        for _, line in pairs(processed_lines) do
+            if not line.timestamp:match("%d+-%d+ %d+:%d+:%d+%.%d+") then
+                log.error("Invalid timestamp format: " .. line.timestamp)
+            end
+        end
+
+        -- 按照时间戳排序
+        table.sort(processed_lines, function(a, b)
+            return a.timestamp < b.timestamp
+        end)
+
+        if #processed_lines > 0 then
+            local duplicate_line = processed_lines[1]
+            table.insert(config.results, duplicate_line.original_line)
+            for i = 2, #processed_lines do
+                -- -- 对于log_line_id相同但是在不同的文件中的log，则认为重复，则只保留一个
+                -- -- 故保存相同文件中的log或者log_line_id不同的log
+                -- -- 这是为了处理aplogcat-main.txt和logcat-main.txt中的log重复问题
+                -- if processed_lines[i].file == duplicate_line.file or processed_lines[i].log_line_id ~= duplicate_line.log_line_id then
+                --     table.insert(config.results, processed_lines[i].original_line)
+                --     duplicate_line = processed_lines[i]
+                -- end
+                table.insert(config.results, processed_lines[i].original_line)
+            end
+        end
+    else
+        -- config.data 是rg搜索的结果，流水线似地添加到config.data中，故合并成单个字符串，无需添加\n
+        -- Replace \r\n with \n to handle Windows line endings
+        for line in string.gmatch(table.concat(config.data, ''), "[^\r\n]+") do
+            if line ~= "" then
+                config.match_cnt = config.match_cnt + 1
+                -- If the last char is a ASCII 13 / ^M / <CR> then trim it
+                if string.sub(line, -1, -1) == "\13" then line = string.sub(line, 1, -2) end
+                table.insert(config.results, line)
+            end
+        end
+    end
+
     if config.match_cnt > 0 then
-        add_results_to_qf()
+        add_results_to_qf(config.results)
+        -- 保存搜索结果
+        history.store_search_result(config.path, config.pattern, config.match_cnt, table.concat(config.results, '\n'))
     end
     -- Print exit message
     local msg = " "..config.pattern.." │ "..config.match_cnt.." result"..(config.match_cnt==1 and '' or 's')
     if config.error_cnt > 0 then
         msg = msg.." ("..config.error_cnt.." errors)"
     else
-        -- msg = msg.." │ "..config.demo_cmd
         msg = msg.." │ "..config.path
     end
-    log.info("demo cmd:" .. "rg " .. config.demo_cmd)
     schedule_print(msg, true)
+    local plural = "s"
+    if config.match_cnt == 1 then plural = "" end
+    schedule_print("Found "..config.match_cnt.." result"..plural, false)
+
+    -- -- 不需要， 及时释放内存占用
+    -- -- 共用的存储空间，清空后导致没有显示
+    -- config.data = {}
+    -- config.results = {}
+
 end
 
 
@@ -488,11 +558,10 @@ local function spawn_job()
     local stdout = loop.new_pipe(false)
     local stderr = loop.new_pipe(false)
 
-    log.info("search cmd:" .. "rg " .. table.concat(config.rg_args, " "))
+    log.debug("search cmd:" .. "rg " .. table.concat(config.rg_args, " "))
 
-    print("Rgflow start search for:  "..config.pattern)
+    schedule_print("Rgflow start search for:  "..config.pattern, true)
     -- Append the following makes it too long (results in one having to press enter)
-    -- .."  with  "..config.demo_cmd)
 
     -- https://github.com/luvit/luv/blob/master/docs.md#uvspawnpath-options-on_exit
     handle = loop.spawn('rg', {
@@ -526,7 +595,6 @@ local function get_config(flags, pattern, path)
     local flags_list = vim.split(flags, " ")
 
     -- set conceallevel=2
-    -- syntax match Todo /bar/ conceal
     -- :help conceal
 
     -- for flag in flags:gmatch("[-%w]+") do table.insert(rg_args, flag) end
@@ -534,21 +602,22 @@ local function get_config(flags, pattern, path)
         table.insert(rg_args, flag)
     end
 
-    -- 2. Add the pattern
-    table.insert(rg_args, pattern)
+    -- 2. Add the pattern， pattern 用 ""  包裹
+    table.insert(rg_args, '"' .. pattern .. '"')
 
     -- 3. Add the search path
     table.insert(rg_args, path)
 
     return {
         rg_args=rg_args,
-        demo_cmd=flags.." "..pattern.." "..path,
-        pattern=pattern,
-        path=path,
+        pattern = pattern,
+        path = path,
+        need_sort = config.need_sort,
         error_cnt=0,
         match_cnt=0,
         title="  "..pattern.."    "..path,
-        results={},
+        data = {}, -- 传输的临时数据，最终是要后处理并传给results
+        results={},-- 最终要显示在quickfix中的数据
     }
 end
 
@@ -591,9 +660,9 @@ function M.search()
         config.match_cnt = stored.match_cnt
         config.results = vim.split(stored.results, '\n')
         config.title = "Restored search results for " .. config.pattern
-        add_results_to_qf()
+        add_results_to_qf(config.results)
     else
-        log.debug("new search result")
+        log.info("new search result")
         spawn_job()
     end
 end
@@ -686,12 +755,13 @@ end
 
 -- Begins Rgflow search via a hotkey
 -- @mode - Refer to module doc string at top of this file.
-function M.start_via_hotkey_root(mode)
+function M.start_via_hotkey_root(mode, need_sort)
     -- If called from the hotkey
     -- api.nvim_command("messages clear")
     local flags   = api.nvim_get_var('rgflow_flags')
     local pattern = get_pattern(mode) or ""
     local path    = vim.fn.getcwd()
+    config.need_sort = need_sort
     M.buf, M.wini, M.winh = start_ui(flags, pattern, path)
 end
 
@@ -704,6 +774,7 @@ function M.start_via_hotkey_current_file(mode)
     local flags   = api.nvim_get_var('rgflow_flags')
     local pattern = get_pattern(mode) or ""
     local path    = vim.fn.expand("%:p")
+    config.need_sort = 0
     M.buf, M.wini, M.winh = start_ui(flags, pattern, path)
 end
 

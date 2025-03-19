@@ -34,7 +34,10 @@ local default_patterns = {
     -- 03-05 22:04:07.692  5850  5920 E AndroidRuntime: 	at android.os.BaseBundle.getValueAt(BaseBundle.java:399)
     -- 03-05 22:04:07.692  5850  5920 E AndroidRuntime: 	at com.motorola.camera.fsm.camera.states.runnables.CaptureRequestRunnable.run(SourceFile:2)
     "崩溃|Fatal exception|FATAL_EXCEPTION|AndroidRuntime.*com.motorola.camera|F DEBUG|Kill .com.motorola.camera[35]. |Dump ERROR Stack Trace|Unable to configure streams|CameraAccessException|kill.*com.motorola.deviceguard|NO CAMERAS AVAILABLE|E SettingsManager|E MotoCameraController|W Error|E CameraCaptureSession|Unable to launch app com.motorola.camera[35]|Failed to find provider info for com.motorola.camera[35]",
-    "camera生命周期|CameraLifeCycle|wm_.*activity.*Camera,|wm_.*,Camera,|am_proc_start.*Camera|am_kill.*Camera",
+    -- 情况1: 用户误触导致的假crash真退出
+    -- 按home键，能看到 com.android.launcher 的日志，也会发送 android.intent.action.MAIN
+    -- 参考：https://idart.mot.com/browse/IKSWV-122489
+    "camera生命周期|CameraLifeCycle|wm_.*activity.*Camera,|wm_.*,Camera,|am_proc_start.*Camera|am_kill.*Camera|TOUCH_GESTURE|Gesture|onResume|onPause|input_interaction: Interaction with|KPI-6PA-ID.*motion event|Inputdispatcher.*com.motorola.camera|BACK_KEY|com.android.launcher|isActionMain|android.intent.action.MAIN",
     "AutoFocusStateMachine|CameraKpiTag: AUTO_FOCUS",
     -- 情况1: 冻屏时，处理拍照非常的慢，有Mcflkp和McfCaptureRequestRunnable的日志
     -- Mcflkp  : Alg benchmark [0x15F0000-JGRawHDR]: prepare: 1 ms, process: 3244 ms
@@ -45,16 +48,12 @@ local default_patterns = {
     -- 情况3: activity low memory
     -- 02-26 06:16:50.100  1732  3406 I ActivityManager: no adj 200+ process, memory is very low, trigger a low memory report for perf team to check further
     --
-    "冻屏_freeze|lowmemorykiller.*cpuload ([456789]\\d|100)|lowmemorykiller.*cpu psi [456789]\\d|mempsi \\d\\d|low memory|cpuload ([789]\\d|100)|CPU usage.*\\d\\d\\d\\dms|CameraKpiTag.*\\d\\d\\d\\d ms|ActivityManager.*\\d\\d\\d\\dms|Mcflkp  : Alg benchmark.*process: \\d{4,} ms|McfCaptureRequestRunnable: Capture time:(\\d{5,}|[3456789]\\d{3})|FocusExposureLockRunnable:.*lock focus timeout|memory is very low",
+    "冻屏_freeze|lowmemorykiller.*cpuload ([456789]\\d|100)|lowmemorykiller.*cpu psi [456789]\\d|mempsi \\d\\d|low memory|cpuload ([789]\\d|100)|CPU usage.*\\d\\d\\d\\dms|CameraKpiTag.*\\d\\d\\d\\d ms|ActivityManager.*\\d\\d\\d\\dms|Mcflkp  : Alg benchmark.*process: \\d{4,} ms|McfCaptureRequestRunnable: Capture time:(\\d{5,}|[3456789]\\d{3})|FocusExposureLockRunnable:.*lock focus timeout|memory is very low|SmartFreezer|freeze",
     --AF timeout导致无法拍照 https://idart.mot.com/browse/IKSWV-94659
-    "CameraFsm| Fsm |MotoCamera: |CameraKpiTag| ActivityBase:|setupForMode|logicalCameraId is|logicalCameraId=",
-    "lowmemorykiller",
-    "ShotSlot=INVALID",
+    "CameraFsm| Fsm |MotoCamera: |CameraKpiTag| ActivityBase:",
     "engine错误|E CameraFsm|E CameraDevice|W CameraDevice|E Camera3-Device|E CamX : [ERROR]|E CamX.*Buffer|E CamX.*TimedWait|E CamX.*not|CAM_ERR.*Unexpected state|CamX.*error|CamX.*Failure|CamX.*failed|CamxResultETimeout|E CHI|E CHI.*bad state|CAM_ERR|there might be a leak|failed to get buffer|Unable to.*buffer|E MtkCam",
     "ANR at|anr traces|Input dispatching timed out.*camera[35]|blocked by|held by thread|waiting to lock|I am_anr.*camera|begin ANR dump all threads|ActivityThread: main stack element",
     "系统重启|reboot|bootstat:|bootstat:.*kernel_panel",
-    -- 情况1: 用户误触导致的假crash真退出
-    "点击事件|TOUCH_GESTURE|Gesture|onResume|onPause|input_interaction: Interaction with|KPI-6PA-ID.*motion event|Inputdispatcher.*com.motorola.camera3",
     "模式和前后镜头切换|logicalCameraId is|logicalCameraId=|setupForMode",
 }
 

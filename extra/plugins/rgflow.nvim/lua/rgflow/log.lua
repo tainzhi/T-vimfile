@@ -2,7 +2,7 @@
 -- for windows, the log file is located at %USERPROFILE%\AppData\Local\temp\nvim\rgflow.log and %USERPROFILE%\AppData\Local\temp\nvim\rgflow\history_record.txt
 local log = require "plenary.log".new{
 plugin = "rgflow",
-level = "debug",
+level = "info",
 use_console = "false",
 }
 

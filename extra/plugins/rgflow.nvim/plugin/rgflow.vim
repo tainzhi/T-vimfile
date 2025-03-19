@@ -41,7 +41,7 @@ if testing
     " When testing, wish to reload lua files, and reset global values
     let g:rgflow_search_keymaps = 1
     let g:rgflow_qf_keymaps = 1
-    let g:rgflow_flags = "--smart-case -g *{*,py} -g !*{min.js,pyc} -g !spike/* --fixed-strings --no-fixed-strings --no-ignore --ignore -M 200"
+    let g:rgflow_flags = "--smart-case -g !*{min.js,pyc,spike/*} --no-fixed-strings --no-ignore"
     let g:rgflow_set_incsearch = 0
     let g:rgflow_mark_str = "▌"
     let g:rgflow_open_qf_list = 1
@@ -57,7 +57,7 @@ else
     " For some reason --no-messages makes it stop working
     " No need to escape globs, e.g. '*.py' as the plugin will escape each item
     " seprated by a space
-    let g:rgflow_flags = get(g:, 'rgflow_flags', "--smart-case -g *{*,py} -g !*{min.js,pyc} -g !spike/* --fixed-strings --no-fixed-strings --no-ignore --ignore")
+    let g:rgflow_flags = get(g:, 'rgflow_flags', "--smart-case -g !*{min.js,pyc,spike/*} --no-fixed-strings --no-ignore")
 
     " After a search, whether to set incsearch to be the pattern searched for
     let g:rgflow_set_incsearch = get(g:, 'rgflow_set_incsearch', 1)
@@ -96,8 +96,10 @@ vnoremap <Plug>RgflowPasteFixdClipboardVisual   :<C-U>call v:lua.rgflow.paste_fi
 
 if g:rgflow_search_keymaps
     " KEY MAPPINGS
-    " Rip grep in files, use <cword> under the cursor as starting point
-    nnoremap <leader>rg :<C-U>lua rgflow.start_via_hotkey_root('n')<CR>
+    " Rip grep in files witout timestamp order, use <cword> under the cursor as starting point
+    nnoremap <leader>rg :<C-U>lua rgflow.start_via_hotkey_root('n', 0)<CR>
+    " Rip grep in files with timestamp order, use <cword> under the cursor as starting point
+    nnoremap <leader>rgo :<C-U>lua rgflow.start_via_hotkey_root('n', 1)<CR>
     " " Start and paste contents of search register
     " nnoremap <leader>rr :<C-U>lua rgflow.start_via_hotkey_root('n')<CR>0D"/p
     " Rip grep in files, use visual selection as starting point
