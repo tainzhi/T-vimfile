@@ -1,5 +1,6 @@
 local opt = vim.opt
 local g = vim.g
+local o = vim.o
 
 opt.termguicolors = true
 -- 必须要系统安装而 NerdFonts 字体，否则会显示乱码
@@ -8,7 +9,7 @@ if jit.os == "Windows" then
 -- ubuntu默认的 DejaVu Sans Mono 不是 NerdFonts 字体，需要重新下载安装
 -- 从 https://www.nerdfonts.com/font-downloads 选择 DejaVuSansM Nerd Font下载安装
 elseif jit.os == "Linux" then
-   opt.guifont = "DejaVu Sans Mono:h12"
+   opt.guifont = "DejaVu Sans Mono:h14"
 elseif jit.os == "OSX" then
    opt.guifont = "Helvetia:h10"
 end
@@ -71,6 +72,10 @@ g.mapleader = " "
 g.neovide_remember_window_size = true
 g.neovide_cursor_vfx_mode = "railgun"
 g.neovide_underline_automatic_scaling = true
+
+o.syntax = "on"
+o.filetype = "plugin"
+o.filetype="indent"
 
 -- disable some builtin vim plugins
 local disabled_built_ins = {
