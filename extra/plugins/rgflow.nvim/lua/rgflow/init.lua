@@ -422,6 +422,7 @@ local function add_results_to_qf(results)
     if config.match_cnt == 1 then plural = "" end
     print("Adding "..config.match_cnt.." result"..plural.." to the quickfix list...")
     api.nvim_command('redraw!')
+    vim.fn.setqflist({}, ' ', {title=config.title, lines=results})
 
     -- Refer to `:help setqflist`
     -- 分成每次1万行的批次，并使用 vim.fn.setqflist 的 a 操作符将这些批次追加到 quickfix 列表中。避免一次性处理大量数据导致的性能问题
@@ -559,7 +560,7 @@ local function spawn_job()
     local stdout = loop.new_pipe(false)
     local stderr = loop.new_pipe(false)
 
-    log.debug("search cmd:" .. "rg " .. table.concat(config.rg_args, " "))
+    log.debug("search config:" .. vim.inspect(config))
 
     schedule_print("Rgflow start search for:  "..config.pattern, true)
     -- Append the following makes it too long (results in one having to press enter)
@@ -603,8 +604,8 @@ local function get_config(flags, pattern, path)
         table.insert(rg_args, flag)
     end
 
-    -- 2. Add the pattern， pattern 用 ""  包裹
-    table.insert(rg_args, '"' .. pattern .. '"')
+    -- 2. Add the pattern， 注意： pattern 不需要用 ""  包裹，包裹后会导致rg无法搜索到结果
+    table.insert(rg_args, pattern)
 
     -- 3. Add the search path
     table.insert(rg_args, path)
@@ -668,12 +669,30 @@ function M.search()
     end
 end
 
+local function check_rg_command()
+  local handle = io.popen("command -v rg")
+  local result = handle:read("*a")
+  handle:close()
+
+  if result == "" then
+    print("error: rg command not found")
+    return false
+  else
+    return true
+  end
+end
+
 
 --- Creates the input dialogue and waits for input
 -- If <CR> is pressed in normal mode, the search starts, <ESC> aborts.
 -- @param pattern - The initial pattern to place in the pattern field
 --                  when the dialogue opens.
 local function start_ui(flags, pattern, path)
+    if not check_rg_command() then
+        return
+        schedule_print("ERROR: ripgrep not found, please check path in cmd with :echo $PATH", true)
+    end
+
     -- bufh / winh / widthh = heading window/buffer/width
     -- bufi / wini / widthi = input dialogue window/buffer/width
 
