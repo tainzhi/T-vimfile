@@ -464,7 +464,7 @@ end
 
 --- The handler for when the spawned job exits
 local function on_exit()
-    log.debug("on_exit")
+    log.debug("on_exit, need_sort:" .. config.need_sort)
     if config.need_sort == 1 then
         local processed_lines = {}
         -- config.data 是rg搜索的结果，流水线似地添加到config.data中，故合并成单个字符串，无需添加\n
@@ -478,7 +478,8 @@ local function on_exit()
                 if timestamp ~= nil then
                     table.insert(processed_lines, {
                         file = file,
-                        log_line_id = timestamp .. " " .. pid .. " " .. tid .. " " .. log_level .. " " .. string.sub(log_content, 1, 10),
+                        -- 时间戳长度精确到毫秒，故只取前18位，有些log会精确到微妙，会有21位，制取前18位
+                        log_line_id = string.sub(timestamp, 1, 18) .. " " .. pid .. " " .. tid .. " " .. log_level .. " " .. string.sub(log_content, 1, 20),
                         timestamp = timestamp,
                         original_line = line,
                     })
@@ -503,14 +504,12 @@ local function on_exit()
             local duplicate_line = processed_lines[1]
             table.insert(config.results, duplicate_line.original_line)
             for i = 2, #processed_lines do
-                -- -- 对于log_line_id相同但是在不同的文件中的log，则认为重复，则只保留一个
-                -- -- 故保存相同文件中的log或者log_line_id不同的log
-                -- -- 这是为了处理aplogcat-main.txt和logcat-main.txt中的log重复问题
-                -- if processed_lines[i].file == duplicate_line.file or processed_lines[i].log_line_id ~= duplicate_line.log_line_id then
-                --     table.insert(config.results, processed_lines[i].original_line)
-                --     duplicate_line = processed_lines[i]
-                -- end
-                table.insert(config.results, processed_lines[i].original_line)
+                -- 对于log_line_id相同则认为重复，则只保留一个
+                -- 这是为了处理aplogcat-main.txt和logcat-main.txt中的log重复问题
+                if processed_lines[i].log_line_id ~= duplicate_line.log_line_id then
+                    table.insert(config.results, processed_lines[i].original_line)
+                    duplicate_line = processed_lines[i]
+                end
             end
         end
     else
@@ -525,6 +524,8 @@ local function on_exit()
             end
         end
     end
+
+    log.debug("on_exit, match_cnt:" .. config.match_cnt)
 
     if config.match_cnt > 0 then
         add_results_to_qf(config.results)
