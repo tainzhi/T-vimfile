@@ -1,6 +1,6 @@
-## install && sync
+## install && sync && uninstall
 
-[参考：NvChad](https://nvchad.netlify.app/getting-started/setup)
+[参考：NvChad](https://nvchad.com/docs/quickstart/install)
 
 - windows powershell
 
@@ -27,6 +27,27 @@ git clone https://github.com/tainzhi/T-vimfile ~/.config/nvim
 ```vim
 :Lazy load firenvim
 :call firenvim#install(0)
+```
+
+uninstall
+```shell
+# Linux / MacOS (unix)
+rm -rf ~/.config/nvim
+rm -rf ~/.local/state/nvim
+rm -rf ~/.local/share/nvim
+
+# Flatpak (linux)
+rm -rf ~/.var/app/io.neovim.nvim/config/nvim
+rm -rf ~/.var/app/io.neovim.nvim/data/nvim
+rm -rf ~/.var/app/io.neovim.nvim/.local/state/nvim
+
+# Windows CMD
+rd -r ~\AppData\Local\nvim
+rd -r ~\AppData\Local\nvim-data
+
+# Windows PowerShell
+rm -Force ~\AppData\Local\nvim
+rm -Force ~\AppData\Local\nvim-data
 ```
 
 ## nvim-qt 的替代 gui
