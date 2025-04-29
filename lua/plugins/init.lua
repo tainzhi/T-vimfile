@@ -496,13 +496,20 @@ local default_plugins = {
    },
 
    -- file managing , picker etc
+   -- 对于打目录来说，速度非常的慢，慢到几乎无法使用
+   -- {
+   --    "kyazdani42/nvim-tree.lua",
+   --    cmd = { "NvimTreeToggle", "NvimTreeFocus" },
+   --    config = require("plugins.configs.nvimtree"),
+   --    cond = function()
+   --       return vim.fn.file ~= 'help'
+   --    end,
+   -- },
    {
-      "kyazdani42/nvim-tree.lua",
-      cmd = { "NvimTreeToggle", "NvimTreeFocus" },
-      config = require("plugins.configs.nvimtree"),
-      cond = function()
-         return vim.fn.file ~= 'help'
-      end,
+      "ms-jpq/chadtree",
+      build = "python3 -m chadtree deps",
+      branch= "chad",
+      cmd = { "CHADopen", "CHADclose" },
    },
 
    {
@@ -618,6 +625,7 @@ if vim.g.vscode == nil then
    local lazy_config = require "plugins.configs.lazy_nvim"
    require("lazy").setup(default_plugins, lazy_config)
 else
+   -- for VSCode Noevim
    -- -- normal mode, switch to english
    -- vim.api.nvim_create_autocmd({"InsertLeave"}, {
    --    pattern = "*",

@@ -82,8 +82,8 @@ map("v", "<C-/>", ":lua require('Comment.api').toggle.linewise(vim.fn.visualmode
 
 
 -- file explorer/tree
-map("n", "<C-n>", ":NvimTreeToggle <CR>")
-map("n", "<leader>e", ":NvimTreeFocus <CR>")
+map("n", "<C-n>", ":CHADopen <CR>")
+-- map("n", "<leader>e", ":NvimTreeFocus <CR>")
 
 -- plugin: Telescope
 -- multitool for finding & picking things
