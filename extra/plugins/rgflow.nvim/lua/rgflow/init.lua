@@ -688,7 +688,8 @@ end
 -- @param pattern - The initial pattern to place in the pattern field
 --                  when the dialogue opens.
 local function start_ui(flags, pattern, path)
-    if not check_rg_command() then
+    -- 非win系统即linux系统下，需要检查ripgrep命令是否存在
+    if (not vim.loop.os_uname().sysname:lower():match("win")) and (not check_rg_command()) then
         return
         schedule_print("ERROR: ripgrep not found, please check path in cmd with :echo $PATH", true)
     end
