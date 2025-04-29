@@ -48,9 +48,9 @@ local default_patterns = {
     -- 情况3: activity low memory
     -- 02-26 06:16:50.100  1732  3406 I ActivityManager: no adj 200+ process, memory is very low, trigger a low memory report for perf team to check further
     --
-    "冻屏_freeze|lowmemorykiller.*cpuload ([456789]\\d|100)|lowmemorykiller.*cpu psi [456789]\\d|mempsi \\d\\d|low memory|cpuload ([789]\\d|100)|CPU usage.*\\d\\d\\d\\dms|CameraKpiTag.*\\d\\d\\d\\d ms|ActivityManager.*\\d\\d\\d\\dms|Mcflkp  : Alg benchmark.*process: \\d{4,} ms|McfCaptureRequestRunnable: Capture time:(\\d{5,}|[3456789]\\d{3})|FocusExposureLockRunnable:.*lock focus timeout|memory is very low|SmartFreezer|freeze",
+    "冻屏_freeze|lowmemorykiller.*cpuload ([456789]\\d|100)|lowmemorykiller.*cpu psi [456789]\\d|mempsi \\d\\d|low memory|cpuload ([789]\\d|100)|CPU usage.*\\d\\d\\d\\dms|CameraKpiTag.*\\d\\d\\d\\d ms|ActivityManager.*\\d\\d\\d\\dms|Mcflkp  : Alg benchmark.*process: \\d{4,} ms|McfCaptureRequestRunnable: Capture time:(\\d{5,}|[3456789]\\d{3})|FocusExposureLockRunnable:.*lock focus timeout|memory is very low",
     --AF timeout导致无法拍照 https://idart.mot.com/browse/IKSWV-94659
-    "CameraFsm| Fsm |MotoCamera: |CameraKpiTag| ActivityBase:",
+    "CameraFsm| Fsm |MotoCamera: |CameraKpiTag| ActivityBase:|SHUTTER_BUTTON_CLICKED|playCaptureLottieAnimate shutterState:",
     "engine错误|E CameraFsm|E CameraDevice|W CameraDevice|E Camera3-Device|E CamX : [ERROR]|E CamX.*Buffer|E CamX.*TimedWait|E CamX.*not|CAM_ERR.*Unexpected state|CamX.*error|CamX.*Failure|CamX.*failed|CamxResultETimeout|E CHI|E CHI.*bad state|CAM_ERR|there might be a leak|failed to get buffer|Unable to.*buffer|E MtkCam|CameraService|CameraService_proxy|Camera3-Device",
     "ANR at|anr traces|Input dispatching timed out.*camera[35]|blocked by|held by thread|waiting to lock|I am_anr.*camera|begin ANR dump all threads|ActivityThread: main stack element",
     "系统重启|reboot|bootstat:|bootstat:.*kernel_panel",

@@ -7,6 +7,7 @@ if exists('b:current_syntax')
 
   " Moto Camera log syntax
   "---------------------------------------------------------------------------
+  syn match motCameraTriggerError "ERROR_CLOSED\|ERROR_RETRY\|DRAG_FAILED\|LP_CAPTURE_FAIL\|CAPTURE_FAILED\|RECORDING_ERROR\|RECORDER_ERROR\|CURRENT_MEMORY_NOT_AVAILABLE\|MEMORY_NOT_AVAILABLE\|AUTO_FOCUS_TRACKING_CANCEL\|CAPTURE_CANCEL\|SHUTTER_BUTTON_CANCEL"
   syn match keyErrorFatal "Error\|ERROR\|error\|fatal\|Fatal\|ERR"
   syn match keyInvalid "Invalid\|INVALID"
   syn match keyNullEmpty "Null\|Empty\|NULL\|empty\|null"
@@ -23,6 +24,7 @@ if exists('b:current_syntax')
   syn match keyLeak "leak\|Leak\|LEAK"
   syn match keyQuit "quit\|Quit\|QUIT\|abort\|Abort\|ABORT\|exit\|Exit\|EXIT"
   syn match keyClose "Closing\|closing\|closed\|Closed\|close\|Close\|CLOSE"
+  hi link motCameraTriggerError Error
   hi link keyErrorFatal Error
   hi link keyInvalid Error
   hi link keyNullEmpty Error
@@ -38,8 +40,14 @@ if exists('b:current_syntax')
   hi link keyLeak Error
   hi link keyClose Error
 
+  syn match waitForMemoryRunnableError "handleStorageFull\|Throttling due to large save queue size\|Cannot do next capture, queue is full, aborting\|There is not enough free bytes for"
+  hi link waitForMemoryRunnableError Error
+
   syn match motCamera "com.motorola.camera"
   hi link motCamera Constant
+
+  syn match motCameraProcess "MotoCamera:\|switchMode fromMode\|CloseCameraRunnable\|OpenCameraRunnable\|SHUTTER_BUTTON_CLICKED\|playCaptureLottieAnimate shutterState:"
+  hi motCameraProcess gui=NONE guifg=#F07000 ctermfg=Green 
 
   syn match fsm "\<Fsm\>" display
   hi fsm gui=NONE guifg=#F07000 ctermfg=Green 
