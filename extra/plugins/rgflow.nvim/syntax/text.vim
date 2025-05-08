@@ -24,6 +24,7 @@ if exists('b:current_syntax')
   syn match keyLeak "leak\|Leak\|LEAK"
   syn match keyQuit "quit\|Quit\|QUIT\|abort\|Abort\|ABORT\|exit\|Exit\|EXIT"
   syn match keyClose "Closing\|closing\|closed\|Closed\|close\|Close\|CLOSE"
+  syn match keyWait "wait for\|Wait for\|Wating for\|watting for\|waiting to\|Waiting to\|Wait to\|wait to"
   hi link motCameraTriggerError Error
   hi link keyErrorFatal Error
   hi link keyInvalid Error
@@ -39,6 +40,7 @@ if exists('b:current_syntax')
   hi link keyCancel Error
   hi link keyLeak Error
   hi link keyClose Error
+  hi link keyWait Error
 
   syn match waitForMemoryRunnableError "handleStorageFull\|Throttling due to large save queue size\|Cannot do next capture, queue is full, aborting\|There is not enough free bytes for"
   hi link waitForMemoryRunnableError Error
