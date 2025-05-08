@@ -33,7 +33,10 @@ local default_patterns = {
     -- 03-05 22:04:07.692  5850  5920 E AndroidRuntime: 	at android.util.ArrayMap.valueAt(ArrayMap.java:532)
     -- 03-05 22:04:07.692  5850  5920 E AndroidRuntime: 	at android.os.BaseBundle.getValueAt(BaseBundle.java:399)
     -- 03-05 22:04:07.692  5850  5920 E AndroidRuntime: 	at com.motorola.camera.fsm.camera.states.runnables.CaptureRequestRunnable.run(SourceFile:2)
-    "崩溃|Fatal exception|FATAL_EXCEPTION|AndroidRuntime.*camera|F DEBUG|Kill .com.motorola.camera[35]. |Dump ERROR Stack Trace|Unable to configure streams|CameraAccessException|kill.*com.motorola.deviceguard|NO CAMERAS AVAILABLE|E SettingsManager|E MotoCameraController|W Error|E CameraCaptureSession|Unable to launch app com.motorola.camera[35]|Failed to find provider info for com.motorola.camera[35]",
+    -- 情况3: 
+    -- 崩溃堆栈，没有。只有一条错误的日志。参考 https://idart.mot.com/browse/IKSWV-147587
+    -- 05-06 10:38:16.444  1987  2029 I am_crash: [15282,0,com.motorola.camera5,819478085,java.lang.IllegalArgumentException, Each request must have at least one Surface target
+    "崩溃|Fatal exception|FATAL_EXCEPTION|AndroidRuntime.*camera|com.motorola.camera.*IllegalArgumentException|F DEBUG|Kill .com.motorola.camera[35]. |Dump ERROR Stack Trace|Unable to configure streams|CameraAccessException|kill.*com.motorola.deviceguard|NO CAMERAS AVAILABLE|E SettingsManager|E MotoCameraController|W Error|E CameraCaptureSession|Unable to launch app com.motorola.camera[35]|Failed to find provider info for com.motorola.camera[35]",
     -- 情况1: 用户误触导致的假crash真退出
     -- 按home键，能看到 com.android.launcher 的日志，也会发送 android.intent.action.MAIN
     -- 参考：https://idart.mot.com/browse/IKSWV-122489
