@@ -1,5 +1,4 @@
 local M = {}
-local utils = require "core.utils"
 
 M.better_escape = function()
    require("better_escape").setup {
@@ -18,7 +17,7 @@ M.im_select = function()
    -- For Windows/WSL, default: "C:\\Progra~1\\im-select.exe" 即在 C:\\program files目录下
    -- For macOS, default: "im-select"
    if jit.os == "Windows" then
-      default_command = 'C:\\im-select.exe'
+      default_command = 'D:\\Applications\\im-select.exe'
       default_im_select = '1033'
    elseif jit.os == "Linux" then
       default_command = "/bin/ibus"
@@ -53,8 +52,8 @@ M.im_select = function()
          -- Restore the previous used input method state when the following events
          -- are triggered, if you don't want to restore previous used im in Insert mode,
          -- e.g. deprecated `disable_auto_restore = 1`, just let it empty
-         -- as `set_previous_events = {}`
-         set_previous_events     = { "InsertEnter", "CmdlineEnter" },
+         -- as `set_previous_events = { "InsertEnter", "CmdlineEnter" }`
+         set_previous_events     = { "InsertEnter" },
          
          -- Show notification about how to install executable binary when binary missed
          keep_quiet_on_no_binary = false,
