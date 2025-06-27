@@ -8,38 +8,39 @@ if exists('b:current_syntax')
   " Moto Camera log syntax
   "---------------------------------------------------------------------------
   syn match motCameraTriggerError "ERROR_CLOSED\|ERROR_RETRY\|DRAG_FAILED\|LP_CAPTURE_FAIL\|CAPTURE_FAILED\|RECORDING_ERROR\|RECORDER_ERROR\|CURRENT_MEMORY_NOT_AVAILABLE\|MEMORY_NOT_AVAILABLE\|AUTO_FOCUS_TRACKING_CANCEL\|CAPTURE_CANCEL\|SHUTTER_BUTTON_CANCEL"
-  syn match keyErrorFatal "Error\|ERROR\|error\|fatal\|Fatal\|ERR"
-  syn match keyInvalid "Invalid\|INVALID"
+  hi link motCameraTriggerError Error
+  syn match keyErrorFatal "Error\|ERROR\|error\|fatal\|Fatal\|ERR\|onError"
+  hi link keyErrorFatal Error
+  syn match keyInvalid "Invalid\|INVALID\|invalid"
+  hi link keyInvalid Error
   syn match keyNullEmpty "Null\|Empty\|NULL\|empty\|null"
-  syn match keyTime "timeout|Timeout\|TIMEOUT"
-  syn match keyKillCrash "killed\|Killed\|kill\|\|Kill\|crash\|Crash\|die\|died\|dying"
+  hi link keyNullEmpty Error
+  syn match keyTime "timeout\|Timeout\|TIMEOUT"
+  hi link keyTime Error
+  syn match keyKillCrash "killed\|Killed\|kill\|Kill\|crash\|Crash\|die\|died\|dying"
+  hi link keyKillCrash Error
   " failed在前，优先级priority更高
   syn match keyFail "failed\|Failed\|Failutre\|FAILURE\|failure\|fail\|Fail"
-  syn match keyException "NullPointerException\|Exception\|EXCEPTION"
-  syn match keyNo "\<not\>\|\<NOT\>\|\<Not\>\|\<no\>\|\<No\>\|\<NO\>"
-  syn match keyAbnormal "abnormal\|Abnormal\|Abnoraml\|ABNORMAL"
-  syn match keyFreeze "freeze\|Freeze\|froze\|Froze\|frozen\|Frozen"
-  syn match keyAble "disable\|Disable\|DISABLE\|unable\|UNABLE"
-  syn match keyCancel "cancelling\|cancelled\|cancel\|Cancel\|CANCEL"
-  syn match keyLeak "leak\|Leak\|LEAK"
-  syn match keyQuit "quit\|Quit\|QUIT\|abort\|Abort\|ABORT\|exit\|Exit\|EXIT"
-  syn match keyClose "Closing\|closing\|closed\|Closed\|close\|Close\|CLOSE"
-  syn match keyWait "wait for\|Wait for\|Wating for\|watting for\|waiting to\|Waiting to\|Wait to\|wait to"
-  hi link motCameraTriggerError Error
-  hi link keyErrorFatal Error
-  hi link keyInvalid Error
-  hi link keyNullEmpty Error
-  hi link keyTime Error
-  hi link keyKillCrash Error
   hi link keyFail Error
+  syn match keyException "NullPointerException\|Exception\|EXCEPTION"
   hi link keyException Error
+  syn match keyNo "\<not\>\|\<NOT\>\|\<Not\>\|\<no\>\|\<No\>\|\<NO\>"
   hi link keyNo Error
+  syn match keyAbnormal "abnormal\|Abnormal\|Abnoraml\|ABNORMAL"
   hi link keyAbnormal Error
+  syn match keyFreeze "freeze\|Freeze\|froze\|Froze\|frozen\|Frozen"
   hi link keyFreeze Error
+  syn match keyAble "disable\|Disable\|DISABLE\|unable\|UNABLE"
   hi link keyAble Error
+  syn match keyCancel "cancelling\|cancelled\|cancel\|Cancel\|CANCEL"
   hi link keyCancel Error
+  syn match keyLeak "leak\|Leak\|LEAK"
   hi link keyLeak Error
+  syn match keyQuit "quit\|Quit\|QUIT\|abort\|Abort\|ABORT\|exit\|Exit\|EXIT"
+  hi link keyQuit Error
+  syn match keyClose "Closing\|closing\|closed\|Closed\|close\|Close\|CLOSE"
   hi link keyClose Error
+  syn match keyWait "wait for\|Wait for\|Wating for\|watting for\|waiting to\|Waiting to\|Wait to\|wait to"
   hi link keyWait Error
 
   syn match waitForMemoryRunnableError "handleStorageFull\|Throttling due to large save queue size\|Cannot do next capture, queue is full, aborting\|There is not enough free bytes for"
