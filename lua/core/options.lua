@@ -62,6 +62,12 @@ opt.updatetime = 250
 -- go to previous/next line with h,l,left arrow and right arrow
 -- when cursor reaches end/beginning of line
 opt.whichwrap:append "<>[]hl"
+
+opt.smoothscroll = true
+opt.foldexpr = "v:lua.require'core.utils'.foldexpr()"
+opt.foldmethod = "expr"
+opt.foldtext = "getline(v:foldstart)"
+
 -- space 
 -- references: https://github.com/vscode-neovim/vscode-neovim/issues/1137
 -- vscode nvim mapleader not working
