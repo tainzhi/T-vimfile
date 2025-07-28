@@ -14,7 +14,6 @@ local alwasys_plugins = {
    {
       "kylechui/nvim-surround",
       event = "VeryLazy",
-      version = "*", -- Use for stability; omit to use `main` branch for the latest features
       config = function()
          require("nvim-surround").setup { mappings_style = "surround" }
       end
@@ -547,6 +546,7 @@ local nonvscode_plugins = {
       build = "python3 -m chadtree deps",
       branch= "chad",
       cmd = { "CHADopen", "CHADclose" },
+      config = require("plugins.configs.chadtree"),
    },
 
    -- -- 加载耗时，弃用
