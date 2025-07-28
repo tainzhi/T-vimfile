@@ -21,12 +21,13 @@ local alwasys_plugins = {
 
    {
       -- easy-motion的替代
-      'phaazon/hop.nvim',
-      branch = 'v2', -- optional but strongly recommended
+      'smoka7/hop.nvim',
       event = "BufRead",
       config = function()
          require "hop".setup {
-            keys = 'etovxqpdygfblzhckisuran'
+            keys = 'etovxqpdygfblzhckisuran',
+            jump_on_sole_occurrence = true,
+            hint_offset = -1,
          }
       end,
    },
