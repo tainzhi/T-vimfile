@@ -109,6 +109,11 @@ if g:rgflow_search_keymaps
     nnoremap <leader>rr :<C-U>call v:lua.rgflow.clear()<CR>
 endif
 
+
+
+autocmd BufReadPost *.txt,*.log syntax enable
+autocmd BufRead,BufWinEnter,BufNewFile *.txt,*.log setfiletype text | syntax on
+
 function! ResizeSurfingkeysWindow()
     setlocal filetype=idart
     setlocal guifont=Consolas:h16

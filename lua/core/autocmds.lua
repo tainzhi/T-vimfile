@@ -22,15 +22,6 @@ vim.cmd [[ autocmd BufWinEnter *.txt if &ft == 'help' | wincmd L | vertical resi
 vim.cmd [[ autocmd BufWritePre *.md if &ft == 'markdown' | PanguAll]]
 vim.cmd [[ autocmd BufWinEnter *.md if &ft == 'markdown' | set shada="NONE"]]
 
-vim.cmd [[ autocmd BufReadPost *.txt,*.log syntax enable]]
-vim.api.nvim_create_autocmd({"BufRead","BufWinEnter", "BufNewFile"}, {
-    pattern = {"*.txt", "*.log"},
-    callback = function()
-        vim.bo.filetype = "text"
-        vim.opt.syntax = "on"
-    end,
-})
-
 if vim.g.vscode then
    -- for vscode noevim
    local default_im_select
