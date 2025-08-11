@@ -60,7 +60,92 @@ local alwasys_plugins = {
          require('Comment').setup()
       end
    },
-   
+}
+
+
+
+local nonvscode_plugins = {
+   {
+      "nvim-lua/plenary.nvim",
+   },
+
+   {
+      -- statusline
+      'nvim-lualine/lualine.nvim',
+      dependencies = { 'kyazdani42/nvim-web-devicons', lazy = true },
+      conifg = require("plugins.configs.lualine")
+   },
+
+   -- {
+   --    "akinsho/bufferline.nvim",
+   --    lazy = false,
+   --    version = "*",
+   --    dependencies = "kyazdani42/nvim-web-devicons",
+   --    config = require("plugins.configs.bufferline")
+   -- },
+
+   {
+      "lukas-reineke/indent-blankline.nvim",
+      main = "ibl",
+      event = "VeryLazy",
+      lazy = true,
+      init = function()
+         require("core.utils").lazy_load "indent-blankline.nvim"
+      end,
+      config = function()
+         local highlight = {
+            "RainbowRed",
+            "RainbowYellow",
+            "RainbowBlue",
+            "RainbowOrange",
+            "RainbowGreen",
+            "RainbowViolet",
+            "RainbowCyan",
+         }
+
+         local hooks = require "ibl.hooks"
+         -- create the highlight groups in the highlight setup hook, so they are reset
+         -- every time the colorscheme changes
+         hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+            vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
+            vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
+            vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
+            vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
+            vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
+            vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
+            vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
+         end)
+
+         require("ibl").setup { indent = { highlight = highlight } }
+      end
+   },
+
+   -- git stuff
+   {
+      "lewis6991/gitsigns.nvim",
+      ft = { "gitcommit", "diff" },
+      init = function()
+         -- load gitsigns only when a git file is opened
+         vim.api.nvim_create_autocmd({ "BufRead" }, {
+            group = vim.api.nvim_create_augroup("GitSignsLazyLoad", { clear = true }),
+            callback = function()
+               vim.fn.jobstart({ "git", "-C", vim.loop.cwd(), "rev-parse" },
+                  {
+                     on_exit = function(_, return_code)
+                        if return_code == 0 then
+                           vim.api.nvim_del_augroup_by_name "GitSignsLazyLoad"
+                           vim.schedule(function()
+                              require("lazy").load { plugins = { "gitsigns.nvim" } }
+                           end)
+                        end
+                     end
+                  }
+               )
+            end,
+         })
+      end,
+   },
+
    {
       "nvim-treesitter/nvim-treesitter",
       -- ft = { "c", "c++", "lua", "sh", "java", "python"},
@@ -69,6 +154,26 @@ local alwasys_plugins = {
       config = require("plugins.configs.treesitter"),
    },
    
+
+   {
+      "nvim-telescope/telescope.nvim",
+      event = "VeryLazy",
+      dependencies = {
+         {
+            "nvim-telescope/telescope-fzf-native.nvim",
+            build = "make",
+            cond = function()
+               return vim.fn.executable 'make' == 1
+            end
+         },
+         {
+            "nvim-telescope/telescope-media-files.nvim",
+         },
+         { 'nvim-telescope/telescope-ui-select.nvim' },
+      },
+      config = require("plugins.configs.telescope")
+   },
+
    {
       'neovim/nvim-lspconfig',
       ft = { "lua", "cpp", "h", "python", "bash" },
@@ -238,112 +343,6 @@ local alwasys_plugins = {
          }
       end,
    },
-
-}
-
-
-
-local nonvscode_plugins = {
-   {
-      "nvim-lua/plenary.nvim",
-   },
-
-   {
-      -- statusline
-      'nvim-lualine/lualine.nvim',
-      dependencies = { 'kyazdani42/nvim-web-devicons', lazy = true },
-      conifg = require("plugins.configs.lualine")
-   },
-
-   -- {
-   --    "akinsho/bufferline.nvim",
-   --    lazy = false,
-   --    version = "*",
-   --    dependencies = "kyazdani42/nvim-web-devicons",
-   --    config = require("plugins.configs.bufferline")
-   -- },
-
-   {
-      "lukas-reineke/indent-blankline.nvim",
-      main = "ibl",
-      event = "VeryLazy",
-      lazy = true,
-      init = function()
-         require("core.utils").lazy_load "indent-blankline.nvim"
-      end,
-      config = function()
-         local highlight = {
-            "RainbowRed",
-            "RainbowYellow",
-            "RainbowBlue",
-            "RainbowOrange",
-            "RainbowGreen",
-            "RainbowViolet",
-            "RainbowCyan",
-         }
-
-         local hooks = require "ibl.hooks"
-         -- create the highlight groups in the highlight setup hook, so they are reset
-         -- every time the colorscheme changes
-         hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-            vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
-            vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
-            vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
-            vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
-            vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
-            vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
-            vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
-         end)
-
-         require("ibl").setup { indent = { highlight = highlight } }
-      end
-   },
-
-   -- git stuff
-   {
-      "lewis6991/gitsigns.nvim",
-      ft = { "gitcommit", "diff" },
-      init = function()
-         -- load gitsigns only when a git file is opened
-         vim.api.nvim_create_autocmd({ "BufRead" }, {
-            group = vim.api.nvim_create_augroup("GitSignsLazyLoad", { clear = true }),
-            callback = function()
-               vim.fn.jobstart({ "git", "-C", vim.loop.cwd(), "rev-parse" },
-                  {
-                     on_exit = function(_, return_code)
-                        if return_code == 0 then
-                           vim.api.nvim_del_augroup_by_name "GitSignsLazyLoad"
-                           vim.schedule(function()
-                              require("lazy").load { plugins = { "gitsigns.nvim" } }
-                           end)
-                        end
-                     end
-                  }
-               )
-            end,
-         })
-      end,
-   },
-
-   {
-      "nvim-telescope/telescope.nvim",
-      event = "VeryLazy",
-      dependencies = {
-         {
-            "nvim-telescope/telescope-fzf-native.nvim",
-            build = "make",
-            cond = function()
-               return vim.fn.executable 'make' == 1
-            end
-         },
-         {
-            "nvim-telescope/telescope-media-files.nvim",
-         },
-         { 'nvim-telescope/telescope-ui-select.nvim' },
-      },
-      config = require("plugins.configs.telescope")
-   },
-
 
    -- references 1: https://github.com/AstroNvim/AstroNvim
    -- references 2: https://github.com/nvim-lua/kickstart.nvim/blob/master/lua/kickstart/plugins/debug.lua
